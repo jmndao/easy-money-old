@@ -1,0 +1,24 @@
+body{
+    height: 1vh;
+}
+.container{
+    padding-top: 100px;
+    
+    margin: auto;
+}
+
+.row-a{
+    padding: 0 10px;
+}
+.row a{
+    width: 100%;
+}
+#togglePassword{
+    cursor: pointer; 
+    position: absolute;
+    right: 15px;
+    top: 20px;
+}
+.right a{
+    color: #ef6c00;
+}

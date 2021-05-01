@@ -1,0 +1,27 @@
+body{
+    background-color: #ddd;
+}
+thead,td{
+    color: #fff;
+}
+
+.p-adjust{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+}
+
+.i-adjust{
+    margin-bottom: 5px;
+    text-align: center;
+    position: absolute;
+    font-size: 2.2rem;;
+    right:5%;
+    bottom: -11px;
+}
+.white-text{
+    font-size:2.2rem;
+}
+/* .stripped{
+    background-color: #ddd;
+} */
