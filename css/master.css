@@ -210,7 +210,7 @@ label[for="nav-toggle"] {
 }
 
 .easy-main-content h5 {
-    font-size: 16px !important;
+    font-size: 16px;
 }
 
 .easy-sidebar-brand {
@@ -244,10 +244,55 @@ label[for="nav-toggle"] {
     .easy-main-content {
         margin-left: 70px;
     }
+    /*---------------------------*/
+    .easy-sidebar:hover {
+        width: 345px;
+        z-index: 20;
+    }
+    .easy-sidebar:hover h5 span:last-child,
+    .easy-sidebar:hover li a span:last-child {
+        display: inline;
+    }
+    .easy-sidebar:hover ul li h5,
+    .easy-sidebar:hover ul li small {
+        display: inline;
+    }
 }
 
 @media only screen and (max-width: 786px) {
     .search-wrapper {
         display: none;
+    }
+    .easy-sidebar {
+        left: -100px !important;
+    }
+    header h5 label {
+        background: var(--second-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 0;
+        margin-right: 1rem;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+    header h5 span {
+        text-align: center;
+        padding-right: 0;
+    }
+    .easy-main-content {
+        width: 100%;
+        margin-left: 0;
+    }
+    header {
+        width: 100% !important;
+        left: 0 !important;
+    }
+}
+
+@media only screen and (max-width: 568px) {
+    header h5 {
+        font-size: 1.1rem !important;
     }
 }
