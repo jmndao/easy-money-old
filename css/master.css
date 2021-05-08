@@ -107,6 +107,7 @@ header {
     top: 0;
     z-index: 10;
     transition: left 300ms;
+    height: 80px;
 }
 
 header h5 {
@@ -213,7 +214,7 @@ label[for="nav-toggle"] {
 }
 
 .easy-sidebar-brand {
-    height: 90px;
+    height: 80px;
 }
 
 .easy-sidebar-brand span {}
