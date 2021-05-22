@@ -186,6 +186,11 @@ header label span {
     align-items: center;
 }
 
+.card-body-wrapper {
+    display: flex;
+    align-items: center;
+}
+
 
 /* ---------- CSS Utils ------------*/
 
@@ -207,6 +212,28 @@ header label span {
 
 .pl-2 {
     padding-left: 10px;
+}
+
+.mt-1 {
+    margin-top: 5px;
+}
+
+.mb-1 {
+    margin-bottom: 5px;
+}
+
+.ml-3 {
+    margin-left: 15px;
+}
+
+.browseBtn_photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.browseBtn_photo .material-icons {
+    padding-left: 5px;
 }
 
 

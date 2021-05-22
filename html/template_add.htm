@@ -8,8 +8,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../materialize/css/materialize.css">
     <link rel="stylesheet" href="../css/master.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/style2.css">
+    <link rel="stylesheet" href="../css/navigation.css">
     <title>EASY MONEY DASHBOARD</title>
 </head>
 
@@ -23,7 +22,6 @@
                 </span><span>EASY MONEY</span></h5>
         </div>
         <div class="easy-sidebar-menu">
-            <div class="divider easy-div"></div>
             <div class="user-wrapper">
                 <img src="../images/user.jpg" alt="User" width="50px" height="50px">
                 <ul class="user-wrapper">
@@ -33,38 +31,53 @@
                     <li><small>Super Admin</small></li>
                 </ul>
             </div>
-            <div class="divider easy-div"></div>
             <ul>
                 <li>
-                    <a href="#" class="active">
+                    <a href="index.htm" class="active">
                         <span class="material-icons">
-                            dashboard
-                            </span>
+                                dashboard
+                                </span>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="client.htm">
                         <span class="material-icons">
-                            local_mall
-                            </span>
-                        <span>Stock Dépot</span>
+                                person_add
+                                </span>
+                        <span>Clients</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="">
+                        <span class="material-icons">
+                                local_mall
+                                </span>
+                        <span>Produits</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="material-icons">
-                            receipt_long
-                            </span>
-                        <span>Stock Achat</span>
+                                price_check
+                                </span>
+                        <span>Achat</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="material-icons">
-                            settings
-                            </span>
-                        <span>Paramètres</span>
+                                history_edu
+                                </span>
+                        <span>Demande Client</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="profile.htm">
+                        <span class="material-icons">
+                                settings
+                                </span>
+                        <span>Profil</span>
                     </a>
                 </li>
             </ul>
@@ -85,8 +98,8 @@
                 <input type="search" name="search" id="search" placeholder="Search here...">
             </div>
             <div class="miscellaneous">
-                <span class="material-icons">notifications</span>
-                <span class="material-icons">person</span>
+                <button class="notifBtn"><span class="new badge">4</span><span class="material-icons notif">notifications</span></button>
+                <button class="persBtn"><span class="material-icons pers">person</span></button>
             </div>
 
         </header>
@@ -95,11 +108,11 @@
             <!----- Add your code -->
         </div>
 
-
     </main>
 
 </body>
 <script src="../js/index.js"></script>
 <script src="../materialize/js/materialize.js"></script>
+<script src="../js/script.js"></script>
 
 </html>

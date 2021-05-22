@@ -15,7 +15,7 @@ togglePassword.addEventListener('click', function(e) {
 
 
 links.forEach((link) => {
-    link.addEventListener('click', () => {
+    link.addEventListener('hover', () => {
         link.classList.add('.redBackground');
     })
 })
