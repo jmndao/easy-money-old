@@ -30,7 +30,6 @@
 
 .easy-sidebar-menu li {
     width: 100%;
-    margin-bottom: 1.3rem;
     padding-left: 1rem;
 }
 
@@ -39,17 +38,19 @@
     display: block;
     color: var(--third-color);
     font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .easy-sidebar-menu a span:first-child {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     padding-right: 1rem;
 }
 
 .easy-sidebar-menu a.active {
     background-color: var(--white-color);
-    padding-top: 1rem;
-    padding-bottom: 1rem;
     color: var(--second-color);
     border-radius: 10px 0 0 10px;
 }
@@ -63,6 +64,10 @@
     background-color: var(--second-color);
     z-index: 10;
     transition: width 300ms;
+}
+
+.redBackground {
+    background-color: red;
 }
 
 .easy-main-content {
@@ -248,7 +253,7 @@ label[for="nav-toggle"] {
         margin-left: 70px;
     }
     /*---------------------------*/
-    .easy-sidebar:hover {
+    /* .easy-sidebar:hover {
         width: 345px;
         z-index: 20;
     }
@@ -259,15 +264,18 @@ label[for="nav-toggle"] {
     .easy-sidebar:hover ul li h5,
     .easy-sidebar:hover ul li small {
         display: inline;
-    }
+    } */
 }
 
 @media only screen and (max-width: 786px) {
     .search-wrapper {
         display: none;
     }
+    #nav-toggle:checked~.easy-main-content {
+        margin-left: 0;
+    }
     .easy-sidebar {
-        left: -100px !important;
+        left: -100px;
     }
     header h5 label {
         background: var(--second-color);
@@ -298,7 +306,7 @@ label[for="nav-toggle"] {
         z-index: 10;
     }
     #nav-toggle:checked+.easy-sidebar h5 span:last-child,
-    #nav-toggle:checked+.easy-sidebar li a span:last-child {
+    #nav-toggle:chec ked+.easy-sidebar li a span:last-child {
         display: inline;
     }
     #nav-toggle:checked+.easy-sidebar ul li h5,
