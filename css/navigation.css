@@ -1,0 +1,32 @@
+:root {
+    --first-color: #000000;
+    --second-color: #ff3d00;
+    --third-color: #eee;
+    --white-color: #fff;
+}
+
+.miscellaneous button {
+    margin: 10px 15px;
+    cursor: pointer;
+    border: 0;
+    outline: none;
+    background-color: var(--white-color);
+}
+
+.notifBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.easy-sidebar-menu ul li span:last-child {
+    font-size: 20px;
+}
+
+.easy-sidebar-menu ul li a:hover {
+    background-color: var(--white-color);
+    color: var(--second-color);
+    border-radius: 10px 0 0 10px;
+    opacity: 0.4;
+    transition: background-color 500ms;
+}

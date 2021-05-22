@@ -108,7 +108,8 @@
 
         <div class="easy-body-wrapper">
             <!----- Add your code -->
-            <h5 class="center-align">PRODUITS</h5>
+
+            <h5 class="center-align">CLIENT</h5>
             <div class="row">
                 <div class="coll">
                     <!--Am not using this coll yett -->
@@ -117,64 +118,36 @@
                             <form class="col s12">
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input id="Marque" type="text" class="validate">
-                                        <label for="Marque">Marque</label>
+                                        <input id="first_name" type="text" class="validate">
+                                        <label for="first_name">Prenom du vendeur</label>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input id="Model" type="text" class="validate">
-                                        <label for="Model">Model</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s6">
-                                        <input id="edition" type="text" class="validate">
-                                        <label for="Edition">Edition</label>
-                                    </div>
-                                    <div class="input-field col s6">
-                                        <input id="Annee" type="text" class="validate">
-                                        <label for="Annee">Annee</label>
+                                        <input id="last_name" type="text" class="validate">
+                                        <label for="last_name">Nom du vendeur</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input id="giga-octet" type="text" class="validate">
-                                        <label for="giga-octet">Giga Octet</label>
+                                        <input id="tel" type="NUMBER" class="validate">
+                                        <label for="tel">TEL</label>
                                     </div>
                                     <div class="input-field col s6">
-                                        <input id="Ram" type="text" class="validate">
-                                        <label for="Ram">Ram</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s6">
-                                        <input id="Dimensions" type="text" class="validate">
-                                        <label for="Dimensionst">Dimensions</label>
-                                    </div>
-                                    <div class="input-field col s6">
-                                        <input id="Poids" type="text" class="validate">
-                                        <label for="Poids">Poids</label>
+                                        <input id="email" type="email" class="validate">
+                                        <label for="email">Email</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <select>
+                                        <input id="nin" type="number" class="validate">
+                                        <label for="nin">NIN</label>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input id="date" type="date" class="validate">
+                                        <label for="date">Date</label>
+                                    </div>
+                                </div>
 
-                                            <option value="" disabled selected>Chargeur</option>
-                                            <option value="1">OUI</option>
-                                            <option value="2">NON</option>
 
-                                        </select>
-
-                                    </div>
-                                    <div class="input-field col s6">
-                                        <select>
-                                            <option value="" disabled selected>Boite D'Origine</option>
-                                            <option value="1">OUI</option>
-                                            <option value="2">NON</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="modal-footer">
                                     <button
                                         class="modal-close waves-effect waves-green btn-flat right btn-small deep-orange darken-3"
@@ -187,7 +160,63 @@
                     </div>
                 </div>
             </div>
+            <div class="card-ppanel">
+                <!-- Working on the list of Clients -->
+                <!-- Modal Trigger -->
+                <div class="center ">
+                    <a class="waves-effect  btn c-btn modal-trigger" href="#modal1">Voir Tous les clients</a>
+                </div>
+                <!-- Modal Structure -->
+                <div id="modal1" class="modal bottom-sheet">
+                    <div class="modal-content all-black">
+                        <h4>List de tous les Clients</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Prenom</th>
+                                    <th>Nom</th>
+                                    <th>TEL</th>
+                                    <th>Email</th>
+                                    <th>Nin</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Alvin</td>
+                                    <td>Eclair</td>
+                                    <td>771234567</td>
+                                    <td>abc@gmail.com</td>
+                                    <td>00234156789</td>
+                                    <td>08-09-2021 </td>
+                                </tr>
+                                <tr>
+                                    <td>Alan</td>
+                                    <td>Jellybean</td>
+                                    <td>779876543</td>
+                                    <td>def@gmail.com</td>
+                                    <td></td>
+                                    <td>11-19-2021 </td>
+                                </tr>
+                                <tr>
+                                    <td>Jonathan</td>
+                                    <td>Lollipop</td>
+                                    <td>770358543</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>11-19-2021 </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
+                    </div>
+                </div>
+            </div>
         </div>
+
 
     </main>
 
