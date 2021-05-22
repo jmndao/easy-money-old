@@ -157,6 +157,9 @@ header label span {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: var(--first-color);
+    color: var(--third-color);
+    margin: 1rem 0;
 }
 
 .user-wrapper img {
@@ -288,6 +291,19 @@ label[for="nav-toggle"] {
     header {
         width: 100% !important;
         left: 0 !important;
+    }
+    #nav-toggle:checked+.easy-sidebar {
+        left: 0;
+        width: 345px;
+        z-index: 10;
+    }
+    #nav-toggle:checked+.easy-sidebar h5 span:last-child,
+    #nav-toggle:checked+.easy-sidebar li a span:last-child {
+        display: inline;
+    }
+    #nav-toggle:checked+.easy-sidebar ul li h5,
+    #nav-toggle:checked+.easy-sidebar ul li small {
+        display: inline;
     }
 }
 
