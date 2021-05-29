@@ -2,13 +2,15 @@ from django.db import models
 
 # Create your models here.
 
-# First Model -- Stock Depot/Achat
+# First Model --  Depot
+
+# Second Model -- Achat
 
 
-# Second Model -- Demande Client
+# Third Model -- Demande Client
 
 
-# Third Model -- Clients
+# Fourth Model -- Clients
 
 
-# Fourth Model -- Notifications
+# Fifth Model -- Notifications

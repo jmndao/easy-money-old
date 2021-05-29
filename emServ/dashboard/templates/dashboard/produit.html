@@ -1,30 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'dashboard/base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link rel="stylesheet" href="../materialize/css/materialize.css">
-    <link rel="stylesheet" href="../materia<!DOCTYPE html>
-    <html lang=" en">
+{% block body_content %}
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-        <link rel="stylesheet" href="../materialize/css/materialize.css">
-        <link rel="stylesheet" href="../materialize/css/materialize.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="../css/client.css">
-        <title>Produit</title>
-    </head>
-
-<body>
-    <h5 class="center-align">PRODUITS</h5>
+<h5 class="center-align">PRODUITS</h5>
     <div class="row">
         <div class="coll">
             <!--Am not using this coll yett -->
@@ -103,8 +82,5 @@
             </div>
         </div>
     </div>
-    <script src="../materialize/js/materialize.js"></script>
-    <script src="../js/script.js"></script>
-</body>
 
-</html>
+{% endblock body_content %}

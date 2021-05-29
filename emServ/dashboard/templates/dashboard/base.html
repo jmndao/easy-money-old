@@ -25,7 +25,7 @@
         </div>
         <div class="easy-sidebar-menu">
             <div class="user-wrapper">
-                <img src="../images/user.jpg" alt="User" width="50px" height="50px">
+                <img src="{% static 'dashboard/images/user.jpg' %}" alt="User" width="50px" height="50px">
                 <ul class="user-wrapper">
                     <li>
                         <h5>Damien</h5>
@@ -35,7 +35,7 @@
             </div>
             <ul>
                 <li>
-                    <a href="index.htm" class="active">
+                    <a href="{% url 'dashboard:homePage' %}" class="active">
                         <span class="material-icons">
                             dashboard
                         </span>
@@ -43,7 +43,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="client.htm">
+                    <a href="{% url 'dashboard:clientPage' %}">
                         <span class="material-icons">
                             person_add
                         </span>
@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="">
+                    <a href="{% url 'dashboard:productPage' %}" class="">
                         <span class="material-icons">
                             local_mall
                         </span>
@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'dashboard:buyingStockPage' %}">
                         <span class="material-icons">
                             price_check
                         </span>
@@ -67,7 +67,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'dashboard:clientRequestPage' %}">
                         <span class="material-icons">
                             history_edu
                         </span>
@@ -75,7 +75,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="profile.htm">
+                    <a href="{% url 'dashboard:profilePage' %}">
                         <span class="material-icons">
                             settings
                         </span>
