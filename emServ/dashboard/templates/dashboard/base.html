@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../materialize/css/materialize.css">
-    <link rel="stylesheet" href="../css/master.css">
-    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/materialize/css/materialize.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/master.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/navigation.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/client.css' %}" />
     <title>EASY MONEY DASHBOARD</title>
 </head>
 
@@ -18,7 +20,7 @@
     <div class="easy-sidebar">
         <div class="easy-sidebar-brand">
             <h5><span class="material-icons">
-                price_change
+                    price_change
                 </span><span>EASY MONEY</span></h5>
         </div>
         <div class="easy-sidebar-menu">
@@ -35,48 +37,48 @@
                 <li>
                     <a href="index.htm" class="active">
                         <span class="material-icons">
-                                dashboard
-                                </span>
+                            dashboard
+                        </span>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="client.htm">
                         <span class="material-icons">
-                                person_add
-                                </span>
+                            person_add
+                        </span>
                         <span>Clients</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="">
                         <span class="material-icons">
-                                local_mall
-                                </span>
+                            local_mall
+                        </span>
                         <span>Produits</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="material-icons">
-                                price_check
-                                </span>
+                            price_check
+                        </span>
                         <span>Achat</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="material-icons">
-                                history_edu
-                                </span>
+                            history_edu
+                        </span>
                         <span>Demande Client</span>
                     </a>
                 </li>
                 <li>
                     <a href="profile.htm">
                         <span class="material-icons">
-                                settings
-                                </span>
+                            settings
+                        </span>
                         <span>Profil</span>
                     </a>
                 </li>
@@ -98,21 +100,25 @@
                 <input type="search" name="search" id="search" placeholder="Search here...">
             </div>
             <div class="miscellaneous">
-                <button class="notifBtn"><span class="new badge">4</span><span class="material-icons notif">notifications</span></button>
+                <button class="notifBtn"><span class="new badge">4</span><span
+                        class="material-icons notif">notifications</span></button>
                 <button class="persBtn"><span class="material-icons pers">person</span></button>
             </div>
 
         </header>
 
         <div class="easy-body-wrapper">
-            <!----- Add your code -->
+            
+            {% block body_content %}
+                <!----- Add your code -->
+            {% endblock body_content %}
         </div>
 
     </main>
 
 </body>
-<script src="../js/index.js"></script>
-<script src="../materialize/js/materialize.js"></script>
-<script src="../js/script.js"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/script.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/materialize/js/materialize.js' %}"></script>
 
 </html>
