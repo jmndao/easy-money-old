@@ -1,12 +1,12 @@
 from django.shortcuts import render
+from django.views.generic import (TemplateView, ListView, DetailView)
 
 # Create your views here.
 
 
-def index(request):
+class IndexView(TemplateView):
 
-    return render(request, "dashboard/index.html", {})
-
+    template_name = 'dashboard/index.html'
 
 
 def profile(request):
