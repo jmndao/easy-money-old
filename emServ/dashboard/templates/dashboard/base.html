@@ -7,20 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/materialize/css/materialize.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/master.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/navigation.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/index.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/client.css' %}" />
     <title>EASY MONEY DASHBOARD</title>
 </head>
 
 <body>
+
+
     <input type="checkbox" name="navToggle" id="nav-toggle" />
     <div class="easy-sidebar">
         <div class="easy-sidebar-brand">
             <h5>
-                <span class="material-icons"> price_change </span
-          ><span>EASY MONEY</span>
+                <span class="material-icons"> price_change </span>
+                <span>EASY MONEY</span>
             </h5>
         </div>
         <div class="easy-sidebar-menu">
@@ -78,8 +81,9 @@
         <header>
             <h5 class="valign-wrapper">
                 <label for="nav-toggle">
-            <span class="material-icons">menu</span>
-          </label> Dashboard
+                    <span class="material-icons">menu</span>
+                </label> 
+                Dashboard
             </h5>
             <div class="search-wrapper">
                 <span class="material-icons">search</span>
@@ -87,12 +91,12 @@
             </div>
             <div class="miscellaneous">
                 <button class="notifBtn">
-            <span class="new badge">4</span
-            ><span class="material-icons notif">notifications</span>
-          </button>
+                    <span class="new badge">4</span>
+                    <span class="material-icons notif">notifications</span>
+                </button>
                 <button class="persBtn">
-            <span class="material-icons pers">person</span>
-          </button>
+                    <span class="material-icons pers">person</span>
+                </button>
             </div>
         </header>
 

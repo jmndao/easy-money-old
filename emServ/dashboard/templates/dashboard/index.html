@@ -1,189 +1,214 @@
-{% extends 'dashboard/base.html' %}
-{% load static %}
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
 
 {% block body_content %}
 
     <div class="row">
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Boutiques</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small">
-                                    store
-                                </i>
-                                <span class="p-large i-adjust">012</span>
-                            </p>
-                        </div>
-                    </div>
+
+        <!--- Boutique Card -->
+        <div class="col s12 m6 l3">
+            <div class="card deep-orange accent-3">
+                <div class="card-content white-text">
+                    <span class="card-title">Boutiques</span>
+                    <p class="p-adjust">
+                        <i class="material-icons small"> store </i>
+                        <span class="p-large i-adjust">012</span>
+                    </p>
                 </div>
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Produit</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small ">shopping_cart</i>
-                                <span class="p-large i-adjust">123</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Customers</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small ">groups</i>
-                                <span class="p-large i-adjust">2,110</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Revenu</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small ">sell</i>
-                                <span class="p-large i-adjust">3M</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row-table-inner">
-                    <div class="col s12">
-                        <div class="card-panel grey darken-3">
-                            <div class="card-panel-header__wrapper">
-                                <div class="white-text">Stock Achat
-                                </div>
-                                <div class="bbtn">
-                                    <a class="waves-effect waves-light btn-small deep-orange accent-3"><i class="material-icons left">visibility</i>Voir Tout</a>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <table class="responsive-table highlight">
-                                <thead class="stripped">
-                                    <tr>
-                                        <th>Reference</th>
-                                        <th>Nom Vendeur</th>
-                                        <th>Produit</th>
-                                        <th>Qualite</th>
-                                        <th>Date D'achat</th>
-                                        <th>Prix D'achat</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jeanette</td>
-                                        <td>SAC A LANGER GRIS</td>
-                                        <td><span class="new badge yellow" data-badge-caption="Excellente"></span></td>
-                                        <td>5/21/2021</td>
-                                        <td>1,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>ANtoine</td>
-                                        <td>DOSEUR LAIT OU PUREE</td>
-                                        <td><span class="new badge green" data-badge-caption="Normale"></span> </td>
-                                        <td>1/22/2021</td>
-                                        <td>123,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Jules</td>
-                                        <td>JEU ENFANT MIKADO EN BOIS</td>
-                                        <td> <span class="new badge green" data-badge-caption="Normale"></span> </td>
-                                        <td>2/11/2021</td>
-                                        <td>212,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Moussa</td>
-                                        <td>VELO DE COURSE SERIOUS</td>
-                                        <td><span class="new badge red" data-badge-caption="Mauvaise"></span></td>
-                                        <td>4/09/2021</td>
-                                        <td>12,800</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-table-inner">
-                    <div class="col s12">
-                        <div class="card-panel grey darken-3">
-                            <div class="card-panel-header__wrapper">
-                                <div class="white-text">Stock Dépot
-                                </div>
-                                <div class="bbtn">
-                                    <a class="waves-effect waves-light btn-small deep-orange accent-3"><i class="material-icons left">visibility</i>Voir Tout</a>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <table class="responsive-table highlight">
-                                <thead>
-                                    <tr>
-                                        <th>Reference</th>
-
-                                        <th>Produit</th>
-                                        <th>Date de vente</th>
-                                        <th>prix de vente minimum</th>
-
-                                        <th>Prix de vente final</th>
-
-                                        <th>Garantie</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-
-                                        <td>SAC A LANGER GRIS</td>
-                                        <td>5/21/2021</td>
-                                        <td>900</td>
-
-                                        <td>1,000</td>
-                                        <td> OUI</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>DOSEUR LAIT OU PUREE</td>
-                                        <td>1/22/2021</td>
-                                        <td>112,000</td>
-
-                                        <td>123,000</td>
-                                        <td> NON</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>JEU ENFANT MIKADO EN BOIS</td>
-                                        <td>2/11/2021</td>
-                                        <td>209,000</td>
-
-                                        <td>212,000</td>
-                                        <td> NON</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>VELO DE COURSE SERIOUS</td>
-                                        <td>4/09/2021</td>
-                                        <td>8,000</td>
-
-                                        <td>12,800</td>
-                                        <td> OUI</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+        </div>
+
+        <!--- Produit Card -->
+        <div class="col s12 m6 l3">
+            <div class="card deep-orange accent-3">
+                <div class="card-content white-text">
+                    <span class="card-title">Produit</span>
+                    <p class="p-adjust">
+                        <i class="material-icons small">shopping_cart</i>
+                        <span class="p-large i-adjust">123</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--- Client Card -->
+        <div class="col s12 m6 l3">
+            <div class="card deep-orange accent-3">
+                <div class="card-content white-text">
+                    <span class="card-title">Clients</span>
+                    <p class="p-adjust">
+                        <i class="material-icons small">groups</i>
+                        <span class="p-large i-adjust">2,110</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--- Revenue Card -->
+        <div class="col s12 m6 l3">
+            <div class="card deep-orange accent-3">
+                <div class="card-content white-text">
+                    <span class="card-title">Revenue</span>
+                    <p class="p-adjust">
+                        <i class="material-icons small">sell</i>
+                        <span class="p-large i-adjust">3M</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!----- Tables: Achat et Depot -->
+        <div class="middle-section-easy row">
+            <!------ Section Wrapper of Tables: 8 columns-->
+            <div class="section-table-easy col s8">
+                <!----- Table -->
+                    <div class="row-table-inner">
+                        <div class="col s12">
+                            <div class="card-panel grey darken-3">
+                                <div class="card-panel-header__wrapper">
+                                    <div class="white-text">Stock Achat</div>
+                                    <div class="bbtn">
+                                        <a class="waves-effect waves-light btn-small deep-orange accent-3">
+                                            <i class="material-icons left">visibility</i>
+                                            Voir Tout
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <table class="responsive-table highlight">
+                                    <thead class="stripped">
+                                        <tr>
+                                            <th>Reference</th>
+                                            <th>Nom Vendeur</th>
+                                            <th>Produit</th>
+                                            <th>Qualite</th>
+                                            <th>Date D'achat</th>
+                                            <th>Prix D'achat</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!----- Row: 1-->
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Jeanette</td>
+                                            <td>SAC A LANGER GRIS</td>
+                                            <td>
+                                                <span class="new badge yellow" data-badge-caption="Excellente">
+                                                </span>
+                                            </td>
+                                            <td>5/21/2021</td>
+                                            <td>1,000</td>
+                                        </tr>
+                                        <!----- Row: 2-->
+                                        <tr>
+                                            <td>2</td>
+                                            <td>ANtoine</td>
+                                            <td>DOSEUR LAIT OU PUREE</td>
+                                            <td>
+                                                <span class="new badge green" data-badge-caption="Normale">
+                                                </span>
+                                            </td>
+                                            <td>1/22/2021</td>
+                                            <td>123,000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row-table-inner">
+                        <!----- Table -->
+                        <div class="col s12">
+                            <div class="card-panel grey darken-3">
+                                <div class="card-panel-header__wrapper">
+                                    <div class="white-text">Stock Dépot</div>
+                                    <div class="bbtn">
+                                        <a class="waves-effect waves-light btn-small deep-orange accent-3">
+                                            <i class="material-icons left">visibility</i>
+                                            Voir Tout
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                
+                                <table class="responsive-table highlight">
+                                    <thead>
+                                        <tr>
+                                            <th>Reference</th>
+                                            <th>Produit</th>
+                                            <th>Date de vente</th>
+                                            <th>prix de vente minimum</th>
+                                            <th>Prix de vente final</th>
+                                            <th>Garantie</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <!----- Row: 1-->
+                                        <tr>
+                                            <td>1</td>
+                                            <td>SAC A LANGER GRIS</td>
+                                            <td>5/21/2021</td>
+                                            <td>900</td>
+                                            <td>1,000</td>
+                                            <td>OUI</td>
+                                        </tr>
+                                        <!----- Row: 2-->
+                                        <tr>
+                                            <td>2</td>
+                                            <td>DOSEUR LAIT OU PUREE</td>
+                                            <td>1/22/2021</td>
+                                            <td>112,000</td>
+                                            <td>123,000</td>
+                                            <td>NON</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-info-easy col s4">
+                    <!------ Product Trend Section -->
+                    <div class="product_trend-section">
+                        <div class="card-panel">
+                            <div class="title-section">
+                                <span class="title center">Tendance des Produits</span>
+                                <a class="waves-effect waves-light btn-small"><i class="material-icons left">unfold_more</i></a>
+                            </div>
+                        </div>
+                        <div class="upd card-panel">
+                            <ul class="collection s12">
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle red">trending_down</i>
+                                    <span class="title">Mac Book Pro 2016</span>
+                                    <p>Restant: 4</p>
+                                    <p>Fournisseur: Ibrahima Fall</p>
+                                    <p>Tel: +221 77 123 56 78</p>
+                                </li>
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle red">trending_down</i>
+                                    <span class="title">Iphone 12</span>
+                                    <p>Restant: 2</p>
+                                    <p>Fournisseur:  Alioune Sarr</p>
+                                    <p>Tel: +221 77 100 50 08</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+
+                    
+                </div>
+            
+        </div>
+        
+    </div>
 
 {% endblock body_content %}

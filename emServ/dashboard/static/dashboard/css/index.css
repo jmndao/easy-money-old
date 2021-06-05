@@ -30,3 +30,16 @@
     opacity: 0.4;
     transition: background-color 500ms;
 }
+
+
+/* ----------------- Start --------------- */
+
+.upd.card-panel {
+    padding: 0 !important;
+}
+
+.product_trend-section .title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

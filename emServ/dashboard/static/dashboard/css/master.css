@@ -3,6 +3,7 @@
     --second-color: #ff3d00;
     --third-color: #eee;
     --white-color: #fff;
+    --sidenav-width: 290px;
 }
 
 * {
@@ -44,6 +45,12 @@
     padding-bottom: 1rem;
 }
 
+
+/*----------- Navbar --------------*/
+
+
+/*-----------End Navbar --------------*/
+
 .easy-sidebar-menu a span:first-child {
     font-size: 1.8rem;
     padding-right: 1rem;
@@ -56,7 +63,7 @@
 }
 
 .easy-sidebar {
-    width: 345px;
+    width: var(--sidenav-width);
     position: fixed;
     top: 0;
     left: 0;
@@ -72,7 +79,7 @@
 
 .easy-main-content {
     transition: margin-left 300ms;
-    margin-left: 345px;
+    margin-left: var(--sidenav-width);
 }
 
 #nav-toggle:checked+.easy-sidebar {
@@ -107,8 +114,8 @@ header {
     background-color: var(--white-color);
     color: var(--first-color);
     position: fixed;
-    left: 345px;
-    width: calc(100% - 345px);
+    left: var(--sidenav-width);
+    width: calc(100% - var(--sidenav-width));
     top: 0;
     z-index: 10;
     transition: left 300ms;
@@ -141,7 +148,6 @@ header label span {
     height: 50px;
     display: flex;
     align-items: center;
-    overflow-x: hidden;
 }
 
 .search-wrapper input {
@@ -281,7 +287,7 @@ label[for="nav-toggle"] {
     }
     /*---------------------------*/
     /* .easy-sidebar:hover {
-        width: 345px;
+        width: var(--sidenav-width);
         z-index: 20;
     }
     .easy-sidebar:hover h5 span:last-child,
@@ -329,7 +335,7 @@ label[for="nav-toggle"] {
     }
     #nav-toggle:checked+.easy-sidebar {
         left: 0;
-        width: 345px;
+        width: var(--sidenav-width);
         z-index: 10;
     }
     #nav-toggle:checked+.easy-sidebar h5 span:last-child,
