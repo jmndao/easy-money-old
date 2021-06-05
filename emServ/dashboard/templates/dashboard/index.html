@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'dashboard/base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../materialize/css/materialize.css">
-    <link rel="stylesheet" href="../css/master.css">
-    <link rel="stylesheet" href="../css/navigation.css">
-    <title>EASY MONEY DASHBOARD</title>
-</head>
+{% block body_content %}
 
+<<<<<<< HEAD:html/index.htm
 <body>
 
     <input type="checkbox" name="navToggle" id="nav-toggle">
@@ -115,6 +107,9 @@
 
         <div class="easy-body-wrapper">
             <div class="row">
+=======
+    <div class="row">
+>>>>>>> 005fb1a2015b30ec80eec5d285ecb1406debf3a9:emServ/dashboard/templates/dashboard/index.html
                 <div class="col s12 m6 l3 ">
                     <div class="card deep-orange accent-3">
                         <div class="card-content white-text">
@@ -288,14 +283,5 @@
                 </div>
 
             </div>
-        </div>
 
-
-    </main>
-
-</body>
-<script src="../js/index.js"></script>
-<script src="../materialize/js/materialize.js"></script>
-<script src="../js/script.js"></script>
-
-</html>
+{% endblock body_content %}
