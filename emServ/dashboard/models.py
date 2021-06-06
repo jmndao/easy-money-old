@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-# from datetime import datetime
 
 # Create your models here.
 
@@ -81,12 +80,10 @@ class BuyingStockModel(models.Model):
     """
 
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    """It's cool that we would figureout away not to make him type all the 
-    informations in the ProductModel classes."""
     date_de_vente = models.DateTimeField(auto_now_add=True) 
-    prix_de_vente_min = models.DecimalField(max_digits = 8, decimal_places=3, verbose_name="Prix de vente minimum")
-    prix_de_vente_fin = models.DecimalField(max_digits = 8, decimal_places=3, verbose_name="Prix de vente final")
-    garantie = models.BooleanField(default = False)
+    prix_de_vente_min = models.DecimalField(max_digits=8, decimal_places=3, verbose_name="Prix de vente minimum")
+    prix_de_vente_fin = models.DecimalField(max_digits=8, decimal_places=3, verbose_name="Prix de vente final")
+    garantie = models.BooleanField(default=False)
     delai_garantie = models.IntegerField()
 
 
