@@ -62,6 +62,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{% url 'dashboard:depositStockPage' %}">
+                        <span class="material-icons"> price_check </span>
+                        <span>Depots</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{% url 'dashboard:clientRequestPage' %}">
                         <span class="material-icons"> history_edu </span>
                         <span>Demande Client</span>
@@ -102,13 +108,13 @@
 
         <div class="easy-body-wrapper">
             {% block body_content %}
-              <!----- Add your code -->
+            <!----- Add your code -->
             {% endblock body_content %}
         </div>
     </main>
 </body>
-  <script type="text/javascript" src="{% static 'dashboard/js/index.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/script.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/materialize/js/materialize.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/script.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/materialize/js/materialize.js' %}"></script>
 
 </html>
