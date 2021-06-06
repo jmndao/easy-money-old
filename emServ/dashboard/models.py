@@ -30,18 +30,21 @@ class DepositStockModel(models.Model):
     nom_vendeur = models.CharField(max_length=100, blank=True, null=True)
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     qualite = models.CharField(max_length=20, choices=QUALITE)
-    date_d_achat = models.DateTimeField(auto_now_add=True)
+    date_d_achat = models.DateTimeField(default = datetime.now )
     prix_d_achat = models.DecimalField(max_digits = 8, decimal_places = 3, verbose_name = "prix d'achat" )
 
 
 # Second Model -- Achat
 
+
 class BuyingStockModel(models.Model):
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    """It's cool that we would figureout away not to make him type all the 
+    informations in the ProductModel classes."""
     date_de_vente = models.DateTimeField(default = datetime.now) 
     prix_de_vente_min = models.DecimalField(max_digits = 8, decimal_places=3, verbose_name="Prix de vente minimum")
     prix_de_vente_fin = models.DecimalField(max_digits = 8, decimal_places=3, verbose_name="Prix de vente final")
-    garantie = models.BooleanField()
+    garantie = models.BooleanField(default = False)
     delai_garantie = models.IntegerField()
 
 
@@ -49,7 +52,7 @@ class BuyingStockModel(models.Model):
 
 
 # Third Model -- Demande Client
-class demande_client(models.Model):
+class Demande_client(models.Model):
     prenom_du_client = models.CharField(max_length = 100)
     nom_du_client = models.CharField(max_length = 100)
     date_demander =  models.DateTimeField(auto_now_add=True)
