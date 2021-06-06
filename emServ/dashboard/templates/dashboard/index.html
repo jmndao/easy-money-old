@@ -3,281 +3,136 @@
 
 {% block body_content %}
 
-<body>
 
-    <input type="checkbox" name="navToggle" id="nav-toggle">
-    <div class="easy-sidebar">
-        <div class="easy-sidebar-brand">
-            <h5><span class="material-icons">
-                    price_change
-                </span><span>EASY MONEY</span></h5>
-        </div>
-        <div class="easy-sidebar-menu">
-            <div class="user-wrapper">
-                <img src="../images/user.jpg" alt="User" width="50px" height="50px">
-                <ul class="user-wrapper">
-                    <li>
-                        <h5>Damien</h5>
-                    </li>
-                    <li><small>Super Admin</small></li>
-                </ul>
+<main class="easy-main-content">
+
+    <div class="row-table-inner">
+        <div class="col s12">
+            <div class="card-panel grey lighten-3">
+                <div class="card-panel-header__wrapper add_pd">
+                    <div class="black-text">Stock Achat
+                    </div>
+                    <div class="bbtn">
+                        <a class="waves-effect waves-light btn-small deep-orange accent-3"><i
+                                class="material-icons left">visibility</i>Voir Tout</a>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <table class="responsive-table highlight">
+                    <thead class="stripped">
+                        <tr>
+                            <th>Reference</th>
+                            <th>Nom Vendeur</th>
+                            <th>Produit</th>
+                            <th>Qualite</th>
+                            <th>Prix D'achat</th>
+                            <th>Date D'achat</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jeanette</td>
+                            <td>SAC A LANGER GRIS</td>
+                            <td><span class="new badge yellow" data-badge-caption="Excellente"></span></td>
+                            <td>1,000</td>
+                            <td>5/21/2021</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>ANtoine</td>
+                            <td>DOSEUR LAIT OU PUREE</td>
+                            <td><span class="new badge green" data-badge-caption="Normale"></span> </td>
+                            <td>123,000</td>
+                            <td>1/22/2021</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Jules</td>
+                            <td>JEU ENFANT MIKADO EN BOIS</td>
+                            <td> <span class="new badge green" data-badge-caption="Normale"></span> </td>
+                            <td>212,000</td>
+                            <td>2/11/2021</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Moussa</td>
+                            <td>VELO DE COURSE SERIOUS</td>
+                            <td><span class="new badge red" data-badge-caption="Mauvaise"></span></td>
+                            <td>12,800</td>
+                            <td>4/09/2021</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <ul>
-                <li>
-                    <a href="index.htm" class="active">
-                        <span class="material-icons">
-                            dashboard
-                        </span>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="client.htm">
-                        <span class="material-icons">
-                            person_add
-                        </span>
-                        <span>Clients</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="produit.htm" class="">
-                        <span class="material-icons">
-                            local_mall
-                        </span>
-                        <span>Produits</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="stock_achat.htm">
-                        <span class="material-icons">
-                            price_check
-                        </span>
-                        <span>Achat</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="depot.htm">
-                        <span class="material-icons">
-                            price_check
-                        </span>
-                        <span>Depot</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="request.htm">
-                        <span class="material-icons">
-                            history_edu
-                        </span>
-                        <span>Demande Client</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="profile.htm">
-                        <span class="material-icons">
-                            settings
-                        </span>
-                        <span>Profil</span>
-                    </a>
-                </li>
-            </ul>
+        </div>
+    </div>
+    <div class="row-table-inner">
+        <div class="col s12">
+            <div class="card-panel grey lighten-3">
+                <div class="card-panel-header__wrapper add_pd">
+                    <div class="black-text">Stock Dépot
+                    </div>
+                    <div class="bbtn">
+                        <a class="waves-effect waves-light btn-small deep-orange accent-3"><i
+                                class="material-icons left">visibility</i>Voir Tout</a>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <table class="responsive-table highlight">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Produit</th>
+                            <th>prix de vente minimum</th>
+                            <th>Prix de vente final</th>
+                            <th>Date de vente</th>
+                            <th>Garantie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>SAC A LANGER GRIS</td>
+                            <td>900</td>
+                            <td>1,000</td>
+                            <td>5/21/2021</td>
+                            <td> OUI</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>DOSEUR LAIT OU PUREE</td>
+                            <td>112,000</td>
+                            <td>123,000</td>
+                            <td>1/22/2021</td>
+                            <td> NON</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>JEU ENFANT MIKADO EN BOIS</td>
+                            <td>209,000</td>
+                            <td>212,000</td>
+                            <td>2/11/2021</td>
+                            <td> NON</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>VELO DE COURSE SERIOUS</td>
+                            <td>8,000</td>
+                            <td>12,800</td>
+                            <td>4/09/2021</td>
+                            <td> OUI</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+    </div>
+    </div>
+</main>
 
-
-    <main class="easy-main-content">
-        <header>
-            <h5 class="valign-wrapper">
-                <label for="nav-toggle">
-                    <span class="material-icons">menu</span>
-                </label> Dashboard
-            </h5>
-            <div class="search-wrapper">
-                <span class="material-icons">search</span>
-                <input type="search" name="search" id="search" placeholder="Search here...">
-            </div>
-            <div class="miscellaneous">
-                <button class="notifBtn"><span class="new badge">4</span><span
-                        class="material-icons notif">notifications</span></button>
-                <button class="persBtn"><span class="material-icons pers">person</span></button>
-            </div>
-
-        </header>
-
-        <div class="easy-body-wrapper">
-            <div class="row">
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Boutiques</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small">
-                                    store
-                                </i>
-                                <span class="p-large i-adjust">012</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Produit</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small ">shopping_cart</i>
-                                <span class="p-large i-adjust">123</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Customers</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small ">groups</i>
-                                <span class="p-large i-adjust">2,110</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l3 ">
-                    <div class="card deep-orange accent-3">
-                        <div class="card-content white-text">
-                            <span class="card-title">Revenu</span>
-                            <p class="p-adjust">
-                                <i class="material-icons small ">sell</i>
-                                <span class="p-large i-adjust">3M</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row-table-inner">
-                    <div class="col s12">
-                        <div class="card-panel grey lighten-3">
-                            <div class="card-panel-header__wrapper add_pd">
-                                <div class="black-text">Stock Achat
-                                </div>
-                                <div class="bbtn">
-                                    <a class="waves-effect waves-light btn-small deep-orange accent-3"><i
-                                            class="material-icons left">visibility</i>Voir Tout</a>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <table class="responsive-table highlight">
-                                <thead class="stripped">
-                                    <tr>
-                                        <th>Reference</th>
-                                        <th>Nom Vendeur</th>
-                                        <th>Produit</th>
-                                        <th>Qualite</th>
-                                        <th>Prix D'achat</th>
-                                        <th>Date D'achat</th>
-                                    </tr>
-                                </thead>
-
-
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Jeanette</td>
-                                        <td>SAC A LANGER GRIS</td>
-                                        <td><span class="new badge yellow" data-badge-caption="Excellente"></span></td>
-                                        <td>1,000</td>
-                                        <td>5/21/2021</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>ANtoine</td>
-                                        <td>DOSEUR LAIT OU PUREE</td>
-                                        <td><span class="new badge green" data-badge-caption="Normale"></span> </td>
-                                        <td>123,000</td>
-                                        <td>1/22/2021</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Jules</td>
-                                        <td>JEU ENFANT MIKADO EN BOIS</td>
-                                        <td> <span class="new badge green" data-badge-caption="Normale"></span> </td>
-                                        <td>212,000</td>
-                                        <td>2/11/2021</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Moussa</td>
-                                        <td>VELO DE COURSE SERIOUS</td>
-                                        <td><span class="new badge red" data-badge-caption="Mauvaise"></span></td>
-                                        <td>12,800</td>
-                                        <td>4/09/2021</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="row-table-inner">
-                    <div class="col s12">
-                        <div class="card-panel grey lighten-3">
-                            <div class="card-panel-header__wrapper add_pd">
-                                <div class="black-text">Stock Dépot
-                                </div>
-                                <div class="bbtn">
-                                    <a class="waves-effect waves-light btn-small deep-orange accent-3"><i
-                                            class="material-icons left">visibility</i>Voir Tout</a>
-                                </div>
-                            </div>
-                            <div class="divider"></div>
-                            <table class="responsive-table highlight">
-                                <thead>
-                                    <tr>
-                                        <th>Reference</th>
-                                        <th>Produit</th>
-                                        <th>prix de vente minimum</th>
-                                        <th>Prix de vente final</th>
-                                        <th>Date de vente</th>
-                                        <th>Garantie</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>SAC A LANGER GRIS</td>
-                                        <td>900</td>
-                                        <td>1,000</td>
-                                        <td>5/21/2021</td>
-                                        <td> OUI</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>DOSEUR LAIT OU PUREE</td>
-                                        <td>112,000</td>
-                                        <td>123,000</td>
-                                        <td>1/22/2021</td>
-                                        <td> NON</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>JEU ENFANT MIKADO EN BOIS</td>
-                                        <td>209,000</td>
-                                        <td>212,000</td>
-                                        <td>2/11/2021</td>
-                                        <td> NON</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>VELO DE COURSE SERIOUS</td>
-                                        <td>8,000</td>
-                                        <td>12,800</td>
-                                        <td>4/09/2021</td>
-                                        <td> OUI</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            {% endblock body_content %}
+{% endblock body_content %}
