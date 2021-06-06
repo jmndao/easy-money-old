@@ -19,8 +19,7 @@
     <div class="easy-sidebar">
         <div class="easy-sidebar-brand">
             <h5>
-                <span class="material-icons"> price_change </span
-          ><span>EASY MONEY</span>
+                <span class="material-icons"> price_change </span><span>EASY MONEY</span>
             </h5>
         </div>
         <div class="easy-sidebar-menu">
@@ -59,6 +58,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{% url 'dashboard:depositStockPage' %}">
+                        <span class="material-icons"> price_check </span>
+                        <span>Depots</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{% url 'dashboard:clientRequestPage' %}">
                         <span class="material-icons"> history_edu </span>
                         <span>Demande Client</span>
@@ -78,8 +83,8 @@
         <header>
             <h5 class="valign-wrapper">
                 <label for="nav-toggle">
-            <span class="material-icons">menu</span>
-          </label> Dashboard
+                    <span class="material-icons">menu</span>
+                </label> Dashboard
             </h5>
             <div class="search-wrapper">
                 <span class="material-icons">search</span>
@@ -87,24 +92,23 @@
             </div>
             <div class="miscellaneous">
                 <button class="notifBtn">
-            <span class="new badge">4</span
-            ><span class="material-icons notif">notifications</span>
-          </button>
+                    <span class="new badge">4</span><span class="material-icons notif">notifications</span>
+                </button>
                 <button class="persBtn">
-            <span class="material-icons pers">person</span>
-          </button>
+                    <span class="material-icons pers">person</span>
+                </button>
             </div>
         </header>
 
         <div class="easy-body-wrapper">
             {% block body_content %}
-              <!----- Add your code -->
+            <!----- Add your code -->
             {% endblock body_content %}
         </div>
     </main>
 </body>
-  <script type="text/javascript" src="{% static 'dashboard/js/index.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/script.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/materialize/js/materialize.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/script.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/materialize/js/materialize.js' %}"></script>
 
 </html>
