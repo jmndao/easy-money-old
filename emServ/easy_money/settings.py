@@ -80,22 +80,15 @@ WSGI_APPLICATION = 'easy_money.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbTest',
-        'USER' : 'jmndao',
-        'PASSWORD' : 'Passer123',
-        'PORT': 5432,
-        'HOST' : 'localhost'
-    },
-    'users': {
-        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easy_money',
         'USER' : 'postgres',
         'PASSWORD' : 'postgres',
-        'PORT': 5430,
+        'PORT': 5432,
         'HOST' : 'localhost'
     }
 }
 
+DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
