@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import dj_database_url
 from decouple import config
 from pathlib import Path
 
@@ -77,16 +78,31 @@ WSGI_APPLICATION = 'easy_money.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbTest',
-        'USER' : 'jmndao',
-        'PASSWORD' : 'Passer123',
-        'PORT': 5432,
-        'HOST' : 'localhost'
+# Setting up database
+DB_USER = config('DB_USER')
+DB_NAME = config('DB_NAME')
+DB_PORT = config('DB_PORT', cast=int)
+DB_HOST = config('DB_HOST')
+DB_PWD = config('DB_PASSWORD')
+
+DATABASES = {}
+
+if config('USE_POSTGRES', cast=bool):
+    # If using postgreSQL
+    if config('DEVELOPMENT_MODE', cast=bool):
+        # Deployment on Heroku with PostgreSQL
+        DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    else:
+        # Local deployment with PostgreSQL
+        DATABASES['default'] = dj_database_url.config(default=f'postgres://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+else:
+    # if using a sqlite file locally
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 
 
 # Password validation
