@@ -67,14 +67,16 @@
     </div>
 
 </div>
-<div class="card-panel">
+<div class="row">
+    <div class="card-panel">
 
-    <!---- Adding Chart Depot -->
+        <!---- Adding Chart Depot -->
 
-    <div class="akhad">
-        <canvas id="myChart2" width="400" height="400"></canvas>
+        <div class="akhad">
+            <canvas id="myChart2" width="400" height="400"></canvas>
+        </div>
+
     </div>
-
 </div>
 <!----- Tables: Achat et Depot -->
 <div class="middle-section-easy row">
@@ -82,10 +84,10 @@
     <div class="section-table-easy col s8">
         <!----- Table -->
         <div class="row-table-inner">
-            <div class="col s12">
-                <div class="card-panel grey darken-3">
-                    <div class="card-panel-header__wrapper">
-                        <div class="white-text">Stock Achat</div>
+            <div class="col  s12">
+                <div class="card-panel grey lighten-1">
+                    <div class="colright card-panel-header__wrapper">
+                        <div class="black-text">Stock Achat</div>
                         <div class="bbtn">
                             <a class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class="material-icons left">visibility</i>
@@ -95,14 +97,14 @@
                     </div>
                     <div class="divider"></div>
                     <table class="responsive-table highlight">
-                        <thead class="stripped">
+                        <thead class="">
                             <tr>
                                 <th>Reference</th>
-                                <th>Nom Vendeur</th>
+                                <th>Vendeur</th>
                                 <th>Produit</th>
                                 <th>Qualite</th>
-                                <th>Date D'achat</th>
-                                <th>Prix D'achat</th>
+                                <th>Date</th>
+                                <th>Prix </th>
                             </tr>
                         </thead>
 
@@ -113,8 +115,7 @@
                                 <td>Jeanette</td>
                                 <td>SAC A LANGER GRIS</td>
                                 <td>
-                                    <span class="new badge yellow" data-badge-caption="Excellente">
-                                    </span>
+                                    Bonne
                                 </td>
                                 <td>5/21/2021</td>
                                 <td>1,000</td>
@@ -125,8 +126,7 @@
                                 <td>ANtoine</td>
                                 <td>DOSEUR LAIT OU PUREE</td>
                                 <td>
-                                    <span class="new badge green" data-badge-caption="Normale">
-                                    </span>
+                                    Normale
                                 </td>
                                 <td>1/22/2021</td>
                                 <td>123,000</td>
@@ -140,9 +140,9 @@
         <div class="row-table-inner">
             <!----- Table -->
             <div class="col s12">
-                <div class="card-panel grey darken-3">
-                    <div class="card-panel-header__wrapper">
-                        <div class="white-text">Stock Dépot</div>
+                <div class="card-panel grey lighten-1">
+                    <div class="colright card-panel-header__wrapper">
+                        <div class="black-text">Stock Dépot</div>
                         <div class="bbtn">
                             <a class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class="material-icons left">visibility</i>
@@ -157,9 +157,9 @@
                             <tr>
                                 <th>Reference</th>
                                 <th>Produit</th>
-                                <th>Date de vente</th>
-                                <th>prix de vente minimum</th>
-                                <th>Prix de vente final</th>
+                                <th>Date</th>
+                                <th>prix minimum</th>
+                                <th>Prix final</th>
                                 <th>Garantie</th>
                             </tr>
                         </thead>
@@ -192,7 +192,7 @@
 
     <div class="section-info-easy col s4">
         <!------ Product Trend Section -->
-        <div class="product_trend-section">
+        <div class="product_trend-section mrl">
             <div class="card-panel">
                 <div class="title-section">
                     <span class="title center">Tendance des Produits</span>

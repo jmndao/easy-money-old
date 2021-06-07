@@ -3,10 +3,10 @@ chart_achat.height = 200;
 var myChart_achat = new Chart(chart_achat, {
     type: 'bar',
     data: {
-        labels: ['Janvier', 'Fevrier', 'March', 'Avril', 'Mais', 'Juin'],
+        labels: ['Janvier', 'Fevrier', 'March', 'Avril', 'Mais', 'Juin','juillet','Aout','Septembre','Octobre','Novembre','Decembre'],
         datasets: [{
             label: 'Stock Achat',
-            data: [120000, 212700, 100000, 212000, 312000, 97000],
+            data: [120000, 212700, 100000, 212000, 312000, 97000, 212700,120000 ,97000, 170000, 212000,147000],
             fill: false,
             tension: 0.2,
             borderColor: 
@@ -46,10 +46,10 @@ chart_depot.height = 200;
 var chart_depot = new Chart(chart_depot, {
     type: 'bar',
     data: {
-        labels: ['Janvier', 'Fevrier', 'March', 'Avril', 'Mais', 'Juin'],
+        labels: ['Janvier', 'Fevrier', 'March', 'Avril', 'Mais', 'Juin','juillet','Aout','Septembre','Octobre','Novembre','Decembre'],
         datasets: [{
             label: 'Stock Achat',
-            data: [ 212700,120000 ,97000, 170000, 212000,147000 ],
+            data: [ 212700,120000 ,97000, 170000, 212000,147000, 120000, 212700, 100000, 212000, 312000, 97000, ],
             fill: false,
             tension: 0.2,
             borderColor: 

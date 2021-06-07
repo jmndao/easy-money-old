@@ -265,7 +265,19 @@ label[for="nav-toggle"] {
     padding: 7px 0;
 }
 
-
+.row .col {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    min-height: 1px;
+}
+.mrl{
+    margin-left: 10px;
+}
+.colright{
+    margin-bottom: 10px;
+}
 /*------------ Break Section : end ---------------*/
 
 
