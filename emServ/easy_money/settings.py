@@ -78,6 +78,7 @@ WSGI_APPLICATION = 'easy_money.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+<<<<<<< HEAD
 # Setting up database
 DB_USER = config('DB_USER')
 DB_NAME = config('DB_NAME')
@@ -102,6 +103,24 @@ else:
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
+=======
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dbTest',
+        'USER' : 'jmndao',
+        'PASSWORD' : 'Passer123',
+        'PORT': 5432,
+        'HOST' : 'localhost'
+    },
+    'users': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'easy_money',
+        'USER' : 'postgres',
+        'PASSWORD' : 'postgres',
+        'PORT': 5430,
+        'HOST' : 'localhost'
+>>>>>>> efa039356603ac9b41e3ade83b0535f4c2078580
     }
 
 
