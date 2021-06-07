@@ -1,5 +1,28 @@
+from django.forms import fields
 from django.shortcuts import render
-from django.views.generic import (TemplateView, ListView, DetailView)
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.views.generic.detail import SingleObjectMixin
+from django.contrib import messages
+
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView
+
+from django.views.generic import (  TemplateView, 
+                                    ListView, 
+                                    DetailView,
+                                    FormView
+                                )
+
+from django.views.generic.edit import ( CreateView,
+                                        UpdateView,
+                                        DeleteView
+                                    )
+from dashboard.models import ProductModel
+
+from dashboard.forms import (   ProductDepositInline,
+                                DepositStockInline
+                            )
+
 
 # Create your views here.
 
@@ -45,17 +68,32 @@ def clientRequest(request):
 
 
 
-def depositStock(request):
+class ProductDeposit(TemplateView, CreateWithInlinesView):
     """
         Fonction    : Stock Depot
         Model       : - DepositStockModel
 
         Context     : 
     """
+    template_name = 'dashboard/deposit.html'
 
-    return render(request, "dashboard/deposit.html", {})
 
+class ProductUpdateView(UpdateView):
 
+    model = ProductModel
+    template_name = 'dashboard/product/product_edit.html'
+    fields = '__all__'
+    # Url to redirect after successfully
+    # updating a product
+    success_url = '/'
+
+class ProductDeleteView(DeleteView):
+
+    model = ProductModel
+    template_name = 'dashboard/product/product_delete.html'
+    # Url to redirect after successful
+    # deleting a product
+    success_url = '/'
 
 
 def buyingStock(request):
