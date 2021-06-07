@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import dj_database_url
 from decouple import config
 from pathlib import Path
 
@@ -86,7 +87,6 @@ DATABASES = {
         'PORT': 5432,
         'HOST' : 'localhost'
     }
-}
 
 DATABASE_ROUTERS = ['routers.db_routers.AuthRouter',]
 
