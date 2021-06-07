@@ -71,6 +71,9 @@
     background-color: var(--second-color);
     z-index: 10;
     transition: width 300ms;
+    overflow: scroll;
+    padding-bottom: 30px;
+    box-shadow: inset 0px -10px 0px 0px grey;
 }
 
 .redBackground {
