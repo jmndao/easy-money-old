@@ -17,7 +17,7 @@ var myChart_achat = new Chart(chart_achat, {
     options: {
         title:{
             display:true,
-            text: 'Montant Total Vendu Par Mois ',
+            text: 'Montant Total Recu Par Mois ',
             fontSize:25
         },
         legend:{
@@ -60,7 +60,7 @@ var chart_depot = new Chart(chart_depot, {
     options: {
         title:{
             display:true,
-            text: 'Montant Total Acheter Par Mois ',
+            text: 'Montant Dépensé Par Mois',
             fontSize:25
         },
         legend:{
