@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Adding the dashboard App
     'dashboard',
+    # App for inline Forms
+    'extra_views'
 ]
 
 MIDDLEWARE = [

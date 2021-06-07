@@ -41,6 +41,10 @@ class ProductModel(models.Model):
     chargeurs = models.BooleanField(default=True)
     boite_origine = models.BooleanField(default=False)
 
+    
+    def __str__(self):
+        return '{}:{}'.format(self.nom_du_produit, self.annee)
+
 
 
 # First Model --  Depot
@@ -61,6 +65,10 @@ class DepositStockModel(models.Model):
     qualite = models.CharField(max_length=20, choices=QUALITE)
     date_d_achat = models.DateTimeField(auto_now_add=True )
     prix_d_achat = models.DecimalField(max_digits=20, decimal_places=3, verbose_name="Prix d'achat" )
+
+
+    def __str__(self):
+        return '{}:{}'.format(self.nom_vendeur,self.produit.nom_du_produit)
 
 
 # Second Model -- Achat
@@ -86,6 +94,10 @@ class BuyingStockModel(models.Model):
     garantie = models.BooleanField(default=False)
     delai_garantie = models.IntegerField()
 
+    
+    def __str__(self):
+        return '{}:{}'.format(self.produit.nom_du_produit, self.date_de_vente)
+
 
 
 # Fourth Model -- Clients
@@ -106,6 +118,10 @@ class ClientModel(models.Model):
     nom_du_client = models.CharField(max_length = 100)
     numero = models.CharField(max_length=20)
     address_email = models.EmailField()
+
+
+    def __str__(self):
+        return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
 
 
 
@@ -131,6 +147,10 @@ class ClientRequestModel(models.Model):
     date_demander =  models.DateTimeField(auto_now_add=True)
     produit_demander = models.CharField(max_length = 100)
     produit_trouver = models.BooleanField(default = False)
+
+    
+    def __str__(self):
+        return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client,self.produit_trouver)
 
 
 # Fifth Model -- Notifications
