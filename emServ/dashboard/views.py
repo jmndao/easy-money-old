@@ -1,27 +1,18 @@
-from django.forms import fields
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect
-from django.views.generic.detail import SingleObjectMixin
 from django.contrib import messages
 
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView
+from django.views.generic import (TemplateView,
+                                  ListView,
+                                  DetailView,
+                                  FormView
+                                  )
 
-from django.views.generic import (  TemplateView, 
-                                    ListView, 
-                                    DetailView,
-                                    FormView
-                                )
-
-from django.views.generic.edit import ( CreateView,
-                                        UpdateView,
-                                        DeleteView
-                                    )
+from django.views.generic.edit import (CreateView,
+                                       UpdateView,
+                                       DeleteView
+                                       )
 from dashboard.models import ProductModel
-
-from dashboard.forms import (   ProductDepositInline,
-                                DepositStockInline
-                            )
 
 
 # Create your views here.
@@ -43,7 +34,6 @@ def profile(request):
     return render(request, "dashboard/profile.html", {})
 
 
-
 def client(request):
     """
         Fonction    : Gestion de Client
@@ -53,7 +43,6 @@ def client(request):
     """
 
     return render(request, "dashboard/client.html", {})
-
 
 
 def clientRequest(request):
@@ -67,8 +56,7 @@ def clientRequest(request):
     return render(request, "dashboard/client_request.html", {})
 
 
-
-class ProductDeposit(TemplateView, CreateWithInlinesView):
+class ProductDeposit(TemplateView):
     """
         Fonction    : Stock Depot
         Model       : - DepositStockModel
@@ -86,6 +74,7 @@ class ProductUpdateView(UpdateView):
     # Url to redirect after successfully
     # updating a product
     success_url = '/'
+
 
 class ProductDeleteView(DeleteView):
 
@@ -105,8 +94,6 @@ def buyingStock(request):
     """
 
     return render(request, "dashboard/buying.html", {})
-
-
 
 
 def product(request):
