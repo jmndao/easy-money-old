@@ -8,7 +8,7 @@ app_name = 'dashboard'
 urlpatterns = [
 
     path('', d_views.IndexView.as_view(), name="homePage"),
-    path('client/', d_views.client, name="clientPage"),
+    path('client/', d_views.ClientView.as_view(), name="clientPage"),
     path('demande_client/', d_views.clientRequest, name='clientRequestPage'),
     # Product Routers
     path('product_edit/<int:pk>/', d_views.ProductUpdateView.as_view(), name='productEditPage'),
@@ -21,6 +21,7 @@ urlpatterns = [
     # Profile Router
     path('profile/', d_views.profile, name="profilePage"),
 
-    path('produit/', d_views.product, name="productPage")
+    path('produit/', d_views.product, name="productPage"),
+
     
 ]

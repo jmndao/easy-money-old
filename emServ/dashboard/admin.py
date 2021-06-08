@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import User
 
 # Register your models here.
 from .models import ProductModel
@@ -12,4 +13,5 @@ admin.site.register(DepositStockModel)
 admin.site.register(BuyingStockModel)
 admin.site.register(ClientRequestModel)
 admin.site.register(ClientModel)
+
 

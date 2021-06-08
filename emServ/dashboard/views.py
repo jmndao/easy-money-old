@@ -15,9 +15,10 @@ from django.views.generic import (  TemplateView,
 
 from django.views.generic.edit import ( CreateView,
                                         UpdateView,
-                                        DeleteView
+                                        DeleteView,
+
                                     )
-from dashboard.models import ProductModel
+from dashboard.models import ProductModel,ClientModel
 
 from dashboard.forms import (   ProductDepositInline,
                                 DepositStockInline
@@ -95,6 +96,9 @@ class ProductDeleteView(DeleteView):
     # deleting a product
     success_url = '/'
 
+class ClientView(ListView):
+    model =  ClientModel
+    template_name = 'dashboard/client/client_view.html'
 
 def buyingStock(request):
     """
