@@ -12,7 +12,7 @@ from django.views.generic.edit import (CreateView,
                                        UpdateView,
                                        DeleteView
                                        )
-from dashboard.models import ProductModel
+from dashboard.models import ProductModel,ClientModel
 
 
 # Create your views here.
@@ -75,6 +75,9 @@ class ProductUpdateView(UpdateView):
     # updating a product
     success_url = '/'
 
+class ClientView(ListView):
+    model = ClientModel
+    template_name = 'dashboard/client/client.html'
 
 class ProductDeleteView(DeleteView):
 
