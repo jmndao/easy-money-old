@@ -1,0 +1,76 @@
+{% extends 'dashboard/base.html' %}
+
+{% block body_content %}
+
+    <div class="card-panel">
+        
+        <div class="row">
+            <form class="col s12" method='POST'>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form.nom_du_produit }}
+                        <label for="{{ form.nom_du_produit.id_for_label }}">Nom du produit</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s4">
+                        {{ form.model }}
+                        <label for="{{ form.model.id_for_label }}">Model</label>
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form.edition }}
+                        <label for="{{ form.edition.id_for_label }}">Edition</label>
+                    </div>
+                    <div class="input-field col s4">
+                        {{ form.annee }}
+                        <label for="{{ form.annee.id_for_label }}">Annee</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s3">
+                        {{ form.nombre_de_giga }}
+                        <label for="{{ form.model.id_for_label }}">Giga</label>
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form.nombre_de_ram }}
+                        <label for="{{ form.edition.id_for_label }}">RAM</label>
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form.poids }}
+                        <label for="{{ form.poids.id_for_label }}">Masse</label>
+                    </div>
+                    <div class="input-field col s3">
+                        {{ form.dimensions }}
+                        <label for="{{ form.dimensions.id_for_label }}">Dimensions</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                     <div class="input-field col s6">
+                        <label>
+                            {{ form.chargeurs }}
+                            <span>Chargeur</span>
+                        </label>
+                    </div>
+                     <div class="input-field col s6">
+                        <label>
+                            {{ form.boite_origine }}
+                            <span>Boite d'origine</span>
+                        </label>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <ul>
+        {% for product in products %}
+            <li>{{ product }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock body_content %}
