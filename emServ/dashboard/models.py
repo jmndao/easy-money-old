@@ -28,12 +28,13 @@ class ProductModel(models.Model):
             - poids                 : the weight (masse) of the product
             - chargeur              : if it has a charger or not [ Yes or No ]
             - boite_origine         : It the client has brought its original box.
+            - created_date          : the day and time all of these above information has been added.
 
     """
     nom_du_produit = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     edition = models.CharField(max_length=100)
-    annee = models.DateTimeField()
+    annee = models.DateField()
     nombre_de_giga = models.IntegerField()
     nombre_de_ram = models.IntegerField()
     dimensions = models.DecimalField(
@@ -42,6 +43,7 @@ class ProductModel(models.Model):
         max_digits=8, decimal_places=3, verbose_name="Masse")
     chargeurs = models.BooleanField(default=True)
     boite_origine = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_du_produit, self.annee)
