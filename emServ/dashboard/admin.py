@@ -1,17 +1,19 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
 
 # Register your models here.
-from .models import ProductModel
-from .models import DepositStockModel
-from .models import BuyingStockModel
-from .models import ClientRequestModel
-from .models import ClientModel
+from dashboard.models import (
+    ProductModel,
+    DepositStockModel,
+    BuyingStockModel,
+    ClientModel,
+    ClientRequestModel,
+    Shop
+)
 
 admin.site.register(ProductModel)
 admin.site.register(DepositStockModel)
 admin.site.register(BuyingStockModel)
 admin.site.register(ClientRequestModel)
 admin.site.register(ClientModel)
-
+admin.site.register(Shop)
 

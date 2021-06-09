@@ -1,23 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 
-<<<<<<< HEAD
-from extra_views import CreateWithInlinesView, UpdateWithInlinesView
-
-from django.views.generic import (  TemplateView, 
-                                    ListView, 
-                                    DetailView,
-                                    FormView
-                                )
-
-from django.views.generic.edit import ( CreateView,
-                                        UpdateView,
-                                        DeleteView,
-
-                                    )
-from dashboard.models import ProductModel,ClientModel
-=======
 from django.views.generic import (TemplateView,
                                   ListView,
                                   DetailView,
@@ -25,7 +9,6 @@ from django.views.generic import (TemplateView,
                                   )
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
->>>>>>> akhadtop
 
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
@@ -85,48 +68,24 @@ class ProductDeposit(TemplateView):
     """
     template_name = 'dashboard/deposit.html'
 
-########## Product View: 
-#
-# Setting Logic:
-#-------------------------: * Functions
-#  - ProductView:           Route to product page 
-#                           * Form (to add new product)
-#                           * List (list all products) -> Detail
-#  - ProductUpdateView:     Route to product update page
-#                           * Update a product
-#  - ProductDeleteView:     Route to product delete page
-#                           * Delete a product
-##########################################################
-#
-class ProductView(FormView, ListView):
+
+
+class ProductView(CreateView):
 
     model = ProductModel
-    context_object_name = 'products'
-    form_class = ProductModelForm
     template_name = 'dashboard/product/product.html'
-
-    def get_success_url(self):
-        return reverse('dashboard:productDetailPage', {'pk', self.object.pk})
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:productPage')
 
     def form_valid(self, form):
-        # Here, we would record the user's interest using the message
-        # passed in form.cleaned_data['message']
+        # Future 
+        # form.instance.user = self.request.user
         return super().form_valid(form)
 
-    # def get_queryset(self):
-    #     # This below will take place in the future because
-    #     # each shop has it owner and must only list for his shop
-    #     # self.products = get_object_or_404()
-    #     # self.owner =  ...
-    #     # return Shop.object.filter(owner=self.owner)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = ProductModel.objects.order_by('created_date')
+        return context
 
 
 class ProductUpdateView(UpdateView):
@@ -136,32 +95,7 @@ class ProductUpdateView(UpdateView):
     fields = '__all__'
     # Url to redirect after successfully
     # updating a product
-    success_url = '/'
-
-
-class ClientView(FormView, ListView):
-
-    context_object_name = 'clients'
-    form_class = ClientModelForm
-    template_name = 'dashboard/client/client.html'
-    queryset = ClientModel.objects.all()
-
-
-    def get_success_url(self):
-        return reverse('dashboard:productDetailPage', {'pk', self.object.pk})
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        # Here, we would record the user's interest using the message
-        # passed in form.cleaned_data['message']
-        return super().form_valid(form)
+    success_url = reverse_lazy('dashboard:productPage')
 
 
 class ProductDeleteView(DeleteView):
@@ -170,19 +104,33 @@ class ProductDeleteView(DeleteView):
     template_name = 'dashboard/product/product_delete.html'
     # Url to redirect after successful
     # deleting a product
-    success_url = '/'
+    success_url = reverse_lazy('dashboard:productPage')
 
-class ClientView(ListView):
-    model =  ClientModel
-    template_name = 'dashboard/client/client_view.html'
 
 class ProductDetailView(DetailView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_detail.html'
+    
 
-#
-########## End of Product View
+class ClientView(CreateView):
+
+    template_name = 'dashboard/client/client.html'
+    model = ClientModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:clientPage')
+
+    def form_valid(self, form):
+        # Future
+        # form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Future
+        # context['clients']  = ClientModel.objects.order_by('created_date')
+        context['clients'] = ClientModel.objects.all()
+        return context
 
 
 def buyingStock(request):

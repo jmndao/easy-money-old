@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -28,13 +29,13 @@ class ProductModel(models.Model):
             - poids                 : the weight (masse) of the product
             - chargeur              : if it has a charger or not [ Yes or No ]
             - boite_origine         : It the client has brought its original box.
+            - created_date          : the day and time all of these above information has been added.
 
     """
     nom_du_produit = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     edition = models.CharField(max_length=100)
-    # prix = models.IntegerField()
-    annee = models.DateTimeField()
+    annee = models.DateField()
     nombre_de_giga = models.IntegerField()
     nombre_de_ram = models.IntegerField()
     dimensions = models.DecimalField(
@@ -43,6 +44,7 @@ class ProductModel(models.Model):
         max_digits=8, decimal_places=3, verbose_name="Masse")
     chargeurs = models.BooleanField(default=True)
     boite_origine = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_du_produit, self.annee)
@@ -67,6 +69,8 @@ class DepositStockModel(models.Model):
     date_d_achat = models.DateTimeField(auto_now_add=True)
     prix_d_achat = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
+    # Future
+    # created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
@@ -96,6 +100,8 @@ class BuyingStockModel(models.Model):
         max_digits=8, decimal_places=3, verbose_name="Prix de vente final")
     garantie = models.BooleanField(default=False)
     delai_garantie = models.IntegerField()
+    # Future
+    # created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.produit.nom_du_produit, self.date_de_vente)
@@ -119,6 +125,8 @@ class ClientModel(models.Model):
     nom_du_client = models.CharField(max_length=100)
     numero = models.CharField(max_length=20)
     address_email = models.EmailField()
+    # Future
+    # created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         # return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
@@ -147,10 +155,41 @@ class ClientRequestModel(models.Model):
     date_demander = models.DateTimeField(auto_now_add=True)
     produit_demander = models.CharField(max_length=100)
     produit_trouver = models.BooleanField(default=False)
+    # Future
+    # created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
 
+
+class Shop(models.Model):
+    """
+        Shop has the products, the deposit, the sales, and all about the clients.
+        Therefore, each shop has its own personal record of all of those 
+        above models including the owner himself.
+        It holds:
+            - owner                 : owner of the shop
+            - nom_de_la_boutique    : name of the shop
+            - produits              : the products that it has 
+            - depot                 : the deposit it has made
+            - achat                 : the sales it has made
+            - clients               : the client it has 
+            - requete_client        : the client request
+            - create_date.
+    """
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    nom_de_la_boutique = models.CharField(max_length=100)
+    produits = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    depot = models.ForeignKey(DepositStockModel, on_delete=models.CASCADE)
+    achat = models.ForeignKey(BuyingStockModel, on_delete=models.CASCADE)
+    clients = models.ForeignKey(ClientModel, on_delete=models.CASCADE)
+    requete_client = models.ForeignKey(ClientRequestModel, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str(self):
+
+        return 'Shop/{}:{}'.format(self.nom_de_la_boutique, self.owner.username)
 
 
 

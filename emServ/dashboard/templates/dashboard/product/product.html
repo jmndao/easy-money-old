@@ -2,14 +2,16 @@
 
 {% block body_content %}
 
-<div class="card-panel">
-
-    <div class="row">
-        <form class="col s12" method='POST'>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.nom_du_produit }}
-                    <label for="{{ form.nom_du_produit.id_for_label }}">Nom du produit</label>
+    <div class="card-panel">
+        
+        <div class="row">
+            <form class="col s12" method='POST'>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form.nom_du_produit }}
+                        <label for="{{ form.nom_du_produit.id_for_label }}">Nom du produit</label>
+                    </div>
                 </div>
             </div>
 
