@@ -129,8 +129,7 @@ class ClientModel(models.Model):
     # created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        # return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
-        return '{} {} {} '.format(self.prenom_du_client, self.nom_du_client, self.numero)
+        return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
 
 
 # Third Model -- Client Request Model

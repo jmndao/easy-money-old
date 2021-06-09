@@ -1,0 +1,24 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block body_content %}
+
+    <div class="card-panel">
+    
+         <form method="POST">
+            {% csrf_token %}
+            <label>{{form.username.label}}</label>
+            {{form.username}}
+
+            <label>{{form.password1.label}}</label>
+            {{form.password1}}
+
+            <label>{{form.password2.label}}</label>
+            {{form.password2}}
+            <input style="margin-top:10px ;" class="button" type="submit" value="Register">
+        </form>
+        <p>Already have an account? <a href="{% url 'accounts:loginPage' %}">Login</a></p>
+
+    </div>
+
+{% endblock body_content %}

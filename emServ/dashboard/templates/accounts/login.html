@@ -1,0 +1,17 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block body_content %}
+
+    <div class="card-panel">
+    
+         <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input class="button" type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="{% url 'accounts:registerPage' %}">Register</a></p>
+        
+    </div>
+
+{% endblock body_content %}

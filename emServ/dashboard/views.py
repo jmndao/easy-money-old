@@ -1,74 +1,176 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-
 from django.views.generic import (TemplateView,
                                   ListView,
                                   DetailView,
                                   FormView
                                   )
-from django.views import View
-from django.views.generic.detail import SingleObjectMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
                                        DeleteView
                                        )
-from dashboard.models import ProductModel,ClientModel
+from dashboard.models import (  ProductModel, 
+                                ClientModel,
+                                ClientRequestModel,
+                                DepositStockModel,
+                                BuyingStockModel,
+                                Shop
+                            )
 
 # Create your views here.
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
 
     template_name = 'dashboard/index.html'
 
 
-def profile(request):
-    """
-        Fonction    : Profile Utilisateur
-        Model       : - User
-                      - Profile
-        Context     : 
-    """
+class ProfileView(LoginRequiredMixin, TemplateView):
 
-    return render(request, "dashboard/profile.html", {})
+    template_name = 'dashboard/profile.html'
 
 
-def client(request):
-    """
-        Fonction    : Gestion de Client
-        Model       : - ClientModel
+class ClientRequestView(LoginRequiredMixin, CreateView):
 
-        Context     : 
-    """
+    template_name = 'dashboard/client_request/client_request.html'
+    model = ClientRequestModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:clientRequestPage')
+    
 
-    return render(request, "dashboard/client.html", {})
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-
-def clientRequest(request):
-    """
-        Fonction    : Demande Client
-        Model       : - ClientRequestModel
-                      - ClientModel  
-        Context     : 
-    """
-
-    return render(request, "dashboard/client_request.html", {})
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            # Future
+            # context['client_requests'] = ClientRequestModel.objects.order_by('created_date')
+            context["client_requests"] = ClientRequestModel.objects.all()
+            return context
 
 
-class ProductDeposit(TemplateView):
-    """
-        Fonction    : Stock Depot
-        Model       : - DepositStockModel
+class ClientRequestUpdateView(LoginRequiredMixin, UpdateView):
 
-        Context     : 
-    """
-    template_name = 'dashboard/deposit.html'
+    template_name = 'dashboard/client_request/client_request_edit.html'
+    model = ClientRequestModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:clientRequestPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class ClientRequestDetailView(LoginRequiredMixin, DetailView):
+
+    template_name = 'dashboard/client_request/client_request_detail.html'
+    model = ClientRequestModel
 
 
 
-class ProductView(CreateView):
+class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
+
+    template_name = 'dashboard/client_request/client_request_delete.html'
+    model = ClientRequestModel
+    success_url = reverse_lazy('dashboard:clientRequestPage')
+
+
+class DepositStockView(LoginRequiredMixin, CreateView):
+
+    template_name = 'dashboard/deposit_stock/deposit_stock.html'
+    model = DepositStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:depositStockPage')
+    
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            # Future
+            # context['deposit_stocks'] = DepositStockModel.objects.order_by('created_date')
+            context["deposit_stocks"] = DepositStockModel.objects.all()
+            return context
+
+
+class DepositStockUpdateView(LoginRequiredMixin, UpdateView):
+
+    template_name = 'dashboard/deposit_stock/deposit_stock_edit.html'
+    model = DepositStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:depositStockPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class DepositStockDetailView(LoginRequiredMixin, DetailView):
+
+    template_name = 'dashboard/deposit_stock/deposit_stock_detail.html'
+    model = DepositStockModel
+
+
+
+class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
+
+    template_name = 'dashboard/deposit_stock/deposit_stock_delete.html'
+    model = DepositStockModel
+    success_url = reverse_lazy('dashboard:depositStockPage')
+
+
+class BuyingStockView(LoginRequiredMixin, CreateView):
+
+    template_name = 'dashboard/buying_stock/buying_stock.html'
+    model = BuyingStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:buyingStockPage')
+    
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            # Future
+            # context['buying_stocks'] = BuyingStockModel.objects.order_by('created_date')
+            context["buying_stocks"] = BuyingStockModel.objects.all()
+            return context
+
+
+class BuyingStockUpdateView(LoginRequiredMixin, UpdateView):
+
+    template_name = 'dashboard/buying_stock/buying_stock_edit.html'
+    model = BuyingStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:buyingStockPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+class BuyingStockDetailView(LoginRequiredMixin, DetailView):
+
+    template_name = 'dashboard/buying_stock/buying_stock_detail.html'
+    model = BuyingStockModel
+
+
+
+class BuyingStockDeleteView(LoginRequiredMixin, DeleteView):
+
+    template_name = 'dashboard/buying_stock/buying_stock_delete.html'
+    model = BuyingStockModel
+    success_url = reverse_lazy('dashboard:buyingStockPage')
+
+
+class ProductView(LoginRequiredMixin, CreateView):
 
     model = ProductModel
     template_name = 'dashboard/product/product.html'
@@ -77,7 +179,7 @@ class ProductView(CreateView):
 
     def form_valid(self, form):
         # Future 
-        # form.instance.user = self.request.user
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -87,7 +189,7 @@ class ProductView(CreateView):
         return context
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_edit.html'
@@ -96,8 +198,12 @@ class ProductUpdateView(UpdateView):
     # updating a product
     success_url = reverse_lazy('dashboard:productPage')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-class ProductDeleteView(DeleteView):
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_delete.html'
@@ -106,13 +212,13 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy('dashboard:productPage')
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_detail.html'
     
 
-class ClientView(CreateView):
+class ClientView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/client/client.html'
     model = ClientModel
@@ -120,8 +226,7 @@ class ClientView(CreateView):
     success_url = reverse_lazy('dashboard:clientPage')
 
     def form_valid(self, form):
-        # Future
-        # form.instance.user = self.request.user
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -132,33 +237,29 @@ class ClientView(CreateView):
         context['title'] = 'Espace Client'
         return context
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
 
     template_name = 'dashboard/client/client_edit.html'
     fields = '__all__'
     model = ClientModel
     success_url = reverse_lazy('dashboard:clientPage')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-class ClientDeleteView(DeleteView):
+
+class ClientDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'dashboard/client/client_delete.html'
     model = ClientModel
     success_url = reverse_lazy('dashboard:clientPage')
 
 
-class ClientDetailView(DetailView):
+
+class ClientDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
 
-def buyingStock(request):
-    """
-        Fonction    : Stock Achat
-        Model       : - BuyingStockModel
-
-        Context     : 
-    """
-
-    return render(request, "dashboard/buying.html", {})
 
