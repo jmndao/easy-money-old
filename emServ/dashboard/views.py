@@ -15,8 +15,6 @@ from django.views.generic.edit import (CreateView,
                                        DeleteView
                                        )
 from dashboard.models import ProductModel,ClientModel
-from dashboard.forms import ProductModelForm,ClientModelForm
-
 
 # Create your views here.
 
@@ -85,6 +83,7 @@ class ProductView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['products'] = ProductModel.objects.order_by('created_date')
+        context['title'] = 'Espace Produit'
         return context
 
 
@@ -130,8 +129,28 @@ class ClientView(CreateView):
         # Future
         # context['clients']  = ClientModel.objects.order_by('created_date')
         context['clients'] = ClientModel.objects.all()
+        context['title'] = 'Espace Client'
         return context
 
+class ClientUpdateView(UpdateView):
+
+    template_name = 'dashboard/client/client_edit.html'
+    fields = '__all__'
+    model = ClientModel
+    success_url = reverse_lazy('dashboard:clientPage')
+
+
+class ClientDeleteView(DeleteView):
+
+    template_name = 'dashboard/client/client_delete.html'
+    model = ClientModel
+    success_url = reverse_lazy('dashboard:clientPage')
+
+
+class ClientDetailView(DetailView):
+
+    template_name = 'dashboard/client/client_detail.html'
+    model = ClientModel
 
 def buyingStock(request):
     """

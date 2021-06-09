@@ -87,14 +87,19 @@
         </div>
         <div class="divider"></div>
         <table>
-            <thead>
+            <tbody>
                 {% for product in products %}
                 <tr>
                     <th> {{ product.nom_du_produit }}</th>
                     <th>{{ product.model }}</th>
+                    <th>
+                        <a href="{% url 'dashboard:productDetailPage' product.pk %}"><i class="material-icons right">see_more</i></a>
+                        <a href="{% url 'dashboard:productEditPage' product.pk %}"><i class="material-icons right">update</i></a>
+                        <a href="{% url 'dashboard:productDeletePage' product.pk %}"><i class="material-icons right">delete</i></a>
+                    </th>
                 </tr>
                 {% endfor %}
-            </thead>
+            </tbody>
         </table>
     </div>
 </div>

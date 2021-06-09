@@ -9,9 +9,9 @@ urlpatterns = [
     path('', d_views.IndexView.as_view(), name="homePage"),
     # Client Routers
     path('client/', d_views.ClientView.as_view(), name="clientPage"),
-    # path('client_edit/<int:pk>/', d_views.ClientUpdateView.as_view(), name='clientEditPage'),
-    # path('client_delete/<int:pk>/', d_views.ClientDeleteView.as_view(), name='clientDeletePage'),
-    # path('client_detail/<int:pk>/', d_views.ClientDetailView.as_view(), name='clientDetailPage'),
+    path('client_edit/<int:pk>/', d_views.ClientUpdateView.as_view(), name='clientEditPage'),
+    path('client_delete/<int:pk>/', d_views.ClientDeleteView.as_view(), name='clientDeletePage'),
+    path('client_detail/<int:pk>/', d_views.ClientDetailView.as_view(), name='clientDetailPage'),
     #
     path('demande_client/', d_views.clientRequest, name='clientRequestPage'),
     #

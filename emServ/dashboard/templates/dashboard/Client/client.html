@@ -14,6 +14,7 @@
             </div>
         </div>
         <form class="col s8" method='POST'>
+            {% csrf_token %}
             <div class="row">
                 <div class="input-field col s6">
                     {{ form.prenom_du_client }}
@@ -90,6 +91,11 @@
                     <th>{{ client.nom_du_client }}</th>
                     <th>{{ client.numero }}</th>
                     <th>{{ client.address_email }}</th>
+                    <th>
+                        <a href="{% url 'dashboard:clientDetailPage' client.pk %}"><i class="material-icons right">see_more</i></a>
+                        <a href="{% url 'dashboard:clientEditPage' client.pk %}"><i class="material-icons right">update</i></a>
+                        <a href="{% url 'dashboard:clientDeletePage' client.pk %}"><i class="material-icons right">delete</i></a>
+                    </th>
                 </tr>
                 {% endfor %}
             </thead>
