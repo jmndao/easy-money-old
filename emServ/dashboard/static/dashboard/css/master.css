@@ -298,6 +298,13 @@ label[for="nav-toggle"] {
 .righty{
     margin-left: 10px;
 }
+.big-text{
+
+    font-size: 20px!important;
+}
+.big2{
+    font-size: 25px!important;
+}
 /*------------ Break Section : end ---------------*/
 
 

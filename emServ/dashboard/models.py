@@ -33,6 +33,7 @@ class ProductModel(models.Model):
     nom_du_produit = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     edition = models.CharField(max_length=100)
+    # prix = models.IntegerField()
     annee = models.DateTimeField()
     nombre_de_giga = models.IntegerField()
     nombre_de_ram = models.IntegerField()
@@ -120,7 +121,8 @@ class ClientModel(models.Model):
     address_email = models.EmailField()
 
     def __str__(self):
-        return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
+        # return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
+        return '{} {} {} '.format(self.prenom_du_client, self.nom_du_client, self.numero)
 
 
 # Third Model -- Client Request Model
@@ -148,6 +150,8 @@ class ClientRequestModel(models.Model):
 
     def __str__(self):
         return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
+
+
 
 
 # Fifth Model -- Notifications
