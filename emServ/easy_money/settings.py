@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Adding the dashboard App
     'dashboard',
-    # App for inline Forms
-    'extra_views'
 ]
 
 MIDDLEWARE = [
@@ -149,4 +147,9 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# Redirect url
+REDIRECT_URL_LOGIN = 'dashboard:homePage'
+REDIRECT_URL = 'dashboard:homePage'
 

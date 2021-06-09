@@ -33,18 +33,19 @@ class ProductModel(models.Model):
     nom_du_produit = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
     edition = models.CharField(max_length=100)
+    # prix = models.IntegerField()
     annee = models.DateTimeField()
     nombre_de_giga = models.IntegerField()
     nombre_de_ram = models.IntegerField()
-    dimensions = models.DecimalField(max_digits=8, decimal_places=3, verbose_name = "Dimensions")
-    poids = models.DecimalField(max_digits=8, decimal_places = 3, verbose_name = "Masse")
+    dimensions = models.DecimalField(
+        max_digits=8, decimal_places=3, verbose_name="Dimensions")
+    poids = models.DecimalField(
+        max_digits=8, decimal_places=3, verbose_name="Masse")
     chargeurs = models.BooleanField(default=True)
     boite_origine = models.BooleanField(default=False)
 
-    
     def __str__(self):
         return '{}:{}'.format(self.nom_du_produit, self.annee)
-
 
 
 # First Model --  Depot
@@ -63,12 +64,12 @@ class DepositStockModel(models.Model):
     nom_vendeur = models.CharField(max_length=100, blank=True, null=True)
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     qualite = models.CharField(max_length=20, choices=QUALITE)
-    date_d_achat = models.DateTimeField(auto_now_add=True )
-    prix_d_achat = models.DecimalField(max_digits=20, decimal_places=3, verbose_name="Prix d'achat" )
-
+    date_d_achat = models.DateTimeField(auto_now_add=True)
+    prix_d_achat = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
 
     def __str__(self):
-        return '{}:{}'.format(self.nom_vendeur,self.produit.nom_du_produit)
+        return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
 
 
 # Second Model -- Achat
@@ -88,16 +89,16 @@ class BuyingStockModel(models.Model):
     """
 
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    date_de_vente = models.DateTimeField(auto_now_add=True) 
-    prix_de_vente_min = models.DecimalField(max_digits=8, decimal_places=3, verbose_name="Prix de vente minimum")
-    prix_de_vente_fin = models.DecimalField(max_digits=8, decimal_places=3, verbose_name="Prix de vente final")
+    date_de_vente = models.DateTimeField(auto_now_add=True)
+    prix_de_vente_min = models.DecimalField(
+        max_digits=8, decimal_places=3, verbose_name="Prix de vente minimum")
+    prix_de_vente_fin = models.DecimalField(
+        max_digits=8, decimal_places=3, verbose_name="Prix de vente final")
     garantie = models.BooleanField(default=False)
     delai_garantie = models.IntegerField()
 
-    
     def __str__(self):
         return '{}:{}'.format(self.produit.nom_du_produit, self.date_de_vente)
-
 
 
 # Fourth Model -- Clients
@@ -114,15 +115,14 @@ class ClientModel(models.Model):
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
-    prenom_du_client = models.CharField(max_length = 100)
-    nom_du_client = models.CharField(max_length = 100)
+    prenom_du_client = models.CharField(max_length=100)
+    nom_du_client = models.CharField(max_length=100)
     numero = models.CharField(max_length=20)
     address_email = models.EmailField()
 
-
     def __str__(self):
-        return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
-
+        # return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
+        return '{} {} {} '.format(self.prenom_du_client, self.nom_du_client, self.numero)
 
 
 # Third Model -- Client Request Model
@@ -144,14 +144,14 @@ class ClientRequestModel(models.Model):
     # prenom_du_client = models.CharField(max_length = 100)
     # nom_du_client = models.CharField(max_length = 100)
     client = models.ForeignKey(ClientModel, on_delete=models.CASCADE)
-    date_demander =  models.DateTimeField(auto_now_add=True)
-    produit_demander = models.CharField(max_length = 100)
-    produit_trouver = models.BooleanField(default = False)
+    date_demander = models.DateTimeField(auto_now_add=True)
+    produit_demander = models.CharField(max_length=100)
+    produit_trouver = models.BooleanField(default=False)
 
-    
     def __str__(self):
-        return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client,self.produit_trouver)
+        return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
+
+
 
 
 # Fifth Model -- Notifications
-

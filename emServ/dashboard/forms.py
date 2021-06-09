@@ -1,29 +1,14 @@
-from extra_views import InlineFormSetFactory
-from django.forms import fields, forms
-from django.forms.models import inlineformset_factory
-
-from .models import (   ProductModel, 
-                        DepositStockModel,
-                        BuyingStockModel,
-                        ClientModel,
-                        ClientRequestModel
-)
-
-# ProductDepositFormset = inlineformset_factory(
-#                                                 ProductModel, 
-#                                                 DepositStockModel, 
-#                                                 fields='__all__',
-#                                                 max_num=1,
-#                                                 can_delete=True
-#                                             )
-
-class ProductDepositInline(InlineFormSetFactory):
-
-    model = ProductModel
-    fields = '__all__'
+from django import forms
+from dashboard.models import ProductModel,ClientModel
 
 
-class DepositStockInline(InlineFormSetFactory):
 
-    model = DepositStockModel
-    fields = '__all__'
+class ProductModelForm(forms.ModelForm):
+    class Meta:
+        model = ProductModel
+        fields = '__all__'
+
+class ClientModelForm(forms.ModelForm):
+    class Meta:
+        model = ClientModel
+        fields = '__all__'
