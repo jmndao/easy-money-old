@@ -175,6 +175,10 @@ class ProductView(LoginRequiredMixin, CreateView):
     model = ProductModel
     template_name = 'dashboard/product/product.html'
     fields = '__all__'
+    
+    ################################################################
+
+    ################################################################
     success_url = reverse_lazy('dashboard:productPage')
 
     def form_valid(self, form):
@@ -228,6 +232,13 @@ class ClientView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    def added_item(request):
+        if request.method == 'POST':
+            form = ClientView(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Added')
+                return redirect('dashboard/client/client.html')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -261,5 +272,4 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
-
 

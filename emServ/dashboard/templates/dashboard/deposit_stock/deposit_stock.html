@@ -2,6 +2,185 @@
 {% load static %}
 
 {% block body_content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital@1&display=swap');
 
+    #depot-title {
+        font-family: 'Vollcon', 'serif';
+        font-size: 20px;
+    }
+
+    .number {
+        font-family: 'Vollcon', 'serif';
+        font-size: 26px;
+        text-align: center;
+    }
+
+    .depot-center {
+        text-align: center;
+    }
+</style>
+<div class="row">
+    <div class="col s4">
+        <div class="card grey lighten-4 ">
+            <div class="card-content ">
+                <div class="for-title row">
+                    <span class="card-title col s10 teal-text lighten-2-text" id="depot-title">produits
+                        totaux</span>
+                    <i class="material-icons col s2 teal-text lighten-2-text">album</i>
+                </div>
+                <p class='number'>
+                    <!-- deep-orange-text accent-3-text -->
+                    10,746
+                </p>
+            </div>
+            <div class="card-panel grey darken-3 valign-wrapper">
+                <p id="depot-title" class=" col s10 teal-text lighten-2-text">produits reçus</p>
+                <p id="depot-title" class=" col s2 teal-text lighten-2-text">053</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="col s4">
+        <div class="card grey lighten-4 ">
+            <div class="card-content ">
+                <div class="for-title row">
+                    <span class="card-title col s10 teal-text lighten-2-text" id="depot-title">prix
+                        totaux</span>
+                    <i class="material-icons col s2 teal-text lighten-2-text">monetization_on</i>
+                </div>
+                <p class='number'>
+                    <!-- deep-orange-text accent-3-text -->
+                    873.000,000
+                </p>
+            </div>
+            <div class="card-panel grey darken-3 valign-wrapper">
+                <p id="depot-title" class=" col s7 teal-text lighten-2-text">prix du jour</p>
+                <p id="depot-title" class=" col s5 teal-text lighten-2-text">275.000,000</p>
+
+            </div>
+        </div>
+    </div>
+    <div class="col s4">
+        <div class="card grey lighten-4 ">
+            <div class="card-content ">
+                <div class="for-title row">
+                    <span class="card-title col s10 teal-text lighten-2-text" id="depot-title">produits
+                        totaux</span>
+                    <i class="material-icons col s2 teal-text lighten-2-text">album</i>
+                </div>
+                <p class='number'>
+                    <!-- deep-orange-text accent-3-text -->
+                    10,746
+                </p>
+            </div>
+            <div class="card-panel grey darken-3 valign-wrapper">
+                <p id="depot-title" class=" col s10 teal-text lighten-2-text">produits du jour</p>
+                <p id="depot-title" class=" col s2 teal-text lighten-2-text">053</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- I'll add a graph in here -->
+
+<!-- End graph -->
+<!-- You can change this code from here -->
+<div class="row">
+    <div class="col s12">
+        <div class="card grey lighten-4 ">
+            <div class="card-content grey darken-3">
+                <span class="card-title teal-text lighten-2-text" id="depot-title">
+                    Dernier produits deposés
+                </span>
+            </div>
+            <div class="card-content">
+                <form action="#" class="depot-table col s2">
+                    <p>
+                        <label>
+                            <input id="depot-title" type="checkbox" />
+                            <span></span>
+                        </label>
+                    </p>
+                </form>
+                <div class="element valign-wrapper teal-text lighten-2-text">
+                    <div class='depot-table col s2'>
+                        <p id="depot-title">produits</p>
+                    </div>
+                    <div id="depot-title" class='depot-table col s2 teal-text lighten-2-text'>
+                        <p>prix</p>
+                    </div>
+                    <div id="depot-title" class='depot-table col s2 teal-text lighten-2-text'>
+                        <p>quantités</p>
+                    </div>
+                    <div id="depot-title" class='depot-table col s4 teal-text lighten-2-text'>
+                        <p>manage</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <form action="#" class="depot-table col s2">
+                    <p>
+                        <label>
+                            <input id="depot-title" type="checkbox" />
+                            <span></span>
+                        </label>
+                    </p>
+                </form>
+                <div id="depot-title" class='depot-table col s2 depot-center'>
+                    <p>Mac Book</p>
+                </div>
+                <div id="depot-title" class='depot-table col s2 depot-center'>
+                    <p>750,000</p>
+                </div>
+                <div id="depot-title" class='depot-table col s2 depot-center'>
+                    <p>07</p>
+                </div>
+                <div class="col s4 depot-center">
+                    <div class="row">
+                        <div class="col s6 .right-align">
+                            <i class="material-icons">edit</i>
+                        </div>
+                        <div class="col s6 .left-align">
+                            <i class="material-icons">delete</i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card">
+                <form action="#" class="depot-table col s2">
+                    <p>
+                        <label>
+                            <input id="depot-title" type="checkbox" />
+                            <span></span>
+                        </label>
+                    </p>
+                </form>
+                <div id="depot-title" class='depot-table col s2 depot-center'>
+                    <p>Samsung Galaxy S5</p>
+                </div>
+                <div id="depot-title" class='depot-table col s2 depot-center'>
+                    <p>150,000</p>
+                </div>
+                <div id="depot-title" class='depot-table col s2 depot-center'>
+                    <p>03</p>
+                </div>
+                <div class="col s4 depot-center">
+                    <div class="row">
+                        <div class="col s6 .right-align">
+                            <i class="material-icons">edit</i>
+                        </div>
+                        <div class="col s6 .left-align">
+                            <i class="material-icons">delete</i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- To here -->
 
 {% endblock body_content %}

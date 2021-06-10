@@ -5,7 +5,6 @@
     --white-color: #fff;
     --sidenav-width: 290px;
 }
-
 * {
     padding: 0;
     margin: 0;
@@ -305,6 +304,15 @@ label[for="nav-toggle"] {
 .big2{
     font-size: 25px!important;
 }
+
+/* ----------- Deposit Stylings Start------------------*/
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital@1&display=swap');
+#depot-title{
+    font-family: 'Vollcon', 'serif'!important;
+    font-size:10px;
+}
+/* ----------- Deposit Stylings End------------------*/
+
 /*------------ Break Section : end ---------------*/
 
 

@@ -2,7 +2,19 @@
 
 {% block body_content %}
 
+
 <head></head>
+<!--  -->
+<div class="card_panel">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages%}
+        <li {% if message.tags %} class="{{ message.tags}}" {% endif %}> {{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<!--  -->
 <div class="card-panel">
 
     <div class="row">
@@ -92,9 +104,12 @@
                     <th>{{ client.numero }}</th>
                     <th>{{ client.address_email }}</th>
                     <th>
-                        <a href="{% url 'dashboard:clientDetailPage' client.pk %}"><i class="material-icons right">see_more</i></a>
-                        <a href="{% url 'dashboard:clientEditPage' client.pk %}"><i class="material-icons right">update</i></a>
-                        <a href="{% url 'dashboard:clientDeletePage' client.pk %}"><i class="material-icons right">delete</i></a>
+                        <a href="{% url 'dashboard:clientDetailPage' client.pk %}"><i
+                                class="material-icons right">see_more</i></a>
+                        <a href="{% url 'dashboard:clientEditPage' client.pk %}"><i
+                                class="material-icons right">edit</i></a>
+                        <a href="{% url 'dashboard:clientDeletePage' client.pk %}"><i
+                                class="material-icons right">delete</i></a>
                     </th>
                 </tr>
                 {% endfor %}

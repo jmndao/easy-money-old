@@ -1,7 +1,15 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.contrib.messages import constants as messages
+from django.contrib import messages
 
+
+
+MESSAGES_TAGS = {
+    messages.INFO: 'info',
+    50: 'critical',
+}
 # Create your models here.
 
 QUALITE = [
@@ -46,7 +54,11 @@ class ProductModel(models.Model):
     boite_origine = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+
+
+
+
+    def __str__ (self):
         return '{}:{}'.format(self.nom_du_produit, self.annee)
 
 
