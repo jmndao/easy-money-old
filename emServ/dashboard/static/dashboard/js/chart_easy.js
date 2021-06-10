@@ -87,7 +87,7 @@ var chart_depot = new Chart(chart_depot, {
 
 // The Stock Depot Chart
 var chart_stock_depot =  document.getElementById('chart-depot');
-chart_stock_depot.height = 100;
+chart_stock_depot.height = 200;
 var mychart_stock_depot = new Chart(chart_stock_depot, {
     type: 'bar',
     data: {
