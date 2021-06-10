@@ -18,9 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+import notifications.urls 
+
 urlpatterns = [
     path('', include('dashboard.urls')),
     path('accounts/', include('accounts.urls')),
+    path('notifications/', include(notifications.urls, namespace='notifications')),
+    path('message/', include('message.urls')),
     path('admin/', admin.site.urls),
 ]
 

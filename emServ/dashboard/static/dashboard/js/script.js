@@ -15,3 +15,11 @@ M.Autocomplete.init(req_autocomplete, {
         "Anta Lo": null
     },
 });
+
+// Setting up the Dropdown
+
+const dropdown = document.querySelectorAll('.dropdown-trigger');
+M.Dropdown.init(dropdown, {
+    alignment: 'bottom',
+    hover: true
+});

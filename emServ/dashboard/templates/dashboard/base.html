@@ -1,4 +1,5 @@
 {% load static %}
+{% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +15,7 @@
     <!-- Specific Page CSS goes here...  -->
     {% block stylesheets %}{% endblock stylesheets %}
     <title>
-        {% block title %}{% endblock %} | Easy Money
+        {% block title %}{% endblock title %} | Easy Money
     </title>
 </head>
 
@@ -24,7 +25,7 @@
     {% include 'includes/sidenav.html' %}
 
     <main class="easy-main-content">
-
+        
         {% include 'includes/navbar.html' %}
 
         <div class="easy-body-wrapper">

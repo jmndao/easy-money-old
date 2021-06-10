@@ -190,6 +190,18 @@ class Shop(models.Model):
 
         return 'Shop/{}:{}'.format(self.nom_de_la_boutique, self.owner.username)
 
+# class NotificationModel(models.Model):
 
+#     NOTIFICATION_TYPES = [
+#         (1, 'Message'),
+#         (2, 'Deletion')
+#     ]
 
-# Fifth Model -- Notifications
+#     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_sender')
+#     to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_to')
+#     message = models.TextField()
+#     notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
+#     overview = models.CharField(max_length=90, blank=True, null=True)
+
+#     def __str__(self):
+#         return '[{}|{}]->{}'.format(self.sender, self.to, self.overview)

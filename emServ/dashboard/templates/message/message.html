@@ -1,0 +1,22 @@
+{% extends 'dashboard/base.html' %}
+
+{% block body_content %}
+
+    <div class="card-panel">
+        <form action="{% url 'message:messagePage' %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn-large waves-purple purple darken-3" type="submit">
+                Envoyer
+                <span class="material-icons">send</span>
+            </button>
+        </form>
+    </div>
+
+    <ul class="collection">
+        {% for msg in msgs %}
+            <li>{{ msg }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock body_content %}

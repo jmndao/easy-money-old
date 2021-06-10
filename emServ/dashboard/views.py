@@ -261,5 +261,3 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
-
-
