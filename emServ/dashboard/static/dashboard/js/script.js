@@ -20,6 +20,12 @@ M.Autocomplete.init(req_autocomplete, {
 
 const dropdown = document.querySelectorAll('.dropdown-trigger');
 M.Dropdown.init(dropdown, {
-    alignment: 'bottom',
-    hover: true
+    coverTrigger: false,
+    inDuration: 300,
+    alignment: 'right',
+    outDuration: 250,
+    hover: false,
+    constrainWidth: false,
+    gutter: 0, // Spacing from edge
+    belowOrigin: true, // Displays dropdown
 });

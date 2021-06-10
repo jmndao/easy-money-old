@@ -17,29 +17,27 @@
             <input type="search" name="search" id="search" placeholder="Search here..." />
         </div>
         <div class="miscellaneous">
-            <a class="btn-large waves-effect waves-light orange accent-3" href="{% url 'message:messagePage' %}">
+            <a class="waves-effect waves-light" href="{% url 'message:messagePage' %}">
                 {% notifications_unread as unread_count %}
                 {% if unread_count %}
-                    <span class="new badge">{{ unread_count }}</span>
+                    <span class="new badge left">{{ unread_count }}</span>
                 {% endif %}
                 <span class="material-icons">notifications</span>
             </a>
-            <a class="btn-large waves-effect waves-light blue accent-3 dropdown-trigger" data-target="dropdown_notif">
+            <a class="waves-effect waves-light dropdown-trigger" data-target="dropdown_notif">
                 <span class="material-icons pers">person</span>
             </a>
             <ul id='dropdown_notif' class=' collection dropdown-content'>
                 <li class="collection-item">
-                    <div>Mon Profile
-                        <a href="{% url 'dashboard:profilePage' %}" class="secondary-content">
-                            <i class="material-icons">profile</i>
-                        </a>
-                    </div>
+                    <a href="{% url 'dashboard:profilePage' %}">
+                        Mon Profile
+                        <i class="material-icons secondary-content right">settings</i>
+                    </a>
                 </li>
-                <li class="divider"></li>
                 <li class="collection-item">
-                    <div>Se Deconnecter
-                        <a href="{% url 'accounts:logoutPage' %}" class="secondary-content">
-                            <i class="material-icons">logout</i>
+                        <a href="{% url 'accounts:logoutPage' %}">
+                            Se Deconnecter
+                            <i class="material-icons secondary-content right">logout</i>
                         </a>
                     </div>
                 </li>
