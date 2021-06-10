@@ -25,9 +25,9 @@
         <div class="card grey lighten-4 ">
             <div class="card-content ">
                 <div class="for-title row">
-                    <span class="card-title col s10 teal-text lighten-2-text" id="depot-title">produits
+                    <span class="card-title col s9 teal-text lighten-2-text " id="depot-title">produits
                         totaux</span>
-                    <i class="material-icons col s2 teal-text lighten-2-text">album</i>
+                    <i class="material-icons col s3 teal-text lighten-2-text medium">album</i>
                 </div>
                 <p class='number'>
                     <!-- deep-orange-text accent-3-text -->
@@ -35,8 +35,8 @@
                 </p>
             </div>
             <div class="card-panel grey darken-3 valign-wrapper">
-                <p id="depot-title" class=" col s10 teal-text lighten-2-text">produits reçus</p>
-                <p id="depot-title" class=" col s2 teal-text lighten-2-text">053</p>
+                <p id="depot-title" class=" col s9 teal-text lighten-2-text medium">produits reçus</p>
+                <p id="depot-title" class=" col s3 teal-text lighten-2-text">053</p>
 
             </div>
         </div>
@@ -45,9 +45,9 @@
         <div class="card grey lighten-4 ">
             <div class="card-content ">
                 <div class="for-title row">
-                    <span class="card-title col s10 teal-text lighten-2-text" id="depot-title">prix
+                    <span class="card-title col s9 teal-text lighten-2-text" id="depot-title">prix
                         totaux</span>
-                    <i class="material-icons col s2 teal-text lighten-2-text">monetization_on</i>
+                    <i class="material-icons col s3 teal-text lighten-2-text medium">monetization_on</i>
                 </div>
                 <p class='number'>
                     <!-- deep-orange-text accent-3-text -->
@@ -61,28 +61,21 @@
             </div>
         </div>
     </div>
-    <div class="col s4">
-        <div class="card grey lighten-4 ">
-            <div class="card-content ">
-                <div class="for-title row">
-                    <span class="card-title col s10 teal-text lighten-2-text" id="depot-title">produits
-                        totaux</span>
-                    <i class="material-icons col s2 teal-text lighten-2-text">album</i>
-                </div>
-                <p class='number'>
-                    <!-- deep-orange-text accent-3-text -->
-                    10,746
-                </p>
-            </div>
-            <div class="card-panel grey darken-3 valign-wrapper">
-                <p id="depot-title" class=" col s10 teal-text lighten-2-text">produits du jour</p>
-                <p id="depot-title" class=" col s2 teal-text lighten-2-text">053</p>
 
-            </div>
-        </div>
-    </div>
 </div>
 <!-- I'll add a graph in here -->
+<div class="row">
+    <div class="col s9">
+        <div id="myChart"></div>
+        <div id="myChart2"></div>
+        <!---- Adding Chart Achat -->
+
+        <div class="akhad">
+            <canvas id="chart-depot" width="400" height="100"></canvas>
+        </div>
+
+    </div>
+</div>
 
 <!-- End graph -->
 <!-- You can change this code from here -->
@@ -182,5 +175,7 @@
     </div>
 </div>
 <!-- To here -->
+
+
 
 {% endblock body_content %}

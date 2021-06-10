@@ -81,8 +81,7 @@ class DepositStockModel(models.Model):
     date_d_achat = models.DateTimeField(auto_now_add=True)
     prix_d_achat = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-    # Future
-    # created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
@@ -112,8 +111,7 @@ class BuyingStockModel(models.Model):
         max_digits=8, decimal_places=3, verbose_name="Prix de vente final")
     garantie = models.BooleanField(default=False)
     delai_garantie = models.IntegerField()
-    # Future
-    # created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.produit.nom_du_produit, self.date_de_vente)
@@ -137,8 +135,7 @@ class ClientModel(models.Model):
     nom_du_client = models.CharField(max_length=100)
     numero = models.CharField(max_length=20)
     address_email = models.EmailField()
-    # Future
-    # created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 'Client/{}:{}'.format(self.prenom_du_client, self.nom_du_client)
@@ -166,8 +163,7 @@ class ClientRequestModel(models.Model):
     date_demander = models.DateTimeField(auto_now_add=True)
     produit_demander = models.CharField(max_length=100)
     produit_trouver = models.BooleanField(default=False)
-    # Future
-    # created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
