@@ -98,25 +98,23 @@
     </div>
     <div class="card-container col s6">
         <div class=" col s12">
-            <form class="col s12">
+            <form class="col s12" method='POST'>
                 <div class="row">
-                    <div class="input-field col s6">
-                        <input id="name" type="text" class="validate">
-                        <label for="name">Nom</label>
-                    </div>
-                    <div class="input-field col s6">
-                        <input id="produit" type="text" class="validate">
-                        <label for="produit">produit</label>
+                    <div class="input-field col s12">
+                        {{ form.client }}
+                        <label for="{{ form.client.id_for_label }}">Nom</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <input id="number" type="number" class="validate">
-                        <label for="number">numero</label>
+                        <label for="{{form.produit_trouver.id_for_label }}">
+                            {{ form.produit_trouver}}
+                            <span>Produit trouvé</span>
+                        </label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="email" type="email" class="validate">
-                        <label for="email">email</label>
+                        {{ form.produit_demander }}
+                        <label for="{{ form.produit_demander.id_for_label }}">Produit</label>
                     </div>
                 </div>
                 <div class="row center-align ">
