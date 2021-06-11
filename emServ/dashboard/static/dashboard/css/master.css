@@ -34,14 +34,13 @@
 }
 
 .easy-sidebar-menu a {
-    padding-left: 1rem;
     display: block;
     color: var(--third-color);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     display: flex;
     align-items: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding: 0.989rem 0;
+    padding-left: 1rem;
 }
 
 
@@ -70,7 +69,6 @@
     background-color: var(--second-color);
     z-index: 10;
     transition: width 300ms;
-    overflow: scroll;
     padding-bottom: 30px;
     box-shadow: inset 0px -10px 0px 0px grey;
 }
@@ -109,19 +107,25 @@
 
 header {
     background-color: var(--white-color);
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    padding: 5px 1.5rem;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, .2);
     background-color: var(--white-color);
-    color: var(--first-color);
     position: fixed;
     left: var(--sidenav-width);
     width: calc(100% - var(--sidenav-width));
     top: 0;
     z-index: 10;
     transition: left 300ms;
-    height: 80px;
+    height: auto;
+}
+
+.dropdown-content {
+    overflow: visible;
+    width: 30% !important;
+    height: auto !important;
 }
 
 header h5 {
@@ -129,8 +133,14 @@ header h5 {
 }
 
 header label span {
-    font-size: 1.7rem;
-    padding-right: 1rem;
+    font-size: 1.7rem !important;
+    text-align: center;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--second-color);
+    margin-right: 5px;
+    webkit-box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
 .easy-body-wrapper {
@@ -158,8 +168,10 @@ header label span {
 }
 
 .miscellaneous {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-end: none;
+    grid-gap: 15px;
 }
 
 .miscellaneous span {
@@ -173,6 +185,7 @@ header label span {
     background-color: var(--first-color);
     color: var(--third-color);
     margin: 1rem 0;
+    padding: 10px;
 }
 
 .user-wrapper img {
@@ -186,6 +199,14 @@ header label span {
 .user-wrapper li {
     padding: 0;
     margin: 0;
+}
+
+.user-inner-wrapper {
+    padding: 10px 0;
+}
+
+.add_scroll {
+    overflow-y: auto;
 }
 
 .card-panel-header__wrapper {
@@ -250,6 +271,7 @@ header label span {
 label[for="nav-toggle"] {
     padding-top: 5px;
     color: var(--first-color) !important;
+    cursor: pointer;
 }
 
 .easy-main-content h5 {
@@ -260,10 +282,13 @@ label[for="nav-toggle"] {
     height: 80px;
 }
 
-.easy-sidebar-brand span {}
+.easy-sidebar-brand span {
+    font-weight: 900;
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
 
-
-.add_pd{
+.add_pd {
     padding: 7px 0;
 }
 
@@ -273,7 +298,8 @@ label[for="nav-toggle"] {
     box-sizing: border-box;
     min-height: 1px;
 }
-.row.lefty .col{
+
+.row.lefty .col {
     float: left;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -281,37 +307,34 @@ label[for="nav-toggle"] {
     margin: 0;
     min-height: 1px;
 }
-.s_achat.section-table-easy.row.col{
+
+.s_achat.section-table-easy.row.col {
     float: left;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     min-height: 1px;
 }
-.mrl{
+
+.mrl {
     margin-left: 10px;
 }
-.colright{
+
+.colright {
     margin-bottom: 10px;
 }
 
-.righty{
+.righty {
     margin-left: 10px;
 }
-.big-text{
 
+.big-text {
     font-size: 20px!important;
 }
-.big2{
+
+.big2 {
     font-size: 25px!important;
 }
 
-/* ----------- Deposit Stylings Start------------------*/
-@import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital@1&display=swap');
-#depot-title{
-    font-family: 'Vollcon', 'serif'!important;
-    font-size:10px;
-}
-/* ----------- Deposit Stylings End------------------*/
 
 /*------------ Break Section : end ---------------*/
 

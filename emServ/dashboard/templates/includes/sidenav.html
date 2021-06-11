@@ -6,21 +6,24 @@
 <div class="easy-sidebar">
     <div class="easy-sidebar-brand">
         <h5>
-            <span class="material-icons"> price_change </span>
             <span>EASY MONEY</span>
         </h5>
     </div>
     <div class="easy-sidebar-menu">
         <div class="user-wrapper grey darken-3 ">
             <img src="{% static 'dashboard/images/user.jpg' %}" alt="User" width="50px" height="50px" />
+<<<<<<< HEAD
             <ul class="user-wrapper grey darken-3">
+=======
+            <ul class="user-inner-wrapper">
+>>>>>>> f44d4b7afc9f33cf02dc835a939d30a57541b557
                 <li>
                     <h5>Damien</h5>
                 </li>
                 <li><small>Super Admin</small></li>
             </ul>
         </div>
-        <ul>
+        <ul class="add_scroll">
             <li>
                 <a href="{% url 'dashboard:homePage' %}" class="active">
                     <span class="material-icons"> dashboard </span>
@@ -47,7 +50,7 @@
             </li>
             <li>
                 <a href="{% url 'dashboard:depositStockPage' %}">
-                    <span class="material-icons"> price_check </span>
+                    <span class="material-icons"> add_shopping_cart </span>
                     <span>Depots</span>
                 </a>
             </li>
@@ -55,12 +58,6 @@
                 <a href="{% url 'dashboard:clientRequestPage' %}">
                     <span class="material-icons"> history_edu </span>
                     <span>Demande Client</span>
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'dashboard:profilePage' %}">
-                    <span class="material-icons"> settings </span>
-                    <span>Profil</span>
                 </a>
             </li>
         </ul>

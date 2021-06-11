@@ -21,3 +21,8 @@
 .right a {
     color: #ef6c00;
 }
+
+.chart_bar {
+    width: 100%;
+    height: 280px;
+}
