@@ -1,29 +1,8 @@
-/* body{
-    background-color: #ddd;
-} */
-
-.card-ppanel {
-    padding: 50px;
-}
-
-
-/* h5{
-    margin-top: 50px;
-    /* color: rgb(255,61,0); */
-
-font-size: 72px;
-background: -webkit-linear-gradient(#000000, #ff3d00);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-
-}
-*/ .all-black .ui-bar-a .ui-link-inherit {
-    color: black;
-}
 .btn.c-btn {
     font-size: 1.5rem;
     background-color: #424242;
 }
+
 input:not([type]):focus:not([readonly]),
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
@@ -41,6 +20,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
     -webkit-box-shadow: 0 1px 0 0 #bdbdbd;
     box-shadow: 0 1px 0 0 #bdbdbd;
 }
+
 input:not([type]).validate+label,
 input[type=text]:not(.browser-default).validate+label,
 input[type=password]:not(.browser-default).validate+label,
@@ -58,5 +38,6 @@ textarea.materialize-textarea.validate+label {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 
 /*  for the Product */
