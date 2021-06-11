@@ -1,0 +1,131 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block body_content %}
+<div class="row">
+    <div class="card-panel  col s12">
+        <div class="card-container card-padd row">
+            <div class=" the_title col s7 ">
+                <span>
+                    produits cherchés
+                </span>
+            </div>
+            <div class="col s5">
+                <div class="the_title col s6 ">
+                    <!-- <a class="waves-effect add-width waves-light btn deep-orange accent-3"> -->
+                    <a class='dropdown-trigger btn waves-effect add-width waves-light btn deep-orange accent-3' href='#'
+                        data-target='dropdown1'>
+                        <i class="material-icons right ">arrow_drop_down
+                            <!-- arrow_drop_down_circle-->
+                        </i>Dernier(5)
+                        <!-- <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a> -->
+                    </a>
+                    <ul id='dropdown1' class='dropdown-content'>
+                        <li><a href="#!">Ballon</a></li>
+                        <li><a href="#!">Phone</a></li>
+                        <li><a href="#!">Bag</a></li>
+                        <li><a href="#!">Computer</a></li>
+                        <li><a href="#!">Fan</a></li>
+                    </ul>
+                </div>
+                <div class="the_title col s6 ">
+                    <a class="waves-effect add-width waves-light btn deep-orange accent-3">
+                        <i class="material-icons right">visibility</i>voir tous
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>nom</th>
+                    <th>produit</th>
+                    <th>number</th>
+                    <th>email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Alvin</td>
+                    <td>Ballon</td>
+                    <td>77 123 45 67</td>
+                    <td>alvin@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>Alan</td>
+                    <td>Phone</td>
+                    <td>77 123 89 76</td>
+                    <td>alan@gmail.com</td>
+                </tr>
+                <tr>
+                    <td>Jonathan</td>
+                    <td>Bag</td>
+                    <td>77 456 23 86</td>
+                    <td>Jonathan@gmile.com</td>
+                </tr>
+                <tr>
+                    <td>Jonathan</td>
+                    <td>Computer</td>
+                    <td>77 456 23 86</td>
+                    <td>Jonathan@gmile.com</td>
+                </tr>
+                <tr>
+                    <td>Phillip</td>
+                    <td>Fan</td>
+                    <td>77 456 23 86</td>
+                    <td>phillip@gmile.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class=" card-panel row">
+
+    <div class="">
+        <div class="card-container col s6">
+            <div class="card-title center-align">
+                <p>produits demandés par jour</p>
+            </div>
+            <div>
+                <canvas id="chart_client"></canvas>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-container col s6">
+        <div class=" col s12">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="name" type="text" class="validate">
+                        <label for="name">Nom</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="produit" type="text" class="validate">
+                        <label for="produit">produit</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input id="number" type="number" class="validate">
+                        <label for="number">numero</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">email</label>
+                    </div>
+                </div>
+                <div class="row center-align ">
+                    <a class="waves-effect waves-light btn black">
+                        <i class="material-icons left">add</i>button
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body_content %}
