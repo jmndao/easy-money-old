@@ -1,4 +1,4 @@
-var ctx = document.getElementById("myChart").getContext("2d");
+var ctx_in = document.getElementById("myChart");
 
 var data = {
     labels: ['Janv', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'],
@@ -17,7 +17,7 @@ var data = {
     ]
 };
 
-var myBarChart = new Chart(ctx, {
+var myBarChart = new Chart(ctx_in, {
     type: 'bar',
     data: data,
     options: {
