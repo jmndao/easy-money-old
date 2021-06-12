@@ -186,10 +186,7 @@ class ProductView(LoginRequiredMixin, CreateView):
     model = ProductModel
     template_name = 'dashboard/product/product.html'
     fields = '__all__'
-    
-    ################################################################
 
-    ################################################################
     success_url = reverse_lazy('dashboard:productPage')
 
     def form_valid(self, form):

@@ -10,17 +10,7 @@ var dataDepot = {
     }]
 };
 
-var myBarChart = new Chart(depotChart, {
+var myDepotChart = new Chart(depotChart, {
     type: 'bar',
     data: dataDepot,
-    options: {
-        barValueSpacing: 0,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    min: 0,
-                }
-            }]
-        }
-    }
 });

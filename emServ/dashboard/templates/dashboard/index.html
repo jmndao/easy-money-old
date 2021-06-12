@@ -1,6 +1,10 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
 {% block body_content %}
 
 <div class="row">
@@ -46,11 +50,11 @@
 
     <!--- Revenue Card -->
     <div class="col s12 m6 l3">
-        <div class="card deep-orange accent-3">
-            <div class="card-content white-text">
+        <div class="card">
+            <div class="card-content deep-orange-text accent-3">
                 <span class="card-title">Revenue</span>
                 <p class="p-adjust">
-                    <i class="material-icons small">sell</i>
+                    <i class="material-icons small right">sell</i>
                     <span class="p-large i-adjust">3M</span>
                 </p>
             </div>
@@ -69,32 +73,39 @@
     
     <div class="section-info-easy col m4 s12">
         <!------ Product Trend Section -->
-        <div class="product_trend-section mrl">
-            <div class="card-panel">
-                <div class="title-section">
-                    <span class="title center">Tendance des Produits</span>
-                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">unfold_more</i></a>
-                </div>
-            </div>
-            <div class="upd card-panel">
-                <ul class="collection s12">
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle red">trending_down</i>
-                        <span class="title">Mac Book Pro 2016</span>
-                        <p>Restant: 4</p>
-                        <p>Fournisseur: Ibrahima Fall</p>
-                        <p>Tel: +221 77 123 56 78</p>
-                    </li>
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle red">trending_down</i>
-                        <span class="title">Iphone 12</span>
-                        <p>Restant: 2</p>
-                        <p>Fournisseur: Alioune Sarr</p>
-                        <p>Tel: +221 77 100 50 08</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <ul class="deposit collection with-header">
+            <li class="collection-header">
+            Tendance Produit
+            </li>
+            <li class="collection-item avatar">
+            <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+            <span class="title">Title</span>
+            <p>First Line <br>
+                Second Line
+            </p>
+            </li>
+            <li class="collection-item avatar">
+            <i class="material-icons circle">folder</i>
+            <span class="title">Title</span>
+            <p>First Line <br>
+                Second Line
+            </p>
+            </li>
+            <li class="collection-item avatar">
+            <i class="material-icons circle green">insert_chart</i>
+            <span class="title">Title</span>
+            <p>First Line <br>
+                Second Line
+            </p>
+            </li>
+            <li class="collection-item avatar">
+            <i class="material-icons circle red">play_arrow</i>
+            <span class="title">Title</span>
+            <p>First Line <br>
+                Second Line
+            </p>
+            </li>
+        </ul>
 
     </div>
 
