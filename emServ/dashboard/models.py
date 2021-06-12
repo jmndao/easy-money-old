@@ -81,7 +81,6 @@ class DepositStockModel(models.Model):
     date_d_achat = models.DateTimeField(auto_now_add=True)
     prix_d_achat = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)

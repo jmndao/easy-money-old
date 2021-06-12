@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital@1&display=swap');
 .container {
     padding-top: 100px;
     margin: auto;
@@ -30,4 +31,43 @@
 table.responsive-table tr {
     border-bottom: none;
     padding: 0 !important;
+}
+
+#depot-title {
+    font-family: 'Vollcon', 'serif';
+    font-size: 20px;
+}
+
+.number {
+    font-family: 'Vollcon', 'serif';
+    font-size: 26px;
+    text-align: center;
+}
+
+.depot-center {
+    text-align: center;
+}
+
+ul.deposit.collection.with-header {
+    max-height: 360px;
+    overflow-y: scroll;
+}
+
+.collection.with-header .collection-header {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+span.dummy_info {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+span.material-icons.dummy_icon {
+    font-size: 60px;
+}
+
+.card-title.center.dummy_info {
+    font-size: 20px;
+    font-weight: 800;
 }
