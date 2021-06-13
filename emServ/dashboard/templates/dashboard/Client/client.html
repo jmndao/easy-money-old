@@ -79,7 +79,16 @@
         </div>
     </div>
 </div>
-
+<div class="card-panel">
+    <div class="card-container col s12">
+        <div class="card-title center-align">
+            <h3>clients reçus par mois</h3>
+        </div>
+        <div>
+            <canvas id="chart_client"></canvas>
+        </div>
+    </div>
+</div>
 <!-- #####################################  -->
 
 <!-- Adding Card Table End -->
@@ -100,12 +109,10 @@
 </div>
 <!--  -->
 
-
 {% endblock body_content %}
 
-
-
 {% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/js/client_request.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 {% endblock javascripts %}

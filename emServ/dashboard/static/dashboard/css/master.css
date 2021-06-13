@@ -482,7 +482,9 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     /* padding: 0 0.75rem; */
     min-height: 1px;
 }
-
+.b-large{
+    width: 100%;
+}
 
 /* ---------- CSS Responsiveness ------------*/
 
