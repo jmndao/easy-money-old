@@ -424,18 +424,7 @@
 
 <div class=" card-panel row">
 
-    <div class="">
-        <div class="card-container col s6">
-            <div class="card-title center-align">
-                <p>produits demandés par jour</p>
-            </div>
-            <div>
-                <canvas id="chart_client"></canvas>
-            </div>
-        </div>
-
-    </div>
-    <div class="card-container col s6">
+    <div class="card-container col s12">
         <div class=" col s12">
             <form class="col s12" method='POST'>
                 <div class="row">
@@ -445,30 +434,77 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12">
                         {{ form.produit_demander }}
                         <label for="{{ form.produit_demander.id_for_label }}">Produit</label>
                     </div>
-                    <div class="input-field col s6">
-                        <label for="{{form.produit_trouver.id_for_label }}">
-                            {{ form.produit_trouver}}
-                            <span>Produit trouvé</span>
-                        </label>
-                    </div>
-
+                </div>
+                <div class="row">
                 </div>
                 <div class="row center-align ">
                     <a class="waves-effect waves-light btn black">
-                        <i class="material-icons left">add</i>button
+                        <i class="material-icons left">add</i>AJOUTER
                     </a>
                 </div>
             </form>
         </div>
     </div>
+    <div class="card-container col s12">
+        <div class="card-title center-align">
+            <p>clients reçus par jour</p>
+        </div>
+        <div>
+            <canvas id="chart_client"></canvas>
+        </div>
+    </div>
 </div>
 {% endblock body_content %}
 
+
 {% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/js/chart_request.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script>
+    var ctx = document.getElementById('chart_client').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Janv', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'frequence des cliens en fonction du temps',
+                data: [12, 9, 13, 15, 12, 13, 9, 15, 14, 13, 14, 14],
+                borderColor: [
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                    'rgba(255,61,0,1)',
+                ],
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                borderWidth: 1,
+                fill: true,
+                tension: 0.1
+            }]
+        },
+        options: {
+            barValueSpacing: 0,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
 {% endblock javascripts %}
