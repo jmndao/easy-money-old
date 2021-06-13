@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block stylesheets %}
+<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
@@ -100,18 +101,169 @@
             <!-- <canvas id="myChart" width="400" height="100"></canvas> -->
         </div>
 
+=======
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
+{% block body_content %}
+  
+  <div class="row">
+    <!----Row 1-->
+    <div class="col s12 m4">
+      <div class="card-panel">
+        <div class="row valign-wrapper">
+          <div class="col s4">
+            <span class="material-icons dummy_icon">category</span>
+          </div>
+          <div class="col s8">
+            <span class="dummy_info">Vendu</span> 
+          </div>
+        </div>
+      </div>
+      <div class="card-panel orange darken-4">
+        <div class="card-title center dummy_info">20</div>
+      </div>
+    </div>  
+    <!----Row 2-->
+    <div class="col s12 m4">
+      <div class="card-panel">
+        <div class="row valign-wrapper">
+          <div class="col s4">
+            <span class="material-icons dummy_icon">paid</span>
+          </div>
+          <div class="col s8">
+            <span class="dummy_info">Revenu</span> 
+          </div>
+        </div>
+      </div>
+      <div class="card-panel orange darken-4">
+        <div class="card-title center dummy_info">1,002,000 C.FCA</div>
+      </div>
+    </div>
+    <!----Row 3-->
+    <div class="col s12 m4">
+      <div class="card-panel orange darken-4">
+        <div class="row valign-wrapper">
+          <div class="col s4">
+            <span class="material-icons dummy_icon">savings</span>
+          </div>
+          <div class="col s8">
+            <span class="dummy_info">Benefice</span> 
+          </div>
+        </div>
+      </div>
+      <div class="card-panel">
+        <div class="card-title center dummy_info">802,000 C.FCA</div>
+      </div>
+    </div>
+  
+  </div>
+
+<!-- I'll add a graph in here -->
+<div class="row">
+    <div class="col s8">
+        <!---- Adding Chart Achat -->
+        <div class="card-panel">
+            <canvas id="salesChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+    <div class="col s4">
+      <ul class="deposit collection with-header">
+        <li class="collection-header">
+          Tendance Achat
+        </li>
+        <li class="collection-item avatar">
+          <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+          <span class="title">Title</span>
+          <p>First Line <br>
+            Second Line
+          </p>
+        </li>
+        <li class="collection-item avatar">
+          <i class="material-icons circle">folder</i>
+          <span class="title">Title</span>
+          <p>First Line <br>
+            Second Line
+          </p>
+        </li>
+        <li class="collection-item avatar">
+          <i class="material-icons circle green">insert_chart</i>
+          <span class="title">Title</span>
+          <p>First Line <br>
+            Second Line
+          </p>
+        </li>
+        <li class="collection-item avatar">
+          <i class="material-icons circle red">play_arrow</i>
+          <span class="title">Title</span>
+          <p>First Line <br>
+            Second Line
+          </p>
+        </li>
+      </ul>
+>>>>>>> adeac3eb9fdc8d970e1ee69b68efc9b22adc9a72
     </div>
 </div>
 
 <!-- End graph -->
+<<<<<<< HEAD
 <!-- You can change this code from here -->
 
 <!-- To here -->
+=======
+
+<!-------- Modal -->
+<div id="saleStock" class="modal">
+    <div class="modal-content">
+      <div class="card-panel orange darken-4">Nouveau Depot <i class="material-icons right">add_shopping_cart</i></div>
+      <form action="" method="post">
+        {% csrf_token %}
+        
+        <!--- Form -->
+        <div class="row">
+          <div class="input-field col s6">
+              {{ form.produit }}
+              <label for="{{ form.produit.id_for_label }}">Produit</label>
+          </div>
+          <div class="input-field col s6">
+              {{ form.prix_de_vente_min }}
+              <label for="{{ form.prix_de_vente_min.id_for_label }}">Prix de vente minimal</label>
+          </div>
+          <div class="input-field col s6">
+              {{ form.prix_de_vente_fin }}
+              <label for="{{ form.prix_de_vente_fin.id_for_label }}">Prix de vente final</label>
+          </div>
+          <div class="input-field col s6">
+              {{ form.delai_garantie }}
+              <label for="{{ form.delai_garantie.id_for_label }}">Delai garantie</label>
+          </div>
+          <div class="input-field col s6">
+            <label for="{{ form.prix_d_achat.id_for_label }}"> 
+              {{ form.garantie }}
+              <span>Garantie</span> 
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+        <a href="{% url 'dashboard:buyingStockPage' %}" class="waves-effect btn-flat nopadding"><i class="material-icons">local_mall</i></a>
+          <button class="modal-close waves-effect waves-green btn-flat" type="submit">
+            <i class="material-icons right">thumb_up_alt</i>
+          </button>
+        </div>
+     </form>
+    </div>
+    
+  </div>
+>>>>>>> adeac3eb9fdc8d970e1ee69b68efc9b22adc9a72
 
 
 <!------- Section R3002: - Deposit stock [] -->
 
 <div class="row">
+<<<<<<< HEAD
     <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
@@ -595,11 +747,72 @@
             </table>
         </div>
     </div>
+=======
+  <div id="man" class="col s12">
+    <div class="card material-table">
+      <div class="table-header">
+        <span class="table-title">Achat</span>
+        <div class="actions">
+          <a href="#saleStock" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">price_check</i></a>
+          <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+        </div>
+      </div>
+      <table id="datatable" class="responsive-table">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Date de vente</th>
+            <th>Prix de vente</th>
+            <th>Garantie</th>
+            <th>Delai garantie</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bs in buying_stocks %}
+            <tr>
+              <td> {{ bs.produit }} </td>
+              <td> {{ bs.date_de_vente }}</td>
+              {% if bs.prix_de_vente_min %}
+                <td> {{ bs.prix_de_vente_min }}</td>
+                {% else %}
+                <td> ----- </td>
+              {% endif %}
+              <td> {{ bs.prix_de_vente_fin }}</td>
+              {% if bs.garantie %}
+                <td> Oui </td>
+                {% else %}
+                <td> Non </td>
+              {% endif %}
+              
+            {% if bs.garantie %}
+                <td> {{ bs.delai_de_garantie }} </td>
+            {% else %}
+                <td> Pas de garantie </td>
+            {% endif %}
+              <td class="actions">
+                <a href="{% url 'dashboard:depositStockDetailPage' bs.pk %}" class="orange-text darken-4 waves-effect btn-flat"><span class="material-icons">visibility</span></a>
+                <a href="{% url 'dashboard:depositStockEditPage' bs.pk %}" class="green-text darken-4 waves-effect btn-flat"><span class="material-icons">update</span></a>
+                <a href="{% url 'dashboard:depositStockDeletePage' bs.pk %}" class="red-text accent-4 waves-effect btn-flat"><span class="material-icons">delete</span></a>
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+>>>>>>> adeac3eb9fdc8d970e1ee69b68efc9b22adc9a72
 </div>
 
 {% endblock body_content %}
 
 {% block javascripts %}
+<<<<<<< HEAD
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+=======
+  <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+  <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+  <script type="text/javascript" src="{% static 'dashboard/js/chart_sales.js' %}"></script>
+>>>>>>> adeac3eb9fdc8d970e1ee69b68efc9b22adc9a72
 {% endblock javascripts %}

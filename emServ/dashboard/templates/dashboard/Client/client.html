@@ -1,9 +1,93 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
 
 {% block body_content %}
 
 
-<head></head>
+<div class="row with-gaps">
+    <div class="col 12 black white-text width-border valign-wrapper z-depth-2 separate_one">
+        <div class="col s8 add_pd">
+            <h4 class="deep-orange-text accent-3">Ajouter Clients</h4>
+            <p>En bas vous avez la liste de tous vos clients.</p>
+        </div>
+        <div class="col s4  center-align">
+            <div class="icon z-depth-2">
+                <a href=""><i class="material-icons medium deep-orange-text accent-3 separate_two">add_circle</i></a>
+            </div>
+            <div class="ajouter">
+                <a href="" class="deep-orange-text accent-3"> Ajouter un </a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 black white-text width-border valign-wrapper z-depth-2 ">
+        <div class="col s8 add_pd">
+            <h4 class="deep-orange-text accent-3">Total Client</h4>
+            <p>Voila le nombre total de clients ayant visité</p>
+        </div>
+        <div class="col s4  center-align">
+            <div class="icon z-depth-2">
+                <i class="material-icons medium deep-orange-text accent-3 separate_two">people</i>
+            </div>
+            <div class="ajouter ">
+                <p class="deep-orange-text accent-3 big">2034</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+                <span class="table-title">List Des Clients</span>
+                <div class="actions">
+                    <!-- Here is where we should make the linking-->
+                    <a class="modal-trigger waves-effect btn-flat nopadding"><i
+                            class="material-icons">person_add</i></a>
+                    <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                            class="material-icons">search</i></a>
+                </div>
+            </div>
+            <table id="datatable" class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>produit</th>
+                        <th>numero</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <th class="black-text"> {{ client.prenom_du_client }}</th>
+                        <th class="black-text">{{ client.nom_du_client }}</th>
+                        <th class="black-text">{{ client.numero }}</th>
+                        <th class="black-text">{{ client.address_email }}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- #####################################  -->
+
+<!-- Adding Card Table End -->
+
+
+<!-- #####################################  -->
+
+
 <!--  -->
 <div class="card_panel">
     {% if messages %}
@@ -15,107 +99,13 @@
     {% endif %}
 </div>
 <!--  -->
-<div class="card-panel">
 
-    <div class="row">
-        <div class="col s12">
-            <div class="card-panel grey darken-3">
-                <div class="card-panel-header__wrapper">
-                    <div class="white-text big-text">Ajouter Un Nouveau Client</div>
-                </div>
-            </div>
-        </div>
-        <form class="col s8" method='POST'>
-            {% csrf_token %}
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ form.prenom_du_client }}
-                    <label for="{{ form.prenom_du_client.id_for_label }}">Prenom Du Client</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.nom_du_client }}
-                    <label for="{{ form.nom_du_client.id_for_label }}">Nom Du Client</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.numero }}
-                    <label for="{{ form.numero.id_for_label }}">Numero De Telephone</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.address_email }}
-                    <label for="{{ form.address_email.id_for_label }}">Address Email</label>
-                </div>
-            </div>
-            <div class="bbtn ">
-                <button data-target="modal1"
-                    class="btn btn-large center-align modal-trigger waves-effect waves-light btn-small light-blue">Ajouter
-                    <i class="material-icons right ">add</i>
-                </button>
-            </div>
-        </form>
-        <div class="section-info-easy col s4">
-            <!------ Product Trend Section -->
-            <div class="product_trend-section mrl">
-                <div class="card-panel">
-                    <div class="title-section">
-                        <span class="title center">Tendance des Produits</span>
-                        <a class="waves-effect waves-light btn-small"><i class="material-icons left">unfold_more</i></a>
-                    </div>
-                </div>
-                <div class="upd card-panel">
-                    <ul class="collection s4">
-                        <li class="collection-item avatar">
-                            <i class="material-icons circle red">trending_down</i>
-                            <span class="title">Mac Book Pro 2016</span>
-                            <p>Restant: 4</p>
-                            <p>Fournisseur: Ibrahima Fall</p>
-                            <p>Tel: +221 77 123 56 78</p>
-                        </li>
-                        <li class="collection-item avatar s4">
-                            <i class="material-icons circle red">trending_down</i>
-                            <span class="title">Iphone 12</span>
-                            <p>Restant: 2</p>
-                            <p>Fournisseur: Alioune Sarr</p>
-                            <p>Tel: +221 77 100 50 08</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-<div class="card-panel">
-    <div class="row-table-inner">
-        <div class="col s12">
-            <div class="card-panel grey darken-3">
-                <div class="card-panel-header__wrapper">
-                    <div class="white-text big-text">Voir Tous Clients</div>
-                </div>
-            </div>
-        </div>
-        <div class="divider"></div>
-        <table>
-            <thead>
-                {% for client in clients %}
-                <tr>
-                    <th> {{ client.prenom_du_client }}</th>
-                    <th>{{ client.nom_du_client }}</th>
-                    <th>{{ client.numero }}</th>
-                    <th>{{ client.address_email }}</th>
-                    <th>
-                        <a href="{% url 'dashboard:clientDetailPage' client.pk %}"><i
-                                class="material-icons right">see_more</i></a>
-                        <a href="{% url 'dashboard:clientEditPage' client.pk %}"><i
-                                class="material-icons right">edit</i></a>
-                        <a href="{% url 'dashboard:clientDeletePage' client.pk %}"><i
-                                class="material-icons right">delete</i></a>
-                    </th>
-                </tr>
-                {% endfor %}
-            </thead>
-        </table>
-    </div>
-</div>
 
 {% endblock body_content %}
+
+
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+{% endblock javascripts %}

@@ -1,17 +1,21 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
 {% block body_content %}
 
-<div class="row">
+<div class="row with-gap">
 
     <!--- Boutique Card -->
     <div class="col s12 m6 l3">
         <div class="card deep-orange accent-3">
             <div class="card-content white-text">
                 <span class="card-title">Boutiques</span>
-                <p class="p-adjust">
-                    <i class="material-icons small"> store </i>
+                <p class="p-adjust add_size">
+                    <i class="material-icons small right"> store </i>
                     <span class="p-large i-adjust">012</span>
                 </p>
             </div>
@@ -23,9 +27,9 @@
         <div class="card deep-orange accent-3">
             <div class="card-content white-text">
                 <span class="card-title">Produit</span>
-                <p class="p-adjust">
-                    <i class="material-icons small">shopping_cart</i>
-                    <span class="p-large i-adjust">123</span>
+                <p class="p-adjust add_size">
+                    <i class="material-icons small right">shopping_cart</i>
+                    <span class="p-large i-adjust ">123</span>
                 </p>
             </div>
         </div>
@@ -36,8 +40,8 @@
         <div class="card deep-orange accent-3">
             <div class="card-content white-text">
                 <span class="card-title">Clients</span>
-                <p class="p-adjust">
-                    <i class="material-icons small">groups</i>
+                <p class="p-adjust add_size">
+                    <i class="material-icons small right">groups</i>
                     <span class="p-large i-adjust">2,110</span>
                 </p>
             </div>
@@ -46,12 +50,12 @@
 
     <!--- Revenue Card -->
     <div class="col s12 m6 l3">
-        <div class="card deep-orange accent-3">
-            <div class="card-content white-text">
+        <div class="card">
+            <div class="card-content deep-orange-text accent-3">
                 <span class="card-title">Revenue</span>
-                <p class="p-adjust">
-                    <i class="material-icons small">sell</i>
-                    <span class="p-large i-adjust">3M</span>
+                <p class="p-adjust add_size ">
+                    <i class="material-icons small right deep-orange-text accent-3">sell</i>
+                    <span class="p-large i-adjust deep-orange-text accent-3">3M</span>
                 </p>
             </div>
         </div>
@@ -69,32 +73,39 @@
 
     <div class="section-info-easy col m4 s12">
         <!------ Product Trend Section -->
-        <div class="product_trend-section mrl">
-            <div class="card-panel">
-                <div class="title-section">
-                    <span class="title center">Tendance des Produits</span>
-                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">unfold_more</i></a>
-                </div>
-            </div>
-            <div class="upd card-panel">
-                <ul class="collection s12">
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle red">trending_down</i>
-                        <span class="title">Mac Book Pro 2016</span>
-                        <p>Restant: 4</p>
-                        <p>Fournisseur: Ibrahima Fall</p>
-                        <p>Tel: +221 77 123 56 78</p>
-                    </li>
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle red">trending_down</i>
-                        <span class="title">Iphone 12</span>
-                        <p>Restant: 2</p>
-                        <p>Fournisseur: Alioune Sarr</p>
-                        <p>Tel: +221 77 100 50 08</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <ul class="deposit collection with-header">
+            <li class="collection-header">
+                Tendance Produit
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                <span class="title"><i> Tendance Achat</i></span>
+                <p>MacBook Pro<br>
+                    achat: 10
+                </p>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                <span class="title"><i> Tendance Achat</i></span>
+                <p>Galaxy S20<br>
+                    achat: 7
+                </p>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle red darken-3">trending_down</i>
+                <span class="title"><i>Tendance Depot</i></span>
+                <p>Nokia Chargeur HP <br>
+                    1
+                </p>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle red darken-3">trending_down</i>
+                <span class="title"><i></i>Tendance Depot</span>
+                <p>Nokia Ventilo<br>
+                    0
+                </p>
+            </li>
+        </ul>
 
     </div>
 
@@ -109,9 +120,10 @@
             <div class=" col  s12">
                 <div class="card-panel grey lighten-1">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text">Stock Achat</div>
+                        <div class="black-text big-text"><b>Stock Achat</b></div>
                         <div class="bbtn">
-                            <a class="waves-effect waves-light btn-small deep-orange accent-3">
+                            <a href="{% static 'dashboard/deposit_stock/deposit_stock.html' %}"
+                                class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class="material-icons left">visibility</i>
                                 Voir Tout
                             </a>
@@ -164,10 +176,11 @@
             <div class="col s12">
                 <div class="card-panel grey lighten-1">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text">Stock Dépot</div>
+                        <div class="black-text big-text"><b>Stock Dépot</b></div>
                         <div class="bbtn">
-                            <a class="waves-effect waves-light btn-small deep-orange accent-3">
-                                <i class="material-icons left">visibility</i>
+                            <a class="waves-effect waves-light btn-small deep-orange accent-3"
+                                href="{% static 'dashboard/deposit_stock/deposit_stock.html' %}">
+                                <i class=" material-icons left">visibility</i>
                                 Voir Tout
                             </a>
                         </div>
@@ -219,5 +232,5 @@
 {% endblock body_content %}
 
 {% block javascripts %}
-    <script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
+<script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
 {% endblock javascripts %}
