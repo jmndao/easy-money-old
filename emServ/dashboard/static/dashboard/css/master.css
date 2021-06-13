@@ -567,7 +567,7 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     #nav-toggle:checked+.easy-sidebar ul li h5,
     #nav-toggle:checked+.easy-sidebar ul li small {
         display: inline;
-    }
+    } 
 }
 
 @media only screen and (max-width: 568px) {
