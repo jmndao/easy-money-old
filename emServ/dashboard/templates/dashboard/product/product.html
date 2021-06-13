@@ -9,11 +9,105 @@
 
 
 {% block body_content %}
+<div class="row center-align">
+    <div class="card-panel black">
+        <div class="card-container">
+            <h4 class="deep-orange-text accent-3 ">Vous pouvez toujours ajouter un nouveau produit.</h4>
+            <p class="grey-text lighten-4">remplissez seul les informstions que vous avez sur le produit</p>
+        </div>
+        <br><br>
+        <div class="divider grey"></div>
+        <div class="row ">
+            <div class="col m6 s12">
+
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="product_name" type="text" class="validate">
+                                <label for="product_name">nom du produit</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="product_model" type="text" class="validate">
+                                <label for="product_model">model du produit</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="edition" type="text" class="validate">
+                                <label for="edition">édition</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="annee" type="text" class="validate">
+                                <label for="annee">année</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6 left-align">
+                                <p>
+                                    <label>
+                                        <input type="checkbox" />
+                                        <span>boite d'origine</span>
+                                    </label>
+                                </p>
+
+                            </div>
+                            <div class=" col s6 left-align">
+                                <p>
+                                    <label>
+                                        <input type="checkbox" />
+                                        <span>chargeur</span>
+                                    </label>
+                                </p>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col m6 s12">
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="giga" type="text" class="validate">
+                                <label for="giga">nombre de giga</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="ram" type="text" class="validate">
+                                <label for="ram">nombre de ram</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="dimensions" type="text" class="validate">
+                                <label for="dimensions">dimensions</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="masse" type="text" class="validate">
+                                <label for="masse">masse</label>
+                            </div>
+                        </div>
+
+                        <div class="row center-align ">
+                            <a class="waves-effect waves-light btn deep-orange accent-3 ">
+                                <i class="material-icons left">add</i>button
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="row">
-    <div id="man" class="col s12">
+    <div id="man" class="col table s12">
         <div class="card material-table">
             <div class="table-header">
-                <span class="table-title">List Des Clients</span>
+                <span class="table-title"><b>List Des Clients</b> </span>
                 <div class="actions">
                     <!-- Here is where we should make the linking-->
                     <a class="modal-trigger waves-effect btn-flat nopadding"><i
@@ -22,22 +116,34 @@
                             class="material-icons">search</i></a>
                 </div>
             </div>
-            <table id="datatable" class="responsive-table">
-                <thead>
+            <table id="datatable" class="responsive-table" class='left-align'>
+                <thead class='left-align'>
                     <tr>
-                        <th>name</th>
-                        <th>produit</th>
-                        <th>numero</th>
-                        <th>email</th>
+                        <th>nom</th>
+                        <th>modele</th>
+                        <th>édition</th>
+                        <th>storage</th>
+                        <th>ram</th>
+                        <th>taille</th>
+                        <th>poids</th>
+                        <th>année</th>
+                        <th>boite</th>
+                        <th>chargeur</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for client in clients %}
+                    {% for product in products %}
                     <tr>
-                        <th class="black-text"> {{ client.prenom_du_client }}</th>
-                        <th class="black-text">{{ client.nom_du_client }}</th>
-                        <th class="black-text">{{ client.numero }}</th>
-                        <th class="black-text">{{ client.address_email }}</th>
+                        <th class="black-text"> {{ product.nom_du_produit }}</th>
+                        <th class="black-text">{{ product.model }}</th>
+                        <th class="black-text">{{ product.edition }}</th>
+                        <th class="black-text">{{ product.annee }}</th>
+                        <th class="black-text">{{ product.storage }}</th>
+                        <th class="black-text">{{ product.ram }}</th>
+                        <th class="black-text">{{ product.dimension }}</th>
+                        <th class="black-text">{{ product.poids }}</th>
+                        <th class="black-text"> {{ product.boite_origine }}</th>
+                        <th class="black-text">{{ product.chargeur }}</th>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -47,49 +153,6 @@
 </div>
 
 
-<div class="card-panel">
-
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button class="waves-effect btn blue darken-3">
-            Ajouter
-            <i class="material-icons right">add</i>
-        </button>
-    </form>
-
-</div>
-
-<div class="card-panel">
-    <div class="row-table-inner">
-        <div class="col s12">
-            <div class="card-panel grey darken-3">
-                <div class="card-panel-header__wrapper">
-                    <div class="white-text big-text">Voir Tous les Produits</div>
-                </div>
-            </div>
-        </div>
-        <div class="divider"></div>
-        <table>
-            <tbody>
-                {% for product in products %}
-                <tr>
-                    <th> {{ product.nom_du_produit }}</th>
-                    <th>{{ product.model }}</th>
-                    <th>
-                        <a href="{% url 'dashboard:productDetailPage' product.pk %}"><i
-                                class="material-icons right">see_more</i></a>
-                        <a href="{% url 'dashboard:productEditPage' product.pk %}"><i
-                                class="material-icons right">update</i></a>
-                        <a href="{% url 'dashboard:productDeletePage' product.pk %}"><i
-                                class="material-icons right">delete</i></a>
-                    </th>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
 
 {% block javascripts %}
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
