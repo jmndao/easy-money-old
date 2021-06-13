@@ -228,9 +228,10 @@ div.material-table table tbody tr:hover {
 }
 
 div.material-table .actions {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
-    align-items: center;
+    align-content: flex-end;
     padding: 0;
 }
 

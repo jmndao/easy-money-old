@@ -1,5 +1,6 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
@@ -23,7 +24,7 @@
         </div>
       </div>
       <div class="card-panel orange darken-4">
-        <div class="card-title center dummy_info">20</div>
+        <div class="card-title center dummy_info">{{ count_item }}</div>
       </div>
     </div>  
     <!----Row 2-->
@@ -39,7 +40,7 @@
         </div>
       </div>
       <div class="card-panel orange darken-4">
-        <div class="card-title center dummy_info">1,002,000 C.FCA</div>
+        <div class="card-title center dummy_info">{{ revenue|floatformat:0|intcomma}} C.FCA</div>
       </div>
     </div>
     <!----Row 3-->
@@ -55,7 +56,7 @@
         </div>
       </div>
       <div class="card-panel">
-        <div class="card-title center dummy_info">802,000 C.FCA</div>
+        <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
       </div>
     </div>
   
@@ -129,15 +130,26 @@
               {{ form.prix_de_vente_fin }}
               <label for="{{ form.prix_de_vente_fin.id_for_label }}">Prix de vente final</label>
           </div>
-          <div class="input-field col s6">
-              {{ form.delai_garantie }}
-              <label for="{{ form.delai_garantie.id_for_label }}">Delai garantie</label>
-          </div>
-          <div class="input-field col s6">
-            <label for="{{ form.prix_d_achat.id_for_label }}"> 
-              {{ form.garantie }}
-              <span>Garantie</span> 
-            </label>
+          <div class="col s12">
+            <ul class="collapsible">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Assurez-vous une garantie pour ce produit ?</div>
+              <div class="collapsible-body">
+                <span>
+                  <div class="input-field col s6">
+                    <label for="{{ form.garantie.id_for_label }}"> 
+                      {{ form.garantie }}
+                      <span>Garantie</span> 
+                    </label>
+                  </div>
+                  <div class="input-field col s6">
+                      {{ form.delai_garantie }}
+                      <label for="{{ form.delai_garantie.id_for_label }}">Delai garantie</label>
+                  </div>
+                </span>
+              </div>                
+            </li>
+          </ul>
           </div>
         </div>
 
@@ -161,7 +173,7 @@
       <div class="table-header">
         <span class="table-title">Achat</span>
         <div class="actions">
-          <a href="#saleStock" class="modal-trigger waves-effect btn-flat nopadding"><i class="material-icons">price_check</i></a>
+          <a href="#saleStock" class="modal-trigger waves-effect btn-flat nopadding tooltipped" data-position="top" data-tooltip="Nouveau Achat"><i class="material-icons">price_check</i></a>
           <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
       </div>
@@ -170,7 +182,8 @@
           <tr>
             <th>Produit</th>
             <th>Date de vente</th>
-            <th>Prix de vente</th>
+            <th>Prix de vente minimal</th>
+            <th>Prix de vente final</th>
             <th>Garantie</th>
             <th>Delai garantie</th>
             <th>Actions</th>
@@ -182,26 +195,23 @@
               <td> {{ bs.produit }} </td>
               <td> {{ bs.date_de_vente }}</td>
               {% if bs.prix_de_vente_min %}
-                <td> {{ bs.prix_de_vente_min }}</td>
+                <td> {{ bs.prix_de_vente_min|floatformat:0|intcomma }}</td>
                 {% else %}
                 <td> ----- </td>
               {% endif %}
-              <td> {{ bs.prix_de_vente_fin }}</td>
-              {% if bs.garantie %}
-                <td> Oui </td>
-                {% else %}
-                <td> Non </td>
-              {% endif %}
+              <td> {{ bs.prix_de_vente_fin|floatformat:0|intcomma }}</td>
+
+              <td>{{ bs.garantie|yesno:"OUI, NON" }}</td>
               
             {% if bs.garantie %}
-                <td> {{ bs.delai_de_garantie }} </td>
+                <td> {{ bs.delai_garantie }} </td>
             {% else %}
                 <td> Pas de garantie </td>
             {% endif %}
               <td class="actions">
-                <a href="{% url 'dashboard:depositStockDetailPage' bs.pk %}" class="orange-text darken-4 waves-effect btn-flat"><span class="material-icons">visibility</span></a>
-                <a href="{% url 'dashboard:depositStockEditPage' bs.pk %}" class="green-text darken-4 waves-effect btn-flat"><span class="material-icons">update</span></a>
-                <a href="{% url 'dashboard:depositStockDeletePage' bs.pk %}" class="red-text accent-4 waves-effect btn-flat"><span class="material-icons">delete</span></a>
+                <a href="{% url 'dashboard:buyingStockDetailPage' bs.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir Achat"><span class="material-icons">visibility</span></a>
+                <a href="{% url 'dashboard:buyingStockEditPage' bs.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier Achat"><span class="material-icons">update</span></a>
+                <a href="{% url 'dashboard:buyingStockDeletePage' bs.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer Achat"><span class="material-icons">delete</span></a>
               </td>
           </tr>
           {% endfor %}
@@ -217,4 +227,5 @@
   <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
   <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
   <script type="text/javascript" src="{% static 'dashboard/js/chart_sales.js' %}"></script>
+  <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}

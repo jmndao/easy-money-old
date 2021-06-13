@@ -17,7 +17,6 @@ M.Autocomplete.init(req_autocomplete, {
 });
 
 // Setting up the Dropdown
-
 const dropdown = document.querySelectorAll('.dropdown-trigger');
 M.Dropdown.init(dropdown, {
     coverTrigger: false,

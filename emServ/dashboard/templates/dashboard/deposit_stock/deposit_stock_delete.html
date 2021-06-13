@@ -1,4 +1,5 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
 
 {% block body_content %}
 
@@ -16,6 +17,10 @@
                     Confirmer
                 <i class="material-icons right red-text">delete_forever</i>
                 </button>
+                <a href="{% url 'dashboard:depositStockPage' %}" class="btn-flat waves-effect">
+                    Retourner
+                    <i class="material-icons right">keyboard_return</i>
+                </a>
         </form>
     </div>
 

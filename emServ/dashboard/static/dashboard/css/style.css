@@ -71,3 +71,11 @@ span.material-icons.dummy_icon {
     font-size: 20px;
     font-weight: 800;
 }
+
+.select-dropdown {
+    width: 100% !important;
+}
+
+.collapsible-body {
+    height: 120px;
+}

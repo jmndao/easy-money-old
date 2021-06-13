@@ -1,27 +1,46 @@
 {% extends 'dashboard/base.html' %}
+{% load humanize %}
 
 {% block body_content %}
 
     <div class="card-panel">
 
         <div class="card-panel orange darken-4">
-            Details <i class="material-icons right">eye</i>
+            <b>Details Produit</b> <i class="material-icons right">visibility</i>
         </div>
 
         <div class="row">
             <div class="col s12">
-                <h1>{{ deposit.produit }}</h1> (PRODUIT)
+                <h4>Produit Déposé: {{ deposit.produit }}</h4> 
             </div>
             <div class="col s6">
-                {{ deposit.qualite }}
+                Nom du vendeur: 
             </div>
             <div class="col s6">
-                {{ deposit.prix_d_achat }}
+                <b>{{ deposit.nom_vendeur }}</b>
             </div>
             <div class="col s6">
-                {{ deposit.date_d_achat }}
+                Qualité du produit: 
             </div>
+            <div class="col s6">
+                <b>{{ deposit.qualite }}</b>
+            </div>
+            <div class="col s6">
+                Date d'achat [par la boutique]: 
+            </div>
+            <div class="col s6">
+                <b>{{ deposit.date_d_achat }}</b>
+            </div>
+            <div class="col s6">
+                Prix d'achat:
+            </div>
+            <div class="col s6">
+                <b>{{ deposit.prix_d_achat|floatformat:0|intcomma }}</b>
+            </div>
+            
         </div>
+
+        <a href="{% url 'dashboard:depositStockPage' %}" class="btn-flat waves-effect">Retourner <i class="material-icons right">keyboard_return</i></a>
     
     </div>
 

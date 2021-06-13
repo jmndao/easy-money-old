@@ -5,6 +5,15 @@
     --white-color: #fff;
     --sidenav-width: 290px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,900;1,400&display=swap');
+
+/**** CSS for login Page *****/
+
+body {
+    font-family: 'Source Code Pro', monospace;
+}
+
 * {
     padding: 0;
     margin: 0;
