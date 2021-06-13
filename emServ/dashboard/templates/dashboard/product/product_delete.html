@@ -1,13 +1,27 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
 
 {% block body_content %}
 
-    <form method="post">
-        {% csrf_token %}
-     
-        <p>Are you sure you want to delete "{{ object }}"?</p>
+    <div class="card-panel">
+        <div class="card-panel orange darken-4">
+            <b> Suppression produit</b>
+            <i class="material-icons right">delete_forever</i>
+        </div>
+        <form method="post">
+            {% csrf_token %}
         
-            <input type="submit" value="Confirm">
-    </form>
+            <p>Etes-vous certain de vouloir supprimer "{{ product.nom_du_produit }}"?</p>
+            
+                <button type="submit" class="btn-flat waves-effect">
+                    Confirmer
+                <i class="material-icons right red-text">delete_forever</i>
+                </button>
+                <a href="{% url 'dashboard:productPage' %}" class="btn-flat waves-effect">
+                    Retourner
+                    <i class="material-icons right">keyboard_return</i>
+                </a>
+        </form>
+    </div>
 
 {% endblock body_content %}

@@ -10,44 +10,44 @@
 
 {% block body_content %}
 <div class="row center-align">
-    <div class="card-panel black">
+    <div class="card-panel">
         <div class="card-container">
             <h4 class="deep-orange-text accent-3 ">Vous pouvez toujours ajouter un nouveau produit.</h4>
-            <p class="grey-text lighten-4">remplissez seul les informstions que vous avez sur le produit</p>
+            <p class="grey-text lighten-4">remplissez seul les informations que vous avez sur le produit</p>
         </div>
-        <br><br>
-        <div class="divider grey"></div>
+
         <div class="row ">
             <div class="col m6 s12">
 
                 <div class="row">
-                    <form class="col s12">
+                    <form class="col s12" method="POST">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="product_name" type="text" class="validate">
-                                <label for="product_name">nom du produit</label>
+                                {{ form.nom_du_produit}}
+                                <label for="{{form.nom_du_produit.id_for_label}}">Nom du produit</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="product_model" type="text" class="validate">
-                                <label for="product_model">model du produit</label>
+                                {{ form.model }}
+                                <label for="{{form.model.id_for_label}}">Model du produit</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="edition" type="text" class="validate">
-                                <label for="edition">édition</label>
+                                {{form.edition}}
+                                <label for="{{form.edition.id_for_label}}">Edition</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="annee" type="text" class="validate">
-                                <label for="annee">année</label>
+                                {{form.annee}}
+                                <label for="{{form.annee.id_for_label}}">Année</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s6 left-align">
                                 <p>
                                     <label>
-                                        <input type="checkbox" />
-                                        <span>boite d'origine</span>
+                                       {{form.boite_origine}}
+                                        <span>Boite d'origine</span>
                                     </label>
                                 </p>
 
@@ -55,14 +55,12 @@
                             <div class=" col s6 left-align">
                                 <p>
                                     <label>
-                                        <input type="checkbox" />
-                                        <span>chargeur</span>
+                                        {{form.chargeurs}}
+                                        <span>Chargeur</span>
                                     </label>
                                 </p>
                             </div>
-
                         </div>
-                    </form>
                 </div>
 
             </div>
@@ -71,29 +69,30 @@
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="giga" type="text" class="validate">
-                                <label for="giga">nombre de giga</label>
+                                {{form.nombre_de_giga}}
+                                <label for="{{form.nombre_de_giga.id_for_label}}">Nombre de giga</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="ram" type="text" class="validate">
-                                <label for="ram">nombre de ram</label>
+                                {{form.nombre_de_ram}}
+                                <label for="{{form.nombre_de_ram.id_for_label}}">Nombre de ram</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="dimensions" type="text" class="validate">
-                                <label for="dimensions">dimensions</label>
+                                {{form.dimensions}}
+                                <label for="{{form.dimensions.id_for_label}}">Dimensions</label>
                             </div>
                             <div class="input-field col s6">
-                                <input id="masse" type="text" class="validate">
-                                <label for="masse">masse</label>
+                                {{ form.poids}}
+                                <label for="{{form.poids.id_for_label}}">Masse</label>
                             </div>
                         </div>
 
                         <div class="row center-align ">
-                            <a class="waves-effect waves-light btn deep-orange accent-3 ">
-                                <i class="material-icons left">add</i>button
-                            </a>
+                            <button class="waves-effect waves-light btn deep-orange accent-3 " type="submit">
+                                Ajouter
+                                <i class="material-icons right">category</i>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -107,44 +106,40 @@
     <div id="man" class="col table s12">
         <div class="card material-table">
             <div class="table-header">
-                <span class="table-title"><b>List Des Clients</b> </span>
+                <span class="table-title"><b>Liste Produits</b> </span>
                 <div class="actions">
                     <!-- Here is where we should make the linking-->
-                    <a class="modal-trigger waves-effect btn-flat nopadding"><i
-                            class="material-icons">person_add</i></a>
+                    {% comment %} <a class="modal-trigger waves-effect btn-flat nopadding"><i
+                            class="material-icons">person_add</i></a> {% endcomment %}
                     <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">search</i></a>
                 </div>
             </div>
-            <table id="datatable" class="responsive-table" class='left-align'>
-                <thead class='left-align'>
+            <table id="datatable" class="responsive-table">
+                <thead>
                     <tr>
-                        <th>nom</th>
-                        <th>modele</th>
-                        <th>édition</th>
-                        <th>storage</th>
-                        <th>ram</th>
-                        <th>taille</th>
-                        <th>poids</th>
+                        <th>Nom</th>
+                        <th>Modele</th>
+                        <th>Edition</th>
                         <th>année</th>
-                        <th>boite</th>
                         <th>chargeur</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for product in products %}
-                    <tr>
-                        <th class="black-text"> {{ product.nom_du_produit }}</th>
-                        <th class="black-text">{{ product.model }}</th>
-                        <th class="black-text">{{ product.edition }}</th>
-                        <th class="black-text">{{ product.annee }}</th>
-                        <th class="black-text">{{ product.storage }}</th>
-                        <th class="black-text">{{ product.ram }}</th>
-                        <th class="black-text">{{ product.dimension }}</th>
-                        <th class="black-text">{{ product.poids }}</th>
-                        <th class="black-text"> {{ product.boite_origine }}</th>
-                        <th class="black-text">{{ product.chargeur }}</th>
-                    </tr>
+                        <tr>
+                            <th class="black-text">{{ product.nom_du_produit }}</th>
+                            <th class="black-text">{{ product.model }}</th>
+                            <th class="black-text">{{ product.edition }}</th>
+                            <th class="black-text">{{ product.annee }}</th>
+                            <th class="black-text">{{ product.chargeur|yesno:"OUI, NON" }}</th>
+                            <td class="actions black-text">
+                                <a href="{% url 'dashboard:productDetailPage' product.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir Achat"><span class="material-icons">visibility</span></a>
+                                <a href="{% url 'dashboard:productEditPage' product.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier Achat"><span class="material-icons">update</span></a>
+                                <a href="{% url 'dashboard:productDeletePage' product.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer Achat"><span class="material-icons">delete</span></a>
+                            </td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>

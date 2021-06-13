@@ -234,6 +234,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'dashboard/product/product_delete.html'
     # Url to redirect after successful
     # deleting a product
+    context_object_name = 'product'
     success_url = reverse_lazy('dashboard:productPage')
 
 
@@ -253,14 +254,7 @@ class ClientView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-    def added_item(request):
-        if request.method == 'POST':
-            form = ClientView(request.POST)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Added')
-                return redirect('dashboard/client/client.html')
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Future

@@ -5,11 +5,6 @@ from django.contrib.messages import constants as messages
 from django.contrib import messages
 
 
-
-MESSAGES_TAGS = {
-    messages.INFO: 'info',
-    50: 'critical',
-}
 # Create your models here.
 
 QUALITE = [

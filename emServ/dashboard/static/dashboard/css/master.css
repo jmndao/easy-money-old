@@ -79,7 +79,6 @@ body {
     z-index: 10;
     transition: width 300ms;
     padding-bottom: 30px;
-    box-shadow: inset 0px -10px 0px 0px grey;
 }
 
 .redBackground {
@@ -347,53 +346,66 @@ label[for="nav-toggle"] {
 
 /*------------ Break Section : end ---------------*/
 
+
 /* Client Request */
 
-.card-padd{
+.card-padd {
     padding-top: 20px;
-    font-size:22px;
+    font-size: 22px;
 }
+
 .row .the_title.col {
     padding: 0 15px;
 }
+
 .row .the_title.col.col.s6 {
     width: 150px;
     margin-left: auto;
     left: auto;
     right: auto;
 }
+
 .btn.add-width {
     padding: 0 4px;
-    
 }
+
 i.right {
     float: right;
     margin-left: 7px;
 }
+
+
 /* Akhad's Adjustment */
-.add_size{
+
+.add_size {
     color: #FFFFFF !important;
     font-size: 25px !important;
-  }
-.width-border{
+}
+
+.width-border {
     border-radius: 10px;
 }
-.with-gaps{
-    display:grid;
+
+.with-gaps {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
 }
+
 .deep-orange-text.big {
     color: #ff5722 !important;
     font-size: 28px;
 }
-.row .col.s6{
+
+.row .col.s6 {
     padding: 10px;
 }
+
 .row .col.s8.add_pd {
-    
     padding-bottom: 30px;
-    }
+}
+
+
 /* .row .col.s6.separate_one {
     width: 49.4%;
     margin-right: 5px;
@@ -403,7 +415,9 @@ i.right {
 
    */
 
+
 /* Hndling the color of the border and text when on focus  */
+
 input:not([type]):focus:not([readonly]),
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
@@ -417,27 +431,31 @@ input[type=tel]:not(.browser-default):focus:not([readonly]),
 input[type=number]:not(.browser-default):focus:not([readonly]),
 input[type=search]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #ff3d00;
-  -webkit-box-shadow: 0 1px 0 0 #ff3d00;
-          box-shadow: 0 1px 0 0 #ff3d00;
+    border-bottom: 1px solid #ff3d00;
+    -webkit-box-shadow: 0 1px 0 0 #ff3d00;
+    box-shadow: 0 1px 0 0 #ff3d00;
 }
-input:not([type]):focus:not([readonly]) + label,
-input[type=text]:not(.browser-default):focus:not([readonly]) + label,
-input[type=password]:not(.browser-default):focus:not([readonly]) + label,
-input[type=email]:not(.browser-default):focus:not([readonly]) + label,
-input[type=url]:not(.browser-default):focus:not([readonly]) + label,
-input[type=time]:not(.browser-default):focus:not([readonly]) + label,
-input[type=date]:not(.browser-default):focus:not([readonly]) + label,
-input[type=datetime]:not(.browser-default):focus:not([readonly]) + label,
-input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,
-input[type=tel]:not(.browser-default):focus:not([readonly]) + label,
-input[type=number]:not(.browser-default):focus:not([readonly]) + label,
-input[type=search]:not(.browser-default):focus:not([readonly]) + label,
-textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #ff3d00!important;
+
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #ff3d00!important;
 }
+
+
 /* Handling the checkbox color */
-[type="checkbox"]:checked + span:not(.lever):before {
+
+[type="checkbox"]:checked+span:not(.lever):before {
     top: -4px;
     left: -5px;
     width: 12px;
@@ -446,18 +464,17 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     border-left: 2px solid transparent;
     border-right: 2px solid #ff3d00;
     border-bottom: 2px solid #ff3d00;
-    -webkit-transform: rotate(
-40deg
-);
-    transform: rotate(
-40deg
-);
+    -webkit-transform: rotate( 40deg);
+    transform: rotate( 40deg);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform-origin: 100% 100%;
     transform-origin: 100% 100%;
 }
+
+
 /* Eliminating the padiing in the table */
+
 .row .col.table {
     float: left;
     -webkit-box-sizing: border-box;
@@ -465,6 +482,7 @@ textarea.materialize-textarea:focus:not([readonly]) + label {
     /* padding: 0 0.75rem; */
     min-height: 1px;
 }
+
 
 /* ---------- CSS Responsiveness ------------*/
 
