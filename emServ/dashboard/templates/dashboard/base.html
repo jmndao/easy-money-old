@@ -7,6 +7,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Chart JS -->
+    <script type="text/javascript" src="{% static 'dashboard/js/chartjs.min.js' %}"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/materialize/css/materialize.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/master.css' %}" />
@@ -39,7 +41,6 @@
         </div>
 
     </main>
-    <script src="plugins/chartjs.min.js"></script>
 </body>
 
 {% include 'includes/scripts.html' %}

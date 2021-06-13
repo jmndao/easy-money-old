@@ -1,78 +1,62 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
 
 {% block body_content %}
+<div class="row">
+    <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+                <span class="table-title">List Des Clients</span>
+                <div class="actions">
+                    <!-- Here is where we should make the linking-->
+                    <a class="modal-trigger waves-effect btn-flat nopadding"><i
+                            class="material-icons">person_add</i></a>
+                    <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                            class="material-icons">search</i></a>
+                </div>
+            </div>
+            <table id="datatable" class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>produit</th>
+                        <th>numero</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr>
+                        <th class="black-text"> {{ client.prenom_du_client }}</th>
+                        <th class="black-text">{{ client.nom_du_client }}</th>
+                        <th class="black-text">{{ client.numero }}</th>
+                        <th class="black-text">{{ client.address_email }}</th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 
 <div class="card-panel">
 
-    <div class="row">
-        <form class="col s12" method='POST'>
-            {% csrf_token %}
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ form.nom_du_produit }}
-                    <label for="{{ form.nom_du_produit.id_for_label }}">Nom du produit</label>
-                </div>
-            </div>
-    </div>
-
-    <div class="row">
-        <div class="input-field col s4">
-            {{ form.model }}
-            <label for="{{ form.model.id_for_label }}">Model</label>
-        </div>
-        <div class="input-field col s4">
-            {{ form.edition }}
-            <label for="{{ form.edition.id_for_label }}">Edition</label>
-        </div>
-        <div class="input-field col s4">
-            {{ form.annee }}
-            <label for="{{ form.annee.id_for_label }}">Annee</label>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="input-field col s3">
-            {{ form.nombre_de_giga }}
-            <label for="{{ form.model.id_for_label }}">Giga</label>
-        </div>
-        <div class="input-field col s3">
-            {{ form.nombre_de_ram }}
-            <label for="{{ form.edition.id_for_label }}">RAM</label>
-        </div>
-        <div class="input-field col s3">
-            {{ form.poids }}
-            <label for="{{ form.poids.id_for_label }}">Masse</label>
-        </div>
-        <div class="input-field col s3">
-            {{ form.dimensions }}
-            <label for="{{ form.dimensions.id_for_label }}">Dimensions</label>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="input-field col s6">
-            <label>
-                {{ form.chargeurs }}
-                <span>Chargeur</span>
-            </label>
-        </div>
-        <div class="input-field col s6">
-            <label>
-                {{ form.boite_origine }}
-                <span>Boite d'origine</span>
-            </label>
-        </div>
-    </div>
-    <br><br>
-    <div class="bbtn ">
-        <button data-target="modal1"
-            class="btn btn-large center-align modal-trigger waves-effect waves-light btn-small light-blue">Ajouter
-            <i class="material-icons right ">add</i>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="waves-effect btn blue darken-3">
+            Ajouter
+            <i class="material-icons right">add</i>
         </button>
-    </div>
-
     </form>
-</div>
 
 </div>
 
@@ -107,5 +91,8 @@
     </div>
 </div>
 
-
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+{% endblock javascripts %}
 {% endblock body_content %}

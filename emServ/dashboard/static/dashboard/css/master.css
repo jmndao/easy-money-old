@@ -361,6 +361,39 @@ i.right {
     float: right;
     margin-left: 7px;
 }
+/* Akhad's Adjustment */
+.add_size{
+    color: #FFFFFF !important;
+    font-size: 25px !important;
+  }
+.width-border{
+    border-radius: 10px;
+}
+.with-gaps{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+.deep-orange-text.big {
+    color: #ff5722 !important;
+    font-size: 28px;
+}
+.row .col.s6{
+    padding: 10px;
+}
+.row .col.s8.add_pd {
+    
+    padding-bottom: 30px;
+    }
+/* .row .col.s6.separate_one {
+    width: 49.4%;
+    margin-right: 5px;
+    left: auto;
+    right: auto;
+}
+
+   */
+
 /* ---------- CSS Responsiveness ------------*/
 
 @media only screen and (max-width: 1100px) {

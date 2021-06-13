@@ -19,6 +19,8 @@ from dashboard.models import (  ProductModel,
                                 Shop
                             )
 
+from notifications.signals import notify
+
 # Create your views here.
 
 
@@ -114,6 +116,7 @@ class DepositStockDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/deposit_stock/deposit_stock_detail.html'
     model = DepositStockModel
+    context_object_name = 'deposit'
 
 
 
@@ -123,7 +126,15 @@ class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
     model = DepositStockModel
     success_url = reverse_lazy('dashboard:depositStockPage')
 
-
+    # def get_success_url(self):
+    #     notify.send(
+    #         self.request.user,
+    #         recipient=self.request.,
+    #         description=form.instance.text_message,
+    #         verb=form.instance.subject
+    #     )
+    #     return super().get_success_url()
+    
 class BuyingStockView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/buying_stock/buying_stock.html'
@@ -175,10 +186,7 @@ class ProductView(LoginRequiredMixin, CreateView):
     model = ProductModel
     template_name = 'dashboard/product/product.html'
     fields = '__all__'
-    
-    ################################################################
 
-    ################################################################
     success_url = reverse_lazy('dashboard:productPage')
 
     def form_valid(self, form):

@@ -41,21 +41,17 @@ class ProductModel(models.Model):
 
     """
     nom_du_produit = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-    edition = models.CharField(max_length=100)
-    annee = models.DateField()
-    nombre_de_giga = models.IntegerField()
-    nombre_de_ram = models.IntegerField()
-    dimensions = models.DecimalField(
-        max_digits=8, decimal_places=3, verbose_name="Dimensions")
+    model = models.CharField(max_length=100,  null=True, blank=True)
+    edition = models.CharField(max_length=100, null=True, blank=True)
+    annee = models.DateField(null=True, blank=True)
+    nombre_de_giga = models.IntegerField(null=True, blank=True)
+    nombre_de_ram = models.IntegerField(null=True, blank=True)
+    dimensions = models.CharField(max_length=20, verbose_name="Dimensions")
     poids = models.DecimalField(
         max_digits=8, decimal_places=3, verbose_name="Masse")
     chargeurs = models.BooleanField(default=True)
     boite_origine = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
-
-
-
 
 
     def __str__ (self):
@@ -81,7 +77,6 @@ class DepositStockModel(models.Model):
     date_d_achat = models.DateTimeField(auto_now_add=True)
     prix_d_achat = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
@@ -106,11 +101,11 @@ class BuyingStockModel(models.Model):
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     date_de_vente = models.DateTimeField(auto_now_add=True)
     prix_de_vente_min = models.DecimalField(
-        max_digits=8, decimal_places=3, verbose_name="Prix de vente minimum")
+        max_digits=8, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)
     prix_de_vente_fin = models.DecimalField(
-        max_digits=8, decimal_places=3, verbose_name="Prix de vente final")
+        max_digits=8, decimal_places=3, verbose_name="Prix de vente final", blank=True, null=True)
     garantie = models.BooleanField(default=False)
-    delai_garantie = models.IntegerField()
+    delai_garantie = models.IntegerField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

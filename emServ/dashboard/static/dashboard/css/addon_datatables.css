@@ -227,6 +227,13 @@ div.material-table table tbody tr:hover {
     background-color: #EEE;
 }
 
+div.material-table .actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
 
 /* div.material-table table th:first-child,
 div.material-table table td:first-child {

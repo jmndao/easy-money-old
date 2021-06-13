@@ -1,0 +1,22 @@
+{% extends 'dashboard/base.html' %}
+
+{% block body_content %}
+
+    <div class="card-panel">
+        <div class="card-panel orange darken-4">
+            Suppression de produit 
+            <i class="material-icons right">delete_forever</i>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+        
+            <p>Etes-vous certain de vouloir supprimer "{{ object.produit }}"?</p>
+            
+                <button type="submit" class="btn-flat waves-effect">
+                    Confirmer
+                <i class="material-icons right red-text">delete_forever</i>
+                </button>
+        </form>
+    </div>
+
+{% endblock body_content %}
