@@ -92,12 +92,18 @@ class DepositStockView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def benefice(self, sum_dp):
+        rev = BuyingStockModel.objects.all()
+        sum_rev = sum([p.prix_de_vente_fin for p in rev])
+        return (sum_rev - sum_dp)
+
     def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            # Future
-            # context['deposit_stocks'] = DepositStockModel.objects.order_by('created_date')
-            context["deposit_stocks"] = DepositStockModel.objects.all()
-            return context
+        context = super().get_context_data(**kwargs)
+        context['deposit_stocks'] = self.q = DepositStockModel.objects.order_by('-date_d_achat')
+        context['count_item'] = self.q.count()
+        context['spent'] = sum([p.prix_d_achat for p in self.q])
+        context['benefice'] = self.benefice(context['spent'])
+        return context
 
 
 class DepositStockUpdateView(LoginRequiredMixin, UpdateView):
@@ -147,12 +153,18 @@ class BuyingStockView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def benefice(self, revenue):
+        dp = DepositStockModel.objects.all()
+        sum_dp = sum([p.prix_d_achat for p in dp])
+        return (revenue - sum_dp)
+
     def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            # Future
-            # context['buying_stocks'] = BuyingStockModel.objects.order_by('created_date')
-            context["buying_stocks"] = BuyingStockModel.objects.all()
-            return context
+        context = super().get_context_data(**kwargs)
+        context['buying_stocks'] = self.q = BuyingStockModel.objects.order_by('-created_date')
+        context['count_item'] = self.q.count()
+        context['revenue'] = sum([p.prix_de_vente_fin for p in self.q])
+        context['benefice'] = self.benefice(context['revenue'])
+        return context
 
 
 class BuyingStockUpdateView(LoginRequiredMixin, UpdateView):
@@ -171,6 +183,7 @@ class BuyingStockDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/buying_stock/buying_stock_detail.html'
     model = BuyingStockModel
+    context_object_name = 'sales'
 
 
 

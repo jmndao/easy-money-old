@@ -1,17 +1,28 @@
 {% extends 'accounts/base.html' %}
 {% load static %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/login.css' %}">
+{% endblock stylesheets %}
+
 {% block body_content %}
 
-    <div class="card-panel">
-    
-         <form method="POST">
+    <div class="card-panel login white">
+
+        <div class="card-panel deep-orange accent-3 center">
+            <p class="logo_login">Bienvenue chez Easy Money!</p>
+        </div>
+        
+        <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
-            <input class="button" type="submit" value="Login">
+            <button type="submit" class="btn waves-effect deep-orange-text accent-3 black right"><b>
+                Se Connecter</b>
+                <i class="material-icons right">login</i>
+            </button>
         </form>
-        <p>Don't have an account? <a href="{% url 'accounts:registerPage' %}">Register</a></p>
         
+            
     </div>
 
 {% endblock body_content %}

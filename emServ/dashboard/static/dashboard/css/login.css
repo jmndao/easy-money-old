@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,900;1,400&display=swap');
+
+/**** CSS for login Page *****/
+
+body {
+    font-family: 'Source Code Pro', monospace;
+    background: -webkit-linear-gradient(to left bottom, #ff3d00, #c42025, #831629, #43131e, #000000);
+    background: -moz-linear-gradient(to left bottom, #ff3d00, #c42025, #831629, #43131e, #000000);
+    background: linear-gradient(to left bottom, #ff3d00, #c42025, #831629, #43131e, #000000);
+}
+
+.card-panel.login {
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo_login {
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+}

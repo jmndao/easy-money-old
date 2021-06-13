@@ -1,9 +1,14 @@
 {% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
 
 {% block body_content %}
 
     <div class="card-panel">
-        <div class="card-panel orange darken-4">Editer un Depot <a href="{% url 'dashboard:productPage' %}" class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
+        <div class="card-panel orange darken-4">Editer un Depot <a href="{% url 'dashboard:depositStockPage' %}" class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
             <div class="info_text valign-wrapper">
                 <p class="blue-text lighten-2">
                     <small>
