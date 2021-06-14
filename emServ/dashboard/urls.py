@@ -22,6 +22,11 @@ urlpatterns = [
     path('deposit_stock_edit/<int:pk>/', d_views.DepositStockUpdateView.as_view(), name='depositStockEditPage'),
     path('deposit_stock_delete/<int:pk>/', d_views.DepositStockDeleteView.as_view(), name='depositStockDeletePage'),
     path('deposit_stock_detail/<int:pk>/', d_views.DepositStockDetailView.as_view(), name='depositStockDetailPage'),
+    # DepotVenteStock Routers
+    path('depot_vente_stock/', d_views.DepotVenteStockView.as_view(), name = 'depotVenteStockPage'),
+
+
+
     # BuyingStock Routers
     path('buying_stock/', d_views.BuyingStockView.as_view(), name="buyingStockPage"),
     path('buying_stock_edit/<int:pk>/', d_views.BuyingStockUpdateView.as_view(), name='buyingStockEditPage'),

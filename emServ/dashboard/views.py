@@ -16,6 +16,7 @@ from dashboard.models import (  ProductModel,
                                 ClientModel,
                                 ClientRequestModel,
                                 DepositStockModel,
+                                DepotVenteStockModel,
                                 BuyingStockModel,
                                 Shop
                             )
@@ -141,7 +142,21 @@ class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
     #         verb=form.instance.subject
     #     )
     #     return super().get_success_url()
-    
+
+
+# For the new depot vente tab that I am creating.
+
+class DepotVenteStockView(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/depot_vente_stock/depot_vente_stock.html'
+    model = DepotVenteStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+ 
 class BuyingStockView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/buying_stock/buying_stock.html'

@@ -75,6 +75,29 @@ class DepositStockModel(models.Model):
         return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
 
 
+# Depot Vente Model
+class DepotVenteStockModel(models.Model):
+    """
+        This model trepresents the model in which, clients depose their belonguings
+        , hoping that the company is going to sell it for them. And the company will 
+        take its part after selling it. It basically has everything that the depositModel has.
+        It holds:
+            - nom_du_vendeur    : the name of the saler
+            - produit           : the product that has been sold
+            - qualite           : quality of the product ('excellent','normall','bad')
+            - date_d_achat      : date and time of the purchase
+            - prix_d_achat      : the price the product has been purchased
+
+        Notice that the diffrence is going to be in which page, the user went to fill the form
+    """
+    nom_vendeur = models.CharField(max_length=100, blank=True, null=True)
+    produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
+    qualite = models.CharField(max_length=20, choices=QUALITE)
+    date_d_achat = models.DateTimeField(auto_now_add=True)
+    prix_d_achat = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
+
+
 # Second Model -- Achat
 
 
