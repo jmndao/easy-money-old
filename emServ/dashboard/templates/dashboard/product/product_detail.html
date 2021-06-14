@@ -7,40 +7,88 @@
     <div class="card-panel">
 
         <div class="card-panel orange darken-4">
-            <b>Details de vente</b><i class="material-icons right">visibility</i>
+            <b>Details Produit</b><i class="material-icons right">visibility</i>
         </div>
 
         <div class="row">
             <div class="col s12">
-                <h4>Produit vendu: {{ sales.produit }}</h4>
+                <h4>Produit: {{ product.nom_du_produit }}</h4>
             </div>
-            <div class="col s6">
-                Date de la vente: 
+            <div class="row">
+                <div class="col s6">
+                    Model: 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.model %}{{ product.model }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-               <b>{{ sales.date_de_vente }}</b>
+             <div class="row">
+                <div class="col s6">
+                    Edition: 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.edition %}{{ product.edition }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-                Prix de vente minimal: 
+             <div class="row">
+                <div class="col s6">
+                    Année: 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.annee %}{{ product.annee }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-                <b>{% if sales.prix_de_vente_min %}{{ sales.prix_de_vente_min|floatformat:0|intcomma }} {% else %} ------- {% endif %} </b>
+             <div class="row">
+                <div class="col s6">
+                    Capacite Stockage (Giga): 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.nombre_de_giga %}{{ product.nombre_de_giga }} Giga{% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-                Prix de vente final: 
+             <div class="row">
+                <div class="col s6">
+                    RAM (Giga): 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.nombre_de_ram %}{{ product.nombre_de_ram }} Giga {% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-                <b>{{ sales.prix_de_vente_fin|floatformat:0|intcomma }}</b>
+             <div class="row">
+                <div class="col s6">
+                    Dimension: 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.dimensions %}{{ product.dimensions }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-                Garantie: 
+             <div class="row">
+                <div class="col s6">
+                    Masse: 
+                </div>
+                <div class="col s6">
+                    <b>{% if product.poids %}{{ product.poids }} kg{% else %}Non spécifiée{% endif %}</b>
+                </div>
             </div>
-            <div class="col s6">
-                <b>{{ sales.garantie|yesno:"OUI, NON"}} {% if sales.garantie %} / Delai {{ sales.delai_garantie }} {% else %} -------- {% endif %}</b>
+             <div class="row">
+                <div class="col s6">
+                    Chargeur: 
+                </div>
+                <div class="col s6">
+                    <b>{{ product.chargeurs|yesno:"OUI, NON" }}</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    Boite d'origine: 
+                </div>
+                <div class="col s6">
+                    <b>{{ product.boite_origine|yesno:"OUI, NON" }}</b>
+                </div>
             </div>
         </div>
 
-        <a href="{% url 'dashboard:buyingStockPage' %}" class="btn-flat waves-effect">Retourner <i class="material-icons right">keyboard_return</i></a>
+        <a href="{% url 'dashboard:productPage' %}" class="btn-flat waves-effect">Retourner <i class="material-icons right">keyboard_return</i></a>
     
     </div>
 

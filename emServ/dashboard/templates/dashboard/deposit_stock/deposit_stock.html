@@ -135,28 +135,7 @@
               <label for="{{ form.prix_d_achat.id_for_label }}">Prix d'achat</label>
           </div>
         </div>
-        <form action="" method="post">
-            {% csrf_token %}
-
-            <!--- Form -->
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ form.nom_vendeur }}
-                    <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.produit }}
-                    <label for="{{ form.produit.id_for_label }}">Produit</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.qualite }}
-                    <label for="{{ form.qualite.id_for_label }}">Qualite</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.prix_d_achat }}
-                    <label for="{{ form.prix_d_achat.id_for_label }}">Prix d'achat</label>
-                </div>
-            </div>
+    
 
             <div class="info_text valign-wrapper">
                 <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
@@ -164,13 +143,12 @@
             </div>
 
             <div class="modal-footer">
-                <<<<<<< HEAD <a href="{% url 'dashboard:productPage' %}" class="waves-effect btn-flat nopadding">
-                    <i=======<a href="{% url 'dashboard:depositStockPage' %}"
-                        class="waves-effect btn-flat nopadding"><i>>>>>>> akhadtop
-                            class="material-icons">local_mall</i></a>
-                        <button class="modal-close waves-effect waves-green btn-flat" type="submit">
-                            <i class="material-icons right">thumb_up_alt</i>
-                        </button>
+              <a href="{% url 'dashboard:depositStockPage' %}" class="waves-effect btn-flat nopadding">
+                <i class="material-icons">local_mall</i>
+              </a>
+              <button class="modal-close waves-effect waves-green btn-flat" type="submit">
+                  <i class="material-icons right">thumb_up_alt</i>
+              </button>
             </div>
         </form>
     </div>
@@ -214,7 +192,7 @@
                 <td><span class="new badge red" data-badge-caption="{{ ds.qualite}}"></span></td>
               {% endif %}
               <td>{{ ds.prix_d_achat|floatformat:0|intcomma}}</td>
-              <td>{{ ds.date_d_achat|floatformat:0|intcomma }}</td>
+              <td>{{ ds.date_d_achat|date:"SHORT_DATE_FORMAT"}}</td>
               <td class="actions">
                 <a href="{% url 'dashboard:depositStockDetailPage' ds.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir Produit"><span class="material-icons">visibility</span></a>
                 <a href="{% url 'dashboard:depositStockEditPage' ds.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier Produit"><span class="material-icons">update</span></a>

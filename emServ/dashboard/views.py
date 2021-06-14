@@ -243,6 +243,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_detail.html'
+    context_object_name = 'product'
     
 
 class ClientView(LoginRequiredMixin, CreateView):

@@ -79,3 +79,7 @@ span.material-icons.dummy_icon {
 .collapsible-body {
     height: 120px;
 }
+
+.with-margin-y-30 {
+    margin: 30px 0;
+}
