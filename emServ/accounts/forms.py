@@ -1,9 +1,20 @@
-from django.contrib.auth.forms import UserCreationForm
+from django import forms
 from django.contrib.auth.models import User
+from django.db.models import fields
+
+from accounts.models import UserProfile
 
 
-class UserCreationForm(UserCreationForm):
+class UserForm(forms.ModelForm):
 
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = User
-        fields = ['username', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'email']
+
+
+
+class UserProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = '__all__'

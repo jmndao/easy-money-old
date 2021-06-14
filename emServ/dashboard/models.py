@@ -1,8 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.messages import constants as messages
-from django.contrib import messages
 
 
 # Create your models here.

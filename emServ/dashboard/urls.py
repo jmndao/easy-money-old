@@ -33,6 +33,6 @@ urlpatterns = [
     path('product_delete/<int:pk>/', d_views.ProductDeleteView.as_view(), name='productDeletePage'),
     path('product_detail/<int:pk>/', d_views.ProductDetailView.as_view(), name='productDetailPage'),
     # Profile Router
-    path('profile/', d_views.ProfileView.as_view(), name="profilePage"),
+    # path('profile/', d_views.ProfileView.as_view(), name="profilePage"),
     
 ]
