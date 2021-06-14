@@ -424,18 +424,7 @@
 
 <div class=" card-panel row">
 
-    <div class="">
-        <div class="card-container col s6">
-            <div class="card-title center-align">
-                <p>produits demandés par jour</p>
-            </div>
-            <div>
-                <canvas id="chart_client"></canvas>
-            </div>
-        </div>
-
-    </div>
-    <div class="card-container col s6">
+    <div class="card-container col s12">
         <div class=" col s12">
             <form class="col s12" method='POST'>
                 <div class="row">
@@ -445,28 +434,32 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s12">
                         {{ form.produit_demander }}
                         <label for="{{ form.produit_demander.id_for_label }}">Produit</label>
                     </div>
-                    <div class="input-field col s6">
-                        <label for="{{form.produit_trouver.id_for_label }}">
-                            {{ form.produit_trouver}}
-                            <span>Produit trouvé</span>
-                        </label>
-                    </div>
-
+                </div>
+                <div class="row">
                 </div>
                 <div class="row center-align ">
-                    <a class="waves-effect waves-light btn black">
-                        <i class="material-icons left">add</i>button
-                    </a>
+                    <button type='submit' class="waves-effect waves-light btn black b-large">
+                        <i class="material-icons left">add</i>AJOUTER
+                    </button>
                 </div>
             </form>
         </div>
     </div>
+    <div class="card-container col s12">
+        <div class="card-title center-align">
+            <p>clients reçus par jour</p>
+        </div>
+        <div>
+            <canvas id="chart_client"></canvas>
+        </div>
+    </div>
 </div>
 {% endblock body_content %}
+
 
 {% block javascripts %}
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
