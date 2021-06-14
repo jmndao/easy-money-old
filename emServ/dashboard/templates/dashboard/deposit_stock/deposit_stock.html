@@ -11,148 +11,146 @@
 {% block body_content %}
 
 <div class="row">
-    <!----Row 1-->
-    <div class="col s12 m4">
-      <div class="card-panel">
-        <div class="row valign-wrapper">
-          <div class="col s4">
-            <span class="material-icons dummy_icon">category</span>
-          </div>
-          <div class="col s8">
-            <span class="dummy_info">Produits</span> 
-          </div>
+  <!----Row 1-->
+  <div class="col s12 m4">
+    <div class="card-panel">
+      <div class="row valign-wrapper">
+        <div class="col s4">
+          <span class="material-icons dummy_icon">category</span>
         </div>
-      </div>
-      <div class="card-panel orange darken-4">
-        <div class="card-title center dummy_info">{{ count_item }}</div>
-      </div>
-    </div>  
-    <!----Row 2-->
-    <div class="col s12 m4">
-      <div class="card-panel">
-        <div class="row valign-wrapper">
-          <div class="col s4">
-            <span class="material-icons dummy_icon">paid</span>
-          </div>
-          <div class="col s8">
-            <span class="dummy_info">Dépensé</span> 
-          </div>
+        <div class="col s8">
+          <span class="dummy_info">Produits</span>
         </div>
-      </div>
-      <div class="card-panel orange darken-4">
-        <div class="card-title center dummy_info">{{ spent|floatformat:0|intcomma}} C.FCA</div>
       </div>
     </div>
-    <!----Row 3-->
-    <div class="col s12 m4">
-      <div class="card-panel orange darken-4">
-        <div class="row valign-wrapper">
-          <div class="col s4">
-            <span class="material-icons dummy_icon">savings</span>
-          </div>
-          <div class="col s8">
-            <span class="dummy_info">Benefice</span> 
-          </div>
-        </div>
-      </div>
-      <div class="card-panel">
-        <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
-      </div>
+    <div class="card-panel orange darken-4">
+      <div class="card-title center dummy_info">{{ count_item }}</div>
     </div>
   </div>
+  <!----Row 2-->
+  <div class="col s12 m4">
+    <div class="card-panel">
+      <div class="row valign-wrapper">
+        <div class="col s4">
+          <span class="material-icons dummy_icon">paid</span>
+        </div>
+        <div class="col s8">
+          <span class="dummy_info">Dépensé</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-panel orange darken-4">
+      <div class="card-title center dummy_info">{{ spent|floatformat:0|intcomma}} C.FCA</div>
+    </div>
+  </div>
+  <!----Row 3-->
+  <div class="col s12 m4">
+    <div class="card-panel orange darken-4">
+      <div class="row valign-wrapper">
+        <div class="col s4">
+          <span class="material-icons dummy_icon">savings</span>
+        </div>
+        <div class="col s8">
+          <span class="dummy_info">Benefice</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-panel">
+      <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
+    </div>
+  </div>
+</div>
 
 <!-- I'll add a graph in here -->
 
 <div class="row">
-    <div class="col s8">
-        <!---- Adding Chart Achat -->
-        <div class="card-panel">
-            <canvas id="depotChart" width="400" height="200"></canvas>
-        </div>
+  <div class="col s8">
+    <!---- Adding Chart Achat -->
+    <div class="card-panel">
+      <canvas id="depotChart" width="400" height="200"></canvas>
     </div>
-    <div class="col s4">
-        <ul class="deposit collection with-header">
-            <li class="collection-header">
-                Tendance Dépot
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-                <span class="title">Title</span>
-                <p>First Line <br>
-                    Second Line
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle">folder</i>
-                <span class="title">Title</span>
-                <p>First Line <br>
-                    Second Line
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle green">insert_chart</i>
-                <span class="title">Title</span>
-                <p>First Line <br>
-                    Second Line
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle red">play_arrow</i>
-                <span class="title">Title</span>
-                <p>First Line <br>
-                    Second Line
-                </p>
-            </li>
-        </ul>
-    </div>
+  </div>
+  <div class="col s4">
+    <ul class="deposit collection with-header">
+      <li class="collection-header">
+        Tendance Dépot
+      </li>
+      <li class="collection-item avatar">
+        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+        <span class="title">Title</span>
+        <p>First Line <br>
+          Second Line
+        </p>
+      </li>
+      <li class="collection-item avatar">
+        <i class="material-icons circle">folder</i>
+        <span class="title">Title</span>
+        <p>First Line <br>
+          Second Line
+        </p>
+      </li>
+      <li class="collection-item avatar">
+        <i class="material-icons circle green">insert_chart</i>
+        <span class="title">Title</span>
+        <p>First Line <br>
+          Second Line
+        </p>
+      </li>
+      <li class="collection-item avatar">
+        <i class="material-icons circle red">play_arrow</i>
+        <span class="title">Title</span>
+        <p>First Line <br>
+          Second Line
+        </p>
+      </li>
+    </ul>
+  </div>
 </div>
 
 <!-- End graph -->
 
 <!-------- Modal -->
 <div id="depositStock" class="modal">
-    <div class="modal-content">
-      <div class="card-panel orange darken-4"><b>Nouveau Depot </b><i class="material-icons right">add_shopping_cart</i></div>
-      <form action="" method="post">
-        {% csrf_token %}
-        
-        <!--- Form -->
-        <div class="row">
-          <div class="input-field col s6">
-              {{ form.nom_vendeur }}
-              <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
-          </div>
-          <div class="input-field col s6">
-              {{ form.produit }}
-              <label for="{{ form.produit.id_for_label }}">Produit</label>
-          </div>
-          <div class="input-field col s6">
-              {{ form.qualite }}
-              <label for="{{ form.qualite.id_for_label }}">Qualite</label>
-          </div>
-          <div class="input-field col s6">
-              {{ form.prix_d_achat }}
-              <label for="{{ form.prix_d_achat.id_for_label }}">Prix d'achat</label>
-          </div>
-        </div>
-    
-
-            <div class="info_text valign-wrapper">
-                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
-                            class="material-icons">local_mall</i> </small></span>
-            </div>
-
-            <div class="modal-footer">
-              <a href="{% url 'dashboard:depositStockPage' %}" class="waves-effect btn-flat nopadding">
-                <i class="material-icons">local_mall</i>
-              </a>
-              <button class="modal-close waves-effect waves-green btn-flat" type="submit">
-                  <i class="material-icons right">thumb_up_alt</i>
-              </button>
-            </div>
-        </form>
+  <div class="modal-content">
+    <div class="card-panel orange darken-4"><b>Nouveau Depot </b><i class="material-icons right">add_shopping_cart</i>
     </div>
+    <form action="" method="post">
+      {% csrf_token %}
 
+      <!--- Form -->
+      <div class="row">
+        <div class="input-field col s6">
+          {{ form.nom_vendeur }}
+          <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
+        </div>
+        <div class="input-field col s6">
+          {{ form.produit }}
+          <label for="{{ form.produit.id_for_label }}">Produit</label>
+        </div>
+        <div class="input-field col s6">
+          {{ form.qualite }}
+          <label for="{{ form.qualite.id_for_label }}">Qualite</label>
+        </div>
+        <div class="input-field col s6">
+          {{ form.prix_d_achat }}
+          <label for="{{ form.prix_d_achat.id_for_label }}">Prix d'achat</label>
+        </div>
+      </div>
+      <div class="info_text valign-wrapper">
+        <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
+              class="material-icons">local_mall</i> </small>
+        </span>
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'dashboard:depositStockPage' %}" class="waves-effect btn-flat nopadding">
+          <i class="material-icons">local_mall</i>
+        </a>
+        <button class="modal-close waves-effect waves-green btn-flat" type="submit">
+          <i class="material-icons right">thumb_up_alt</i>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 
@@ -164,7 +162,8 @@
       <div class="table-header">
         <span class="table-title">Produit Depose</span>
         <div class="actions">
-          <a href="#depositStock" class="modal-trigger waves-effect btn-flat nopadding tooltipped" data-position="top" data-tooltip="Ajouter Produit"><i class="material-icons">add_shopping_cart</i></a>
+          <a href="#depositStock" class="modal-trigger waves-effect btn-flat nopadding tooltipped" data-position="top"
+            data-tooltip="Ajouter Produit"><i class="material-icons">add_shopping_cart</i></a>
           <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
       </div>
@@ -181,23 +180,29 @@
         </thead>
         <tbody>
           {% for ds in deposit_stocks %}
-            <tr>
-              <td> {{ ds.nom_vendeur }} </td>
-              <td> {{ ds.produit }}</td>
-              {% if ds.qualite == "EXCELLENT" %}
-                <td><span class="new badge green" data-badge-caption="{{ ds.qualite}}"></span></td>
-              {% elif ds.qualite == "NORMAL" %}
-                <td><span class="new badge yellow" data-badge-caption="{{ ds.qualite}}"></span></td>
-              {% else %}
-                <td><span class="new badge red" data-badge-caption="{{ ds.qualite}}"></span></td>
-              {% endif %}
-              <td>{{ ds.prix_d_achat|floatformat:0|intcomma}}</td>
-              <td>{{ ds.date_d_achat|date:"SHORT_DATE_FORMAT"}}</td>
-              <td class="actions">
-                <a href="{% url 'dashboard:depositStockDetailPage' ds.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir Produit"><span class="material-icons">visibility</span></a>
-                <a href="{% url 'dashboard:depositStockEditPage' ds.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier Produit"><span class="material-icons">update</span></a>
-                <a href="{% url 'dashboard:depositStockDeletePage' ds.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer Produit"><span class="material-icons">delete</span></a>
-              </td>
+          <tr>
+            <td> {{ ds.nom_vendeur }} </td>
+            <td> {{ ds.produit }}</td>
+            {% if ds.qualite == "EXCELLENT" %}
+            <td><span class="new badge green" data-badge-caption="{{ ds.qualite}}"></span></td>
+            {% elif ds.qualite == "NORMAL" %}
+            <td><span class="new badge yellow" data-badge-caption="{{ ds.qualite}}"></span></td>
+            {% else %}
+            <td><span class="new badge red" data-badge-caption="{{ ds.qualite}}"></span></td>
+            {% endif %}
+            <td>{{ ds.prix_d_achat|floatformat:0|intcomma}}</td>
+            <td>{{ ds.date_d_achat|date:"SHORT_DATE_FORMAT"}}</td>
+            <td class="actions">
+              <a href="{% url 'dashboard:depositStockDetailPage' ds.pk %}"
+                class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Voir Produit"><span class="material-icons">visibility</span></a>
+              <a href="{% url 'dashboard:depositStockEditPage' ds.pk %}"
+                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Modifier Produit"><span class="material-icons">update</span></a>
+              <a href="{% url 'dashboard:depositStockDeletePage' ds.pk %}"
+                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Supprimer Produit"><span class="material-icons">delete</span></a>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -206,9 +211,9 @@
 
     {% endblock body_content %}
 
-{% block javascripts %}
-  <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/chart_depot.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
-{% endblock javascripts %}
+    {% block javascripts %}
+    <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/chart_depot.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+    {% endblock javascripts %}
