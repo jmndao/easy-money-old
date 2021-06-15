@@ -25,12 +25,7 @@ from dashboard.utils import Utils
 # Thhis is top adding the form
 from .forms import DepotVenteModel
 
-<<<<<<< HEAD
 class IndexView(LoginRequiredMixin, TemplateView, Utils):
-=======
-# Create your views here.
-class IndexView(LoginRequiredMixin, TemplateView):
->>>>>>> 61a6a96a762fbddb6bebceb04794b98af20b8065
 
     template_name = 'dashboard/index.html'
 
@@ -112,8 +107,6 @@ class DepositStockView(LoginRequiredMixin, CreateView, Utils):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-<<<<<<< HEAD
-=======
     def benefice (self, achat_direct):
         self.d_vente = DepotVenteStockModel.objects.order_by('-date_d_depot')
         spent_direct = sum([p.prix_d_depot for p in self.d_vente])
@@ -122,7 +115,6 @@ class DepositStockView(LoginRequiredMixin, CreateView, Utils):
         the_benefice = sum_rv - (spent_direct + achat_direct)
         return the_benefice 
 
->>>>>>> 61a6a96a762fbddb6bebceb04794b98af20b8065
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['deposit_stocks'] = self.q = DepositStockModel.objects.order_by('-date_d_achat')
@@ -157,74 +149,9 @@ class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
     model = DepositStockModel
     success_url = reverse_lazy('dashboard:depositStockPage')
 
-<<<<<<< HEAD
     
 
 class BuyingStockView(LoginRequiredMixin, CreateView, Utils):
-=======
-    # def get_success_url(self):
-    #     notify.send(
-    #         self.request.user,
-    #         recipient=self.request.,
-    #         description=form.instance.text_message,
-    #         verb=form.instance.subject
-    #     )
-    #     return super().get_success_url()
-
-
-# For the new depot vente tab that I am creating.
-
-# First, creating the DepotVenteView
-class DepotVenteStockView(LoginRequiredMixin, CreateView):
-    template_name = 'dashboard/depot_vente_stock/depot_vente_stock.html'
-    model = DepotVenteStockModel
-    fields = '__all__'
-    success_url = reverse_lazy('dashboard:depotVenteStockPage')
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-    
-    def benefice (self, d_vente_one):
-        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
-        spent_two = sum([p.prix_d_achat for p in self.a_direct])
-        rev = BuyingStockModel.objects.all()
-        sum_rv = sum([p.prix_de_vente_fin for p in rev])
-        the_benefice = sum_rv - (d_vente_one + spent_two)
-        return the_benefice 
-
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        self.q = DepotVenteStockModel.objects.order_by('-date_d_depot')
-        
-        #Nombre de produit
-        context['depot_vente_stocks'] = self.q
-        context['total_item'] = self.q.count()
-
-        #Sum des produits de depots ventes
-        spent_one = [p.prix_d_depot for p in self.q]
-        spent_one_t = sum(spent_one)
-        context['spent_depot'] = sum(spent_one)       
-
-        #benefice
-        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
-        spent_two = [p.prix_d_achat for p in self.a_direct]
-        spent_two_t = sum(spent_two)
-        context['spent_two_t'] = spent_two_t
-         
-        
-        context['benefice'] = self.benefice(context['spent_depot'])
-        return context
-
-
-#Second, create the depotVenteStockCreateView
-
-
-
-class BuyingStockView(LoginRequiredMixin, CreateView):
->>>>>>> 61a6a96a762fbddb6bebceb04794b98af20b8065
 
     template_name = 'dashboard/buying_stock/buying_stock.html'
     model = BuyingStockModel
@@ -236,8 +163,6 @@ class BuyingStockView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-<<<<<<< HEAD
-=======
     def benefice(self, revenue):
         dp = DepositStockModel.objects.all()
         sum_dp = sum([p.prix_d_achat for p in dp])
@@ -251,17 +176,12 @@ class BuyingStockView(LoginRequiredMixin, CreateView):
         the_benefice = revenue - (spent_direct + sum_achat)
         return the_benefice 
 
->>>>>>> 61a6a96a762fbddb6bebceb04794b98af20b8065
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['buying_stocks'] = self.q = BuyingStockModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
         context['revenue'] = sum([p.prix_de_vente_fin for p in self.q])
-<<<<<<< HEAD
-        context['benefice'] = self.benefice_sale(DepositStockModel, context['revenue'])
-=======
         context['benefice_two'] = self.benefice_two(context['revenue'])
->>>>>>> 61a6a96a762fbddb6bebceb04794b98af20b8065
         return context
 
 
