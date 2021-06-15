@@ -151,7 +151,6 @@ class DepositStockDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'deposit'
 
 
-
 class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'dashboard/deposit_stock/deposit_stock_delete.html'
