@@ -1,0 +1,35 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block body_content %}
+
+<div class="card-panel">
+
+    <div class="card-panel orange darken-4">
+        <b>Details Client</b><i class="material-icons right">visibility</i>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <h4>Client: {{ client.prenom_du_client }}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Client: {{ client.nom_du_client }}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Client: {{ client.numero }}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Client: {{ client.address }}</h4>
+        </div>
+
+    </div>
+</div>
+
+<a href="{% url 'dashboard:clientPage' %}" class="btn-flat waves-effect">Retourner <i
+        class="material-icons right">keyboard_return</i></a>
+
+</div>
+
+{% endblock body_content %}

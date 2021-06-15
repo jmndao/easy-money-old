@@ -117,8 +117,8 @@
                     <div class="colright card-panel-header__wrapper">
                         <div class="black-text big-text"><b>Achat Direct</b></div>
                         <div class="bbtn">
-                            <a href="{% static 'dashboard/deposit_stock/deposit_stock.html' %}"
-                                class="waves-effect waves-light btn-small deep-orange accent-3">
+                            <a href="{% url 'dashboard:buyingStockPage' %}" class=" waves-effect waves-light btn-small
+                                deep-orange accent-3">
                                 <i class="material-icons left">visibility</i>
                                 Voir Tout
                             </a>
@@ -161,8 +161,9 @@
                     <div class="colright card-panel-header__wrapper">
                         <div class="black-text big-text"><b>Stock</b></div>
                         <div class="bbtn">
-                            <a class="waves-effect waves-light btn-small deep-orange accent-3"
-                                href="{% static 'dashboard/deposit_stock/deposit_stock.html' %}">
+
+                            <a href="{% url 'dashboard:depositStockPage' %}"
+                                class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class=" material-icons left">visibility</i>
                                 Voir Tout
                             </a>
