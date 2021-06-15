@@ -23,9 +23,10 @@ from dashboard.models import (  ProductModel,
 
 from notifications.signals import notify
 
+# Thhis is top adding the form
+from .forms import DepotVenteModel
+
 # Create your views here.
-
-
 class IndexView(LoginRequiredMixin, TemplateView):
 
     template_name = 'dashboard/index.html'
@@ -145,7 +146,7 @@ class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # For the new depot vente tab that I am creating.
-
+# First, creating the DepotVenteView
 class DepotVenteStockView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/depot_vente_stock/depot_vente_stock.html'
     model = DepotVenteStockModel
@@ -155,8 +156,45 @@ class DepotVenteStockView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def benefice (self, d_vente_one):
+        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
+        spent_two = sum([p.prix_d_achat for p in self.a_direct])
+        rev = BuyingStockModel.objects.all()
+        sum_rv = sum([p.prix_de_vente_fin for p in rev])
+        the_benefice = sum_rv - (d_vente_one + spent_two)
+        return the_benefice 
 
- 
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.q = DepotVenteStockModel.objects.order_by('-date_d_depot')
+        
+        #Nombre de produit
+        context['depot_vente_stocks'] = self.q
+        context['total_item'] = self.q.count()
+
+        #Sum des produits de depots ventes
+        spent_one = [p.prix_d_depot for p in self.q]
+        spent_one_t = sum(spent_one)
+        context['spent_depot'] = sum(spent_one)       
+
+        #benefice
+        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
+        spent_two = [p.prix_d_achat for p in self.a_direct]
+        spent_two_t = sum(spent_two)
+        context['spent_two_t'] = spent_two_t
+        
+        
+        context['benefice'] = self.benefice(context['spent_depot'])
+        return context
+
+
+#Second, create the depotVenteStockCreateView
+
+
+
 class BuyingStockView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/buying_stock/buying_stock.html'

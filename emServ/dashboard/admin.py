@@ -7,6 +7,7 @@ from dashboard.models import (
     BuyingStockModel,
     ClientModel,
     ClientRequestModel,
+    DepotVenteStockModel,
     Shop
 )
 
@@ -15,5 +16,6 @@ admin.site.register(DepositStockModel)
 admin.site.register(BuyingStockModel)
 admin.site.register(ClientRequestModel)
 admin.site.register(ClientModel)
+admin.site.register(DepotVenteStockModel)
 admin.site.register(Shop)
 

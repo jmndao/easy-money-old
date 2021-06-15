@@ -70,6 +70,7 @@ class DepositStockModel(models.Model):
     date_d_achat = models.DateTimeField(auto_now_add=True)
     prix_d_achat = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
@@ -93,10 +94,11 @@ class DepotVenteStockModel(models.Model):
     nom_vendeur = models.CharField(max_length=100, blank=True, null=True)
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     qualite = models.CharField(max_length=20, choices=QUALITE)
-    date_d_achat = models.DateTimeField(auto_now_add=True)
-    prix_d_achat = models.DecimalField(
+    date_d_depot = models.DateTimeField(auto_now_add=True)
+    prix_d_depot = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-
+    def __str__(self):
+        return '{}:{}'.format(self.nom_vendeur, self.produit.nom_du_produit)
 
 # Second Model -- Achat
 

@@ -26,7 +26,6 @@ urlpatterns = [
     path('depot_vente_stock/', d_views.DepotVenteStockView.as_view(), name = 'depotVenteStockPage'),
 
 
-
     # BuyingStock Routers
     path('buying_stock/', d_views.BuyingStockView.as_view(), name="buyingStockPage"),
     path('buying_stock_edit/<int:pk>/', d_views.BuyingStockUpdateView.as_view(), name='buyingStockEditPage'),
