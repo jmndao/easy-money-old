@@ -1,8 +1,9 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -29,7 +30,7 @@
                 <span class="card-title">Produit</span>
                 <p class="p-adjust add_size">
                     <i class="material-icons small right">shopping_cart</i>
-                    <span class="p-large i-adjust ">123</span>
+                    <span class="p-large i-adjust ">{{ n_product }}</span>
                 </p>
             </div>
         </div>
@@ -42,7 +43,7 @@
                 <span class="card-title">Clients</span>
                 <p class="p-adjust add_size">
                     <i class="material-icons small right">groups</i>
-                    <span class="p-large i-adjust">2,110</span>
+                    <span class="p-large i-adjust">{{ n_client|floatformat:0|intcomma }}</span>
                 </p>
             </div>
         </div>
@@ -77,34 +78,28 @@
             <li class="collection-header">
                 Tendance Produit
             </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                <span class="title"><i> Tendance Achat</i></span>
-                <p>MacBook Pro<br>
-                    achat: 10
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                <span class="title"><i> Tendance Achat</i></span>
-                <p>Galaxy S20<br>
-                    achat: 7
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle red darken-3">trending_down</i>
-                <span class="title"><i>Tendance Depot</i></span>
-                <p>Nokia Chargeur HP <br>
-                    1
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle red darken-3">trending_down</i>
-                <span class="title"><i></i>Tendance Depot</span>
-                <p>Nokia Ventilo<br>
-                    0
-                </p>
-            </li>
+            {% for ta in trend_achat %}
+                {% if ta.freq >= 1 %}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                        <span class="title"><i>Achat</i></span>
+                        <p>{{ ta.produit__nom_du_produit }}<br>
+                            Compteur: {{ ta.freq }}
+                        </p>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% for ts in trend_stock %}
+                {% if ts.freq <= 1 %}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+                        <span class="title"><i>Stock</i></span>
+                        <p>{{ ts.produit__nom_du_produit }}<br>
+                            Compteur: {{ ts.freq }}
+                        </p>
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
 
     </div>
@@ -120,7 +115,7 @@
             <div class=" col  s12">
                 <div class="card-panel grey lighten-1">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text"><b>Stock Achat</b></div>
+                        <div class="black-text big-text"><b>Achat Direct</b></div>
                         <div class="bbtn">
                             <a href="{% static 'dashboard/deposit_stock/deposit_stock.html' %}"
                                 class="waves-effect waves-light btn-small deep-orange accent-3">
@@ -133,38 +128,26 @@
                     <table class="responsive-table highlight">
                         <thead class="">
                             <tr>
-                                <th>Reference</th>
-                                <th>Vendeur</th>
                                 <th>Produit</th>
-                                <th>Qualite</th>
-                                <th>Date</th>
-                                <th>Prix </th>
+                                <th>Date de Vente</th>
+                                <th>Prix de Vente</th>
+                                <th>Garantie</th>
+                                <th>Delai de Garantie</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <!----- Row: 1-->
-                            <tr>
-                                <td>1</td>
-                                <td>Jeanette</td>
-                                <td>SAC A LANGER GRIS</td>
-                                <td>
-                                    Bonne
-                                </td>
-                                <td>5/21/2021</td>
-                                <td>1,000</td>
-                            </tr>
+                            {% for achat in achats %}
+                                <tr>
+                                    <td>{{ achat.produit.nom_du_produit }}</td>
+                                    <td>{{ achat.date_de_vente|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td>{{ achat.prix_de_vente_fin|floatformat:0|intcomma }}</td>
+                                    <td>{{ achat.garantie|yesno:"OUI, NON" }}</td>
+                                    <td>{% if achat.garantie %}{{ achat.delai_garantie }} {% else %} ------- {% endif %}</td>
+                                </tr>
+                            {% endfor %}
                             <!----- Row: 2-->
-                            <tr>
-                                <td>2</td>
-                                <td>ANtoine</td>
-                                <td>DOSEUR LAIT OU PUREE</td>
-                                <td>
-                                    Normale
-                                </td>
-                                <td>1/22/2021</td>
-                                <td>123,000</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -176,7 +159,7 @@
             <div class="col s12">
                 <div class="card-panel grey lighten-1">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text"><b>Stock Dépot</b></div>
+                        <div class="black-text big-text"><b>Stock</b></div>
                         <div class="bbtn">
                             <a class="waves-effect waves-light btn-small deep-orange accent-3"
                                 href="{% static 'dashboard/deposit_stock/deposit_stock.html' %}">
@@ -190,34 +173,31 @@
                     <table class="responsive-table highlight">
                         <thead>
                             <tr>
-                                <th>Reference</th>
                                 <th>Produit</th>
-                                <th>Date</th>
-                                <th>prix minimum</th>
-                                <th>Prix final</th>
-                                <th>Garantie</th>
+                                <th>Vendeur</th>
+                                <th>Date Achat</th>
+                                <th>Prix Achat</th>
+                                <th>Qualite</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <!----- Row: 1-->
-                            <tr>
-                                <td>1</td>
-                                <td>SAC A LANGER GRIS</td>
-                                <td>5/21/2021</td>
-                                <td>900</td>
-                                <td>1,000</td>
-                                <td>OUI</td>
-                            </tr>
-                            <!----- Row: 2-->
-                            <tr>
-                                <td>2</td>
-                                <td>DOSEUR LAIT OU PUREE</td>
-                                <td>1/22/2021</td>
-                                <td>112,000</td>
-                                <td>123,000</td>
-                                <td>NON</td>
-                            </tr>
+                            {% for stock in stocks %}
+                                <tr>
+                                    <td>{{ stock.produit.nom_du_produit }}</td>
+                                    <td>{{ stock.nom_vendeur }}</td>
+                                    <td>{{ stock.date_d_achat|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td>{{ stock.prix_d_achat|floatformat:0|intcomma }}</td>
+                                    {% if stock.qualite == "EXCELLENT" %}
+                                        <td><span class="new badge green" data-badge-caption="{{ stock.qualite}}"></span></td>
+                                    {% elif stock.qualite == "NORMAL" %}
+                                        <td><span class="new badge yellow" data-badge-caption="{{ stock.qualite}}"></span></td>
+                                    {% else %}
+                                        <td><span class="new badge red" data-badge-caption="{{ stock.qualite}}"></span></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -232,5 +212,9 @@
 {% endblock body_content %}
 
 {% block javascripts %}
-<script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
+    <script>
+        var dataset_achat = JSON.parse('{{ dataset_achat }}');
+        var dataset_stock = JSON.parse('{{ dataset_stock }}');
+    </script>
+    <script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
 {% endblock javascripts %}

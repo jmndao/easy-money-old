@@ -1,33 +1,46 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.contrib import messages
+from django.db.models import Count
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import (TemplateView,
                                   ListView,
                                   DetailView,
-                                  FormView
-                                  )
+                                  FormView)
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
-                                       DeleteView
-                                       )
+                                       DeleteView)
 from dashboard.models import (  ProductModel, 
                                 ClientModel,
                                 ClientRequestModel,
                                 DepositStockModel,
                                 BuyingStockModel,
-                                Shop
-                            )
+                                Shop)
 
 from notifications.signals import notify
+from dashboard.utils import Utils
 
 # Create your views here.
 
 
-class IndexView(LoginRequiredMixin, TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     template_name = 'dashboard/index.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["stocks"] = DepositStockModel.objects.all().order_by('-date_d_achat')
+        context["achats"] = BuyingStockModel.objects.all().order_by('-created_date')
+        context["dataset_achat"] = self.chartObject(BuyingStockModel, key='prix_de_vente_fin', dt_col_name='created_date')
+        context["dataset_stock"] = self.chartObject(DepositStockModel, key='prix_d_achat', dt_col_name='date_d_achat')
+        context["trend_achat"] = BuyingStockModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
+        context["trend_stock"] = DepositStockModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
+        context["n_product"] = ProductModel.objects.all().count()
+        context["n_client"] = ClientModel.objects.all().count()
+        return context
+    
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -81,7 +94,7 @@ class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('dashboard:clientRequestPage')
 
 
-class DepositStockView(LoginRequiredMixin, CreateView):
+class DepositStockView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/deposit_stock/deposit_stock.html'
     model = DepositStockModel
@@ -93,17 +106,12 @@ class DepositStockView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def benefice(self, sum_dp):
-        rev = BuyingStockModel.objects.all()
-        sum_rev = sum([p.prix_de_vente_fin for p in rev])
-        return (sum_rev - sum_dp)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['deposit_stocks'] = self.q = DepositStockModel.objects.order_by('-date_d_achat')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.prix_d_achat for p in self.q])
-        context['benefice'] = self.benefice(context['spent'])
+        context['benefice'] = self.benefice_stock(BuyingStockModel, context['spent'])
         return context
 
 
@@ -133,16 +141,9 @@ class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
     model = DepositStockModel
     success_url = reverse_lazy('dashboard:depositStockPage')
 
-    # def get_success_url(self):
-    #     notify.send(
-    #         self.request.user,
-    #         recipient=self.request.,
-    #         description=form.instance.text_message,
-    #         verb=form.instance.subject
-    #     )
-    #     return super().get_success_url()
     
-class BuyingStockView(LoginRequiredMixin, CreateView):
+
+class BuyingStockView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/buying_stock/buying_stock.html'
     model = BuyingStockModel
@@ -154,17 +155,12 @@ class BuyingStockView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def benefice(self, revenue):
-        dp = DepositStockModel.objects.all()
-        sum_dp = sum([p.prix_d_achat for p in dp])
-        return (revenue - sum_dp)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['buying_stocks'] = self.q = BuyingStockModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
         context['revenue'] = sum([p.prix_de_vente_fin for p in self.q])
-        context['benefice'] = self.benefice(context['revenue'])
+        context['benefice'] = self.benefice_sale(DepositStockModel, context['revenue'])
         return context
 
 

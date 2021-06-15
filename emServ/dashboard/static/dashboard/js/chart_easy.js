@@ -1,16 +1,16 @@
 var ctx_in = document.getElementById("myChart");
 
 var data = {
-    labels: ['Janv', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Dec'],
+    labels: dataset_stock["months"], // or dataset_achat["months"]
     datasets: [{
-            label: 'Depot',
-            data: [120000, 212700, 100000, 212000, 312000, 97000, 212700, 120000, 97000, 170000, 212000, 147000],
+            label: 'Stock',
+            data: dataset_stock["data"],
             backgroundColor: 'rgb(255, 61, 0)'
 
         },
         {
             label: 'Achat',
-            data: [130000, 214700, 40000, 262000, 412000, 87000, 200700, 143000, 67000, 320000, 232000, 184000],
+            data: dataset_achat["data"],
             backgroundColor: 'rgb(0, 0, 0)'
 
         }
@@ -44,7 +44,7 @@ var myBarChart = new Chart(ctx_in, {
 //             borderColor: ['black'],
 //             data: [3, 5, 4, 8, 1, 6, 4, 2, 7, 0, 4, 1],
 //             backgroundColor: 'rgb(255, 61, 0)',
-            
+
 //         }],
 //     options: {
 //         title:{

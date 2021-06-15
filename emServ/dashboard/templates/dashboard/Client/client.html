@@ -50,7 +50,7 @@
                 <span class="table-title">List Des Clients</span>
                 <div class="actions">
                     <!-- Here is where we should make the linking-->
-                    <a class="modal-trigger waves-effect btn-flat nopadding"><i
+                    <a href="#" class="modal-trigger waves-effect btn-flat nopadding"><i
                             class="material-icons">person_add</i></a>
                     <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">search</i></a>
@@ -89,30 +89,11 @@
         </div>
     </div>
 </div>
-<!-- #####################################  -->
-
-<!-- Adding Card Table End -->
-
-
-<!-- #####################################  -->
-
-
-<!--  -->
-<div class="card_panel">
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages%}
-        <li {% if message.tags %} class="{{ message.tags}}" {% endif %}> {{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-</div>
-<!--  -->
 
 {% endblock body_content %}
 
 {% block javascripts %}
-<script type="text/javascript" src="{% static 'dashboard/js/client_request.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/client_request.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 {% endblock javascripts %}
