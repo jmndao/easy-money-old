@@ -95,10 +95,13 @@ class DepositStockView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def benefice(self, sum_dp):
+    def benefice (self, achat_direct):
+        self.d_vente = DepotVenteStockModel.objects.order_by('-date_d_depot')
+        spent_direct = sum([p.prix_d_depot for p in self.d_vente])
         rev = BuyingStockModel.objects.all()
-        sum_rev = sum([p.prix_de_vente_fin for p in rev])
-        return (sum_rev - sum_dp)
+        sum_rv = sum([p.prix_de_vente_fin for p in rev])
+        the_benefice = sum_rv - (spent_direct + achat_direct)
+        return the_benefice 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -146,6 +149,7 @@ class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
 
 
 # For the new depot vente tab that I am creating.
+
 # First, creating the DepotVenteView
 class DepotVenteStockView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/depot_vente_stock/depot_vente_stock.html'
@@ -185,7 +189,7 @@ class DepotVenteStockView(LoginRequiredMixin, CreateView):
         spent_two = [p.prix_d_achat for p in self.a_direct]
         spent_two_t = sum(spent_two)
         context['spent_two_t'] = spent_two_t
-        
+         
         
         context['benefice'] = self.benefice(context['spent_depot'])
         return context
@@ -211,13 +215,21 @@ class BuyingStockView(LoginRequiredMixin, CreateView):
         dp = DepositStockModel.objects.all()
         sum_dp = sum([p.prix_d_achat for p in dp])
         return (revenue - sum_dp)
+    
+    def benefice_two(self, revenue):
+        self.d_vente = DepotVenteStockModel.objects.order_by('-date_d_depot')
+        spent_direct = sum([p.prix_d_depot for p in self.d_vente])
+        self.achat_direct = DepositStockModel.objects.all()
+        sum_achat = sum([p.prix_d_achat for p in self.achat_direct])
+        the_benefice = revenue - (spent_direct + sum_achat)
+        return the_benefice 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['buying_stocks'] = self.q = BuyingStockModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
         context['revenue'] = sum([p.prix_de_vente_fin for p in self.q])
-        context['benefice'] = self.benefice(context['revenue'])
+        context['benefice_two'] = self.benefice_two(context['revenue'])
         return context
 
 
