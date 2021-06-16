@@ -24,6 +24,11 @@ ETAT = [
     ('POUR_PIECE', 'Pour Piece')
 ]
 
+TYPE = [
+    ('DV', 'Depot Vente'),
+    ('AD', 'Achat Direct')
+]
+
 OBSOLESCENCE = [
     ('RAPIDE', 'Rapide'),
     ('MOYENNE', 'Moyenne'),
@@ -109,6 +114,7 @@ class ProductModel(models.Model):
             - name                  : name of the product
             - model                 : model of the product [electronic]
             - category              : category of the product wheter its elec or ...
+            - dv_or_ad              : category depot vente or achat direct
             - sale_price_on_new     : price of a such a new product
             - sale_price_on_old     : price of a such an old product
             - estate                : the actual estate of the product
@@ -130,6 +136,7 @@ class ProductModel(models.Model):
     name = models.CharField(max_length=100)
     model = models.CharField(max_length=100,  null=True, blank=True)
     category = models.CharField(max_length=100, choices=CATEGORY)
+    dv_or_ad = models.CharField(max_length=100, choices=TYPE)
     quantity = models.IntegerField()
     sale_price_on_new = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix de Vente Neuf")
     sale_price_on_old = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix de Vente Occasion")
@@ -145,7 +152,6 @@ class ProductModel(models.Model):
     charger = models.BooleanField(default=True)
     original_box = models.BooleanField(default=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix Depot Vente")
     seller = models.ForeignKey(ClientModel, null=True, on_delete=models.SET_NULL)
     description = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -167,13 +173,10 @@ class AchatDirectModel(models.Model):
             - produit           : the product that has been sold
             - created_date      : date and time of the sale
             - price             : the price the product has been purchased
-            - min_price         : Minimal price the product has to be sold
     """
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-    min_price = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -191,11 +194,12 @@ class DepotVenteModel(models.Model):
 
             - produit           : the product that has been sold
             - created_date      : date and time of the purchase
+            - price             : price the product has been given to the shop
 
         Notice that the diffrence is going to be in which page, the user went to fill the form
     """
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    min_price = models.DecimalField(
+    price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)    
     created_date = models.DateTimeField(auto_now_add=True)
     
