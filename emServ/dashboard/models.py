@@ -195,7 +195,7 @@ class DepotVenteModel(models.Model):
         Notice that the diffrence is going to be in which page, the user went to fill the form
     """
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    min_price = models.DecimalField(
+    price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)    
     created_date = models.DateTimeField(auto_now_add=True)
     
