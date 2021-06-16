@@ -76,26 +76,26 @@
         <!------ Product Trend Section -->
         <ul class="deposit collection with-header">
             <li class="collection-header">
-                Tendance Produit
+                Tendance Produits
             </li>
-            {% for ta in trend_achat %}
-                {% if ta.freq >= 1 %}
+            {% for tv in tendance_vente %}
+                {% if tv.freq >= 1 %}
                     <li class="collection-item avatar">
                         <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                        <span class="title"><i>Achat</i></span>
-                        <p>{{ ta.produit__nom_du_produit }}<br>
-                            Compteur: {{ ta.freq }}
+                        <span class="title"><i>Vente</i></span>
+                        <p>{{ tv.produit.name }}<br>
+                            Frequence de Vente: {{ tv.freq }}
                         </p>
                     </li>
                 {% endif %}
             {% endfor %}
-            {% for ts in trend_stock %}
+            {% for ts in tendance_achat_direct %}
                 {% if ts.freq <= 1 %}
                     <li class="collection-item avatar">
                         <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-                        <span class="title"><i>Stock</i></span>
-                        <p>{{ ts.produit__nom_du_produit }}<br>
-                            Compteur: {{ ts.freq }}
+                        <span class="title"><i>Achat Direct</i></span>
+                        <p>{{ ts.produit.name }}<br>
+                            Produit en manque: {{ ts.freq }}
                         </p>
                     </li>
                 {% endif %}
@@ -117,7 +117,7 @@
                     <div class="colright card-panel-header__wrapper">
                         <div class="black-text big-text"><b>Achat Direct</b></div>
                         <div class="bbtn">
-                            <a href="{% url 'dashboard:buyingStockPage' %}" class=" waves-effect waves-light btn-small
+                            <a href="{% url 'dashboard:ventePage' %}" class=" waves-effect waves-light btn-small
                                 deep-orange accent-3">
                                 <i class="material-icons left">visibility</i>
                                 Voir Tout
@@ -138,13 +138,13 @@
 
                         <tbody>
                             <!----- Row: 1-->
-                            {% for achat in achats %}
+                            {% for achat in achat_directs %}
                                 <tr>
-                                    <td>{{ achat.produit.nom_du_produit }}</td>
-                                    <td>{{ achat.date_de_vente|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td>{{ achat.prix_de_vente_fin|floatformat:0|intcomma }}</td>
-                                    <td>{{ achat.garantie|yesno:"OUI, NON" }}</td>
-                                    <td>{% if achat.garantie %}{{ achat.delai_garantie }} {% else %} ------- {% endif %}</td>
+                                    <td>{{ achat.produit.name }}</td>
+                                    <td>{{ achat.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td>{{ achat.price|floatformat:0|intcomma }}</td>
+                                    <td>{{ achat.guarantee|yesno:"OUI, NON" }}</td>
+                                    <td>{% if achat.guarantee %}{{ achat.guarantee_period }} {% else %} ------- {% endif %}</td>
                                 </tr>
                             {% endfor %}
                             <!----- Row: 2-->
@@ -159,10 +159,10 @@
             <div class="col s12">
                 <div class="card-panel grey lighten-1">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text"><b>Stock</b></div>
+                        <div class="black-text big-text"><b>Achat Direct</b></div>
                         <div class="bbtn">
 
-                            <a href="{% url 'dashboard:depositStockPage' %}"
+                            <a href="{% url 'dashboard:achatDirectPage' %}"
                                 class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class=" material-icons left">visibility</i>
                                 Voir Tout
@@ -184,18 +184,22 @@
 
                         <tbody>
                             <!----- Row: 1-->
-                            {% for stock in stocks %}
+                            {% for vente in ventes %}
                                 <tr>
-                                    <td>{{ stock.produit.nom_du_produit }}</td>
-                                    <td>{{ stock.nom_vendeur }}</td>
-                                    <td>{{ stock.date_d_achat|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td>{{ stock.prix_d_achat|floatformat:0|intcomma }}</td>
-                                    {% if stock.qualite == "EXCELLENT" %}
-                                        <td><span class="new badge green" data-badge-caption="{{ stock.qualite}}"></span></td>
-                                    {% elif stock.qualite == "NORMAL" %}
-                                        <td><span class="new badge yellow" data-badge-caption="{{ stock.qualite}}"></span></td>
+                                    <td>{{ vente.produit.name }}</td>
+                                    <td>{{ vente.produit.seller }}</td>
+                                    <td>{{ vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td>{{ vente.price|floatformat:0|intcomma }}</td>
+                                    {% if vente.produit.estate == "NEUF" %}
+                                        <td><span class="new badge green" data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                    {% elif vente.produit.estate == "BON" %}
+                                        <td><span class="new badge light-green" data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                    {% elif vente.produit.estate == "MOYEN" %}
+                                        <td><span class="new badge yellow" data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                    {% elif vente.produit.estate == "MAUVAIS" %}
+                                        <td><span class="new badge light-red" data-badge-caption="{{ vente.produit.estate }}"></span></td>
                                     {% else %}
-                                        <td><span class="new badge red" data-badge-caption="{{ stock.qualite}}"></span></td>
+                                        <td><span class="new badge red" data-badge-caption="{{ vente.produit.estate }}"></span></td>
                                     {% endif %}
                                 </tr>
                             {% endfor %}

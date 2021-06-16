@@ -58,8 +58,13 @@ class Utils:
         sum_dvs = sum([p.prix_d_depot for p in dvs])
         return (sum_sales - (d_stock + sum_dvs))
 
-    def chartObject(self, db, key=None, dt_col_name=None):
-        df = pd.DataFrame(db.objects.all().values())
+    def chartObject(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
+        # Let's check is user is superuser or not
+        if is_superuser:
+            df = pd.DataFrame(db.objects.all().values())
+        else:
+            df = pd.DataFrame(db.objects.filter(produit__shop__owner__user__username=uname).values())
+        
         if not df.empty:
             un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
             # Parsed it 
@@ -69,7 +74,7 @@ class Utils:
             dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
             #return mark_safe(escapejs(json.dumps(dataset)))
         else:
-           dataset = {   'months': ['Jan', 'Fev', 'Avr'],
+            dataset = {   'months': ['Jan', 'Fev', 'Avr'],
                             'data': [10, 12, 8]   }
 
         return mark_safe(escapejs(json.dumps(dataset)))
