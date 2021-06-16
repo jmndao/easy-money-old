@@ -238,7 +238,7 @@ class DepotVenteStockDetailView(LoginRequiredMixin, DetailView):
 
 
 #Third, create the depotVenteStockEditView    
-class DepotVenteStockEditView(LoginRequiredMixin, UpdateView):
+class DepotVenteEditView(LoginRequiredMixin, UpdateView):
     template_name = 'dashboard/depot_vente/depot_vente_edit.html'
     model = DepotVenteModel
     fields = '__all__'
@@ -250,13 +250,13 @@ class DepotVenteStockEditView(LoginRequiredMixin, UpdateView):
 
 
 
-class DepotVenteStockDeleteView(LoginRequiredMixin, DeleteView):
+class DepotVenteDeleteView(LoginRequiredMixin, DeleteView):
     model = ProductModel
     template_name = 'dashboard/depot_vente/depot_vente_delete.html'
     context_object_name = 'dv_delete'
     success_url = reverse_lazy('dashboard:depotVentePage')
 
-class VenteView(LoginRequiredMixin, CreateView):
+class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/vente/vente.html'
     model = VenteModel
