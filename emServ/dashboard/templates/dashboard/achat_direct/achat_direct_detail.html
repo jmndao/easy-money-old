@@ -11,36 +11,42 @@
 
         <div class="row">
             <div class="col s12">
-                <h4>Produit Déposé: {{ deposit.produit }}</h4> 
+                <h4>Produit Déposé: {{ achat_direct.produit }}</h4> 
             </div>
             <div class="col s6">
                 Nom du vendeur: 
             </div>
             <div class="col s6">
-                <b>{{ deposit.nom_vendeur }}</b>
+                <b>{{ achat_direct.produit.seller }}</b>
             </div>
             <div class="col s6">
                 Qualité du produit: 
             </div>
             <div class="col s6">
-                <b>{{ deposit.qualite }}</b>
+                <b>{{ achat_direct.produit.estate }}</b>
             </div>
             <div class="col s6">
                 Date d'achat [par la boutique]: 
             </div>
             <div class="col s6">
-                <b>{{ deposit.date_d_achat }}</b>
+                <b>{{ achat_direct.created_date }}</b>
             </div>
             <div class="col s6">
                 Prix d'achat:
             </div>
             <div class="col s6">
-                <b>{{ deposit.prix_d_achat|floatformat:0|intcomma }}</b>
+                <b>{{ achat_direct.price|floatformat:0|intcomma }}</b>
+            </div>
+            <div class="col s6">
+                Prix Minimal:
+            </div>
+            <div class="col s6">
+                <b>{{ achat_direct.min_price|floatformat:0|intcomma }}</b>
             </div>
             
         </div>
 
-        <a href="{% url 'dashboard:depositStockPage' %}" class="btn-flat waves-effect">Retourner <i class="material-icons right">keyboard_return</i></a>
+        <a href="{% url 'dashboard:achatDirectPage' %}" class="btn-flat waves-effect">Retourner <i class="material-icons right">keyboard_return</i></a>
     
     </div>
 
