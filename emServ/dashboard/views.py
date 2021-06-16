@@ -39,12 +39,12 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["stocks"] = DepositStockModel.objects.all().order_by('-date_d_achat')
-        context["achats"] = BuyingStockModel.objects.all().order_by('-created_date')
-        context["dataset_achat"] = self.chartObject(BuyingStockModel, key='prix_de_vente_fin', dt_col_name='created_date')
-        context["dataset_stock"] = self.chartObject(DepositStockModel, key='prix_d_achat', dt_col_name='date_d_achat')
-        context["trend_achat"] = BuyingStockModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
-        context["trend_stock"] = DepositStockModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
+        context["stocks"] = AchatDirectModel.objects.all().order_by('-date_d_achat')
+        context["achats"] = VenteModel.objects.all().order_by('-created_date')
+        context["dataset_achat"] = self.chartObject(VenteModel, key='prix_de_vente_fin', dt_col_name='created_date')
+        context["dataset_stock"] = self.chartObject(AchatDirectModel, key='prix_d_achat', dt_col_name='date_d_achat')
+        context["trend_achat"] = VenteModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
+        context["trend_stock"] = AchatDirectModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
         context["n_product"] = ProductModel.objects.all().count()
         context["n_client"] = ClientModel.objects.all().count()
         return context
@@ -104,10 +104,10 @@ class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
 
 class AchatDirectView(LoginRequiredMixin, CreateView):
 
-    template_name = 'dashboard/deposit_stock/deposit_stock.html'
-    model = DepositStockModel
+    template_name = 'dashboard/achat_direct/achat_direct.html'
+    model = AchatDirectModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:depositStockPage')
+    success_url = reverse_lazy('dashboard:AchatDirectPage')
     
 
     def form_valid(self, form):
@@ -115,7 +115,7 @@ class AchatDirectView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def benefice (self, achat_direct):
-        self.d_vente = DepotVenteStockModel.objects.order_by('-date_d_depot')
+        self.d_vente = DepotVenteModel.objects.order_by('-date_d_depot')
         spent_direct = sum([p.prix_d_depot for p in self.d_vente])
         rev = VenteModel.objects.all()
         sum_rv = sum([p.prix_de_vente_fin for p in rev])
@@ -124,19 +124,19 @@ class AchatDirectView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['deposit_stocks'] = self.q = DepositStockModel.objects.order_by('-date_d_achat')
+        context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-date_d_achat')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.prix_d_achat for p in self.q])
-        context['benefice'] = self.benefice_stock(BuyingStockModel, DepotVenteStockModel, context['spent'])
+        context['benefice'] = self.benefice_stock(VenteModel, DepotVenteModel, context['spent'])
         return context
 
 
 class AchatDirectUpdateView(LoginRequiredMixin, UpdateView):
 
-    template_name = 'dashboard/deposit_stock/deposit_stock_edit.html'
+    template_name = 'dashboard/achat_direct/achat_direct_edit.html'
     model = AchatDirectStockModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:depositStockPage')
+    success_url = reverse_lazy('dashboard:AchatDirectPage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -145,27 +145,27 @@ class AchatDirectUpdateView(LoginRequiredMixin, UpdateView):
 
 class AchatDirectDetailView(LoginRequiredMixin, DetailView):
 
-    template_name = 'dashboard/deposit_stock/deposit_stock_detail.html'
-    model = DepositStockModel
+    template_name = 'dashboard/achat_direct/achat_direct_detail.html'
+    model = AchatDirectModel
     context_object_name = 'deposit'
 
 
 
 class AchatDirectDeleteView(LoginRequiredMixin, DeleteView):
 
-    template_name = 'dashboard/deposit_stock/deposit_stock_delete.html'
-    model = DepositStockModel
-    success_url = reverse_lazy('dashboard:depositStockPage')
+    template_name = 'dashboard/achat_direct/achat_direct_delete.html'
+    model = AchatDirectModel
+    success_url = reverse_lazy('dashboard:AchatDirectPage')
 
 
 # For the new depot vente tab that I am creating.
 
 # First, creating the DepotVenteView
-class DepotVenteStockView(LoginRequiredMixin, CreateView, Utils):
-    template_name = 'dashboard/depot_vente_stock/depot_vente_stock.html'
-    model = DepotVenteStockModel
+class DepotVenteView(LoginRequiredMixin, CreateView, Utils):
+    template_name = 'dashboard/depot_vente/depot_vente.html'
+    model = DepotVenteModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+    success_url = reverse_lazy('dashboard:depotVentePage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -173,19 +173,19 @@ class DepotVenteStockView(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.q = DepotVenteStockModel.objects.order_by('-date_d_depot')    
+        self.q = DepotVenteModel.objects.order_by('-date_d_depot')    
         #Nombre de produit
-        context['depot_vente_stocks'] = self.q
+        context['depot_vente'] = self.q
         context['total_item'] = self.q.count()
         #Sum des produits de depots ventes
         context['spent_depot'] = sum([p.prix_d_depot for p in self.q])
         #benefice 
-        context['benefice'] = self.benefice_dv(DepositStockModel, BuyingStockModel, context['spent_depot'])
+        context['benefice'] = self.benefice_dv(AchatDirectModel, VenteModel, context['spent_depot'])
         return context
 
     
     def benefice (self, d_vente_one):
-        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
+        self.a_direct = AchatDirectModel.objects.order_by('-date_d_achat')
         spent_two = sum([p.prix_d_achat for p in self.a_direct])
         rev = VenteModel.objects.all()
         sum_rv = sum([p.prix_de_vente_fin for p in rev])
@@ -194,10 +194,10 @@ class DepotVenteStockView(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.q = DepotVenteStockModel.objects.order_by('-date_d_depot')
+        self.q = DepotVenteModel.objects.order_by('-date_d_depot')
         
         #Nombre de produit
-        context['depot_vente_stocks'] = self.q
+        context['depot_vente'] = self.q
         context['total_item'] = self.q.count()
 
         #Sum des produits de depots ventes
@@ -206,7 +206,7 @@ class DepotVenteStockView(LoginRequiredMixin, CreateView, Utils):
         context['spent_depot'] = sum(spent_one)       
 
         #benefice
-        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
+        self.a_direct = AchatDirectModel.objects.order_by('-date_d_achat')
         spent_two = [p.prix_d_achat for p in self.a_direct]
         spent_two_t = sum(spent_two)
         context['spent_two_t'] = spent_two_t
@@ -218,18 +218,18 @@ class DepotVenteStockView(LoginRequiredMixin, CreateView, Utils):
 
 #Second, create the depotVenteStockDetailView
 class DepotVenteStockDetailView(LoginRequiredMixin, DetailView):
-    template_name = 'dashboard/depot_vente_stock/depot_vente_stock_detail.html'
-    model = DepotVenteStockModel
+    template_name = 'dashboard/depot_vente/depot_vente_detail.html'
+    model = DepotVenteModel
     context_object_name = 'd_vente'
 
 
 
 #Third, create the depotVenteStockEditView    
 class DepotVenteStockEditView(LoginRequiredMixin, UpdateView):
-    template_name = 'dashboard/depot_vente_stock/depot_vente_stock_edit.html'
-    model = DepotVenteStockModel
+    template_name = 'dashboard/depot_vente/depot_vente_edit.html'
+    model = DepotVenteModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+    success_url = reverse_lazy('dashboard:depotVentePage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -239,9 +239,9 @@ class DepotVenteStockEditView(LoginRequiredMixin, UpdateView):
 
 class DepotVenteStockDeleteView(LoginRequiredMixin, DeleteView):
     model = ProductModel
-    template_name = 'dashboard/depot_vente_stock/depot_vente_stock_delete.html'
+    template_name = 'dashboard/depot_vente/depot_vente_delete.html'
     context_object_name = 'dv_delete'
-    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+    success_url = reverse_lazy('dashboard:depotVentePage')
 
 class VenteView(LoginRequiredMixin, CreateView):
 
@@ -260,7 +260,7 @@ class VenteView(LoginRequiredMixin, CreateView):
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
         context['revenue'] = sales = sum([p.prix_de_vente_fin for p in self.q])
-        context['benefice'] = self.benefice_sale(DepositStockModel, DepotVenteStockModel, sales)
+        context['benefice'] = self.benefice_sale(AchatDirectModel, DepotVenteModel, sales)
         return context
 
 
