@@ -21,8 +21,8 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="input-field col s3">
-                        {{ form.nom_du_produit}}
-                        <label for="{{form.nom_du_produit.id_for_label}}">Nom du produit</label>
+                        {{ form.name}}
+                        <label for="{{form.name.id_for_label}}">Nom du produit</label>
                     </div>
                     <div class="input-field col s3">
                         {{ form.model }}
@@ -39,28 +39,24 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s3">
-                        {{form.nombre_de_giga}}
-                        <label for="{{form.nombre_de_giga.id_for_label}}">Nombre de giga</label>
+                        {{form.storage}}
+                        <label for="{{form.storage.id_for_label}}">Nombre de giga</label>
                     </div>
                     <div class="input-field col s3">
-                        {{form.nombre_de_ram}}
-                        <label for="{{form.nombre_de_ram.id_for_label}}">Nombre de ram</label>
+                        {{form.ram}}
+                        <label for="{{form.ram.id_for_label}}">Nombre de ram</label>
                     </div>
-                    <div class="input-field col s3">
-                        {{form.dimensions}}
-                        <label for="{{form.dimensions.id_for_label}}">Dimensions</label>
-                    </div>
-                    <div class="input-field col s3">
-                        {{ form.poids}}
-                        <label for="{{form.poids.id_for_label}}">Masse</label>
-                    </div>    
+                    <div class="input-field col s6">
+                        {{form.dimension}}
+                        <label for="{{form.dimension.id_for_label}}">Dimensions</label>
+                    </div>   
                 </div>
 
                 <div class="row">
                     <div class="col s4 left-align">
                         <p>
                             <label>
-                                {{form.boite_origine}}
+                                {{form.original_box}}
                                 <span>Boite d'origine</span>
                             </label>
                         </p>

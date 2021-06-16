@@ -229,16 +229,16 @@ class DepotVenteView(LoginRequiredMixin, CreateView, Utils):
         return context
 
 
-#Second, create the DeptVenteModelDetailView
-class DeptVenteModelDetailView(LoginRequiredMixin, DetailView):
+#Second, create the DepotVenteDetailView
+class DepotVenteDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/depot_vente/depot_vente_detail.html'
     model = DepotVenteModel
     context_object_name = 'd_vente'
 
 
 
-#Third, create the DeptVenteModelEditView    
-class DeptVenteModelEditView(LoginRequiredMixin, UpdateView):
+#Third, create the DepotVenteEditView    
+class DepotVenteEditView(LoginRequiredMixin, UpdateView):
     template_name = 'dashboard/depot_vente/depot_vente_edit.html'
     model = DepotVenteModel
     fields = '__all__'
@@ -250,7 +250,7 @@ class DeptVenteModelEditView(LoginRequiredMixin, UpdateView):
 
 
 
-class DeptVenteModelDeleteView(LoginRequiredMixin, DeleteView):
+class DepotVenteDeleteView(LoginRequiredMixin, DeleteView):
     model = ProductModel
     template_name = 'dashboard/depot_vente/depot_vente_delete.html'
     context_object_name = 'dv_delete'
