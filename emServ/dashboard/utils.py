@@ -60,24 +60,6 @@ class Utils:
 
     def chartObject(self, db, key=None, dt_col_name=None):
         df = pd.DataFrame(db.objects.all().values())
-<<<<<<< HEAD
-        un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
-        # Parsed it 
-        monthtly_data = json.loads(un_x.to_json())
-        # the monthly key
-        msp = monthtly_data[key]
-        dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
-        return mark_safe(escapejs(json.dumps(dataset)))
-    
-def render_to_pdf(template_src, context_dict={}):
-    template = get_template(template_src)
-    html  = template.render(context_dict)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
-=======
         if not df.empty:
             un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
             # Parsed it 
@@ -91,4 +73,12 @@ def render_to_pdf(template_src, context_dict={}):
                             'data': [10, 12, 8]   }
 
         return mark_safe(escapejs(json.dumps(dataset)))
->>>>>>> 850754e40547895ca97bc117b9300603869b3727
+
+    def render_to_pdf(self, template_src, context_dict={}):
+        template = get_template(template_src)
+        html  = template.render(context_dict)
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return None

@@ -3,7 +3,8 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import (TemplateView,
-                                  DetailView)
+                                  DetailView,
+                                  View)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
@@ -26,7 +27,6 @@ from dashboard.utils import Utils
 
 
 # Rendering the pdf file
-from dashboard.utils import render_to_pdf
 from django.template.loader import get_template
 from django.http import HttpResponse
 
@@ -379,7 +379,7 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     model = ClientModel
 
 #Rendering the pdf class here:
-class GeneratePDF(View):
+class GeneratePDF(View, Utils):
     def get(self, request, *args, **kwargs):
         template = get_template('dashboard/invoice/invoice.html')
         context = {
@@ -387,7 +387,7 @@ class GeneratePDF(View):
             'customer_name' : 'akhad', 
             'today' : 'Today'
         }
-        pdf = render_to_pdf('dashboard/invoice/invoice.html', context)
+        pdf = self.render_to_pdf('dashboard/invoice/invoice.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Invoice_%s.pdf" %("facture easy money")
