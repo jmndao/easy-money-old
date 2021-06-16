@@ -39,14 +39,27 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["stocks"] = AchatDirectModel.objects.all().order_by('-date_d_achat')
-        context["achats"] = VenteModel.objects.all().order_by('-created_date')
-        context["dataset_achat"] = self.chartObject(VenteModel, key='prix_de_vente_fin', dt_col_name='created_date')
-        context["dataset_stock"] = self.chartObject(AchatDirectModel, key='prix_d_achat', dt_col_name='date_d_achat')
-        context["trend_achat"] = VenteModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
-        context["trend_stock"] = AchatDirectModel.objects.values('produit__nom_du_produit').annotate(freq=Count('produit__nom_du_produit')).order_by()
-        context["n_product"] = ProductModel.objects.all().count()
-        context["n_client"] = ClientModel.objects.all().count()
+
+        if self.request.user.is_superuser:
+            context["stocks"] = DepositStockModel.objects.all().order_by('-date_d_achat')
+            context["achats"] = BuyingStockModel.objects.all().order_by('-created_date')
+            context["dataset_achat"] = self.chartObject(BuyingStockModel, key='prix_de_vente_fin', dt_col_name='created_date')
+            context["dataset_stock"] = self.chartObject(DepositStockModel, key='prix_d_achat', dt_col_name='date_d_achat')
+            context["trend_achat"] = BuyingStockModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
+            context["trend_stock"] = DepositStockModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
+            context["n_product"] = ProductModel.objects.all().count()
+            context["n_client"] = ClientModel.objects.all().count()
+        else: 
+            uname = self.request.user.username
+            context["stocks"] = DepositStockModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-date_d_achat')
+            context["achats"] = BuyingStockModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
+            context["dataset_achat"] = self.chartObject(BuyingStockModel, key='prix_de_vente_fin', dt_col_name='created_date', uname=uname, is_superuser=False)
+            context["dataset_stock"] = self.chartObject(DepositStockModel, key='prix_d_achat', dt_col_name='date_d_achat', uname=uname, is_superuser=False)
+            context["trend_achat"] = BuyingStockModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
+            context["trend_stock"] = DepositStockModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
+            context["n_product"] = ProductModel.objects.filter(shop__owner__user__username=uname).count()
+            context["n_client"] = ClientModel.objects.filter(shop__owner__user__username=uname).count()
+
         return context
 
 

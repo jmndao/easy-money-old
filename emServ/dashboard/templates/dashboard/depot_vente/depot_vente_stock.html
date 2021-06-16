@@ -1,0 +1,225 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
+{% block body_content %}
+{{ this }}
+<div class="row">
+    <!----Row 1-->
+    <div class="col s12 m4">
+        <div class="card-panel">
+            <div class="row valign-wrapper">
+                <div class="col s4">
+                    <span class="material-icons dummy_icon">category</span>
+                </div>
+                <div class="col s8">
+                    <span class="dummy_info">Produits</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel orange darken-4">
+            <div class="card-title center dummy_info"> {{ total_item }}</div>
+        </div>
+    </div>
+    <!----Row 2-->
+    <div class="col s12 m4">
+        <div class="card-panel">
+            <div class="row valign-wrapper">
+                <div class="col s4">
+                    <span class="material-icons dummy_icon">paid</span>
+                </div>
+                <div class="col s8">
+                    <span class="dummy_info">Dépensé</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel orange darken-4">
+            <div class="card-title center dummy_info">{{ spent_depot|floatformat:0|intcomma}} C.FCA</div>
+        </div>
+    </div>
+    <!----Row 3-->
+    <div class="col s12 m4">
+        <div class="card-panel orange darken-4">
+            <div class="row valign-wrapper">
+                <div class="col s4">
+                    <span class="material-icons dummy_icon">savings</span>
+                </div>
+                <div class="col s8">
+                    <span class="dummy_info">Benefice</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-panel">
+            <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
+        </div>
+    </div>
+</div>
+<!-- I'll add a graph in here -->
+
+<div class="row">
+    <div class="col s8">
+        <!---- Adding Chart Achat -->
+        <div class="card-panel">
+            <canvas id="depotChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+    <div class="section-info-easy col m4 s12">
+        <!------ Product Trend Section -->
+        <ul class="deposit collection with-header">
+            <li class="collection-header">
+                Tendance Dé pots Ventes
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                <span class="title"><i> Dépot plus Vendus</i></span>
+                <p>MacBook Pro<br>
+                    achat: 10
+                </p>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                <span class="title"><i> Dépot plus Vendus</i></span>
+                <p>Galaxy S20<br>
+                    achat: 7
+                </p>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle red darken-3">trending_down</i>
+                <span class="title"><i>Dépot moins Vendus</i></span>
+                <p>Nokia Chargeur HP <br>
+                    1
+                </p>
+            </li>
+            <li class="collection-item avatar">
+                <i class="material-icons circle red darken-3">trending_down</i>
+                <span class="title"><i></i>Dépot moins Vendus</span>
+                <p>Nokia Ventilo<br>
+                    0
+                </p>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<!-- End graph -->
+
+<!-------- Modal -->
+<div id="depotVenteStock" class="modal">
+    <div class="modal-content">
+        <div class="card-panel orange darken-4"><b>Nouveau Depot Vente </b><i
+                class="material-icons right">add_shopping_cart</i>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+
+            <!--- Form -->
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form.nom_vendeur }}
+                    <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
+                </div>
+                <div class="input-field col s6">
+                    {{ form.produit }}
+                    <label for="{{ form.produit.id_for_label }}">Produit</label>
+                </div>
+                <div class="input-field col s6">
+                    {{ form.qualite }}
+                    <label for="{{ form.qualite.id_for_label }}">Qualite</label>
+                </div>
+                <div class="input-field col s6">
+                    {{ form.prix_d_depot }}
+                    <label for="{{ form.prix_de_depot.id_for_label }}">Prix de Depot</label>
+                </div>
+            </div>
+            <div class="info_text valign-wrapper">
+                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
+                            class="material-icons">local_mall</i> </small>
+                </span>
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'dashboard:depotVenteStockPage' %}" class="waves-effect btn-flat nopadding">
+                    <i class="material-icons">local_mall</i>
+                </a>
+                <button class="modal-close waves-effect waves-green btn-flat" type="submit">
+                    <i class="material-icons right">thumb_up_alt</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!------- Section R3002: - Deposts Ventes Stock [] -->
+
+<div class="row">
+    <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+                <span class="table-title">Les Produit de Dépot Ventes</span>
+                <div class="actions">
+                    <a href="#depotVenteStock" class="modal-trigger waves-effect btn-flat nopadding tooltipped"
+                        data-position="top" data-tooltip="Ajouter Produit"><i
+                            class="material-icons">add_shopping_cart</i></a>
+                    <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                            class="material-icons">search</i></a>
+                </div>
+            </div>
+            <table id="datatable" class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Vendeur</th>
+                        <th>Produit</th>
+                        <th>Qualite</th>
+                        <th>Prix Dépot</th>
+                        <th>Date Dépot</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dv in depot_vente_stocks %}
+                    <tr>
+                        <td> {{ dv.nom_vendeur }} </td>
+                        <td> {{ dv.produit }}</td>
+                        {% if dv.qualite == "EXCELLENT" %}
+                        <td><span class="new badge green black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
+                        {% elif dv.qualite == "NORMAL" %}
+                        <td><span class="new badge yellow black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
+                        {% else %}
+                        <td><span class="new badge red black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
+                        {% endif %}
+                        <td>{{ dv.prix_d_depot|floatformat:0|intcomma}}</td>
+                        <td>{{ dv.date_d_depot|date:"SHORT_DATE_FORMAT"}}</td>
+                        <td class="actions">
+                            <a href="{% url 'dashboard:depotVenteStockDetailPage' dv.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped"
+                                data-position="left" data-tooltip="Voir Produit"><span
+                                    class="material-icons">visibility</span></a>
+                            <a href="{% url 'dashboard:depotVenteStockEditPage' dv.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped"
+                                data-position="left" data-tooltip="Modifier Produit"><span
+                                    class="material-icons">update</span></a>
+                            <a href="{% url 'dashboard:depotVenteStockDeletePage' dv.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Supprimer Produit"><span class="material-icons">delete</span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!------- Section R3002: - Depots Ventes Stock [] -->
+
+
+{% endblock body_content %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/chart_depot.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+{% endblock javascripts %}

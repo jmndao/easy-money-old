@@ -83,7 +83,7 @@
                     <li class="collection-item avatar">
                         <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
                         <span class="title"><i>Achat</i></span>
-                        <p>{{ ta.produit__nom_du_produit }}<br>
+                        <p>{{ ta.produit__name }}<br>
                             Compteur: {{ ta.freq }}
                         </p>
                     </li>
@@ -94,7 +94,7 @@
                     <li class="collection-item avatar">
                         <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
                         <span class="title"><i>Stock</i></span>
-                        <p>{{ ts.produit__nom_du_produit }}<br>
+                        <p>{{ ts.produit__name }}<br>
                             Compteur: {{ ts.freq }}
                         </p>
                     </li>
@@ -140,7 +140,7 @@
                             <!----- Row: 1-->
                             {% for achat in achats %}
                                 <tr>
-                                    <td>{{ achat.produit.nom_du_produit }}</td>
+                                    <td>{{ achat.produit.name }}</td>
                                     <td>{{ achat.date_de_vente|date:"SHORT_DATE_FORMAT" }}</td>
                                     <td>{{ achat.prix_de_vente_fin|floatformat:0|intcomma }}</td>
                                     <td>{{ achat.garantie|yesno:"OUI, NON" }}</td>
@@ -186,7 +186,7 @@
                             <!----- Row: 1-->
                             {% for stock in stocks %}
                                 <tr>
-                                    <td>{{ stock.produit.nom_du_produit }}</td>
+                                    <td>{{ stock.produit.name }}</td>
                                     <td>{{ stock.nom_vendeur }}</td>
                                     <td>{{ stock.date_d_achat|date:"SHORT_DATE_FORMAT" }}</td>
                                     <td>{{ stock.prix_d_achat|floatformat:0|intcomma }}</td>
