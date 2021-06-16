@@ -56,8 +56,8 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["dataset_achat"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
             context["dataset_stock"] = self.chartObject(AchatDirectModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
             context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
-            context["trend_stock"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
-            context["tendance_achat_direct"] = ProductModel.objects.filter(shop__owner__user__username=uname).count()
+            context["tendance_achat_direct"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
+            context["n_product"] = ProductModel.objects.filter(shop__owner__user__username=uname).count()
             context["n_client"] = ClientModel.objects.filter(shop__owner__user__username=uname).count()
 
         return context
