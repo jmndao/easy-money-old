@@ -147,7 +147,7 @@ class AchatDirectView(LoginRequiredMixin, CreateView):
 class AchatDirectUpdateView(LoginRequiredMixin, UpdateView):
 
     template_name = 'dashboard/achat_direct/achat_direct_edit.html'
-    model = AchatDirectStockModel
+    model = AchatDirectModel
     fields = '__all__'
     success_url = reverse_lazy('dashboard:AchatDirectPage')
 
