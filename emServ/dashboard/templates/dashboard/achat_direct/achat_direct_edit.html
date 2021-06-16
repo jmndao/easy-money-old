@@ -8,7 +8,7 @@
 {% block body_content %}
 
     <div class="card-panel">
-        <div class="card-panel orange darken-4">Editer un Depot <a href="{% url 'dashboard:depositStockPage' %}" class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
+        <div class="card-panel orange darken-4">Editer un Depot <a href="{% url 'dashboard:achatDirectPage' %}" class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
             <div class="info_text valign-wrapper">
                 <p class="blue-text lighten-2">
                     <small>
@@ -22,21 +22,17 @@
                 
                 <!--- Form -->
                 <div class="row">
-                    <div class="input-field col s6">
-                        {{ form.nom_vendeur }}
-                        <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
+                    <div class="input-field col s12">
+                    {{ form.produit }}
+                    <label for="{{ form.produit.id_for_label }}">Produit</label>
                     </div>
-                    <div class="input-field col s6">
-                        {{ form.produit }}
-                        <label for="{{ form.produit.id_for_label }}">Produit</label>
+                    <div class="input-field col s12">
+                    {{ form.price }}
+                    <label for="{{ form.price.id_for_label }}">Prix d'Achat</label>
                     </div>
-                    <div class="input-field col s6">
-                        {{ form.qualite }}
-                        <label for="{{ form.qualite.id_for_label }}">Qualite</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{ form.prix_d_achat }}
-                        <label for="{{ form.prix_d_achat.id_for_label }}">Prix d'achat</label>
+                    <div class="input-field col s12">
+                    {{ form.min_price }}
+                    <label for="{{ form.min_price.id_for_label }}">Prix minimal de vente</label>
                     </div>
                 </div>
 
