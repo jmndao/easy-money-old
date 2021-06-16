@@ -24,7 +24,7 @@ class UserProfile(models.Model):
     zip = models.CharField(max_length=30, null=True, blank=True)
 
     def __str__(self):
-        return 'User/{}:{}'.format(self.user.username, self.full_name)
+        return 'User/{}:{}'.format(self.user.username, self.agency)
 
     @property
     def get_avatar(self):

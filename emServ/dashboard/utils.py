@@ -10,34 +10,58 @@ class Utils:
         
     '''
 
-    def benefice_sale(self, db, spent):
-        stocks = db.objects.all()
-        sum_stocks = sum([p.prix_d_achat for p in stocks])
-        return (spent - sum_stocks)
+        
+    def benefice_sale(self, db_a_direct, db_dvs, sales):
+        """
+        Calculate the Total benefice of the Shop:
+            db_a_direct : is the Achat Direct Model object (DepositStockModel)
+            db_dvs : is the Depot Vente Model object (DepotVenteStockModel)
+            sales : is the total sum of all sales 
+        """
+        a_directs = db_a_direct.objects.all()
+        dvs = db_dvs.objects.all()
+        sum_a_directs = sum([p.prix_d_achat for p in a_directs])
+        sum_dvs = sum([p.prix_d_depot for p in dvs])
+        return (sales - (sum_a_directs + sum_dvs))
     
-    def benefice(self, dbs, dbv, sales):
+    def benefice_dv(self, db_a_direct, db_sales, dv):
         """
-            dbs: is the Achat Direct model object
-            dbv: is the DepotVente model object
-            sales: is the sum of the sale from Sale Model (BuyingStock)
+        Calculate the Total benefice of the Shop:
+            db_a_direct: is the Achat Direct model object
+            db_sales: is the BuyingStock model object
+            dv: is the sum of the depot vente from DepotVenteStockModel
         """
-        stocks = dbs.objects.all()
-        dvs = dbv.objects.all()
-        sum_stock = sum([p.prix_d_achat for p in stocks])
-        sum_dvs = sum([p.prix_d_vente for p in dvs])
-        return (sales - (sum_dvs + sum_stock))
+        a_directs = db_a_direct.objects.all()
+        sales = db_sales.objects.all()
+        sum_a_directs = sum([p.prix_d_achat for p in a_directs])
+        sum_sales = sum([p.prix_d_vente_fin for p in sales])
+        return (sum_sales - (dv + sum_a_directs))
 
-    def benefice_stock(self, db, spent):
-        sales = db.objects.all()
+    def benefice_stock(self, db_sales, db_dvs, d_stock):
+        """
+        Calculate the Total benefice of the Shop:
+            db_sales : is the Sales Model object (BuyingStockModel)
+            db_dvs : is the Depot Vente Model object (DepotVenteStockModel)
+            d_stock : is the total sum of all Achat Direct Model (DepositStockModel) 
+        """
+        sales = db_sales.objects.all()
+        dvs = db_dvs.objects.all()
         sum_sales = sum([p.prix_de_vente_fin for p in sales])
-        return (sum_sales - spent)
+        sum_dvs = sum([p.prix_d_depot for p in dvs])
+        return (sum_sales - (d_stock + sum_dvs))
 
     def chartObject(self, db, key=None, dt_col_name=None):
         df = pd.DataFrame(db.objects.all().values())
-        un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
-        # Parsed it 
-        monthtly_data = json.loads(un_x.to_json())
-        # the monthly key
-        msp = monthtly_data[key]
-        dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
+        if not df.empty:
+            un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
+            # Parsed it 
+            monthtly_data = json.loads(un_x.to_json())
+            # the monthly key
+            msp = monthtly_data[key]
+            dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
+            #return mark_safe(escapejs(json.dumps(dataset)))
+        else:
+           dataset = {   'months': ['Jan', 'Fev', 'Avr'],
+                            'data': [10, 12, 8]   }
+
         return mark_safe(escapejs(json.dumps(dataset)))

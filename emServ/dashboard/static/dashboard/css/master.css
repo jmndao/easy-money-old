@@ -24,7 +24,7 @@ body {
 
 .easy-sidebar-brand {
     height: 8vh;
-    padding: 1rem 0 1rem 2rem;
+    /* padding: 1rem 0 1rem 2rem; */
     color: var(--third-color);
 }
 
@@ -482,9 +482,11 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     /* padding: 0 0.75rem; */
     min-height: 1px;
 }
-.b-large{
+
+.b-large {
     width: 100%;
 }
+
 
 /* ---------- CSS Responsiveness ------------*/
 
@@ -567,7 +569,7 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     #nav-toggle:checked+.easy-sidebar ul li h5,
     #nav-toggle:checked+.easy-sidebar ul li small {
         display: inline;
-    } 
+    }
 }
 
 @media only screen and (max-width: 568px) {
