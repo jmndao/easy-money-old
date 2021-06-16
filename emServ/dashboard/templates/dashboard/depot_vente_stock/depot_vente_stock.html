@@ -196,13 +196,13 @@
                         <td>{{ dv.prix_d_depot|floatformat:0|intcomma}}</td>
                         <td>{{ dv.date_d_depot|date:"SHORT_DATE_FORMAT"}}</td>
                         <td class="actions">
-                            <a href="#" class="orange-text darken-4 waves-effect btn-flat tooltipped"
+                            <a href="{% url 'dashboard:depotVenteStockDetailPage' dv.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped"
                                 data-position="left" data-tooltip="Voir Produit"><span
                                     class="material-icons">visibility</span></a>
-                            <a href="#" class="green-text darken-4 waves-effect btn-flat tooltipped"
+                            <a href="{% url 'dashboard:depotVenteStockEditPage' dv.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped"
                                 data-position="left" data-tooltip="Modifier Produit"><span
                                     class="material-icons">update</span></a>
-                            <a href="#" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                            <a href="{% url 'dashboard:depotVenteStockDeletePage' dv.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Supprimer Produit"><span class="material-icons">delete</span></a>
                         </td>
                     </tr>

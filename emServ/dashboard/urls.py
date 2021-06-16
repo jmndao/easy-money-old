@@ -1,11 +1,13 @@
 from django.urls import path
 import dashboard.views as d_views
+from .views import GeneratePDF
 
 app_name = 'dashboard'
 
 
 urlpatterns = [
-
+    # For handling bills
+    path('invoice/', d_views.GeneratePDF.as_view(), name = 'invoice'),
     path('', d_views.IndexView.as_view(), name="homePage"),
     # Client Routers
     path('client/', d_views.ClientView.as_view(), name="clientPage"),
@@ -24,6 +26,9 @@ urlpatterns = [
     path('deposit_stock_detail/<int:pk>/', d_views.DepositStockDetailView.as_view(), name='depositStockDetailPage'),
     # DepotVenteStock Routers
     path('depot_vente_stock/', d_views.DepotVenteStockView.as_view(), name = 'depotVenteStockPage'),
+    path('depot_vente_stock_detail/<int:pk>/', d_views.DepotVenteStockDetailView.as_view(), name = 'depotVenteStockDetailPage'),
+    path('depot_vente_stock_edit/<int:pk>/', d_views.DepotVenteStockEditView.as_view(), name = 'depotVenteStockEditPage'),
+    path('depot_vente_stock_delete/<int:pk>/', d_views.DepotVenteStockDeleteView.as_view(), name = 'depotVenteStockDeletePage'),
 
 
     # BuyingStock Routers

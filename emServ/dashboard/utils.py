@@ -3,6 +3,14 @@ import pandas as pd
 from django.utils.html import escapejs
 from django.utils.safestring import mark_safe
 
+# For rendering a pdf File
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+
+
 
 class Utils:
 
@@ -41,3 +49,12 @@ class Utils:
         msp = monthtly_data[key]
         dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
         return mark_safe(escapejs(json.dumps(dataset)))
+    
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html  = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None

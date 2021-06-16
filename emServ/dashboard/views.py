@@ -1,30 +1,43 @@
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.db.models import Count
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.db.models import Count
 from django.views.generic import (TemplateView,
                                   ListView,
                                   DetailView,
-                                  FormView)
-
+                                  FormView,
+                                  View
+                                  )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
-                                       DeleteView)
+                                       DeleteView
+                                       )
 from dashboard.models import (  ProductModel, 
                                 ClientModel,
                                 ClientRequestModel,
                                 DepositStockModel,
                                 DepotVenteStockModel,
                                 BuyingStockModel,
-                                Shop)
+                                Shop
+                            )
 
 from notifications.signals import notify
-from dashboard.utils import Utils
 
 # Thhis is top adding the form
-from .forms import DepotVenteModel
+from dashboard.forms import DepotVenteModel
+from dashboard.utils import Utils
 
+ 
+
+# Rendering the pdf file
+from dashboard.utils import render_to_pdf
+from django.template.loader import get_template
+from django.http import HttpResponse
+
+
+# Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     template_name = 'dashboard/index.html'
@@ -41,7 +54,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         context["n_product"] = ProductModel.objects.all().count()
         context["n_client"] = ClientModel.objects.all().count()
         return context
-    
+
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -95,7 +108,7 @@ class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('dashboard:clientRequestPage')
 
 
-class DepositStockView(LoginRequiredMixin, CreateView, Utils):
+class DepositStockView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/deposit_stock/deposit_stock.html'
     model = DepositStockModel
@@ -120,7 +133,7 @@ class DepositStockView(LoginRequiredMixin, CreateView, Utils):
         context['deposit_stocks'] = self.q = DepositStockModel.objects.order_by('-date_d_achat')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.prix_d_achat for p in self.q])
-        context['benefice'] = self.benefice_stock(BuyingStockModel, context['spent'])
+        context['benefice'] = self.benefice(context['spent'])
         return context
 
 
@@ -143,15 +156,96 @@ class DepositStockDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'deposit'
 
 
+
 class DepositStockDeleteView(LoginRequiredMixin, DeleteView):
 
     template_name = 'dashboard/deposit_stock/deposit_stock_delete.html'
     model = DepositStockModel
     success_url = reverse_lazy('dashboard:depositStockPage')
 
-    
+    # def get_success_url(self):
+    #     notify.send(
+    #         self.request.user,
+    #         recipient=self.request.,
+    #         description=form.instance.text_message,
+    #         verb=form.instance.subject
+    #     )
+    #     return super().get_success_url()
 
-class BuyingStockView(LoginRequiredMixin, CreateView, Utils):
+
+# For the new depot vente tab that I am creating.
+
+# First, creating the DepotVenteView
+class DepotVenteStockView(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/depot_vente_stock/depot_vente_stock.html'
+    model = DepotVenteStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    def benefice (self, d_vente_one):
+        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
+        spent_two = sum([p.prix_d_achat for p in self.a_direct])
+        rev = BuyingStockModel.objects.all()
+        sum_rv = sum([p.prix_de_vente_fin for p in rev])
+        the_benefice = sum_rv - (d_vente_one + spent_two)
+        return the_benefice 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.q = DepotVenteStockModel.objects.order_by('-date_d_depot')
+        
+        #Nombre de produit
+        context['depot_vente_stocks'] = self.q
+        context['total_item'] = self.q.count()
+
+        #Sum des produits de depots ventes
+        spent_one = [p.prix_d_depot for p in self.q]
+        spent_one_t = sum(spent_one)
+        context['spent_depot'] = sum(spent_one)       
+
+        #benefice
+        self.a_direct = DepositStockModel.objects.order_by('-date_d_achat')
+        spent_two = [p.prix_d_achat for p in self.a_direct]
+        spent_two_t = sum(spent_two)
+        context['spent_two_t'] = spent_two_t
+         
+        
+        context['benefice'] = self.benefice(context['spent_depot'])
+        return context
+
+
+#Second, create the depotVenteStockDetailView
+class DepotVenteStockDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'dashboard/depot_vente_stock/depot_vente_stock_detail.html'
+    model = DepotVenteStockModel
+    context_object_name = 'd_vente'
+
+
+
+#Third, create the depotVenteStockEditView    
+class DepotVenteStockEditView(LoginRequiredMixin, UpdateView):
+    template_name = 'dashboard/depot_vente_stock/depot_vente_stock_edit.html'
+    model = DepotVenteStockModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
+
+class DepotVenteStockDeleteView(LoginRequiredMixin, DeleteView):
+    model = ProductModel
+    template_name = 'dashboard/depot_vente_stock/depot_vente_stock_delete.html'
+    context_object_name = 'dv_delete'
+    success_url = reverse_lazy('dashboard:depotVenteStockPage')
+
+class BuyingStockView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/buying_stock/buying_stock.html'
     model = BuyingStockModel
@@ -306,3 +400,24 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
+
+#Rendering the pdf class here:
+class GeneratePDF(View):
+    def get(self, request, *args, **kwargs):
+        template = get_template('dashboard/invoice/invoice.html')
+        context = {
+            'invoice_id' : 123,
+            'customer_name' : 'akhad', 
+            'today' : 'Today'
+        }
+        pdf = render_to_pdf('dashboard/invoice/invoice.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" %("facture easy money")
+            content = "inline; filename='%s'" %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return pdf

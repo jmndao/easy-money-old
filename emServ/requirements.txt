@@ -11,3 +11,5 @@ pytz==2021.1
 six==1.16.0
 sqlparse==0.4.1
 swapper==1.1.2.post1
+reportlab==3.5.67
+xhtml2pdf==0.2.5
