@@ -19,7 +19,7 @@ class Utils:
     '''
 
         
-    def benefice_sale(self, db_a_direct, db_dvs, sales):
+    def benefice_vente(self, db_a_direct, db_dvs, sales):
         """
         Calculate the Total benefice of the Shop:
             db_a_direct : is the Achat Direct Model object (DepositStockModel)
@@ -32,7 +32,7 @@ class Utils:
         sum_dvs = sum([p.prix_d_depot for p in dvs])
         return (sales - (sum_a_directs + sum_dvs))
     
-    def benefice_dv(self, db_a_direct, db_sales, dv):
+    def benefice_depot_vente(self, db_a_direct, db_sales, dv):
         """
         Calculate the Total benefice of the Shop:
             db_a_direct: is the Achat Direct model object
@@ -45,7 +45,7 @@ class Utils:
         sum_sales = sum([p.prix_d_vente_fin for p in sales])
         return (sum_sales - (dv + sum_a_directs))
 
-    def benefice_stock(self, db_sales, db_dvs, d_stock):
+    def benefice_achat_direct(self, db_sales, db_dvs, d_stock):
         """
         Calculate the Total benefice of the Shop:
             db_sales : is the Sales Model object (BuyingStockModel)

@@ -115,7 +115,7 @@ class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('dashboard:clientRequestPage')
 
 
-class AchatDirectView(LoginRequiredMixin, CreateView):
+class AchatDirectView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/achat_direct/achat_direct.html'
     model = AchatDirectModel
@@ -127,20 +127,12 @@ class AchatDirectView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def benefice (self, achat_direct):
-        self.d_vente = DepotVenteModel.objects.order_by('-date_d_depot')
-        spent_direct = sum([p.prix_d_depot for p in self.d_vente])
-        rev = VenteModel.objects.all()
-        sum_rv = sum([p.prix_de_vente_fin for p in rev])
-        the_benefice = sum_rv - (spent_direct + achat_direct)
-        return the_benefice 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-date_d_achat')
+        context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.prix_d_achat for p in self.q])
-        context['benefice'] = self.benefice_stock(VenteModel, DepotVenteModel, context['spent'])
+        context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
         return context
 
 
@@ -186,51 +178,20 @@ class DepotVenteView(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        self.q = DepotVenteModel.objects.order_by('-date_d_depot')    
+        self.q = DepotVenteModel.objects.order_by('-created_date')    
         #Nombre de produit
         context['depot_vente'] = self.q
         context['total_item'] = self.q.count()
         #Sum des produits de depots ventes
         context['spent_depot'] = sum([p.prix_d_depot for p in self.q])
         #benefice 
-        context['benefice'] = self.benefice_dv(AchatDirectModel, VenteModel, context['spent_depot'])
-        return context
-
-    
-    def benefice (self, d_vente_one):
-        self.a_direct = AchatDirectModel.objects.order_by('-date_d_achat')
-        spent_two = sum([p.prix_d_achat for p in self.a_direct])
-        rev = VenteModel.objects.all()
-        sum_rv = sum([p.prix_de_vente_fin for p in rev])
-        the_benefice = sum_rv - (d_vente_one + spent_two)
-        return the_benefice 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        self.q = DepotVenteModel.objects.order_by('-date_d_depot')
-        
-        #Nombre de produit
-        context['depot_vente'] = self.q
-        context['total_item'] = self.q.count()
-
-        #Sum des produits de depots ventes
-        spent_one = [p.prix_d_depot for p in self.q]
-        spent_one_t = sum(spent_one)
-        context['spent_depot'] = sum(spent_one)       
-
-        #benefice
-        self.a_direct = AchatDirectModel.objects.order_by('-date_d_achat')
-        spent_two = [p.prix_d_achat for p in self.a_direct]
-        spent_two_t = sum(spent_two)
-        context['spent_two_t'] = spent_two_t
-         
-        
-        context['benefice'] = self.benefice(context['spent_depot'])
+        context['benefice'] = self.benefice_depot_vente(AchatDirectModel, VenteModel, context['spent_depot'])
         return context
 
 
-#Second, create the depotVenteStockDetailView
-class DepotVenteStockDetailView(LoginRequiredMixin, DetailView):
+
+#Second, create the DeptVenteModelDetailView
+class DeptVenteModelDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/depot_vente/depot_vente_detail.html'
     model = DepotVenteModel
     context_object_name = 'd_vente'
@@ -256,6 +217,8 @@ class DepotVenteDeleteView(LoginRequiredMixin, DeleteView):
     context_object_name = 'dv_delete'
     success_url = reverse_lazy('dashboard:depotVentePage')
 
+
+
 class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/vente/vente.html'
@@ -273,7 +236,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
         context['revenue'] = sales = sum([p.prix_de_vente_fin for p in self.q])
-        context['benefice'] = self.benefice_sale(AchatDirectModel, DepotVenteModel, sales)
+        context['benefice'] = self.benefice_vente(AchatDirectModel, DepotVenteModel, sales)
         return context
 
 

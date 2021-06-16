@@ -111,7 +111,7 @@
 <!-- End graph -->
 
 <!-------- Modal -->
-<div id="depotVenteStock" class="modal">
+<div id="depotVente" class="modal">
     <div class="modal-content">
         <div class="card-panel orange darken-4"><b>Nouveau Depot Vente </b><i
                 class="material-icons right">add_shopping_cart</i>
@@ -144,7 +144,7 @@
                 </span>
             </div>
             <div class="modal-footer">
-                <a href="{% url 'dashboard:depotVenteStockPage' %}" class="waves-effect btn-flat nopadding">
+                <a href="{% url 'dashboard:depotVentePage' %}" class="waves-effect btn-flat nopadding">
                     <i class="material-icons">local_mall</i>
                 </a>
                 <button class="modal-close waves-effect waves-green btn-flat" type="submit">
@@ -163,7 +163,7 @@
             <div class="table-header">
                 <span class="table-title">Les Produit de Dépot Ventes</span>
                 <div class="actions">
-                    <a href="#depotVenteStock" class="modal-trigger waves-effect btn-flat nopadding tooltipped"
+                    <a href="#depotVente" class="modal-trigger waves-effect btn-flat nopadding tooltipped"
                         data-position="top" data-tooltip="Ajouter Produit"><i
                             class="material-icons">add_shopping_cart</i></a>
                     <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
