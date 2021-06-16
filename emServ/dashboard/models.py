@@ -146,7 +146,7 @@ class ProductModel(models.Model):
     original_box = models.BooleanField(default=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix Depot Vente")
-    seller = models.OneToOneField(ClientModel)
+    seller = models.ForeignKey(ClientModel, null=True, on_delete=models.SET_NULL)
     description = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
@@ -195,7 +195,7 @@ class DepotVenteModel(models.Model):
         Notice that the diffrence is going to be in which page, the user went to fill the form
     """
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    min_price = models.DecimalField(
+    price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)    
     created_date = models.DateTimeField(auto_now_add=True)
     

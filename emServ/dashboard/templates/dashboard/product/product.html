@@ -23,7 +23,11 @@
             <div class="row">
                 <div class="input-field col s3">
                     {{ form.name}}
+<<<<<<< HEAD
                     <label for="{{form.nom_du_produit.id_for_label}}">Nom du produit</label>
+=======
+                    <label for="{{form.name.id_for_label}}">Nom du produit</label>
+>>>>>>> ab124a07efd416256fd7faa7e63746222d61fb43
                 </div>
                 <div class="input-field col s3">
                     {{ form.model }}
@@ -41,6 +45,7 @@
             <div class="row">
                 <div class="input-field col s3">
                     {{form.storage}}
+<<<<<<< HEAD
                     <label for="{{form.nombre_de_giga.id_for_label}}">Nombre de giga</label>
                 </div>
                 <div class="input-field col s3">
@@ -52,6 +57,19 @@
                     <label for="{{form.dimensions.id_for_label}}">Dimensions</label>
                 </div>
                 
+=======
+                    <label for="{{form.storage.id_for_label}}">Nombre de giga</label>
+                </div>
+                <div class="input-field col s3">
+                    {{form.ram}}
+                    <label for="{{form.ram.id_for_label}}">Nombre de ram</label>
+                </div>
+                <div class="input-field col s3">
+                    {{form.dimension}}
+                    <label for="{{form.dimension.id_for_label}}">Dimensions</label>
+                </div>
+                 
+>>>>>>> ab124a07efd416256fd7faa7e63746222d61fb43
             </div>
 
             <div class="row">
