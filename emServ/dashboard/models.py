@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from accounts.models import UserProfile
 
 
 # Create your models here.
@@ -10,6 +11,28 @@ QUALITE = [
     ('NORMAL', 'Normale'),
     ('MAUVAISE', 'Mauvaise')
 ]
+
+
+class Shop(models.Model):
+    """
+        Shop has the products, the deposit, the sales, and all about the clients.
+        Therefore, each shop has its own personal record of all of those 
+        above models including the owner himself.
+        It holds:
+            - owner                 : owner of the shop
+            - name                  : name of the shop
+            - emplacement           : where the shop is situated
+            - create_date.
+    """
+
+    owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    emplacement = models.CharField(max_length=100, blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+
+        return 'Shop/{}:{}'.format(self.name, self.owner.user.username)
 
 
 class ProductModel(models.Model):
@@ -44,6 +67,7 @@ class ProductModel(models.Model):
         max_digits=20, decimal_places=3, verbose_name="Masse", null=True, blank=True)
     chargeurs = models.BooleanField(default=True)
     boite_origine = models.BooleanField(default=False)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -144,6 +168,7 @@ class ClientModel(models.Model):
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     prenom_du_client = models.CharField(max_length=100)
     nom_du_client = models.CharField(max_length=100)
     numero = models.CharField(max_length=20)
@@ -181,35 +206,6 @@ class ClientRequestModel(models.Model):
     def __str__(self):
         return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
 
-
-class Shop(models.Model):
-    """
-        Shop has the products, the deposit, the sales, and all about the clients.
-        Therefore, each shop has its own personal record of all of those 
-        above models including the owner himself.
-        It holds:
-            - owner                 : owner of the shop
-            - nom_de_la_boutique    : name of the shop
-            - produits              : the products that it has 
-            - depot                 : the deposit it has made
-            - achat                 : the sales it has made
-            - clients               : the client it has 
-            - requete_client        : the client request
-            - create_date.
-    """
-
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    nom_de_la_boutique = models.CharField(max_length=100)
-    produits = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    depot = models.ForeignKey(DepositStockModel, on_delete=models.CASCADE)
-    achat = models.ForeignKey(BuyingStockModel, on_delete=models.CASCADE)
-    clients = models.ForeignKey(ClientModel, on_delete=models.CASCADE)
-    requete_client = models.ForeignKey(ClientRequestModel, on_delete=models.CASCADE)
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    def __str(self):
-
-        return 'Shop/{}:{}'.format(self.nom_de_la_boutique, self.owner.username)
 
 # class NotificationModel(models.Model):
 
