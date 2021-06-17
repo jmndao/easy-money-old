@@ -9,13 +9,14 @@
     <div class="card-panel orange darken-4">
         <b>Details Client</b><i class="material-icons right">visibility</i>
     </div>
-
+     {{ for client in clients }}
     <div class="row">
+       
         <div class="col s12">
-            <h4>Client: {{ client.prenom_du_client }}</h4>
+            <h4>Client: {{ client.fname }}</h4>
         </div>
         <div class="col s12">
-            <h4>Client: {{ client.nom_du_client }}</h4>
+            <h4>Client: {{ client.lname }}</h4>
         </div>
         <div class="col s12">
             <h4>Client: {{ client.numero }}</h4>
@@ -23,8 +24,9 @@
         <div class="col s12">
             <h4>Client: {{ client.address }}</h4>
         </div>
-
+        
     </div>
+    {{ endfor }}
 </div>
 
 <a href="{% url 'dashboard:clientPage' %}" class="btn-flat waves-effect">Retourner <i

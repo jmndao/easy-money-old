@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block title %} {{ title }} {% endblock title %}
@@ -75,20 +75,22 @@
             <div class="input-field col s6 m-grid">
                 {{ form.seller }}
                 <label for="{{form.seller.id_for_label}}">Vendeur</label>
-                <a href="{% url 'dashboard:clientPage' %}" name="addClient" class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Ajouter un client">
+                <a href="{% url 'dashboard:clientPage' %}" name="addClient"
+                    class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+                    data-tooltip="Ajouter un client">
                     <i class="material-icons right">add</i>
                 </a>
             </div>
             <div class="input-field col s3">
                 <label for="{{form.original_box.id_for_label}}">
                     {{ form.original_box }}
-                    <span>Emballage d'origine</span> 
+                    <span>Emballage d'origine</span>
                 </label>
             </div>
             <div class="input-field col s3">
                 <label for="{{form.sale_bill.id_for_label}}">
                     {{ form.sale_bill }}
-                    <span>Facture d'Achat</span> 
+                    <span>Facture d'Achat</span>
                 </label>
             </div>
         </div>
@@ -100,7 +102,7 @@
                 Electronique
             </div>
             <div class="collapsible-body">
-                
+
                 <div class="row">
                     <div class="input-field col s6">
                         {{ form.storage }}
@@ -137,19 +139,20 @@
                     {{form.dimension}}
                     <label for="{{form.dimensions.id_for_label}}">Dimensions</label>
                 </div>
-                
+
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form.annee }}
+                    <label for="{{form.annee.id_for_label}}">Edition</label>
                 </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        {{ form.annee }}
-                        <label for="{{form.annee.id_for_label}}">Edition</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{ form.edition }}
-                        <label for="{{form.edition.id_for_label}}">Edition</label>
-                    </div>
+                <div class="input-field col s6">
+                    {{ form.edition }}
+                    <label for="{{form.edition.id_for_label}}">Edition</label>
                 </div>
             </div>
+            <<<<<<< HEAD=======>>>>>>> 613a29847e8e202367bd2a882080aa1bd171a2f5
+                </div>
         </li>
 
         <li>
@@ -158,7 +161,8 @@
                 Vetements
             </div>
             <div class="collapsible-body">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dolor cum eligendi expedita dolore ut nobis laboriosam minus perferendis sapiente?</span>
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dolor cum eligendi expedita dolore ut
+                    nobis laboriosam minus perferendis sapiente?</span>
             </div>
         </li>
 
@@ -168,7 +172,8 @@
                 Autres
             </div>
             <div class="collapsible-body">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde nesciunt repellendus neque dolores aut.</span>
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde nesciunt repellendus neque
+                    dolores aut.</span>
             </div>
         </li>
     </ul>
@@ -188,27 +193,28 @@
 
 
 <div class="row">
-  <div id="man" class="col s12">
-    <div class="card material-table">
-      <div class="table-header">
-        <span class="table-title">Liste des produits</span>
-        <div class="actions">
-          <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
-        </div>
-      </div>
-        <table id="datatable" class="responsive-table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Modele</th>
-                    <th>Edition</th>
-                    <th>année</th>
-                    <th>chargeur</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product in products %}
+    <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+                <span class="table-title">Liste des produits</span>
+                <div class="actions">
+                    <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                            class="material-icons">search</i></a>
+                </div>
+            </div>
+            <table id="datatable" class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Modele</th>
+                        <th>Edition</th>
+                        <th>année</th>
+                        <th>chargeur</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
                     <tr>
                         <th class="black-text">{{ product.name }}</th>
                         <th class="black-text">{{ product.model }}</th>
@@ -216,20 +222,26 @@
                         <th class="black-text">{{ product.annee }}</th>
                         <th class="black-text">{{ product.charger|yesno:"OUI, NON" }}</th>
                         <td class="actions black-text">
-                            <a href="{% url 'dashboard:productDetailPage' product.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-                            <a href="{% url 'dashboard:productEditPage' product.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier"><span class="material-icons">update</span></a>
-                            <a href="{% url 'dashboard:productDeletePage' product.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+                            <a href="{% url 'dashboard:productDetailPage' product.pk %}"
+                                class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
+                            <a href="{% url 'dashboard:productEditPage' product.pk %}"
+                                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Modifier"><span class="material-icons">update</span></a>
+                            <a href="{% url 'dashboard:productDeletePage' product.pk %}"
+                                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-{% endblock body_content %}
+        {% endblock body_content %}
 
-{% block javascripts %}
-    <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
-{% endblock javascripts %}
+        {% block javascripts %}
+        <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+        {% endblock javascripts %}

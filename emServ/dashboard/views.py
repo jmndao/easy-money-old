@@ -397,6 +397,7 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
 
+
 #Rendering the pdf class here:
 class GeneratePDF(View, Utils):
     def get(self, request, *args, **kwargs):
