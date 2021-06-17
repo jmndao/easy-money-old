@@ -198,11 +198,7 @@ class DepotVenteDetailView(LoginRequiredMixin, DetailView):
 
 
 
-<<<<<<< HEAD
-#Third, create the DepotVenteEditView    
-=======
 #Third, create the depotVenteStockEditView    
->>>>>>> dcce2a32c05ce79473e65b7b92b332efa86d1c7a
 class DepotVenteEditView(LoginRequiredMixin, UpdateView):
     template_name = 'dashboard/depot_vente/depot_vente_edit.html'
     model = DepotVenteModel
