@@ -122,19 +122,19 @@
             <div class="row">
                 <div class="input-field col s6">
                     {{ form.produit.seller }}
-                    <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
+                    <label for="{{ form.produit.seller.id_for_label }}">Nom du vendeur</label>
                 </div>
                 <div class="input-field col s6">
                     {{ form.produit.name }}
-                    <label for="{{ form.produit.id_for_label }}">Produit</label>
+                    <label for="{{ form.produit.name.id_for_label }}">Produit</label>
                 </div>
                 <div class="input-field col s6">
                     {{ form.produit.estate }}
-                    <label for="{{ form.qualite.id_for_label }}">Qualite</label>
+                    <label for="{{ form.qualite.estate.id_for_label }}">Qualite</label>
                 </div>
                 <div class="input-field col s6">
-                    {{ form.min_price }}
-                    <label for="{{ form.prix_de_depot.id_for_label }}">Prix de Depot</label>
+                    {{ form.price }}
+                    <label for="{{ form.price.id_for_label }}">Prix de Depot</label>
                 </div>
             </div>
             <div class="info_text valign-wrapper">
@@ -192,7 +192,7 @@
                         {% else %}
                         <td><span class="new badge red black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
                         {% endif %}
-                        <td>{{ dv.min_price|floatformat:0|intcomma}}</td>
+                        <td>{{ dv.price|floatformat:0|intcomma}}</td>
                         <td>{{ dv.created_date|date:"SHORT_DATE_FORMAT"}}</td>
                         <td class="actions">
                             <a href="{% url 'dashboard:depotVenteDetailPage' dv.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped"

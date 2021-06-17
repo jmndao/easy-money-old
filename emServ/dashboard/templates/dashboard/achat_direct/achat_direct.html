@@ -127,10 +127,6 @@
           {{ form.price }}
           <label for="{{ form.price.id_for_label }}">Prix d'Achat</label>
         </div>
-        <div class="input-field col s12">
-          {{ form.min_price }}
-          <label for="{{ form.min_price.id_for_label }}">Prix minimal de vente</label>
-        </div>
       </div>
       <div class="info_text valign-wrapper">
         <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
@@ -156,7 +152,7 @@
   <div id="man" class="col s12">
     <div class="card material-table">
       <div class="table-header">
-        <span class="table-title">Produit Depose</span>
+        <span class="table-title">Les produits venant de dépot vente</span>
         <div class="actions">
           <a href="#depositStock" class="modal-trigger waves-effect btn-flat nopadding tooltipped" data-position="top"
             data-tooltip="Ajouter Produit"><i class="material-icons">add_shopping_cart</i></a>
@@ -168,7 +164,7 @@
           <tr>
             <th>Vendeur</th>
             <th>Produit</th>
-            <th>Qualite</th>
+            <th>Etat</th>
             <th>Prix Achat</th>
             <th>Date Achat</th>
             <th>Actions</th>

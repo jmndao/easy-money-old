@@ -123,12 +123,21 @@
           </div>
           <div class="input-field col s6">
               {{ form.price }}
-              <label for="{{ form.prix_de_vente_min.id_for_label }}">Prix de vente minimal</label>
+              <label for="{{ form.price.id_for_label }}">Prix de vente </label>
           </div>
+          <div class="col s4 left-align">
+                    <p>
+                        <label>
+                            {{form.garantee}}
+                            <span>Garantie</span>
+                        </label>
+                    </p>
+                </div>
           <div class="input-field col s6">
-              {{ form.prix_de_vente_fin }}
-              <label for="{{ form.prix_de_vente_fin.id_for_label }}">Prix de vente final</label>
+              {{ form.guarantee_period }}
+              <label for="{{ form.guarantee_period.id_for_label }}">Delai de la garantie </label>
           </div>
+          
           <div class="col s12">
             <ul class="collapsible">
             <li>
@@ -180,37 +189,36 @@
         <thead>
           <tr>
             <th>Produit</th>
-            <th>Date de vente</th>
-            <th>Prix de vente minimal</th>
-            <th>Prix de vente final</th>
+            <th>Date vendu</th>
+            <th>Prix vendu</th>
             <th>Garantie</th>
             <th>Delai garantie</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {% for bs in buying_stocks %}
+          {% for v in vente %}
             <tr>
-              <td> {{ bs.produit }} </td>
-              <td> {{ bs.date_de_vente }}</td>
-              {% if bs.prix_de_vente_min %}
-                <td> {{ bs.prix_de_vente_min|floatformat:0|intcomma }}</td>
+              <td> {{ v.produit }} </td>
+              <td> {{ v.created_date }}</td>
+              {% if v.created_date %}
+                <td> {{ v.created_date|floatformat:0|intcomma }}</td>
                 {% else %}
                 <td> ----- </td>
               {% endif %}
-              <td> {{ bs.prix_de_vente_fin|floatformat:0|intcomma }}</td>
+              <td> {{ v.price|floatformat:0|intcomma }}</td>
 
-              <td>{{ bs.garantie|yesno:"OUI, NON" }}</td>
+              <td>{{ v.garantee|yesno:"OUI, NON" }}</td>
               
-            {% if bs.garantie %}
-                <td> {{ bs.delai_garantie }} </td>
+            {% if v.garantie %}
+                <td> {{ v.guarantee_period }} </td>
             {% else %}
                 <td> Pas de garantie </td>
             {% endif %}
               <td class="actions">
-                <a href="{% url 'dashboard:buyingStockDetailPage' bs.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir Achat"><span class="material-icons">visibility</span></a>
-                <a href="{% url 'dashboard:buyingStockEditPage' bs.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier Achat"><span class="material-icons">update</span></a>
-                <a href="{% url 'dashboard:buyingStockDeletePage' bs.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer Achat"><span class="material-icons">delete</span></a>
+                <a href="{% url 'dashboard:VentePage' vp.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir Achat"><span class="material-icons">visibility</span></a>
+                <a href="{% url 'dashboard:VenteEditPage' vp.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier Achat"><span class="material-icons">update</span></a>
+                <a href="{% url 'dashboard:VenteDeletePage' vp.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer Achat"><span class="material-icons">delete</span></a>
               </td>
           </tr>
           {% endfor %}

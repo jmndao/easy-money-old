@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 
@@ -23,11 +23,10 @@
             <div class="row">
                 <div class="input-field col s3">
                     {{ form.name}}
-<<<<<<< HEAD
                     <label for="{{form.nom_du_produit.id_for_label}}">Nom du produit</label>
-=======
+
                     <label for="{{form.name.id_for_label}}">Nom du produit</label>
->>>>>>> ab124a07efd416256fd7faa7e63746222d61fb43
+
                 </div>
                 <div class="input-field col s3">
                     {{ form.model }}
@@ -45,19 +44,6 @@
             <div class="row">
                 <div class="input-field col s3">
                     {{form.storage}}
-<<<<<<< HEAD
-                    <label for="{{form.nombre_de_giga.id_for_label}}">Nombre de giga</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.storage}}
-                    <label for="{{form.nombre_de_ram.id_for_label}}">Nombre de ram</label>
-                </div>
-                <div class="input-field col s6">
-                    {{form.dimension}}
-                    <label for="{{form.dimensions.id_for_label}}">Dimensions</label>
-                </div>
-                
-=======
                     <label for="{{form.storage.id_for_label}}">Nombre de giga</label>
                 </div>
                 <div class="input-field col s3">
@@ -68,8 +54,7 @@
                     {{form.dimension}}
                     <label for="{{form.dimension.id_for_label}}">Dimensions</label>
                 </div>
-                 
->>>>>>> ab124a07efd416256fd7faa7e63746222d61fb43
+
             </div>
 
             <div class="row">
@@ -100,27 +85,28 @@
 
 
 <div class="row">
-  <div id="man" class="col s12">
-    <div class="card material-table">
-      <div class="table-header">
-        <span class="table-title">Liste des produits</span>
-        <div class="actions">
-          <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
-        </div>
-      </div>
-        <table id="datatable" class="responsive-table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Modele</th>
-                    <th>Edition</th>
-                    <th>année</th>
-                    <th>chargeur</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product in products %}
+    <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+                <span class="table-title">Liste des produits</span>
+                <div class="actions">
+                    <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                            class="material-icons">search</i></a>
+                </div>
+            </div>
+            <table id="datatable" class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Modele</th>
+                        <th>Edition</th>
+                        <th>année</th>
+                        <th>chargeur</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
                     <tr>
                         <th class="black-text">{{ product.name }}</th>
                         <th class="black-text">{{ product.model }}</th>
@@ -128,20 +114,26 @@
                         <th class="black-text">{{ product.annee }}</th>
                         <th class="black-text">{{ product.charger|yesno:"OUI, NON" }}</th>
                         <td class="actions black-text">
-                            <a href="{% url 'dashboard:productDetailPage' product.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-                            <a href="{% url 'dashboard:productEditPage' product.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Modifier"><span class="material-icons">update</span></a>
-                            <a href="{% url 'dashboard:productDeletePage' product.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left" data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+                            <a href="{% url 'dashboard:productDetailPage' product.pk %}"
+                                class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
+                            <a href="{% url 'dashboard:productEditPage' product.pk %}"
+                                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Modifier"><span class="material-icons">update</span></a>
+                            <a href="{% url 'dashboard:productDeletePage' product.pk %}"
+                                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-{% endblock body_content %}
+        {% endblock body_content %}
 
-{% block javascripts %}
-    <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
-{% endblock javascripts %}
+        {% block javascripts %}
+        <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+        <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+        {% endblock javascripts %}
