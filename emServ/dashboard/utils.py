@@ -64,7 +64,6 @@ class Utils:
             df = pd.DataFrame(db.objects.all().values())
         else:
             df = pd.DataFrame(db.objects.filter(produit__shop__owner__user__username=uname).values())
-        
         if not df.empty:
             un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
             # Parsed it 
@@ -72,10 +71,10 @@ class Utils:
             # the monthly key
             msp = monthtly_data[key]
             dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
-            #return mark_safe(escapejs(json.dumps(dataset)))
+
         else:
             dataset = {   'months': ['Jan', 'Fev', 'Avr'],
-                            'data': [10, 12, 8]   }
+                            'data': [0, 0, 0]   }
 
         return mark_safe(escapejs(json.dumps(dataset)))
 
