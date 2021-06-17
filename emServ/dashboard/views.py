@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -31,6 +31,7 @@ from django.template.loader import get_template
 from django.http import HttpResponse
 
 
+
 # Create your views here.
 class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
@@ -39,7 +40,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        uname = self.request.user.username
         if self.request.user.is_superuser:
             context["achat_directs"] = AchatDirectModel.objects.all().order_by('-created_date')
             context["ventes"] = VenteModel.objects.all().order_by('-created_date')
@@ -50,7 +51,6 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["n_product"] = ProductModel.objects.all().count()
             context["n_client"] = ClientModel.objects.all().count()
         else: 
-            uname = self.request.user.username
             context["achat_directs"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
             context["dataset_achat"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
@@ -78,14 +78,21 @@ class ClientRequestView(LoginRequiredMixin, CreateView):
     
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            form.instance.shop = Shop.objects.get(owner__user__username=self.request.user.username)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
-            # Future
-            # context['client_requests'] = ClientRequestModel.objects.order_by('created_date')
-            context["client_requests"] = ClientRequestModel.objects.all()
+            uuser = self.request.user
+            if uuser.is_superuser:
+                # What the super Admin will see
+                context["client_requests"] = ClientRequestModel.objects.all()
+            else:
+                # What the simple Admin will see
+                context["client_requests"] = ClientRequestModel.objects.filter(client__shop__owner__user__username=uuser.username)
+            # What both will
+            context["Demande Client"]
             return context
 
 
@@ -97,7 +104,8 @@ class ClientRequestUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('dashboard:clientRequestPage')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            form.instance.shop = Shop.objects.get(owner__user__username=self.request.user.username)
         return super().form_valid(form)
 
 
@@ -105,7 +113,14 @@ class ClientRequestDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client_request/client_request_detail.html'
     model = ClientRequestModel
-
+    
+    def get_queryset(self):
+        uname = self.request.user.username
+        self.client_request = get_object_or_404(ClientRequestModel, 
+                                                pk=self.kwargs['pk'],
+                                                client__shop__owner__user__username=uname)
+        return self.client_request
+    
 
 
 class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
@@ -282,8 +297,11 @@ class ProductView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = ProductModel.objects.order_by('created_date')
-        context['title'] = 'Espace Produit'
+        u_user = self.request.user
+        if u_user.is_superuser:
+            context["products"] = ProductModel.objects.all()
+        else:
+            context["products"] = ProductModel.objects.filter(shop__owner__user__username=u_user.username)
         return context
 
 
@@ -299,6 +317,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+        
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
@@ -313,9 +332,18 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
 
-    model = ProductModel
     template_name = 'dashboard/product/product_detail.html'
     context_object_name = 'product'
+
+    def get_queryset(self):
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            self.product = ProductModel.objects.filter(pk=self.kwargs["pk"],
+                                        shop__owner__user__username=u_user.username)
+        else:
+            self.product = ProductModel.objects.filter(pk=self.kwargs["pk"])
+        return self.product
+    
     
 
 class ClientView(LoginRequiredMixin, CreateView):
@@ -326,14 +354,21 @@ class ClientView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('dashboard:clientPage')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            shop = Shop.objects.get(owner__user__username=self.request.user.username)
+            form.instance.shop = shop
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Future
-        # context['clients']  = ClientModel.objects.order_by('created_date')
-        context['clients'] = ClientModel.objects.all()
+        uname = self.request.user.username
+        if self.request.user.is_superuser:
+            # What the superAdmin will see
+            context['clients'] = ClientModel.objects.all()
+        else:
+            # What the simpleAdmin sill see
+            context['clients'] = ClientModel.objects.filter(shop__owner__user__username=uname)
+        # What both will see
         context['title'] = 'Espace Client'
         return context
 

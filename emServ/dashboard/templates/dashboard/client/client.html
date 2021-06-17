@@ -8,8 +8,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
-{% block body_content %}
+{% block title %} {{ title }} {% endblock title %}
 
+{% block body_content %}
 
 <div class="row with-gaps">
     <div class="col 12 black white-text width-border valign-wrapper z-depth-2 separate_one">
@@ -53,6 +54,12 @@
 
             <!--- Form -->
             <div class="row">
+                {% if user.is_superuser %}
+                    <div class="input-field col s6">
+                        {{ form.shop }}
+                        <label for="{{ form.shop.id_for_label }}">Boutique</label>
+                    </div>
+                {% endif %}
                 <div class="input-field col s6">
                     {{ form.fname }}
                     <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
@@ -84,6 +91,10 @@
                 <div class="input-field col s6">
                     {{ form.numero }}
                     <label for="{{ form.numero.id_for_label }}">Numero</label>
+                </div>
+                <div class="input-field col s3">
+                    {{ form.passage }}
+                    <label for="{{ form.passage.id_for_label }}">Passage</label>
                 </div>
             </div>
 
@@ -124,8 +135,7 @@
                         <th>Prenom</th>
                         <th>Nom</th>
                         <th>Numero</th>
-                        <th>Email</th>
-                        <th>Sexe</th>
+                        <th>Passage</th>
                         <th>Date</th>
                         <th>Actions</th>
                     </tr>
@@ -136,9 +146,8 @@
                         <th class="black-text"> {{ client.fname }}</th>
                         <th class="black-text">{{ client.lname }}</th>
                         <th class="black-text">{{ client.numero }}</th>
-                        <th class="black-text">{{ client.email }}</th>
-                        <th class="black-text">{{ client.sexe }}</th>
-                        <th class="black-text">{{ client.created_date }}</th>
+                        <th class="black-text">{{ client.passage }}</th>
+                        <th class="black-text">{{ client.created_date|date:"SHORT_DATE_FORMAT" }}</th>
                         <td class="actions black-text">
                             <a href="{% url 'dashboard:clientDetailPage' client.pk %}"
                                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
@@ -174,4 +183,5 @@
     <script type="text/javascript" src="{% static 'dashboard/js/client_request.js' %}"></script>
     <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
     <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>    
 {% endblock javascripts %}

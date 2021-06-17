@@ -7,78 +7,156 @@
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
+{% block title %} {{ title }} {% endblock title %}
 
 {% block body_content %}
-<div class="row center-align">
-    <div class="card-panel">
-        <div class="card-container">
-            <h4 class="deep-orange-text accent-3 ">Vous pouvez toujours ajouter un nouveau produit.</h4>
-            <p class="grey-text lighten-4">remplissez seul les informations que vous avez sur le produit</p>
-        </div>
 
-        <div class="divider with-margin-y-30"></div>
-
-        <form method="POST">
-            {% csrf_token %}
-            <div class="row">
-                <div class="input-field col s3">
-                    {{ form.name}}
-                    <label for="{{form.name.id_for_label}}">Nom du produit</label>
-                </div>
-                <div class="input-field col s3">
-                    {{ form.model }}
-                    <label for="{{form.model.id_for_label}}">Model du produit</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.edition}}
-                    <label for="{{form.edition.id_for_label}}">Edition</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.annee}}
-                    <label for="{{form.annee.id_for_label}}">Année</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s3">
-                    {{form.storage}}
-                    <label for="{{form.storage.id_for_label}}">Nombre de giga</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.ram}}
-                    <label for="{{form.ram.id_for_label}}">Nombre de ram</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.dimension}}
-                    <label for="{{form.dimension.id_for_label}}">Dimensions</label>
-                </div>
-                 
-            </div>
-
-            <div class="row">
-                <div class="col s4 left-align">
-                    <p>
-                        <label>
-                            {{form.original_box}}
-                            <span>Boite d'origine</span>
-                        </label>
-                    </p>
-                </div>
-                <div class=" col s4 left-align">
-                    <p>
-                        <label>
-                            {{form.charger}}
-                            <span>Chargeur</span>
-                        </label>
-                    </p>
-                </div>
-                <button class="waves-effect waves-light btn deep-orange accent-3 center" type="submit">
-                    Ajouter
-                    <i class="material-icons right">category</i>
-                </button>
-            </div>
-        </form>
+<div class="card-panel deep-orange accent-3">
+    <div class="card-container">
+        <h4 class="deep-orange-text accent-3 white-text">Vous pouvez toujours ajouter un nouveau produit.</h4>
+        <p class="white-text lighten-4">remplissez seul les informations que vous avez sur le produit</p>
     </div>
 </div>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="card-panel">
+        <div class="row">
+            <div class="input-field col s5">
+                {{ form.shop}}
+                <label for="{{form.shop.id_for_label}}">Choisir la Boutique</label>
+            </div>
+            <div class="input-field col s5">
+                {{ form.name }}
+                <label for="{{form.name.id_for_label}}">Nom Produit</label>
+            </div>
+            <div class="input-field col s2">
+                {{ form.quantity }}
+                <label for="{{form.quantity.id_for_label}}">Quantite</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s3">
+                {{ form.category }}
+                <label for="{{form.category.id_for_label}}">Category</label>
+            </div>
+            <div class="input-field col s3">
+                {{ form.estate }}
+                <label for="{{form.estate.id_for_label}}">Etat</label>
+            </div>
+            <div class="input-field col s3">
+                {{ form.obsolescence }}
+                <label for="{{form.obsolescence.id_for_label}}">Obsolescence</label>
+            </div>
+            <div class="input-field col s3">
+                {{ form.rarety }}
+                <label for="{{form.rarety.id_for_label}}">Rarete</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s3">
+                {{ form.dimension }}
+                <label for="{{form.dimension.id_for_label}}">Dimension</label>
+            </div>
+            <div class="input-field col s3">
+                {{ form.dv_or_ad }}
+                <label for="{{form.dv_or_ad.id_for_label}}">Depot Vente ou Achat</label>
+            </div>
+            <div class="input-field col s3">
+                {{ form.sale_price_on_new }}
+                <label for="{{form.sale_price_on_new.id_for_label}}">Prix du produit Neuf</label>
+            </div>
+            <div class="input-field col s3">
+                {{ form.sale_price_on_old }}
+                <label for="{{form.sale_price_on_old.id_for_label}}">Prix du produit occasion</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6 m-grid">
+                {{ form.seller }}
+                <label for="{{form.seller.id_for_label}}">Vendeur</label>
+                <a href="{% url 'dashboard:clientPage' %}" name="addClient" class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Ajouter un client">
+                    <i class="material-icons right">add</i>
+                </a>
+            </div>
+            <div class="input-field col s3">
+                <label for="{{form.original_box.id_for_label}}">
+                    {{ form.original_box }}
+                    <span>Emballage d'origine</span> 
+                </label>
+            </div>
+            <div class="input-field col s3">
+                <label for="{{form.sale_bill.id_for_label}}">
+                    {{ form.sale_bill }}
+                    <span>Facture d'Achat</span> 
+                </label>
+            </div>
+        </div>
+    </div>
+    <ul class="collapsible popout">
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">keyboard_arrow_down</i>
+                Electronique
+            </div>
+            <div class="collapsible-body">
+                
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form.storage }}
+                        <label for="{{form.storage.id_for_label}}">Memoire de Stockage</label>
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form.ram }}
+                        <label for="{{form.ram.id_for_label}}">Memoire RAM</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6">
+                        {{ form.annee }}
+                        <label for="{{form.annee.id_for_label}}">Edition</label>
+                    </div>
+                    <div class="input-field col s6">
+                        {{ form.edition }}
+                        <label for="{{form.edition.id_for_label}}">Edition</label>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">keyboard_arrow_down</i>
+                Vetements
+            </div>
+            <div class="collapsible-body">
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dolor cum eligendi expedita dolore ut nobis laboriosam minus perferendis sapiente?</span>
+            </div>
+        </li>
+
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">keyboard_arrow_down</i>
+                Autres
+            </div>
+            <div class="collapsible-body">
+                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde nesciunt repellendus neque dolores aut.</span>
+            </div>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="input-field col s8">
+            <i class="material-icons prefix">mode_edit</i>
+            {{ form.description }}
+            <label for="{{form.description.id_for_label}}">Description</label>
+        </div>
+        <button class="btn deep-orange accent-3 right" tyep="submit">
+            <i class="material-icons right">check</i>
+            Enregistrer
+        </button>
+    </div>
+</form>
+
 
 
 <div class="row">

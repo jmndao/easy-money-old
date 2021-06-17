@@ -204,11 +204,11 @@ $(document).ready(function() {
 // Adding a calendar button
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, options);
-  });
+    var instances = M.Datepicker.init(elems, {});
+});
 
-  // Or with jQuery
+// Or with jQuery
 
-  $(document).ready(function(){
+$(document).ready(function() {
     $('.datepicker').datepicker();
-  });
+});
