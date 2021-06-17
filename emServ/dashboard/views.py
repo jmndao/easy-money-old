@@ -205,8 +205,8 @@ class DepotVenteView(LoginRequiredMixin, CreateView, Utils):
 
 
 
-#Second, create the DeptVenteModelDetailView
-class DeptVenteModelDetailView(LoginRequiredMixin, DetailView):
+#Second, create the DepotVenteDetailView
+class DepotVenteDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/depot_vente/depot_vente_detail.html'
     model = DepotVenteModel
     context_object_name = 'd_vente'

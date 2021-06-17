@@ -24,15 +24,15 @@
         <!--- Form -->
         <div class="row">
             <div class="input-field col s6">
-                {{ form.nom_vendeur }}
+                {{ form.produit.seller }}
                 <label for="{{ form.nom_vendeur.id_for_label }}">Nom du Vendeur</label>
             </div>
             <div class="input-field col s6">
-                {{ form.produit }}
+                {{ form.produit.name }}
                 <label for="{{ form.produit.id_for_label }}">Produit</label>
             </div>
             <div class="input-field col s6">
-                {{ form.qualite }}
+                {{ form.produit.estate }}
                 <label for="{{ form.qualite.id_for_label }}">Qualite</label>
             </div>
             <div class="input-field col s6">
@@ -47,7 +47,7 @@
         </div>
 
         <div class="modal-footer">
-            <a href="{% url 'dashboard:depotVenteStockPage' %}" class="waves-effect btn-flat nopadding"><i
+            <a href="{% url 'dashboard:depotVentePage' %}" class="waves-effect btn-flat nopadding"><i
                     class="material-icons">local_mall</i></a>
             <button class="modal-close waves-effect waves-green btn-flat" type="submit">
                 <i class="material-icons right">thumb_up_alt</i>

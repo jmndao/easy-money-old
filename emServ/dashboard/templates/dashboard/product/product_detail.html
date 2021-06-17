@@ -12,7 +12,7 @@
 
         <div class="row">
             <div class="col s12">
-                <h4>Produit: {{ product.nom_du_produit }}</h4>
+                <h4>Produit: {{ product.name }}</h4>
             </div>
             <div class="row">
                 <div class="col s6">
@@ -43,7 +43,7 @@
                     Capacite Stockage (Giga): 
                 </div>
                 <div class="col s6">
-                    <b>{% if product.nombre_de_giga %}{{ product.nombre_de_giga }} Giga{% else %}Non spécifiée{% endif %}</b>
+                    <b>{% if product.storage %}{{ product.storage }} Giga{% else %}Non spécifiée{% endif %}</b>
                 </div>
             </div>
              <div class="row">
@@ -51,7 +51,7 @@
                     RAM (Giga): 
                 </div>
                 <div class="col s6">
-                    <b>{% if product.nombre_de_ram %}{{ product.nombre_de_ram }} Giga {% else %}Non spécifiée{% endif %}</b>
+                    <b>{% if product.ram %}{{ product.ram }} Giga {% else %}Non spécifiée{% endif %}</b>
                 </div>
             </div>
              <div class="row">
@@ -59,23 +59,21 @@
                     Dimension: 
                 </div>
                 <div class="col s6">
-                    <b>{% if product.dimensions %}{{ product.dimensions }}{% else %}Non spécifiée{% endif %}</b>
+                    <b>{% if product.dimension %}{{ product.dimension }}{% else %}Non spécifiée{% endif %}</b>
                 </div>
             </div>
              <div class="row">
-                <div class="col s6">
+                <div class="col s12">
                     Masse: 
                 </div>
-                <div class="col s6">
-                    <b>{% if product.poids %}{{ product.poids }} kg{% else %}Non spécifiée{% endif %}</b>
-                </div>
+               
             </div>
              <div class="row">
                 <div class="col s6">
                     Chargeur: 
                 </div>
                 <div class="col s6">
-                    <b>{{ product.chargeurs|yesno:"OUI, NON" }}</b>
+                    <b>{{ product.charger|yesno:"OUI, NON" }}</b>
                 </div>
             </div>
             <div class="row">
@@ -83,7 +81,7 @@
                     Boite d'origine: 
                 </div>
                 <div class="col s6">
-                    <b>{{ product.boite_origine|yesno:"OUI, NON" }}</b>
+                    <b>{{ product.original_box|yesno:"OUI, NON" }}</b>
                 </div>
             </div>
         </div>
