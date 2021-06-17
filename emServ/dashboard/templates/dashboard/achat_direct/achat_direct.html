@@ -3,9 +3,9 @@
 {% load humanize %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -109,41 +109,47 @@
 
 <!-- End graph -->
 
-<!-------- Modal -->
-<div id="depositStock" class="modal">
-  <div class="modal-content">
-    <div class="card-panel orange darken-4"><b>Nouveau Depot </b><i class="material-icons right">add_shopping_cart</i>
-    </div>
-    <form action="" method="post">
-      {% csrf_token %}
-
-      <!--- Form -->
-      <div class="row">
-        <div class="input-field col s12">
-          {{ form.produit }}
-          <label for="{{ form.produit.id_for_label }}">Produit</label>
-        </div>
-        <div class="input-field col s12">
-          {{ form.price }}
-          <label for="{{ form.price.id_for_label }}">Prix d'Achat</label>
-        </div>
-      </div>
-      <div class="info_text valign-wrapper">
-        <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
-              class="material-icons">local_mall</i> </small>
-        </span>
-      </div>
-      <div class="modal-footer">
-        <a href="{% url 'dashboard:productPage' %}" class="waves-effect btn-flat nopadding">
-          <i class="material-icons">local_mall</i>
-        </a>
-        <button class="modal-close waves-effect waves-green btn-flat" type="submit">
-          <i class="material-icons right">thumb_up_alt</i>
-        </button>
-      </div>
-    </form>
+<div class="card-panel deep-orange accent-3">
+  <div class="card-container center-align">
+    <h4 class="deep-orange-text accent-3 white-text ">Ajouter des produits venants d'achat direct.</h4>
   </div>
 </div>
+<div class="card-panel">
+  <form action="" method="post">
+    {% csrf_token %}
+    <!--- Form -->
+    <div class="row">
+      <div class="input-field col s12">
+        {{ form.produit }}
+        <label for="{{ form.produit.id_for_label }}">Produit</label>
+      </div>
+      <div class="input-field col s12">
+        {{ form.price }}
+        <label for="{{ form.price.id_for_label }}">Prix d'Achat</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="info_text valign-wrapper col m6 s12">
+        <span class="blue-text lighten-2"><small>Vous pouvez ajouter un nouveau client avec l'icon à coté <i
+              class="material-icons">people</i> </small>
+        </span>
+      </div>
+
+      <div class="modal-footer col m6 s12">
+        <div class="row">
+          <a href="{% url 'dashboard:productPage' %}"
+            class="waves-effect  btn-flat nopadding col s2 deep-orange-text accent-3">
+            <i class="material-icons">local_mall</i>
+          </a>
+          <button class="col s2 modal-close waves-effect waves-green btn-flat" type="submit">
+            <i class="material-icons right deep-orange-text accent-3">thumb_up_alt</i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
 
 
 <!------- Section R3002: - Deposit stock [] -->
@@ -176,13 +182,13 @@
             <td> {{ ad.produit.seller }} </td>
             <td> {{ ad.produit.name }}</td>
             {% if ad.produit.estate == "NEUF" %}
-              <td><span class="new badge green" data-badge-caption="{{ ad.produit.estate }}"></span></td>
+            <td><span class="new badge green" data-badge-caption="{{ ad.produit.estate }}"></span></td>
             {% elif ad.produit.estate == "BON" %}
-              <td><span class="new badge light-green" data-badge-caption="{{ ad.produit.estate }}"></span></td>
+            <td><span class="new badge light-green" data-badge-caption="{{ ad.produit.estate }}"></span></td>
             {% elif ad.produit.estate == "MOYEN" %}
-              <td><span class="new badge yellow" data-badge-caption="{{ ad.produit.estate }}"></span></td>
+            <td><span class="new badge yellow" data-badge-caption="{{ ad.produit.estate }}"></span></td>
             {% elif ad.produit.estate == "MAUVAIS" %}
-              <td><span class="new badge light-red" data-badge-caption="{{ ad.produit.estate }}"></span></td>
+            <td><span class="new badge light-red" data-badge-caption="{{ ad.produit.estate }}"></span></td>
             {% else %}
             <td><span class="new badge red" data-badge-caption="{{ ad.produit.estate }}"></span></td>
             {% endif %}

@@ -12,8 +12,8 @@
 {% block body_content %}
 
 <div class="card-panel deep-orange accent-3">
-    <div class="card-container">
-        <h4 class="deep-orange-text accent-3 white-text">Vous pouvez toujours ajouter un nouveau produit.</h4>
+    <div class="card-container center-align">
+        <h4 class="deep-orange-text accent-3 white-text ">Vous pouvez toujours ajouter un nouveau produit.</h4>
         <p class="white-text lighten-4">remplissez seul les informations que vous avez sur le produit</p>
     </div>
 </div>
@@ -234,11 +234,14 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
 
-        {% endblock body_content %}
 
-        {% block javascripts %}
-        <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-        <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-        <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
-        {% endblock javascripts %}
+{% endblock body_content %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+{% endblock javascripts %}

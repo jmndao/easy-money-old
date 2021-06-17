@@ -87,7 +87,7 @@ class ClientModel(models.Model):
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, null=True, blank=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     fname = models.CharField(max_length=100, blank=True, null=True, verbose_name="First Name")
     lname = models.CharField(max_length=100, blank=True, null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
@@ -96,7 +96,6 @@ class ClientModel(models.Model):
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
-    passage = models.IntegerField(default=1, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

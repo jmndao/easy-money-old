@@ -109,50 +109,57 @@
 
 <!-- End graph -->
 
-<!-------- Modal -->
-<div id="depotVente" class="modal">
-    <div class="modal-content">
-        <div class="card-panel orange darken-4"><b>Nouveau Depot Vente </b><i
-                class="material-icons right">add_shopping_cart</i>
-        </div>
-        <form method="post">
-            {% csrf_token %}
-
-            <!--- Form -->
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ form.produit.seller }}
-                    <label for="{{ form.produit.seller.id_for_label }}">Nom du vendeur</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.produit.name }}
-                    <label for="{{ form.produit.name.id_for_label }}">Produit</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.produit.estate }}
-                    <label for="{{ form.qualite.estate.id_for_label }}">Qualite</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.price }}
-                    <label for="{{ form.price.id_for_label }}">Prix de Depot</label>
-                </div>
-            </div>
-            <div class="info_text valign-wrapper">
-                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
-                            class="material-icons">local_mall</i> </small>
-                </span>
-            </div>
-            <div class="modal-footer">
-                <a href="{% url 'dashboard:depotVentePage' %}" class="waves-effect btn-flat nopadding">
-                    <i class="material-icons">local_mall</i>
-                </a>
-                <button class="modal-close waves-effect waves-green btn-flat" type="submit">
-                    <i class="material-icons right">thumb_up_alt</i>
-                </button>
-            </div>
-        </form>
+<div class="card-panel deep-orange accent-3">
+    <div class="card-container center-align">
+        <h4 class="deep-orange-text accent-3 white-text ">Ajouter un produit venant de depot vente
+        </h4>
     </div>
 </div>
+<div class="card-panel">
+    <form method="post">
+        {% csrf_token %}
+
+        <!--- Form -->
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form.produit }}
+                <label for="{{ form.produit.id_for_label }}">Nom du vendeur</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.produit }}
+                <label for="{{ form.produit.id_for_label }}">Produit</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.produit }}
+                <label for="{{ form.prduit.id_for_label }}">Qualite</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.price }}
+                <label for="{{ form.price.id_for_label }}">Prix de Depot</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="info_text valign-wrapper col m6 s12">
+                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un nouveau client avec l'icon à coté <i
+                            class="material-icons">people</i> </small>
+                </span>
+            </div>
+
+            <div class="modal-footer col m6 s12">
+                <div class="row">
+                    <a href="{% url 'dashboard:productPage' %}"
+                        class="waves-effect  btn-flat nopadding col s2 deep-orange-text accent-3">
+                        <i class="material-icons">local_mall</i>
+                    </a>
+                    <button class="col s2 modal-close waves-effect waves-green btn-flat" type="submit">
+                        <i class="material-icons right deep-orange-text accent-3">thumb_up_alt</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 <!------- Section R3002: - Deposts Ventes Stock [] -->
 
@@ -195,13 +202,14 @@
                         <td>{{ dv.price|floatformat:0|intcomma}}</td>
                         <td>{{ dv.created_date|date:"SHORT_DATE_FORMAT"}}</td>
                         <td class="actions">
-                            <a href="{% url 'dashboard:depotVenteDetailPage' dv.pk %}" class="orange-text darken-4 waves-effect btn-flat tooltipped"
-                                data-position="left" data-tooltip="Voir Produit"><span
-                                    class="material-icons">visibility</span></a>
-                            <a href="{% url 'dashboard:depotVenteEditPage' dv.pk %}" class="green-text darken-4 waves-effect btn-flat tooltipped"
-                                data-position="left" data-tooltip="Modifier Produit"><span
-                                    class="material-icons">update</span></a>
-                            <a href="{% url 'dashboard:depotVenteDeletePage' dv.pk %}" class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                            <a href="{% url 'dashboard:depotVenteDetailPage' dv.pk %}"
+                                class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Voir Produit"><span class="material-icons">visibility</span></a>
+                            <a href="{% url 'dashboard:depotVenteEditPage' dv.pk %}"
+                                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Modifier Produit"><span class="material-icons">update</span></a>
+                            <a href="{% url 'dashboard:depotVenteDeletePage' dv.pk %}"
+                                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Supprimer Produit"><span class="material-icons">delete</span></a>
                         </td>
                     </tr>

@@ -3,9 +3,9 @@
 
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block title %} {{ title }} {% endblock title %}
@@ -20,13 +20,12 @@
         </div>
         <div class="col s4  center-align">
             <div class="icon z-depth-2">
-                <a href="#addClient" class="modal-trigger waves-effect nopadding"><i
-                        class="material-icons medium deep-orange-text accent-3 separate_two ">add_circle</i></a>
+                <p class="waves-effect nopadding"><i
+                        class="material-icons medium deep-orange-text accent-3 separate_two ">arrow_downward</i></p>
             </div>
             <div class="ajouter">
-                <a href="#addClient"
-                    class="deep-orange-text accent-3 odal-trigger waves-effect nopadding modal-trigger"> Ajouter un
-                </a>
+                <p class="deep-orange-text accent-3  waves-effect nopadding "> aller en bas
+                </p>
             </div>
         </div>
     </div>
@@ -45,83 +44,84 @@
         </div>
     </div>
 </div>
-<!-------- Modal -->
-<div id="addClient" class="modal">
-    <div class="modal-content">
-        <div class="card-panel orange darken-4"><b>Nouveau Client </b><i class="material-icons right">people</i></div>
-        <form action="" method="post">
-            {% csrf_token %}
-
-            <!--- Form -->
-            <div class="row">
-                {% if user.is_superuser %}
-                    <div class="input-field col s6">
-                        {{ form.shop }}
-                        <label for="{{ form.shop.id_for_label }}">Boutique</label>
-                    </div>
-                {% endif %}
-                <div class="input-field col s6">
-                    {{ form.fname }}
-                    <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.lname }}
-                    <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.age }}
-                    <label for="{{ form.age.id_for_label }}">Age</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.nationality }}
-                    <label for="{{ form.nationality.id_for_label }}">Nationalite</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.sexe }}
-                    <label for="{{ form.sexe.id_for_label }}">Sexe</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.address }}
-                    <label for="{{ form.address.id_for_label }}">Adresse</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.email }}
-                    <label for="{{ form.email.id_for_label }}">Email</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.numero }}
-                    <label for="{{ form.numero.id_for_label }}">Numero</label>
-                </div>
-<<<<<<< HEAD
-                <div class="input-field col s12">
-                    {{ form.shop }}
-                    <label for="{{ form.shop.id_for_label }}">Boutique</label>
-=======
-                <div class="input-field col s3">
-                    {{ form.passage }}
-                    <label for="{{ form.passage.id_for_label }}">Passage</label>
->>>>>>> 613a29847e8e202367bd2a882080aa1bd171a2f5
-                </div>
-            </div>
-
-
-            <div class="info_text valign-wrapper">
-                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un nouveau client avec l'icon à coté <i
-                            class="material-icons">people</i> </small></span>
-            </div>
-
-            <div class="modal-footer">
-                <a href="{% url 'dashboard:clientPage' %}" class="waves-effect btn-flat nopadding">
-                    <i class="material-icons">local_mall</i>
-                </a>
-                <button class="modal-close waves-effect waves-green btn-flat" type="submit">
-                    <i class="material-icons right">thumb_up_alt</i>
-                </button>
-            </div>
-        </form>
+<div class="card-panel deep-orange accent-3">
+    <div class="card-container center-align">
+        <h4 class="deep-orange-text accent-3 white-text ">Vous pouvez toujours ajouter un nouveau client.</h4>
+        <p class="white-text lighten-4">remplissez seul les informations que vous avez sur le client</p>
     </div>
-
 </div>
+<div class="card-panel ">
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <!--- Form -->
+        <div class="row">
+            {% if user.is_superuser %}
+            <div class="input-field col s6">
+                {{ form.shop }}
+                <label for="{{ form.shop.id_for_label }}">Boutique</label>
+            </div>
+            {% endif %}
+            <div class="input-field col s6">
+                {{ form.fname }}
+                <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.lname }}
+                <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.age }}
+                <label for="{{ form.age.id_for_label }}">Age</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.nationality }}
+                <label for="{{ form.nationality.id_for_label }}">Nationalite</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.sexe }}
+                <label for="{{ form.sexe.id_for_label }}">Sexe</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.address }}
+                <label for="{{ form.address.id_for_label }}">Adresse</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.email }}
+                <label for="{{ form.email.id_for_label }}">Email</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.numero }}
+                <label for="{{ form.numero.id_for_label }}">Numero</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.passage }}
+                <label for="{{ form.passage.id_for_label }}">Passage</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="info_text valign-wrapper col m6 s12">
+                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un nouveau client avec l'icon à coté <i
+                            class="material-icons">people</i> </small>
+                </span>
+            </div>
+
+            <div class="modal-footer col m6 s12">
+                <div class="row">
+                    <a href="{% url 'dashboard:clientPage' %}"
+                        class="waves-effect  btn-flat nopadding col s2 deep-orange-text accent-3">
+                        <i class="material-icons">local_mall</i>
+                    </a>
+                    <button class="col s2 modal-close waves-effect waves-green btn-flat" type="submit">
+                        <i class="material-icons right deep-orange-text accent-3">thumb_up_alt</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="row">
     <div id="man" class="col s12">
         <div class="card material-table">
@@ -129,7 +129,7 @@
                 <span class="table-title">Liste Des Clients</span>
                 <div class="actions">
                     <!-- Here is where we should make the linking-->
-                    <a href="#addClient" class="modal-trigger waves-effect btn-flat nopadding"><i
+                    <a href="#addClient" class="waves-effect btn-flat nopadding"><i
                             class="material-icons">person_add</i></a>
                     <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">search</i></a>
@@ -186,8 +186,8 @@
 {% endblock body_content %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{% static 'dashboard/js/client_request.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>    
+<script type="text/javascript" src="{% static 'dashboard/js/client_request.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}

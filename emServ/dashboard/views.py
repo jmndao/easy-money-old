@@ -402,11 +402,15 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 class GeneratePDF(View, Utils):
     def get(self, request, *args, **kwargs):
         template = get_template('dashboard/invoice/invoice.html')
-        context = {
+        context = super().get_context_data(**kwargs)
+        context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
+        context['buyer'] = self.q.produit.seller[0]
+
+        """context = {
             'invoice_id' : 123,
             'customer_name' : 'akhad', 
             'today' : 'Today'
-        }
+        }"""
         pdf = self.render_to_pdf('dashboard/invoice/invoice.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
