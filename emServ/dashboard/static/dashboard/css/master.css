@@ -392,6 +392,7 @@ i.right {
     grid-gap: 20px;
 }
 
+
 .deep-orange-text.big {
     color: #ff5722 !important;
     font-size: 28px;
@@ -569,6 +570,10 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     #nav-toggle:checked+.easy-sidebar ul li h5,
     #nav-toggle:checked+.easy-sidebar ul li small {
         display: inline;
+    }
+    .with-gaps {
+        display: grid;
+        grid-template-columns:1fr; 
     }
 }
 

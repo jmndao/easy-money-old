@@ -18,172 +18,120 @@
     </div>
 </div>
 
+<div class="card-panel" id="productID">
 <form action="" method="post">
     {% csrf_token %}
-    <div class="card-panel">
+    <input type="hidden" name="next" value="{{ request.path }}">
         <div class="row">
-            <div class="input-field col s5">
+            <div class="input-field col m6 s12">
                 {{ form.shop}}
                 <label for="{{form.shop.id_for_label}}">Choisir la Boutique</label>
             </div>
-            <div class="input-field col s5">
+            <div class="input-field col m6 s12">
                 {{ form.name }}
                 <label for="{{form.name.id_for_label}}">Nom Produit</label>
             </div>
-            <div class="input-field col s2">
-                {{ form.quantity }}
-                <label for="{{form.quantity.id_for_label}}">Quantite</label>
-            </div>
         </div>
         <div class="row">
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.category }}
                 <label for="{{form.category.id_for_label}}">Category</label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.estate }}
                 <label for="{{form.estate.id_for_label}}">Etat</label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.obsolescence }}
                 <label for="{{form.obsolescence.id_for_label}}">Obsolescence</label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.rarety }}
                 <label for="{{form.rarety.id_for_label}}">Rarete</label>
             </div>
         </div>
         <div class="row">
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.dimension }}
                 <label for="{{form.dimension.id_for_label}}">Dimension</label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.dv_or_ad }}
                 <label for="{{form.dv_or_ad.id_for_label}}">Depot Vente ou Achat</label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
                 {{ form.sale_price_on_new }}
                 <label for="{{form.sale_price_on_new.id_for_label}}">Prix du produit Neuf</label>
             </div>
-            <div class="input-field col s3">
-                {{ form.sale_price_on_old }}
-                <label for="{{form.sale_price_on_old.id_for_label}}">Prix du produit occasion</label>
+            <div class="input-field col m3 s6">
+                {{ form.annee }}
+                <label for="{{form.annee.id_for_label}}">Annee d'Achat </label>
             </div>
         </div>
+
         <div class="row">
-            <div class="input-field col s6 m-grid">
+            <div class="input-field col m3 s6">
+                {{ form.storage }}
+                <label for="{{form.storage.id_for_label}}">Memoire de Stockage</label>
+            </div>
+            <div class="input-field col m3 s6">
+                {{ form.ram }}
+                <label for="{{form.ram.id_for_label}}">Memoire RAM</label>
+            </div>
+            <div class="input-field col m3 s6">
+                {{ form.model }}
+                <label for="{{form.model.id_for_label}}">Model du produit</label>
+            </div>
+            <div class="input-field col m3 s6">
+                {{form.edition}}
+                <label for="{{form.edition.id_for_label}}">Edition</label>
+            </div>
+        </div>
+
+        <div class="row valign-wrapper">
+            <div class="input-field col m6 s10">
                 {{ form.seller }}
                 <label for="{{form.seller.id_for_label}}">Vendeur</label>
-                <a href="{% url 'dashboard:clientPage' %}" name="addClient"
+            </div>
+            <div class="input-field col m1 s2">
+                <a href="{% url 'dashboard:clientPage' %}" name="clientID"
                     class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
-                    data-tooltip="Ajouter un client">
-                    <i class="material-icons right">add</i>
+                    data-tooltip="Nouveau Vendeur">
+                    <i class="material-icons right">person_add</i>
                 </a>
             </div>
-            <div class="input-field col s3">
-                <label for="{{form.original_box.id_for_label}}">
-                    {{ form.original_box }}
-                    <span>Emballage d'origine</span>
+            <div class="input-field col m3 s6">
+                {{ form.quantity }}
+                <label for="{{form.quantity.id_for_label}}">Quantite</label>
+            </div>
+        </div> 
+
+        <div class="row">
+            <div class="input-field col m3 s6">
+                <label for="{{form.charger.id_for_label}}">
+                    {{ form.charger }}
+                    <span>Chargeur</span>
                 </label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col m3 s6">
+                <label for="{{form.original_box.id_for_label}}">
+                    {{ form.original_box }}
+                    <span>Boite d'origine</span>
+                </label>
+            </div>
+            <div class="input-field col m3 s6">
                 <label for="{{form.sale_bill.id_for_label}}">
                     {{ form.sale_bill }}
                     <span>Facture d'Achat</span>
                 </label>
             </div>
+            <div class="input-field col m3 s6">
+                <button class="waves-effect waves-green btn-flat" type="submit">
+                    <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+                    <b class="deep-orange-text accent-3">Enregistrer</b> 
+                </button>
+            </div>
         </div>
-    </div>
-    <ul class="collapsible popout">
-        <li>
-            <div class="collapsible-header">
-                <i class="material-icons">keyboard_arrow_down</i>
-                Electronique
-            </div>
-            <div class="collapsible-body">
-
-                <div class="row">
-                    <div class="input-field col s6">
-                        {{ form.storage }}
-                        <label for="{{form.storage.id_for_label}}">Memoire de Stockage</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{ form.ram }}
-                        <label for="{{form.ram.id_for_label}}">Memoire RAM</label>
-                    </div>
-                </div>
-                <div class="input-field col s3">
-                    {{ form.model }}
-                    <label for="{{form.model.id_for_label}}">Model du produit</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.edition}}
-                    <label for="{{form.edition.id_for_label}}">Edition</label>
-                </div>
-                <div class="input-field col s3">
-                    {{form.annee}}
-                    <label for="{{form.annee.id_for_label}}">Année</label>
-                </div>
-                <div class="row">
-                    <div class="input-field col s3">
-                        {{form.storage}}
-                        <label for="{{form.nombre_de_giga.id_for_label}}">Nombre de giga</label>
-                    </div>
-                    <div class="input-field col s3">
-                        {{form.storage}}
-                        <label for="{{form.nombre_de_ram.id_for_label}}">Nombre de ram</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{form.dimension}}
-                        <label for="{{form.dimensions.id_for_label}}">Dimensions</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6">
-                        {{ form.annee }}
-                        <label for="{{form.annee.id_for_label}}">Edition</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{ form.edition }}
-                        <label for="{{form.edition.id_for_label}}">Edition</label>
-                    </div>
-                </div>
-            </div>
-        </li>
-
-        <li>
-            <div class="collapsible-header">
-                <i class="material-icons">keyboard_arrow_down</i>
-                Vetements
-            </div>
-            <div class="collapsible-body">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel dolor cum eligendi expedita dolore ut
-                    nobis laboriosam minus perferendis sapiente?</span>
-            </div>
-        </li>
-
-        <li>
-            <div class="collapsible-header">
-                <i class="material-icons">keyboard_arrow_down</i>
-                Autres
-            </div>
-            <div class="collapsible-body">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam unde nesciunt repellendus neque
-                    dolores aut.</span>
-            </div>
-        </li>
-    </ul>
-    <div class="row">
-        <div class="input-field col s8">
-            <i class="material-icons prefix">mode_edit</i>
-            {{ form.description }}
-            <label for="{{form.description.id_for_label}}">Description</label>
-        </div>
-        <button class="btn deep-orange accent-3 right" tyep="submit">
-            <i class="material-icons right">check</i>
-            Enregistrer
-        </button>
     </div>
 </form>
 

@@ -19,9 +19,7 @@ from dashboard.models import (  ProductModel,
                                 Shop
                             )
 
-# from notifications.signals import notify
-from dashboard.utils import Utils
-# from dashboard.forms import DepotVenteModelForm
+from dashboard.utils import Utils, RedirectToPreviousMixin
 
 
 
@@ -69,14 +67,12 @@ class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/profile.html'
 
 
-class ClientRequestView(LoginRequiredMixin, CreateView):
+class ClientRequestView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
 
     template_name = 'dashboard/client_request/client_request.html'
     model = ClientRequestModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:clientRequestPage')
     
-
     def form_valid(self, form):
         if not self.request.user.is_superuser:
             form.instance.shop = Shop.objects.get(owner__user__username=self.request.user.username)
@@ -96,12 +92,11 @@ class ClientRequestView(LoginRequiredMixin, CreateView):
             return context
 
 
-class ClientRequestUpdateView(LoginRequiredMixin, UpdateView):
+class ClientRequestUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     template_name = 'dashboard/client_request/client_request_edit.html'
     model = ClientRequestModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:clientRequestPage')
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
@@ -123,21 +118,19 @@ class ClientRequestDetailView(LoginRequiredMixin, DetailView):
     
 
 
-class ClientRequestDeleteView(LoginRequiredMixin, DeleteView):
+class ClientRequestDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/client_request/client_request_delete.html'
     model = ClientRequestModel
-    success_url = reverse_lazy('dashboard:clientRequestPage')
 
 
-class AchatDirectView(LoginRequiredMixin, CreateView, Utils):
+
+class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
     template_name = 'dashboard/achat_direct/achat_direct.html'
     model = AchatDirectModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:AchatDirectPage')
     
-
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -146,21 +139,22 @@ class AchatDirectView(LoginRequiredMixin, CreateView, Utils):
         context = super().get_context_data(**kwargs)
         context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
-        context['spent'] = sum([p.prix_d_achat for p in self.q])
+        context['spent'] = sum([p.price for p in self.q])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
         return context
 
 
-class AchatDirectUpdateView(LoginRequiredMixin, UpdateView):
+
+class AchatDirectUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     template_name = 'dashboard/achat_direct/achat_direct_edit.html'
     model = AchatDirectModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:AchatDirectPage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
 
 
 class AchatDirectDetailView(LoginRequiredMixin, DetailView):
@@ -171,21 +165,18 @@ class AchatDirectDetailView(LoginRequiredMixin, DetailView):
 
 
 
-class AchatDirectDeleteView(LoginRequiredMixin, DeleteView):
+class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/achat_direct/achat_direct_delete.html'
     model = AchatDirectModel
-    success_url = reverse_lazy('dashboard:AchatDirectPage')
 
 
-# For the new depot vente tab that I am creating.
 
 # First, creating the DepotVenteView
-class DepotVenteView(LoginRequiredMixin, CreateView, Utils):
+class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
     template_name = 'dashboard/depot_vente/depot_vente.html'
     model = DepotVenteModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:depotVentePage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -198,7 +189,7 @@ class DepotVenteView(LoginRequiredMixin, CreateView, Utils):
         context['depot_vente'] = self.q
         context['total_item'] = self.q.count()
         #Sum des produits de depots ventes
-        context['spent_depot'] = sum([p.prix_d_depot for p in self.q])
+        context['spent_depot'] = sum([p.price for p in self.q])
         #benefice 
         context['benefice'] = self.benefice_depot_vente(AchatDirectModel, VenteModel, context['spent_depot'])
         return context
@@ -214,11 +205,10 @@ class DepotVenteDetailView(LoginRequiredMixin, DetailView):
 
 
 #Third, create the depotVenteStockEditView    
-class DepotVenteEditView(LoginRequiredMixin, UpdateView):
+class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
     template_name = 'dashboard/depot_vente/depot_vente_edit.html'
     model = DepotVenteModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:depotVentePage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -226,21 +216,18 @@ class DepotVenteEditView(LoginRequiredMixin, UpdateView):
 
 
 
-class DepotVenteDeleteView(LoginRequiredMixin, DeleteView):
+class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
     model = ProductModel
     template_name = 'dashboard/depot_vente/depot_vente_delete.html'
     context_object_name = 'dv_delete'
-    success_url = reverse_lazy('dashboard:depotVentePage')
 
 
 
-class VenteView(LoginRequiredMixin, CreateView, Utils):
+class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
     template_name = 'dashboard/vente/vente.html'
     model = VenteModel
-    fields = '__all__'
-    success_url = reverse_lazy('dashboard:VentePage')
-    
+    fields = '__all__'    
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -250,17 +237,16 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         context = super().get_context_data(**kwargs)
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
-        context['revenue'] = sales = sum([p.prix_de_vente_fin for p in self.q])
+        context['revenue'] = sales = sum([p.price for p in self.q])
         context['benefice'] = self.benefice_vente(AchatDirectModel, DepotVenteModel, sales)
         return context
 
 
-class VenteUpdateView(LoginRequiredMixin, UpdateView):
+class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     template_name = 'dashboard/vente/vente_edit.html'
     model = VenteModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:ventePage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -275,20 +261,18 @@ class VenteDetailView(LoginRequiredMixin, DetailView):
 
 
 
-class VenteDeleteView(LoginRequiredMixin, DeleteView):
+class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/vente/vente_delete.html'
     model = VenteModel
-    success_url = reverse_lazy('dashboard:ventePage')
 
 
-class ProductView(LoginRequiredMixin, CreateView):
+
+class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
 
     model = ProductModel
     template_name = 'dashboard/product/product.html'
     fields = '__all__'
-
-    success_url = reverse_lazy('dashboard:productPage')
 
     def form_valid(self, form):
         # Future 
@@ -305,14 +289,11 @@ class ProductView(LoginRequiredMixin, CreateView):
         return context
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_edit.html'
     fields = '__all__'
-    # Url to redirect after successfully
-    # updating a product
-    success_url = reverse_lazy('dashboard:productPage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -320,14 +301,13 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     model = ProductModel
     template_name = 'dashboard/product/product_delete.html'
-    # Url to redirect after successful
     # deleting a product
     context_object_name = 'product'
-    success_url = reverse_lazy('dashboard:productPage')
+
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -346,12 +326,11 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     
     
 
-class ClientView(LoginRequiredMixin, CreateView):
+class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
 
     template_name = 'dashboard/client/client.html'
     model = ClientModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:clientPage')
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
@@ -372,23 +351,22 @@ class ClientView(LoginRequiredMixin, CreateView):
         context['title'] = 'Espace Client'
         return context
 
-class ClientUpdateView(LoginRequiredMixin, UpdateView):
+class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     template_name = 'dashboard/client/client_edit.html'
     fields = '__all__'
     model = ClientModel
-    success_url = reverse_lazy('dashboard:clientPage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
 
-class ClientDeleteView(LoginRequiredMixin, DeleteView):
+
+class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/client/client_delete.html'
     model = ClientModel
-    success_url = reverse_lazy('dashboard:clientPage')
 
 
 
@@ -398,8 +376,10 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     model = ClientModel
 
 
+
 #Rendering the pdf class here:
 class GeneratePDF(View, Utils):
+
     def get(self, request, *args, **kwargs):
         template = get_template('dashboard/invoice/invoice.html')
         context = super().get_context_data(**kwargs)

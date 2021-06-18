@@ -10,14 +10,14 @@
         </div>
         <form method="post">
             {% csrf_token %}
-        
+            <input type="hidden" name="next" value="{{ request.path }}">
             <p>Etes-vous certain de vouloir supprimer "{{ object.produit }}"?</p>
             
                 <button type="submit" class="btn-flat waves-effect">
                     Confirmer
                 <i class="material-icons right red-text">delete_forever</i>
                 </button>
-                <a href="{% url 'dashboard:buyingStockPage' %}" class="btn-flat waves-effect">
+                <a href="{% url 'dashboard:ventePage' %}" class="btn-flat waves-effect">
                     Retourner
                     <i class="material-icons right">keyboard_return</i>
                 </a>
