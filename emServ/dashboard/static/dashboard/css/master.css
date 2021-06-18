@@ -581,4 +581,9 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     header h5 {
         font-size: 1.1rem !important;
     }
+    .with-gaps {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 20px;
+    }
 }
