@@ -154,7 +154,7 @@ class ProductModel(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     seller = models.ForeignKey(ClientModel, null=True, on_delete=models.SET_NULL)
     created_date = models.DateTimeField(auto_now_add=True)
-
+    sold = models.BooleanField(default=False)
 
     def __str__ (self):
         return '{}[{}]'.format(self.name, self.category)
