@@ -7,7 +7,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     # For handling bills
-    path('invoice/', d_views.GeneratePDF.as_view(), name = 'invoice'),
+    path('invoice/<int:pk>/', d_views.GeneratePDF.as_view(), name = 'invoice'),
     path('', d_views.IndexView.as_view(), name="homePage"),
     # Client Routers
     path('client/', d_views.ClientView.as_view(), name="clientPage"),

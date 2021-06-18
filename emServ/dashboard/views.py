@@ -230,7 +230,12 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
     fields = '__all__'    
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
+        product = ProductModel.objects.get(pk=form.instance.produit.pk)
+        produit.sold = True
+        produit.save()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -276,7 +281,9 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
 
     def form_valid(self, form):
         # Future 
-        form.instance.user = self.request.user
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            form.instance.shop = Shop.objects.get(shop__owner__user__username=u_user.username)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -380,23 +387,21 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 #Rendering the pdf class here:
 class GeneratePDF(View, Utils):
 
-    def get(self, request, *args, **kwargs):
+    def get(self, *args, **kwargs):
         template = get_template('dashboard/invoice/invoice.html')
-        context = super().get_context_data(**kwargs)
-        context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
-        context['buyer'] = self.q.produit.seller[0]
-
-        """context = {
+        
+        vente = get_object_or_404(VenteModel, pk=self.kwargs['pk'])
+        context = {
+            'vente':vente,
             'invoice_id' : 123,
             'customer_name' : 'akhad', 
-            'today' : 'Today'
-        }"""
+        }
         pdf = self.render_to_pdf('dashboard/invoice/invoice.html', context)
         if pdf:
             response = HttpResponse(pdf, content_type='application/pdf')
             filename = "Invoice_%s.pdf" %("facture easy money")
             content = "inline; filename='%s'" %(filename)
-            download = request.GET.get("download")
+            download = self.request.GET.get("download")
             if download:
                 content = "attachment; filename='%s'" %(filename)
             response['Content-Disposition'] = content

@@ -19,9 +19,9 @@
 </div>
 
 <div class="card-panel" id="productID">
-<form action="" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}">
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
         <div class="row">
             <div class="input-field col m6 s12">
                 {{ form.shop}}
@@ -104,7 +104,7 @@
                 {{ form.quantity }}
                 <label for="{{form.quantity.id_for_label}}">Quantite</label>
             </div>
-        </div> 
+        </div>
 
         <div class="row">
             <div class="input-field col m3 s6">
@@ -128,14 +128,12 @@
             <div class="input-field col m3 s6">
                 <button class="waves-effect waves-green btn-flat" type="submit">
                     <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-                    <b class="deep-orange-text accent-3">Enregistrer</b> 
+                    <b class="deep-orange-text accent-3">Enregistrer</b>
                 </button>
             </div>
         </div>
-    </div>
+</div>
 </form>
-
-
 
 <div class="row">
     <div id="man" class="col s12">
@@ -154,7 +152,7 @@
                         <th>Modele</th>
                         <th>Edition</th>
                         <th>année</th>
-                        <th>chargeur</th>
+                        <th>Vendu</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -165,7 +163,7 @@
                         <th class="black-text">{{ product.model }}</th>
                         <th class="black-text">{{ product.edition }}</th>
                         <th class="black-text">{{ product.annee }}</th>
-                        <th class="black-text">{{ product.charger|yesno:"OUI, NON" }}</th>
+                        <th class="black-text">{{ product.sold|yesno:"OUI, NON" }}</th>
                         <td class="actions black-text">
                             <a href="{% url 'dashboard:productDetailPage' product.pk %}"
                                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"

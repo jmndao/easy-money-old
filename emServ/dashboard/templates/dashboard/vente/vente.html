@@ -3,9 +3,9 @@
 {% load humanize %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -112,7 +112,7 @@
 
 <div class="card-panel deep-orange accent-3 white-text big-text">
   <b>Formulaire de Vente</b>
-  <a href="#" class="btn-flat waves-effect right white-text tooltipped" data-position="bottom" data-tooltip="Devis">
+  <a href="" class="btn-flat waves-effect right white-text tooltipped" data-position="bottom" data-tooltip="Devis">
     <i class="material-icons right">picture_as_pdf</i>
   </a>
 </div>
@@ -125,15 +125,14 @@
       <!--- Form -->
       <div class="row" id="venteID">
         <div class="input-field col m5 s10">
-            {{ form.produit }}
-            <label for="{{form.produit.id_for_label}}">Produit</label>
+          {{ form.produit }}
+          <label for="{{form.produit.id_for_label}}">Produit</label>
         </div>
         <div class="input-field col m1 s2">
-            <a href="{% url 'dashboard:productPage' %}" name="clientID"
-                class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
-                data-tooltip="Nouveau Produit">
-                <i class="material-icons right">local_mall</i>
-            </a>
+          <a href="{% url 'dashboard:productPage' %}" name="clientID"
+            class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Produit">
+            <i class="material-icons right">local_mall</i>
+          </a>
         </div>
         <div class="input-field col m6 s12">
           {{ form.price }}
@@ -142,45 +141,44 @@
       </div>
       <div class="row center-align">
         <div class="input-field col m5 s10">
-            {{ form.client }}
-            <label for="{{form.client.id_for_label}}">Client</label>
+          {{ form.client }}
+          <label for="{{form.client.id_for_label}}">Client</label>
         </div>
         <div class="input-field col m1 s2">
-            <a href="{% url 'dashboard:clientPage' %}" name="clientID"
-                class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
-                data-tooltip="Nouveau Vendeur">
-                <i class="material-icons right">person_add</i>
-            </a>
+          <a href="{% url 'dashboard:clientPage' %}" name="clientID"
+            class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Vendeur">
+            <i class="material-icons right">person_add</i>
+          </a>
         </div>
       </div>
-        <div class="col s12">
-          <ul class="collapsible">
-            <li>
-              <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Assurez-vous une garantie
-                pour ce produit ?</div>
-              <div class="collapsible-body">
-                <div class="row">
-                  <div class="input-field col m6 s12">
-                    <label for="{{ form.guarantee.id_for_label }}">
-                      {{ form.guarantee }}
-                      <span>Garantie</span>
-                    </label>
-                  </div>
-                  <div class="input-field col m6 s12">
-                    {{ form.guarantee_period }}
-                    <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
-                  </div>
+      <div class="col s12">
+        <ul class="collapsible">
+          <li>
+            <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Assurez-vous une garantie
+              pour ce produit ?</div>
+            <div class="collapsible-body">
+              <div class="row">
+                <div class="input-field col m6 s12">
+                  <label for="{{ form.guarantee.id_for_label }}">
+                    {{ form.guarantee }}
+                    <span>Garantie</span>
+                  </label>
+                </div>
+                <div class="input-field col m6 s12">
+                  {{ form.guarantee_period }}
+                  <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
                 </div>
               </div>
-            </li>
-          </ul>
-        </div>
+            </div>
+          </li>
+        </ul>
+      </div>
 
       <div class="col s12">
         <button class="waves-effect waves-green btn-flat" type="submit">
-            <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-            <b class="deep-orange-text accent-3">Enregistrer</b> 
-          </button>
+          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+          <b class="deep-orange-text accent-3">Enregistrer</b>
+        </button>
       </div>
     </form>
   </div>
@@ -207,6 +205,7 @@
             <th>Garantie</th>
             <th>Delai garantie</th>
             <th>Actions</th>
+            <th>Devis</th>
           </tr>
         </thead>
         <tbody>
@@ -217,9 +216,9 @@
             <td> {{ v.price|floatformat:0|intcomma }}</td>
             <td>{{ v.garantee|yesno:"OUI, NON" }}</td>
             {% if v.guarantee %}
-              <td> {{ v.guarantee_period }} mois</td>
+            <td> {{ v.guarantee_period }} mois</td>
             {% else %}
-              <td> Pas de Garantie </td>
+            <td> Pas de Garantie </td>
             {% endif %}
             <td class="actions">
               <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
@@ -231,6 +230,11 @@
               <a href="{% url 'dashboard:venteDeletePage' v.pk %}"
                 class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+            </td>
+            <td>
+              <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
+                <span class="material-icons">picture_as_pdf</span>
+              </a>
             </td>
           </tr>
           {% endfor %}
