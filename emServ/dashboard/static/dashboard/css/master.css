@@ -573,7 +573,7 @@ textarea.materialize-textarea:focus:not([readonly])+label {
     }
     .with-gaps {
         display: grid;
-        grid-template-columns:1fr;
+        grid-template-columns:1fr; 
     }
 }
 
