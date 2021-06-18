@@ -28,8 +28,8 @@ class Utils:
         """
         a_directs = db_a_direct.objects.all()
         dvs = db_dvs.objects.all()
-        sum_a_directs = sum([p.price for p in a_directs])
-        sum_dvs = sum([p.price for p in dvs])
+        sum_a_directs = sum([p.price for p in a_directs if p.price != None])
+        sum_dvs = sum([p.price for p in dvs if p.price != None])
         return (sales - (sum_a_directs + sum_dvs))
     
     def benefice_depot_vente(self, db_a_direct, db_sales, dv):
@@ -41,8 +41,8 @@ class Utils:
         """
         a_directs = db_a_direct.objects.all()
         sales = db_sales.objects.all()
-        sum_a_directs = sum([p.price for p in a_directs])
-        sum_sales = sum([p.price for p in sales])
+        sum_a_directs = sum([p.price for p in a_directs if p.price != None])
+        sum_sales = sum([p.price for p in sales if p.price != None])
         return (sum_sales - (dv + sum_a_directs))
 
     def benefice_achat_direct(self, db_sales, db_dvs, d_stock):
@@ -54,8 +54,8 @@ class Utils:
         """
         sales = db_sales.objects.all()
         dvs = db_dvs.objects.all()
-        sum_sales = sum([p.price for p in sales])
-        sum_dvs = sum([p.price for p in dvs])
+        sum_sales = sum([p.price for p in sales if p.price != None])
+        sum_dvs = sum([p.price for p in dvs if p.price != None])
         return (sum_sales - (d_stock + sum_dvs))
 
     def chartObject(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):

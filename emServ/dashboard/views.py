@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -88,7 +89,6 @@ class ClientRequestView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView)
                 # What the simple Admin will see
                 context["client_requests"] = ClientRequestModel.objects.filter(client__shop__owner__user__username=uuser.username)
             # What both will
-            context["Demande Client"]
             return context
 
 
@@ -139,7 +139,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
         context = super().get_context_data(**kwargs)
         context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
-        context['spent'] = sum([p.price for p in self.q])
+        context['spent'] = sum([p.price for p in self.q if p.price != None])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
         return context
 
@@ -186,10 +186,10 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Ut
         context = super().get_context_data(**kwargs)
         self.q = DepotVenteModel.objects.order_by('-created_date')    
         #Nombre de produit
-        context['depot_vente'] = self.q
+        context['depot_ventes'] = self.q
         context['total_item'] = self.q.count()
         #Sum des produits de depots ventes
-        context['spent_depot'] = sum([p.price for p in self.q])
+        context['spent_depot'] = sum([p.price for p in self.q if p.price != None])
         #benefice 
         context['benefice'] = self.benefice_depot_vente(AchatDirectModel, VenteModel, context['spent_depot'])
         return context
@@ -234,15 +234,15 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
         if not u_user.is_superuser:
             form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
-        produit.sold = True
-        produit.save()
+        product.sold = True 
+        product.save()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
         context['count_item'] = self.q.count()
-        context['revenue'] = sales = sum([p.price for p in self.q])
+        context['revenue'] = sales = sum([p.price for p in self.q if p.price != None])
         context['benefice'] = self.benefice_vente(AchatDirectModel, DepotVenteModel, sales)
         return context
 
@@ -279,12 +279,36 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
     template_name = 'dashboard/product/product.html'
     fields = '__all__'
 
-    def form_valid(self, form):
-        # Future 
-        u_user = self.request.user
-        if not u_user.is_superuser:
-            form.instance.shop = Shop.objects.get(shop__owner__user__username=u_user.username)
-        return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        # Verify form is valid
+        if form.is_valid():
+            # Call parent form_valid to create model record object
+            u_user = self.request.user
+            if not u_user.is_superuser:
+                form.instance.shop = Shop.objects.get(shop__owner__user__username=u_user.username)
+            super().form_valid(form)
+            # latest record
+            latest_record = ProductModel.objects.last()
+            if form.instance.dv_or_ad == 'DV':
+                DepotVenteModel(
+                    produit = latest_record,
+                    price = latest_record.price
+                ).save()
+            else:
+                AchatDirectModel(
+                    produit = latest_record,
+                    price = latest_record.price,
+                    client = latest_record.client
+                ).save()
+            # messages.success(request, 'Item created successfully!')    
+            # Redirect to success page    
+            return HttpResponseRedirect(self.get_success_url())
+        # Form is invalid
+        # Set object to None, since class-based view expects model record object
+        self.object = None
+        # Return class-based view form_invalid to generate form with errors
+        return self.form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

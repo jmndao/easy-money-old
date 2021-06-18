@@ -1,6 +1,6 @@
 from django.urls import path
 import dashboard.views as d_views
-from .views import GeneratePDF
+from .views import DepotVenteDeleteView, DepotVenteDetailView, DepotVenteEditView, GeneratePDF
 
 app_name = 'dashboard'
 
@@ -25,6 +25,9 @@ urlpatterns = [
     path('achat_direct/detail/<int:pk>/', d_views.AchatDirectDetailView.as_view(), name='achatDirectDetailPage'),
     # DepotVenteStock Routers
     path('depot_vente/', d_views.DepotVenteView.as_view(), name = 'depotVentePage'),
+    path('depot_vente/detail/<int:pk>/', d_views.DepotVenteDetailView.as_view(), name='depotVenteDetailPage'),
+    path('depot_vente/supprimer/<int:pk>/', d_views.DepotVenteDeleteView.as_view(), name='depotVenteDeletePage'),
+    path('depot_vente/modifier/<int:pk>/', d_views.DepotVenteEditView.as_view(), name='depotVenteEditPage'),
     # BuyingStock Routers
     path('vente/', d_views.VenteView.as_view(), name="ventePage"),
     path('vente/modifier/<int:pk>/', d_views.VenteUpdateView.as_view(), name='venteEditPage'),
