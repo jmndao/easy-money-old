@@ -96,6 +96,7 @@ class ClientModel(models.Model):
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+    passage = models.IntegerField(default=1)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -135,16 +136,15 @@ class ProductModel(models.Model):
     """
     name = models.CharField(max_length=100)
     model = models.CharField(max_length=100,  null=True, blank=True)
-    category = models.CharField(max_length=100, choices=CATEGORY)
-    dv_or_ad = models.CharField(max_length=100, choices=TYPE)
-    quantity = models.IntegerField()
+    category = models.CharField(max_length=100, choices=CATEGORY, blank=True, null=True)
+    dv_or_ad = models.CharField(max_length=100, choices=TYPE, blank=True, null=True)
+    quantity = models.IntegerField(blank=True, null=True)
     sale_price_on_new = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix de Vente Neuf")
-    sale_price_on_old = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix de Vente Occasion")
-    estate = models.CharField(max_length=20, choices=ETAT)
-    obsolescence = models.CharField(max_length=20, choices=OBSOLESCENCE)
-    rarety = models.CharField(max_length=20, choices=RARETE)
+    estate = models.CharField(max_length=20, choices=ETAT, blank=True, null=True)
+    obsolescence = models.CharField(max_length=20, choices=OBSOLESCENCE, blank=True, null=True)
+    rarety = models.CharField(max_length=20, choices=RARETE, blank=True, null=True)
     sale_bill = models.BooleanField(default=False)
-    dimension = models.CharField(max_length=20, choices=DIMENSION)
+    dimension = models.CharField(max_length=20, choices=DIMENSION, null=True, blank=True)
     edition = models.CharField(max_length=100, null=True, blank=True)
     annee = models.CharField(max_length=20, null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
@@ -153,7 +153,6 @@ class ProductModel(models.Model):
     original_box = models.BooleanField(default=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     seller = models.ForeignKey(ClientModel, null=True, on_delete=models.SET_NULL)
-    description = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -226,6 +225,7 @@ class VenteModel(models.Model):
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
+    client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
     guarantee_period = models.IntegerField(blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
 

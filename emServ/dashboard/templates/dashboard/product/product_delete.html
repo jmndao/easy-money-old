@@ -10,8 +10,8 @@
         </div>
         <form method="post">
             {% csrf_token %}
-        
-            <p>Etes-vous certain de vouloir supprimer "{{ produit.name }}"?</p>
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <p>Etes-vous certain de vouloir supprimer "{{ object.produit }}"?</p>
             
                 <button type="submit" class="btn-flat waves-effect">
                     Confirmer

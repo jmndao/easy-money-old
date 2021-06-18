@@ -3,9 +3,9 @@
 {% load humanize %}
 
 {% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -110,82 +110,77 @@
 
 <!-------- Modal -->
 
-<div class="card-panel deep-orange accent-3">
-  <div class="card-container center-align">
-    <h4 class="deep-orange-text accent-3 white-text ">Vente pouvez toujours vendre un produit deja sur le stock .</h4>
-  </div>
+<div class="card-panel deep-orange accent-3 white-text big-text">
+  <b>Formulaire de Vente</b>
+  <a href="#" class="btn-flat waves-effect right white-text tooltipped" data-position="bottom" data-tooltip="Devis">
+    <i class="material-icons right">picture_as_pdf</i>
+  </a>
 </div>
+
 <div class="card-panel">
   <div class="card-content">
-    <div class="mb4">Nouveau Depot</div>
     <form action="" method="post">
       {% csrf_token %}
-
+      <input type="hidden" name="next" value="{{ request.path }}">
       <!--- Form -->
-      <div class="row">
-        <div class="input-field col s6">
-          {{ form.produit }}
-          <label for="{{ form.produit.id_for_label }}">Produit</label>
+      <div class="row" id="venteID">
+        <div class="input-field col m5 s10">
+            {{ form.produit }}
+            <label for="{{form.produit.id_for_label}}">Produit</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col m1 s2">
+            <a href="{% url 'dashboard:productPage' %}" name="clientID"
+                class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+                data-tooltip="Nouveau Produit">
+                <i class="material-icons right">local_mall</i>
+            </a>
+        </div>
+        <div class="input-field col m6 s12">
           {{ form.price }}
           <label for="{{ form.price.id_for_label }}">Prix de vente </label>
         </div>
-        <div class="col s4 left-align">
-          <p>
-            <label>
-              {{form.garantee}}
-              <span>Garantie</span>
-            </label>
-          </p>
+      </div>
+      <div class="row center-align">
+        <div class="input-field col m5 s10">
+            {{ form.client }}
+            <label for="{{form.client.id_for_label}}">Client</label>
         </div>
-        <div class="input-field col s6">
-          {{ form.guarantee_period }}
-          <label for="{{ form.guarantee_period.id_for_label }}">Delai de la garantie </label>
+        <div class="input-field col m1 s2">
+            <a href="{% url 'dashboard:clientPage' %}" name="clientID"
+                class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+                data-tooltip="Nouveau Vendeur">
+                <i class="material-icons right">person_add</i>
+            </a>
         </div>
-
+      </div>
         <div class="col s12">
           <ul class="collapsible">
             <li>
               <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Assurez-vous une garantie
                 pour ce produit ?</div>
               <div class="collapsible-body">
-                <span>
-                  <div class="input-field col s6">
-                    <label for="{{ form.garantie.id_for_label }}">
-                      {{ form.garantie }}
+                <div class="row">
+                  <div class="input-field col m6 s12">
+                    <label for="{{ form.guarantee.id_for_label }}">
+                      {{ form.guarantee }}
                       <span>Garantie</span>
                     </label>
                   </div>
-                  <div class="input-field col s6">
-                    {{ form.delai_garantie }}
-                    <label for="{{ form.delai_garantie.id_for_label }}">Delai garantie</label>
+                  <div class="input-field col m6 s12">
+                    {{ form.guarantee_period }}
+                    <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
                   </div>
-                </span>
+                </div>
               </div>
             </li>
           </ul>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="info_text valign-wrapper col m6 s12">
-          <span class="blue-text lighten-2"><small>Vous pouvez ajouter un nouveau client avec l'icon à coté <i
-                class="material-icons">people</i> </small>
-          </span>
-        </div>
-
-        <div class="modal-footer col m6 s12">
-          <div class="row">
-            <a href="{% url 'dashboard:ventePage' %}"
-              class="waves-effect  btn-flat nopadding col s2 deep-orange-text accent-3">
-              <i class="material-icons">local_mall</i>
-            </a>
-            <button class="col s2 modal-close waves-effect waves-green btn-flat" type="submit">
-              <i class="material-icons right deep-orange-text accent-3">thumb_up_alt</i>
-            </button>
-          </div>
-        </div>
+      <div class="col s12">
+        <button class="waves-effect waves-green btn-flat" type="submit">
+            <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+            <b class="deep-orange-text accent-3">Enregistrer</b> 
+          </button>
       </div>
     </form>
   </div>
@@ -198,11 +193,9 @@
   <div id="man" class="col s12">
     <div class="card material-table">
       <div class="table-header">
-        <span class="table-title">Achat</span>
+        <span class="table-title">Liste des Ventes</span>
         <div class="actions">
-          <a href="" class=" waves-effect btn-flat nopadding tooltipped" data-position="top"
-            data-tooltip="Nouveau Achat"><i class="material-icons">price_check</i></a>
-          <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+          <a href="" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
       </div>
       <table id="datatable" class="responsive-table">
@@ -221,30 +214,23 @@
           <tr>
             <td> {{ v.produit }} </td>
             <td> {{ v.created_date }}</td>
-            {% if v.created_date %}
-            <td> {{ v.created_date|floatformat:0|intcomma }}</td>
-            {% else %}
-            <td> ----- </td>
-            {% endif %}
             <td> {{ v.price|floatformat:0|intcomma }}</td>
-
             <td>{{ v.garantee|yesno:"OUI, NON" }}</td>
-
-            {% if v.garantie %}
-            <td> {{ v.guarantee_period }} </td>
+            {% if v.guarantee %}
+              <td> {{ v.guarantee_period }} mois</td>
             {% else %}
-            <td> Pas de garantie </td>
+              <td> Pas de Garantie </td>
             {% endif %}
             <td class="actions">
-              <a href="{% url 'dashboard:VentePage' vp.pk %}"
+              <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Voir Achat"><span class="material-icons">visibility</span></a>
-              <a href="{% url 'dashboard:VenteEditPage' vp.pk %}"
+                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
+              <a href="{% url 'dashboard:venteEditPage' v.pk %}"
                 class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier Achat"><span class="material-icons">update</span></a>
-              <a href="{% url 'dashboard:VenteDeletePage' vp.pk %}"
+                data-tooltip="Modifier"><span class="material-icons">update</span></a>
+              <a href="{% url 'dashboard:venteDeletePage' v.pk %}"
                 class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Supprimer Achat"><span class="material-icons">delete</span></a>
+                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
             </td>
           </tr>
           {% endfor %}

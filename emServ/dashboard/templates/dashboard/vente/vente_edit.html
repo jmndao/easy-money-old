@@ -19,7 +19,7 @@
             </div>
             <form action="" method="post">
                 {% csrf_token %}
-                
+                <input type="hidden" name="next" value="{{ request.path }}">
                 <!--- Form -->
                 <div class="row">
                     <div class="input-field col s6">
