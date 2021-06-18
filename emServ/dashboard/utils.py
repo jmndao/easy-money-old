@@ -28,8 +28,8 @@ class Utils:
         """
         a_directs = db_a_direct.objects.all()
         dvs = db_dvs.objects.all()
-        sum_a_directs = sum([p.prix_d_achat for p in a_directs])
-        sum_dvs = sum([p.prix_d_depot for p in dvs])
+        sum_a_directs = sum([p.price for p in a_directs])
+        sum_dvs = sum([p.price for p in dvs])
         return (sales - (sum_a_directs + sum_dvs))
     
     def benefice_depot_vente(self, db_a_direct, db_sales, dv):
@@ -41,8 +41,8 @@ class Utils:
         """
         a_directs = db_a_direct.objects.all()
         sales = db_sales.objects.all()
-        sum_a_directs = sum([p.prix_d_achat for p in a_directs])
-        sum_sales = sum([p.prix_d_vente_fin for p in sales])
+        sum_a_directs = sum([p.price for p in a_directs])
+        sum_sales = sum([p.price for p in sales])
         return (sum_sales - (dv + sum_a_directs))
 
     def benefice_achat_direct(self, db_sales, db_dvs, d_stock):
@@ -54,8 +54,8 @@ class Utils:
         """
         sales = db_sales.objects.all()
         dvs = db_dvs.objects.all()
-        sum_sales = sum([p.prix_de_vente_fin for p in sales])
-        sum_dvs = sum([p.prix_d_depot for p in dvs])
+        sum_sales = sum([p.price for p in sales])
+        sum_dvs = sum([p.price for p in dvs])
         return (sum_sales - (d_stock + sum_dvs))
 
     def chartObject(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
@@ -86,3 +86,21 @@ class Utils:
         if not pdf.err:
             return HttpResponse(result.getvalue(), content_type='application/pdf')
         return None
+
+
+
+
+class RedirectToPreviousMixin:
+    '''
+        This class allows to make redirection to previous
+        page.
+    '''
+
+    default_redirect = '/'
+
+    def get(self, request, *args, **kwargs):
+        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        return super().get(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return self.request.session['previous_page']

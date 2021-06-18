@@ -53,72 +53,67 @@
 <div class="card-panel ">
     <form action="" method="post">
         {% csrf_token %}
-
+        <input type="hidden" name="next" value="{{ request.path }}">
         <!--- Form -->
-        <div class="row">
             {% if user.is_superuser %}
-            <div class="input-field col s6">
-                {{ form.shop }}
-                <label for="{{ form.shop.id_for_label }}">Boutique</label>
-            </div>
-            {% endif %}
-            <div class="input-field col s6">
-                {{ form.fname }}
-                <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.lname }}
-                <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.age }}
-                <label for="{{ form.age.id_for_label }}">Age</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.nationality }}
-                <label for="{{ form.nationality.id_for_label }}">Nationalite</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.sexe }}
-                <label for="{{ form.sexe.id_for_label }}">Sexe</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.address }}
-                <label for="{{ form.address.id_for_label }}">Adresse</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.email }}
-                <label for="{{ form.email.id_for_label }}">Email</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.numero }}
-                <label for="{{ form.numero.id_for_label }}">Numero</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.passage }}
-                <label for="{{ form.passage.id_for_label }}">Passage</label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="info_text valign-wrapper col m6 s12">
-                <span class="blue-text lighten-2"><small>Vous pouvez ajouter un nouveau client avec l'icon à coté <i
-                            class="material-icons">people</i> </small>
-                </span>
-            </div>
-
-            <div class="modal-footer col m6 s12">
                 <div class="row">
-                    <a href="{% url 'dashboard:clientPage' %}"
-                        class="waves-effect  btn-flat nopadding col s2 deep-orange-text accent-3">
-                        <i class="material-icons">local_mall</i>
-                    </a>
-                    <button class="col s2 modal-close waves-effect waves-green btn-flat" type="submit">
-                        <i class="material-icons right deep-orange-text accent-3">thumb_up_alt</i>
+                    <div class="input-field col s6">
+                        {{ form.shop }}
+                        <label for="{{ form.shop.id_for_label }}">Boutique</label>
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="input-field col m6 s12">
+                    {{ form.fname }}
+                    <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
+                </div>
+                <div class="input-field col m6 s12">
+                    {{ form.lname }}
+                    <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m4 s6">
+                    {{ form.age }}
+                    <label for="{{ form.age.id_for_label }}">Age</label>
+                </div>
+                <div class="input-field col m4 s6">
+                    {{ form.nationality }}
+                    <label for="{{ form.nationality.id_for_label }}">Nationalite</label>
+                </div>
+                <div class="input-field col m4 s6">
+                    {{ form.sexe }}
+                    <label for="{{ form.sexe.id_for_label }}">Sexe</label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="input-field col m4 s6">
+                    {{ form.address }}
+                    <label for="{{ form.address.id_for_label }}">Adresse</label>
+                </div>
+                <div class="input-field col m4 s6">
+                    {{ form.email }}
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                </div>
+                <div class="input-field col m4 s6">
+                    {{ form.numero }}
+                    <label for="{{ form.numero.id_for_label }}">Numero</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col m3 s6">
+                    {{ form.passage }}
+                    <label for="{{ form.passage.id_for_label }}">Passage</label>
+                </div>
+                 <div class="col m3 s6 right">
+                    <button class="waves-effect waves-green btn-flat" type="submit">
+                        <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+                        <b class="deep-orange-text accent-3">Enregistrer</b> 
                     </button>
                 </div>
             </div>
-        </div>
     </form>
 </div>
 
