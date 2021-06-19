@@ -409,25 +409,38 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
 
 #Rendering the pdf class here:
-class GeneratePDF(View, Utils):
+class GeneratePDF(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/invoice/invoice.html'
 
-    def get(self, *args, **kwargs):
-        template = get_template('dashboard/invoice/invoice.html')
+    model = ClientModel
+    fields = '__all__'
+
+    # def get(self, *args, **kwargs):
+    #     template = get_template('dashboard/invoice/invoice.html')
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
+        context['count_item'] = self.q.count()
+        context['revenue'] = sales = sum([p.price for p in self.q if p.price != None])
+        return context
         
-        vente = get_object_or_404(VenteModel, pk=self.kwargs['pk'])
-        context = {
-            'vente':vente,
-            'invoice_id' : 123,
-            'customer_name' : 'akhad', 
-        }
-        pdf = self.render_to_pdf('dashboard/invoice/invoice.html', context)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = "Invoice_%s.pdf" %("facture easy money")
-            content = "inline; filename='%s'" %(filename)
-            download = self.request.GET.get("download")
-            if download:
-                content = "attachment; filename='%s'" %(filename)
-            response['Content-Disposition'] = content
-            return response
-        return pdf
+        # vente = get_object_or_404(VenteModel, pk=self.kwargs['pk'])
+        # context = {
+        #     'vente':vente,
+        #     'invoice_id' : 123,
+        #     'customer_name' : 'akhad', 
+        # }
+        # pdf = self.render_to_pdf('dashboard/invoice/invoice.html', context)
+        # if pdf:
+        #     response = HttpResponse(pdf, content_type='application/pdf')
+        #     filename = "Invoice_%s.pdf" %("facture easy money")
+        #     content = "inline; filename='%s'" %(filename)
+        #     download = self.request.GET.get("download")
+        #     if download:
+        #         content = "attachment; filename='%s'" %(filename)
+        #     response['Content-Disposition'] = content
+        #     return response
+        # return pdf
