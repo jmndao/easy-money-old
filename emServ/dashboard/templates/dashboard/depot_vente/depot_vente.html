@@ -169,7 +169,7 @@
             <div class="table-header">
                 <span class="table-title">Liste des Depots-Vente</span>
                 <div class="actions">
-                    <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
+                    <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">search</i></a>
                 </div>
             </div>
@@ -185,29 +185,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for dv in depot_vente_stocks %}
+                    {% for dv in depot_ventes %}
                     <tr>
-                        <td> {{ dv.produit.seller }} </td>
+                        <td> {{ dv.produit.seller.fname }} {{ dv.produit.seller.lname }} </td>
                         <td> {{ dv.produit.name }}</td>
-                        {% if dv.produit.estate == "EXCELLENT" %}
-                        <td><span class="new badge green black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
-                        {% elif dv.produit.estate == "NORMAL" %}
-                        <td><span class="new badge yellow black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
+                        {% if dv.produit.estate == "NEUF" %}
+                        <td><span class="new badge green" data-badge-caption="{{ dv.produit.estate }}"></span></td>
+                        {% elif dv.produit.estate == "BON" %}
+                        <td><span class="new badge light-green" data-badge-caption="{{ dv.produit.estate }}"></span></td>
+                        {% elif dv.produit.estate == "MOYEN" %}
+                        <td><span class="new badge yellow" data-badge-caption="{{ dv.produit.estate }}"></span></td>
+                        {% elif dv.produit.estate == "MAUVAIS" %}
+                        <td><span class="new badge light-red" data-badge-caption="{{ dv.produit.estate }}"></span></td>
                         {% else %}
-                        <td><span class="new badge red black-text" data-badge-caption="{{ dv.qualite}}"></span></td>
+                        <td><span class="new badge red" data-badge-caption="{{ dv.produit.estate }}"></span></td>
                         {% endif %}
                         <td>{{ dv.price|floatformat:0|intcomma}}</td>
                         <td>{{ dv.created_date|date:"SHORT_DATE_FORMAT"}}</td>
                         <td class="actions">
                             <a href="{% url 'dashboard:depotVenteDetailPage' dv.pk %}"
                                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Voir Produit"><span class="material-icons">visibility</span></a>
+                                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
                             <a href="{% url 'dashboard:depotVenteEditPage' dv.pk %}"
                                 class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Modifier Produit"><span class="material-icons">update</span></a>
+                                data-tooltip="Modifier"><span class="material-icons">update</span></a>
                             <a href="{% url 'dashboard:depotVenteDeletePage' dv.pk %}"
                                 class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Supprimer Produit"><span class="material-icons">delete</span></a>
+                                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
                         </td>
                     </tr>
                     {% endfor %}

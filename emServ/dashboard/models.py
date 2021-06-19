@@ -139,7 +139,7 @@ class ProductModel(models.Model):
     category = models.CharField(max_length=100, choices=CATEGORY, blank=True, null=True)
     dv_or_ad = models.CharField(max_length=100, choices=TYPE, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
-    sale_price_on_new = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix de Vente Neuf")
+    price = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
     estate = models.CharField(max_length=20, choices=ETAT, blank=True, null=True)
     obsolescence = models.CharField(max_length=20, choices=OBSOLESCENCE, blank=True, null=True)
     rarety = models.CharField(max_length=20, choices=RARETE, blank=True, null=True)
@@ -176,6 +176,7 @@ class AchatDirectModel(models.Model):
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
+    client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
 
