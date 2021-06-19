@@ -9,41 +9,52 @@
             font-size: 14px;
         }
 
-        header {
-            display: flex;
+        .header {
+            font-size: 20px;
+            font-weight: 100;
+            text-align: center;
+            color: #007cae;
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: 100;
+            /* text-align: right;*/
+            padding: 10px 20px 0px 20px;
+        }
+
+        .title span {
+            color: #007cae;
+        }
+
+        .details {
+            padding: 10px 20px 0px 20px;
+            text-align: left !important;
+            /*margin-left: 40%;*/
+        }
+
+        .hrItem {
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            color: #333;
+            /* old IE */
+            background-color: #fff;
+            /* Modern Browsers */
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <div class="company-info">
-            <h3>Easy Money</h3>
-            <h3>Somone, Saly Center</h3>
-            <h3>Phone Number</h3>
-        </div>
-        <div class="bill-info">
-            <h1>FACTURE</h1>
-            <div class="f-number">57342</div>
-            <div class="f-date">24-04-2020</div>
-        </div>
-    </header>
-    <div class="client-info">
-        <h3>Facture à</h3>
-        <h3>Nom</h3>
-        <h3>Addresse</h3>
-        <h3>Numéro de téléphone</h3>
-    </div>
     <div class='wrapper'>
         <div class='header'>
             <p class='title'>Invoice # </p>
         </div>
         <div>
             <div class='details'>
-                last_vente : {{ vente.produit.name }}<br>
-                Date: {{ vente.created_date }}<br>
-                nom du client: {{ vente.client }}<br>
-                Garantie: {{ vent.guarantee}}<br>
+                last_vente : {{ vente.produit }}
+                Date: {{ vente.created_date }}
+                nom du client: {{ vente.client }}
                 <hr class='hrItem' />
             </div>
         </div>

@@ -11098,7 +11098,7 @@
                  *      } );
                  *    } );
                  */
-                "sInfoEmpty": "Aucunne donnée à afficher",
+                "sInfoEmpty": "aucune donnée à afficher",
 
 
                 /**

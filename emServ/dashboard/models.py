@@ -178,6 +178,7 @@ class AchatDirectModel(models.Model):
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
     created_date = models.DateTimeField(auto_now_add=True)
 
+
     def __str__(self):
         return '{}[{}]'.format(self.produit.seller, self.produit.name)
 

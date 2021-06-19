@@ -88,7 +88,6 @@ class ClientRequestView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView)
                 # What the simple Admin will see
                 context["client_requests"] = ClientRequestModel.objects.filter(client__shop__owner__user__username=uuser.username)
             # What both will
-            context["Demande Client"]
             return context
 
 
@@ -234,8 +233,8 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
         if not u_user.is_superuser:
             form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
-        produit.sold = True
-        produit.save()
+        product.sold = True
+        product.save()
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
