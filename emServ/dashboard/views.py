@@ -234,11 +234,7 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
         if not u_user.is_superuser:
             form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
-<<<<<<< HEAD
-        product.sold = True
-=======
         product.sold = True 
->>>>>>> 4ea7e4a778758cf1ed874427e6a67c9d283f00a1
         product.save()
         return super().form_valid(form)
 
