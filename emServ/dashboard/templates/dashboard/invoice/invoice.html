@@ -21,14 +21,17 @@
 
 
     <style>
-        body {
-            width: 72%;
-            margin: auto;
-        }
-
         .fd {
             margin-left: 0 !important;
             margin-right: 0 !important;
+        }
+
+        .row_pd {
+            padding: 20px 200px 50px;
+        }
+
+        .row {
+            border: none;
         }
 
         .inline {
@@ -44,6 +47,10 @@
 
         }
 
+        body {
+            font-size: 22px;
+        }
+
         .hide {
             visibility: hidden;
         }
@@ -52,7 +59,7 @@
 
 <body id="capture">
 
-    <div class="row card-panel">
+    <div class="row card-panel row_pd">
 
 
         <!-- This is the start of the first row -->
@@ -73,12 +80,12 @@
                     <div class="divider"></div>
                     <div class=" row black white-text fd">
                         <p class="row col s6 ">
-                            <span class=""> Numero Facture</span><br>
-                            <span class=""> 87500</span>
+                            <span class=""> Numero Facture</span><br><br>
+                            <span class=""> {{f_number}}</span>
                         </p>
                         <p class="col s6 ">
-                            <span class=""> Date Facture</span><br>
-                            <span class=""> 19-juin-2021</span>
+                            <span class=""> Date Facture</span><br><br>
+                            <span class=""> {{v_date}}</span>
                         </p>
                     </div>
                 </div>
@@ -90,13 +97,13 @@
         <div class="row">
             <div class="card-content col s8">
                 <p class="black white-text inline">Facture à: </p>
-                <p>Mamadou Fall</p>
-                <p>Saly Niakh Niakhal</p>
-                <p>+221 78 823 01 48</p>
+                <p> {{c_fname}} {{c_lname}}</p>
+                <p> {{c_address}}</p>
+                <p> {{c_tel}} </p>
             </div>
             <div class="card-content col s4">
                 <p><b>Details de la Facture: </b></p>
-                <p>Date&Heure: 21-juin-2021 11:16</p>
+                <p>Date&Heure: {{v_date}} </p>
                 <p>Location: Saly Center</p>
             </div>
         </div>
@@ -115,10 +122,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Un iphone 5s de 2015</td>
-                    <td>2</td>
-                    <td>125,000FCFA</td>
-                    <th>250,000FCFA</th>
+                    <td> {{v_product}} </td>
+                    <td>1</td>
+                    <td> {{c_price}} </td>
+                    <th>{{c_price}} </th>
                 </tr>
             </tbody>
         </table>
@@ -126,7 +133,7 @@
         <div class="row">
             <div class="col s8"></div>
             <div class="col s4">
-                <p><b> Montant à payer : </b>250,000FCFA</p>
+                <p><b> Montant à payer : </b> {{c_price}} </p>
             </div>
         </div>
 

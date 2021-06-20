@@ -422,9 +422,33 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
-        context['count_item'] = self.q.count()
-        context['revenue'] = sales = sum([p.price for p in self.q if p.price != None])
+
+
+        context['all_vente'] = self.a = VenteModel.objects.all()
+        context['f_number'] = self.a.count()
+
+
+        # context['v_shop'] = self.s = Shop.objects.all()
+
+
+        context['vente'] = self.q = VenteModel.objects.last()
+        context['c_fname'] = self.q.client.fname
+        context['c_lname'] = self.q.client.lname
+        context['c_price'] = self.q.price
+        context['v_date'] = date =self.q.created_date
+        date =  date.strftime("%B-%d")
+        context['v_date'] = date
+        context['c_address'] = self.q.client.address
+        context['c_tel'] = self.q.client.numero
+        context['v_product'] = self.q.produit.name
+        
+
+        context['quantity'] = 1
+        
+        
+        
+        ################################################################
+       
         return context
         
         # vente = get_object_or_404(VenteModel, pk=self.kwargs['pk'])

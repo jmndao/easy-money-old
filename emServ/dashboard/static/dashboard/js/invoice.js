@@ -6,10 +6,10 @@ function to_pdf() {
     useCORS: true,
     scale: 1
   }).then(canvas => {
-    var img = canvas.toDataURL('image/png');
     var doc = new jspdf();
+    
     doc.setFont('Arial');
-    doc.setFontSize(11);
+    doc.setFontSize(15);
     doc.addImage(img, 'PNG', 7, 13);
     doc.save('html_to_pdf')
 
