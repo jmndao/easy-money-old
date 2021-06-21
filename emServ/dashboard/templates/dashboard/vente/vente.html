@@ -66,7 +66,7 @@
   <div class="col s8">
     <!---- Adding Chart Achat -->
     <div class="card-panel">
-      <canvas id="salesChart" width="400" height="200"></canvas>
+      <canvas id="venteChart" width="400" height="200"></canvas>
     </div>
   </div>
   <div class="col s4">
@@ -249,6 +249,9 @@
 {% block javascripts %}
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/js/chart_sales.js' %}"></script>
+<script>
+  var dataset_vente = JSON.parse('{{dataset_vente}}')
+</script>
+<script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}

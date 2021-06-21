@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 
+import datetime
 
 
 
@@ -104,3 +105,25 @@ class RedirectToPreviousMixin:
 
     def get_success_url(self):
         return self.request.session['previous_page']
+
+
+    #benefice par mois
+    def benefice_per_month(self, db_vente, db_depot, db_achat):
+        """
+        Calculate the Total benefice of the Shop:
+            db_vente : is the Sales Model object (VenteModel)
+            db_depot : is the Depot Vente Model object (DepotVenteModel)
+            db_achat : is the total sum of all Achat Direct Model (AchatDirectModel) 
+        """
+        today = datetime.date.today()
+        vente = db_vente.objects.filter(mydatefield__year=today.year,
+                           mydatefield__month=today.month)
+        depot = db_depot.objects.filter(mydatefield__year=today.year,
+                           mydatefield__month=today.month)
+        achat = db_achat.objects.filter(mydatefield__year=today.year,
+                           mydatefield__month=today.month)
+
+        sum_vente = sum([p.price for p in vente if p.price != None])
+        sum_depot = sum([p.price for p in depot if p.price != None])
+        sum_achat = sum([p.price for p in achat if p.price != None])
+        return (sum_vente - (sum_depot + sum_achat))

@@ -1,63 +1,182 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Easy Money Facture</title>
-    <style type="text/css">
-        body {
-            font-weight: 200;
-            font-size: 14px;
+    <meta charset="UTF-8">.
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Invoice</title>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" charset="utf-8"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js" charset="utf-8"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="invoice.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+
+
+    <style>
+        .fd {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
         }
 
-        .header {
-            font-size: 20px;
-            font-weight: 100;
-            text-align: center;
-            color: #007cae;
+        .row_pd {
+            padding: 20px 200px 50px;
         }
 
-        .title {
-            font-size: 22px;
-            font-weight: 100;
-            /* text-align: right;*/
-            padding: 10px 20px 0px 20px;
-        }
-
-        .title span {
-            color: #007cae;
-        }
-
-        .details {
-            padding: 10px 20px 0px 20px;
-            text-align: left !important;
-            /*margin-left: 40%;*/
-        }
-
-        .hrItem {
+        .row {
             border: none;
-            height: 1px;
-            /* Set the hr color */
-            color: #333;
-            /* old IE */
-            background-color: #fff;
-            /* Modern Browsers */
+        }
+
+        .inline {
+            display: inline-block;
+            width: 150px;
+            font-size: 22px;
+            font-weight: bolder;
+            height: 42px;
+            border-bottom-right-radius: 15px;
+            border-top-right-radius: 15px;
+            padding-left: 10px;
+            padding-top: 5px;
+
+        }
+
+        body {
+            font-size: 22px;
+        }
+
+        .hide {
+            visibility: hidden;
         }
     </style>
 </head>
 
-<body>
-    <div class='wrapper'>
-        <div class='header'>
-            <p class='title'>Invoice # </p>
+<body id="capture">
+
+    <div class="row card-panel row_pd">
+
+
+        <!-- This is the start of the first row -->
+        <div class="row html_to_pdf">
+            <div class="card-content col s8">
+                <button class="black white-text inline">Facture de: </button>
+                <p>Easy Money Sarl {{client}}</p>
+                <p>Mbour Saly Center</p>
+                <p>+221 77 457 49 25</p>
+            </div>
+            <div class="col s4">
+                <div class="card">
+                    <div class=" card-content card-t deep-orange accent-3 ">
+                        <span class="card-title white-text center-align">
+                            <button onclick="to_pdf()" name="button">Facture</button>
+                        </span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class=" row black white-text fd">
+                        <p class="row col s6 ">
+                            <span class=""> Numero Facture</span><br><br>
+                            <span class=""> {{f_number}}</span>
+                        </p>
+                        <p class="col s6 ">
+                            <span class=""> Date Facture</span><br><br>
+                            <span class=""> {{v_date}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div>
-            <div class='details'>
-                last_vente : {{ vente.produit }}
-                Date: {{ vente.created_date }}
-                nom du client: {{ vente.client }}
-                <hr class='hrItem' />
+
+        <!-- This is the start of the second row -->
+        <div class="row">
+            <div class="card-content col s8">
+                <p class="black white-text inline">Facture à: </p>
+                <p> {{c_fname}} {{c_lname}}</p>
+                <p> {{c_address}}</p>
+                <p> {{c_tel}} </p>
+            </div>
+            <div class="card-content col s4">
+                <p><b>Details de la Facture: </b></p>
+                <p>Date&Heure: {{v_date}} </p>
+                <p>Location: Saly Center</p>
             </div>
         </div>
+
+        <br><br><br>
+
+        <!-- This is where a small table starts -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Description Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> {{v_product}} </td>
+                    <td>1</td>
+                    <td> {{c_price}} </td>
+                    <th>{{c_price}} </th>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <div class="row">
+            <div class="col s8"></div>
+            <div class="col s4">
+                <p><b> Montant à payer : </b> {{c_price}} </p>
+            </div>
+        </div>
+
+        <!-- Le Nom et la Signature -->
+        <footer>
+            <div class="row">
+                <div class="col s8">
+                    <p>Merci pour la <b> Confiance </b></p>
+                </div>
+                <div class="col s4">
+                    <u>Nom et Signature</u>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- <button onclick="window.print()" id="doc" type="button" name="button">
+      click me
+    </button>
+  -->
+    <script src="jspdf.js"></script>
+    <script>
+        function to_pdf() {
+            var data = document.getElementById('capture');
+            html2canvas(data).then(canvas => {
+                var imgWidth = 208;
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+                const contentDataURL = canvas.toDataURL('image/png')
+                let pdf = new jspdf('p', 'mm', 'a4');
+                var position = 0;
+                pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+                pdf.save('newPDF.pdf');
+
+                // Hide the buttons
+                function myFunction() {
+                    var btn = document.getElementsByTagName('button');
+                    btn.classList.add('hide');
+                }
+
+            });
+        }
+    </script>
+
 </body>
 
 </html>

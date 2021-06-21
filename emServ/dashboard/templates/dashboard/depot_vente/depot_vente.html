@@ -228,6 +228,10 @@
 {% block javascripts %}
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+
+<script>
+        var dataset_depot = JSON.parse('{{ dataset_depot }}');
+</script>
 <script type="text/javascript" src="{% static 'dashboard/js/chart_depot.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}
