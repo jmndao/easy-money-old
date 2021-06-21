@@ -90,3 +90,33 @@ span.material-icons.dummy_icon {
     grid-template-columns: 3fr 1fr;
     align-items: center;
 }
+
+
+.btn.way-bigger{
+    height: 80px!important;
+    width: 350px!important;
+    border-radius: 5px;
+    border: 4px solid #000;
+}
+
+.btn.way-bigger.black{
+    font-size: 22px;
+}
+.for-hover{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+.btn.way-bigger.deep-orange{
+    font-size: 19px;
+}
+@media only screen and (max-width: 880px) {
+    .for-hover {
+        display: block;
+        
+    }
+    a .way-bigger{
+        position: absolute;
+        right: 50%;
+    }
+}

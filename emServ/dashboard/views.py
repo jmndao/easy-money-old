@@ -1,3 +1,7 @@
+import datetime
+from django.utils import timezone
+
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -23,8 +27,6 @@ from dashboard.models import (  ProductModel,
 from dashboard.utils import Utils, RedirectToPreviousMixin
 
 
-
-
 # Rendering the pdf file
 from django.template.loader import get_template
 from django.http import HttpResponse
@@ -36,10 +38,53 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     template_name = 'dashboard/index.html'
 
+    #benefice par mois
+    def benefice_per_day(self, db_vente, db_depot, db_achat):
+        """
+        Calculate the Total benefice of the Shop:
+            db_vente : is the Sales Model object (VenteModel)
+            db_depot : is the Depot Vente Model object (DepotVenteModel)
+            db_achat : is the total sum of all Achat Direct Model (AchatDirectModel) 
+        """
+        today = datetime.date.today()
+        vente = db_vente.objects.filter(
+                           created_date__day=today.day)
+        depot = db_depot.objects.filter(
+                           created_date__day=today.day)
+        achat = db_achat.objects.filter(
+                           created_date__day=today.day)
+        sum_vente = sum([p.price for p in vente if p.price != None])
+        sum_depot = sum([p.price for p in depot if p.price != None])
+        sum_achat = sum([p.price for p in achat if p.price != None])
+        return (sum_vente - (sum_depot + sum_achat))
+    
+    def benefice_per_month(self, db_vente, db_depot, db_achat):
+        """
+        Calculate the Total benefice of the Shop:
+            db_vente : is the Sales Model object (VenteModel)
+            db_depot : is the Depot Vente Model object (DepotVenteModel)
+            db_achat : is the total sum of all Achat Direct Model (AchatDirectModel) 
+        """
+        today = datetime.date.today()
+        vente = db_vente.objects.filter(
+                           created_date__month=today.month)
+        depot = db_depot.objects.filter(
+                           created_date__month=today.month)
+        achat = db_achat.objects.filter(
+                           created_date__month=today.month)
+        sum_vente = sum([p.price for p in vente if p.price != None])
+        sum_depot = sum([p.price for p in depot if p.price != None])
+        sum_achat = sum([p.price for p in achat if p.price != None])
+        return (sum_vente - (sum_depot + sum_achat))
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
+        context = super().get_context_data(**kwargs)
+        context['benefice_day'] = self.benefice_per_day(VenteModel, DepotVenteModel, AchatDirectModel)
+        context['benefice_month'] = self.benefice_per_month(VenteModel, DepotVenteModel, AchatDirectModel)
+
         if self.request.user.is_superuser:
             context["achat_directs"] = AchatDirectModel.objects.all().order_by('-created_date')
             context["ventes"] = VenteModel.objects.all().order_by('-created_date')
@@ -58,7 +103,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["tendance_achat_direct"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["n_product"] = ProductModel.objects.filter(shop__owner__user__username=uname).count()
             context["n_client"] = ClientModel.objects.filter(shop__owner__user__username=uname).count()
-
+        
+        #Having the benefice
+        
         return context
 
 

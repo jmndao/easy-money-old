@@ -3,7 +3,7 @@
 {% load humanize %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -12,25 +12,26 @@
 
     <!--- Boutique Card -->
     <div class="col s12 m6 l3">
-        <div class="card deep-orange accent-3">
-            <div class="card-content white-text">
+        <div class="card resize black">
+            <div class="card-content deep-orange-text accent-3">
                 <span class="card-title"> Nombre de Boutiques</span>
-                <p class="p-adjust add_size">
-                    <i class="material-icons small right"> store </i>
-                    <span class="p-large i-adjust">012</span>
+                <p class="p-adjust add_size ">
+                    <i class="material-icons small right deep-orange-text accent-3"> store </i>
+                    <span class="p-large i-adjust deep-orange-text accent-3">012</span>
                 </p>
             </div>
         </div>
     </div>
 
+
     <!--- Produit Card -->
-    <div class="col s12 m6 l3">
-        <div class="card deep-orange accent-3">
-            <div class="card-content white-text">
+    <div class="col  s12 m6 l3">
+        <div class="card resize black">
+            <div class="card-content deep-orange-text accent-3">
                 <span class="card-title">Nombre de Produits</span>
-                <p class="p-adjust add_size">
-                    <i class="material-icons small right">shopping_cart</i>
-                    <span class="p-large i-adjust ">{{ n_product }}</span>
+                <p class="p-adjust add_size ">
+                    <i class="material-icons small right deep-orange-text accent-3">shopping_cart</i>
+                    <span class="p-large i-adjust deep-orange-text accent-3 ">{{ n_product }}</span>
                 </p>
             </div>
         </div>
@@ -38,12 +39,13 @@
 
     <!--- Client Card -->
     <div class="col s12 m6 l3">
-        <div class="card deep-orange accent-3">
-            <div class="card-content white-text">
+        <div class="card resize black">
+            <div class="card-content deep-orange-text accent-3">
                 <span class="card-title">Nombre de Clients</span>
                 <p class="p-adjust add_size">
-                    <i class="material-icons small right">groups</i>
-                    <span class="p-large i-adjust">{{ n_client|floatformat:0|intcomma }}</span>
+                    <i class="material-icons small right deep-orange-text accent-3">groups</i>
+                    <span
+                        class="p-large i-adjust deep-orange-text accent-3">{{ n_client|floatformat:0|intcomma }}</span>
                 </p>
             </div>
         </div>
@@ -51,13 +53,11 @@
 
     <!--- Revenue Card -->
     <div class="col s12 m6 l3">
-        <div class="card">
-            <div class="card-content deep-orange-text accent-3">
-                <span class="card-title">Chiffre D'affaires</span>
-                <p class="p-adjust add_size ">
-                    <i class="material-icons small right deep-orange-text accent-3">sell</i>
-                    <span class="p-large i-adjust deep-orange-text accent-3">3M</span>
-                </p>
+        <div class="card resize deep-orange accent-3">
+            <div class="card-content black-text">
+                <span class="card-title">Benefice</span>
+                <p>Mois: <b>{{benefice_month|floatformat}} </b> </p> <br>
+                <p>Jours:<b> {{benefice_day|floatformat}} </b> </p>
             </div>
         </div>
     </div>
@@ -79,26 +79,26 @@
                 Tendance Produits
             </li>
             {% for tv in tendance_vente %}
-                {% if tv.freq >= 1 %}
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                        <span class="title"><i>Vente</i></span>
-                        <p>{{ tv.produit.name }}<br>
-                            Frequence de Vente: {{ tv.freq }}
-                        </p>
-                    </li>
-                {% endif %}
+            {% if tv.freq >= 1 %}
+            <li class="collection-item avatar">
+                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                <span class="title"><i>Vente</i></span>
+                <p>{{ tv.produit.name }}<br>
+                    Frequence de Vente: {{ tv.freq }}
+                </p>
+            </li>
+            {% endif %}
             {% endfor %}
             {% for ts in tendance_achat_direct %}
-                {% if ts.freq <= 1 %}
-                    <li class="collection-item avatar">
-                        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-                        <span class="title"><i>Achat Direct</i></span>
-                        <p>{{ ts.produit.name }}<br>
-                            Produit en manque: {{ ts.freq }}
-                        </p>
-                    </li>
-                {% endif %}
+            {% if ts.freq <= 1 %}
+            <li class="collection-item avatar">
+                <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+                <span class="title"><i>Achat Direct</i></span>
+                <p>{{ ts.produit.name }}<br>
+                    Produit en manque: {{ ts.freq }}
+                </p>
+            </li>
+            {% endif %}
             {% endfor %}
         </ul>
 
@@ -139,13 +139,14 @@
                         <tbody>
                             <!----- Row: 1-->
                             {% for achat in achat_directs %}
-                                <tr>
-                                    <td>{{ achat.produit.name }}</td>
-                                    <td>{{ achat.created_date|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td>{{ achat.price|floatformat:0|intcomma }}</td>
-                                    <td>{{ achat.guarantee|yesno:"OUI, NON" }}</td>
-                                    <td>{% if achat.guarantee %}{{ achat.guarantee_period }} {% else %} ------- {% endif %}</td>
-                                </tr>
+                            <tr>
+                                <td>{{ achat.produit.name }}</td>
+                                <td>{{ achat.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td>{{ achat.price|floatformat:0|intcomma }}</td>
+                                <td>{{ achat.guarantee|yesno:"OUI, NON" }}</td>
+                                <td>{% if achat.guarantee %}{{ achat.guarantee_period }} {% else %} ------- {% endif %}
+                                </td>
+                            </tr>
                             {% endfor %}
                             <!----- Row: 2-->
                         </tbody>
@@ -185,23 +186,28 @@
                         <tbody>
                             <!----- Row: 1-->
                             {% for vente in ventes %}
-                                <tr>
-                                    <td>{{ vente.produit.name }}</td>
-                                    <td>{{ vente.produit.seller }}</td>
-                                    <td>{{ vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td>{{ vente.price|floatformat:0|intcomma }}</td>
-                                    {% if vente.produit.estate == "NEUF" %}
-                                        <td><span class="new badge green" data-badge-caption="{{ vente.produit.estate }}"></span></td>
-                                    {% elif vente.produit.estate == "BON" %}
-                                        <td><span class="new badge light-green" data-badge-caption="{{ vente.produit.estate }}"></span></td>
-                                    {% elif vente.produit.estate == "MOYEN" %}
-                                        <td><span class="new badge yellow" data-badge-caption="{{ vente.produit.estate }}"></span></td>
-                                    {% elif vente.produit.estate == "MAUVAIS" %}
-                                        <td><span class="new badge light-red" data-badge-caption="{{ vente.produit.estate }}"></span></td>
-                                    {% else %}
-                                        <td><span class="new badge red" data-badge-caption="{{ vente.produit.estate }}"></span></td>
-                                    {% endif %}
-                                </tr>
+                            <tr>
+                                <td>{{ vente.produit.name }}</td>
+                                <td>{{ vente.produit.seller }}</td>
+                                <td>{{ vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td>{{ vente.price|floatformat:0|intcomma }}</td>
+                                {% if vente.produit.estate == "NEUF" %}
+                                <td><span class="new badge green"
+                                        data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                {% elif vente.produit.estate == "BON" %}
+                                <td><span class="new badge light-green"
+                                        data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                {% elif vente.produit.estate == "MOYEN" %}
+                                <td><span class="new badge yellow"
+                                        data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                {% elif vente.produit.estate == "MAUVAIS" %}
+                                <td><span class="new badge light-red"
+                                        data-badge-caption="{{ vente.produit.estate }}"></span></td>
+                                {% else %}
+                                <td><span class="new badge red" data-badge-caption="{{ vente.produit.estate }}"></span>
+                                </td>
+                                {% endif %}
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -217,9 +223,9 @@
 {% endblock body_content %}
 
 {% block javascripts %}
-    <script>
-        var dataset_achat = JSON.parse('{{ dataset_achat }}');
-        var dataset_stock = JSON.parse('{{ dataset_stock }}');
-    </script>
-    <script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
+<script>
+    var dataset_achat = JSON.parse('{{ dataset_achat }}');
+    var dataset_stock = JSON.parse('{{ dataset_stock }}');
+</script>
+<script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
 {% endblock javascripts %}
