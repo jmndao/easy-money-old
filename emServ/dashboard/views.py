@@ -365,7 +365,7 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
                 AchatDirectModel(
                     produit = latest_record,
                     price = latest_record.price,
-                    client = latest_record.client
+                    # client = latest_record.client
                 ).save()
             # messages.success(request, 'Item created successfully!')    
             # Redirect to success page    

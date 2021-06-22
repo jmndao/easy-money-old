@@ -13,7 +13,12 @@ SEXE = [
 CATEGORY = [
     ('ELECTRONIQUE', 'Electronique'),
     ('VETEMENT', 'Vetement'),
-    ('AUTRES', 'Autre')
+    ('DECORATIONS', 'Decorations'),
+    ('ENFANT', 'Telephoniques'),
+    ('AMMEUBLEMENT', 'Ammeublement'),
+    ('LOISIRS', 'Loisirs'),
+    ('IMAGES_ET_SONS', 'Images_et_sons'),
+    ('AUTRES', 'Autre'),
 ]
 
 ETAT = [
@@ -100,7 +105,7 @@ class ClientModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Client/{}:{}'.format(self.fname, self.lname)
+        return '{} {}'.format(self.fname, self.lname)
 
 
 
@@ -155,6 +160,8 @@ class ProductModel(models.Model):
     seller = models.ForeignKey(ClientModel, null=True, on_delete=models.SET_NULL)
     created_date = models.DateTimeField(auto_now_add=True)
     sold = models.BooleanField(default=False)
+    color = models.CharField(max_length=100, blank = True, null=True)
+    
 
     def __str__ (self):
         return '{}[{}]'.format(self.name, self.category)
@@ -221,11 +228,14 @@ class VenteModel(models.Model):
             - price             : the final price the product has been sold
             - garantee          : the number of months the product is guaranteed to the client
             - guarantee_period  : the period in which the guarantee is valid in months
+            - acompte           : the amount of money that the client has given at this moment
     """
 
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
+    acompte = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="l'avance du client", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
     client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
     guarantee_period = models.IntegerField(blank=True, null=True, verbose_name="Periode de garantie [en mois]")

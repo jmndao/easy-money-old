@@ -17,7 +17,7 @@
                 <span class="card-title"> Nombre de Boutiques</span>
                 <p class="p-adjust add_size ">
                     <i class="material-icons small right deep-orange-text accent-3"> store </i>
-                    <span class="p-large i-adjust deep-orange-text accent-3">012</span>
+                    <span class="p-large i-adjust deep-orange-text accent-3">003</span>
                 </p>
             </div>
         </div>
@@ -56,8 +56,8 @@
         <div class="card resize deep-orange accent-3">
             <div class="card-content black-text">
                 <span class="card-title">Benefice</span>
-                <p>Mois: <b>{{benefice_month|floatformat}} </b> </p> <br>
-                <p>Jours:<b> {{benefice_day|floatformat}} </b> </p>
+                <p>Mois: <b>{{benefice_month|floatformat|intcomma}}f </b> </p> <br>
+                <p>Jours:<b> {{benefice_day|floatformat|intcomma}}f </b> </p>
             </div>
         </div>
     </div>
@@ -74,11 +74,13 @@
 
     <div class="section-info-easy col m4 s12">
         <!------ Product Trend Section -->
-        <ul class="deposit collection with-header">
-            <li class="collection-header">
+        <ul class="deposit collection with-header ">
+            <li class="collection-header black deep-orange-text accent-3">
                 Tendance Produits
             </li>
             {% for tv in tendance_vente %}
+            {% if forloop.counter < 4%}
+            <!-- #Display the three first vente trend -->
             {% if tv.freq >= 1 %}
             <li class="collection-item avatar">
                 <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
@@ -88,8 +90,11 @@
                 </p>
             </li>
             {% endif %}
+            {% endif %}
             {% endfor %}
             {% for ts in tendance_achat_direct %}
+            {% if forloop.counter < 4%}
+            <!-- Display the three first vente trend -->
             {% if ts.freq <= 1 %}
             <li class="collection-item avatar">
                 <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
@@ -98,6 +103,7 @@
                     Produit en manque: {{ ts.freq }}
                 </p>
             </li>
+            {% endif %}
             {% endif %}
             {% endfor %}
         </ul>
@@ -113,9 +119,9 @@
         <!----- Table -->
         <div class="row-table-inner">
             <div class=" col  s12">
-                <div class="card-panel grey lighten-1">
+                <div class="card-panel grey lighten-3">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text"><b>Achat Direct</b></div>
+                        <div class="black-text big-text"><b>Achat Directs</b></div>
                         <div class="bbtn">
                             <a href="{% url 'dashboard:ventePage' %}" class=" waves-effect waves-light btn-small
                                 deep-orange accent-3">
@@ -129,25 +135,36 @@
                         <thead class="">
                             <tr>
                                 <th>Produit</th>
-                                <th>Date de Vente</th>
-                                <th>Prix de Vente</th>
+                                <th>Date d' achat</th>
+                                <th>Prix d'achat</th>
                                 <th>Garantie</th>
-                                <th>Delai de Garantie</th>
+                                <th>Clients</th>
+
                             </tr>
                         </thead>
 
                         <tbody>
                             <!----- Row: 1-->
+                            {% with count=0 %}
+                            {% endwith %}
+
                             {% for achat in achat_directs %}
+                            {% if forloop.counter < 5%}
                             <tr>
                                 <td>{{ achat.produit.name }}</td>
                                 <td>{{ achat.created_date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td>{{ achat.price|floatformat:0|intcomma }}</td>
                                 <td>{{ achat.guarantee|yesno:"OUI, NON" }}</td>
-                                <td>{% if achat.guarantee %}{{ achat.guarantee_period }} {% else %} ------- {% endif %}
-                                </td>
+                                <td>{{ achat.client.fname}} {{ achat.client.lname}}</td>
+
                             </tr>
+                            {% endif %}
                             {% endfor %}
+
+
+
+
+
                             <!----- Row: 2-->
                         </tbody>
                     </table>
@@ -158,11 +175,10 @@
         <div class="row-table-inner">
             <!----- Table -->
             <div class="col s12">
-                <div class="card-panel grey lighten-1">
+                <div class="card-panel grey lighten-3">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text"><b>Achat Direct</b></div>
+                        <div class="black-text big-text "><b>Ventes Effecutees</b></div>
                         <div class="bbtn">
-
                             <a href="{% url 'dashboard:achatDirectPage' %}"
                                 class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class=" material-icons left">visibility</i>
@@ -176,9 +192,9 @@
                         <thead>
                             <tr>
                                 <th>Produit</th>
-                                <th>Vendeur</th>
                                 <th>Date Achat</th>
                                 <th>Prix Achat</th>
+                                <th>Clients</th>
                                 <th>Qualite</th>
                             </tr>
                         </thead>
@@ -186,11 +202,12 @@
                         <tbody>
                             <!----- Row: 1-->
                             {% for vente in ventes %}
+                            {% if forloop.counter < 5%}
                             <tr>
                                 <td>{{ vente.produit.name }}</td>
-                                <td>{{ vente.produit.seller }}</td>
                                 <td>{{ vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td>{{ vente.price|floatformat:0|intcomma }}</td>
+                                <td>{{ vente.produit.seller }}</td>
                                 {% if vente.produit.estate == "NEUF" %}
                                 <td><span class="new badge green"
                                         data-badge-caption="{{ vente.produit.estate }}"></span></td>
@@ -208,12 +225,14 @@
                                 </td>
                                 {% endif %}
                             </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+
     </div>
 
 </div>
