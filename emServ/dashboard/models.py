@@ -107,7 +107,7 @@ class ClientModel(models.Model):
     def __str__(self):
         return '{} {}'.format(self.fname, self.lname)
 
-
+ 
 
 class ProductModel(models.Model):
     """
