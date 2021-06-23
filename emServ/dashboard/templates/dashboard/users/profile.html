@@ -1,0 +1,137 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+  <link type="text/css" rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
+{% block body_content %}
+
+
+<div class="row">
+
+    <div class="row">
+      <div class="col m8 s12">
+        <div class="card-panel">
+          <form method="post" enctype='multipart/form-data'>
+          {% csrf_token %}
+          <!------- Profile Image-->
+          <div class="col s12">
+            <div class="card-panel deep-orange accent-3">
+              <i class="material-icons left">account_circle</i>
+              <b>Image de Profil</b>
+            </div>
+          </div>
+          <div class="input-field col s12">
+            <div class="btn">
+              <span>
+                <label for="{{ form.avatar.id_for_label }}"></label>
+                {{ form.avatar }}
+              </span>
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path validate">
+            </div>
+          </div>
+
+          <!------- Information Agence -->
+          {% comment %} <div class="card-panel deep-orange accent-3">
+            <i class="material-icons left">assignment_ind</i>
+            <b>Information Agence</b>
+          </div> {% endcomment %}
+          
+
+          <!------- Information Agent -->
+          <div class="col s12">
+            <div class="card-panel deep-orange accent-3">
+              <i class="material-icons right">assignment_ind</i>
+              <b>Information Agent</b>
+            </div> 
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">home_work</i>
+            <label for="{{ form.agency.id_for_label }}">Agence</label>
+            {{ form.agency }}
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">phone</i>
+            {{ form.phone_number }}
+            <label for="{{ form.phone_number.id_for_label }}">Telephone</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">person_pin</i>
+            {{ form.address }}
+            <label for="{{ form.address.id_for_label }}">Adresse</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">home</i>
+            {{ form.number }}
+            <label for="{{ form.number.id_for_label }}">Numéro</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">add_location_alt</i>
+            {{ form.city }}
+            <label for="{{ form.city.id_for_label }}">Ville</label>
+          </div>
+          <div class="input-field col m6 s12">
+            <i class="material-icons prefix">add_location_alt</i>
+            {{ form.zip }}
+            <label for="{{ form.zip.id_for_label }}">Zip Code</label>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button type="submit" class="btn-flat waves-effect deep-orange-text accent-3">
+                <i class="material-icons right">recommend</i>
+                Enregistrer
+              </button> 
+            </div>
+          </div>
+        </form>
+        </div>
+        
+      </div>
+      
+      <div class="col s12 m4">
+        {% if user.is_superuser %}
+          <div class="collection with-header">
+            <div class="collection-header deep-orange accent-3 white-text">
+              Menu de Creation
+            </div>
+            <a href="{% url 'accounts:userCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouveau Agent</a>
+            <a href="{% url 'accounts:shopCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouvelle Boutique</a>
+          </div>
+        {% endif %}
+        <div class="card-panel">
+          <div class="row">
+            <div class="col s6">
+              <img src="{{ userprofile.avatar.url }}" alt="Profil" class="circle center" width="100" height="100">
+            </div>
+            <div class="col s6">
+              <p class="big-text deep-orange-text accent-3">@{{ userprofile.user.username }}</p>
+              <span>
+                <b>
+                    {% if userprofile.user.first_name %}{{ userprofile.user.first_name }} {% else %} Prenom {% endif %}
+                    {% if userprofile.user.last_name %}{{ userprofile.user.last_name }} {% else %} Nom {% endif %}
+                </b>
+              </span>
+              <span>{% if userprofile.user.email %}{{ userprofile.user.email }} {% else %} Email {% endif %} </span>
+            </div>
+          </div>
+          <div class="divider" style="margin:10px"></div>
+            <div class="row">
+              <a href="{% url 'accounts:userUpdatePage' user.pk %}" class="btn-flat deep-orange accent-3 waves-effect">
+                <i class="material-icons right">edit</i>
+                <b>Modifier</b> 
+              </a>
+            </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock body_content %}

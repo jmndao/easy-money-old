@@ -1,0 +1,30 @@
+{% extends 'dashboard/base.html' %}
+
+{% block body_content %}
+
+    <div class="row">
+
+        <div class="col s12">
+        
+            <div class="card-panel">
+                <div class="card-panel deep-orange accent-3">
+                    <i class="material-icons right">edit</i>
+                    Editer ...
+                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form  }}
+
+                    <button type="submit" class="btn-flat deep-orange-text accent-3 waves-effect">
+                        <i class="material-icons right">thumbs_up</i>
+                        Enregistrer
+                    </button>
+                </form>
+            
+            </div>
+
+        </div>
+    
+    </div>
+
+{% endblock body_content %}

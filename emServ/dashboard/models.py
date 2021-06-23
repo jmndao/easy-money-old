@@ -67,7 +67,7 @@ class Shop(models.Model):
 
     def __str__(self):
 
-        return 'Shop/{}:{}'.format(self.name, self.owner.user.username)
+        return '{} {}'.format(self.name, self.owner.user.username)
 
 
 class ClientModel(models.Model):
@@ -100,7 +100,7 @@ class ClientModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Client/{}:{}'.format(self.fname, self.lname)
+        return '{} {}'.format(self.fname, self.lname)
 
 
 
@@ -157,7 +157,7 @@ class ProductModel(models.Model):
     sold = models.BooleanField(default=False)
 
     def __str__ (self):
-        return '{}[{}]'.format(self.name, self.category)
+        return '{}'.format(self.name)
 
 
 
@@ -232,7 +232,7 @@ class VenteModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{}:{}'.format(self.produit.name, self.price)
+        return '{} {}'.format(self.produit.name, self.price)
 
 
 
@@ -258,7 +258,7 @@ class ClientRequestModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
+        return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)
 
 
 # class NotificationModel(models.Model):
