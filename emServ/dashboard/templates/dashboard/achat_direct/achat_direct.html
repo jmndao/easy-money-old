@@ -148,7 +148,7 @@
 
       </div>
       <div class="col s5">
-        <button class="waves-effect black waves-green btn-flat right" type="submit">
+        <button type="submit" class="waves-effect black waves-green btn-flat right">
           <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
           <b class="deep-orange-text accent-3">Enregistrer</b>
         </button>
@@ -206,7 +206,7 @@
               <a href="{% url 'dashboard:achatDirectEditPage' ad.pk %}"
                 class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Modifier"><span class="material-icons">update</span></a>
-              <a href="{% url 'dashboard:achatDirectkDeletePage' ad.pk %}"
+              <a href="{% url 'dashboard:achatDirectDeletePage' ad.pk %}"
                 class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
             </td>

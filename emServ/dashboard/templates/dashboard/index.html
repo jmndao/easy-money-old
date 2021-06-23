@@ -31,7 +31,7 @@
                 <span class="card-title">Nombre de Produits</span>
                 <p class="p-adjust add_size ">
                     <i class="material-icons small right deep-orange-text accent-3">shopping_cart</i>
-                    <span class="p-large i-adjust deep-orange-text accent-3 ">{{ n_product }}</span>
+                    <span class="p-large i-adjust deep-orange-text accent-3 ">{{ n_product|stringformat:"03d" }}</span>
                 </p>
             </div>
         </div>
@@ -44,8 +44,7 @@
                 <span class="card-title">Nombre de Clients</span>
                 <p class="p-adjust add_size">
                     <i class="material-icons small right deep-orange-text accent-3">groups</i>
-                    <span
-                        class="p-large i-adjust deep-orange-text accent-3">{{ n_client|floatformat:0|intcomma }}</span>
+                    <span class="p-large i-adjust deep-orange-text accent-3">{{ n_client|stringformat:"03d" }}</span>
                 </p>
             </div>
         </div>
@@ -121,9 +120,9 @@
             <div class=" col  s12">
                 <div class="card-panel grey lighten-3">
                     <div class="colright card-panel-header__wrapper">
-                        <div class="black-text big-text"><b>Achat Directs</b></div>
+                        <div class="black-text big-text"><b> Achats Directs </b></div>
                         <div class="bbtn">
-                            <a href="{% url 'dashboard:ventePage' %}" class=" waves-effect waves-light btn-small
+                            <a href="{% url 'dashboard:achatDirectPage' %}#datatable" class=" waves-effect waves-light btn-small
                                 deep-orange accent-3">
                                 <i class="material-icons left">visibility</i>
                                 Voir Tout
@@ -179,7 +178,7 @@
                     <div class="colright card-panel-header__wrapper">
                         <div class="black-text big-text "><b>Ventes Effecutees</b></div>
                         <div class="bbtn">
-                            <a href="{% url 'dashboard:achatDirectPage' %}"
+                            <a href="{% url 'dashboard:ventePage' %}#datatable"
                                 class="waves-effect waves-light btn-small deep-orange accent-3">
                                 <i class=" material-icons left">visibility</i>
                                 Voir Tout

@@ -2,77 +2,89 @@
 {% load static %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
 
-    <div class="card-panel">
-        <div class="card-panel orange darken-4">Editer un Achat <a href="{% url 'dashboard:buyingStockPage' %}" class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
-            <div class="info_text valign-wrapper">
-                <p class="blue-text lighten-2">
-                    <small>
-                        Vous êtes entrain de modifier les informations d'un achat déjà effectué.
-                        Vous pouvez toujours retourner en cliquant sur l'icon d'en haut.
-                    </small>
-                </p>
+<div class="card-panel">
+    <div class="card-panel orange darken-4">Editer un Achat <a href="{% url 'dashboard:ventePage' %}"
+            class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
+    <div class="info_text valign-wrapper">
+        <p class="blue-text lighten-2">
+            <small>
+                Vous êtes entrain de modifier les informations d'un achat déjà effectué.
+                Vous pouvez toujours retourner en cliquant sur l'icon d'en haut.
+            </small>
+        </p>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <!--- Form -->
+        <div class="row">
+            <div class="input-field col m6 s12">
+                {{ form.produit }}
+                <label for="{{ form.produit.id_for_label }}">Produit</label>
             </div>
-            <form action="" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <!--- Form -->
-                <div class="row">
-                    <div class="input-field col s6">
-                        {{ form.produit }}
-                        <label for="{{ form.produit.id_for_label }}">Produit</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{ form.prix_de_vente_min }}
-                        <label for="{{ form.prix_de_vente_min.id_for_label }}">Prix de vente minimal</label>
-                    </div>
-                    <div class="input-field col s6">
-                        {{ form.prix_de_vente_fin }}
-                        <label for="{{ form.prix_de_vente_fin.id_for_label }}">Prix de vente final</label>
-                    </div>
-                    <div class="col s12">
-                        <ul class="collapsible">
-                        <li>
-                        <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Modifier la garantie </div>
+            <div class="input-field col m6 s12">
+                {{ form.price }}
+                <label for="{{ form.prix_de_vente_min.id_for_label }}">Prix du produit</label>
+            </div>
+            <div class="input-field col m6 s12">
+                {{ form.acompte }}
+                <label for="{{ form.prix_de_vente_fin.id_for_label }}">Accompte</label>
+            </div>
+            <div class="row">
+                <div class="input-field col m6 s12">
+                    {{ form.client }}
+                    <label for="{{ form.delai_garantie.id_for_label }}">Client</label>
+                </div>
+            </div>
+            <div class="col s12">
+                <ul class="collapsible">
+                    <li>
+                        <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Modifier la
+                            garantie </div>
                         <div class="collapsible-body">
                             <span>
-                            <div class="input-field col s6">
-                                <label for="{{ form.garantie.id_for_label }}"> 
-                                {{ form.garantie }}
-                                <span>Garantie</span> 
-                                </label>
-                            </div>
-                            <div class="input-field col s6">
-                                {{ form.delai_garantie }}
-                                <label for="{{ form.delai_garantie.id_for_label }}">Delai garantie</label>
-                            </div>
+                                <div class="input-field col s6">
+                                    <label for="{{ form.garantie.id_for_label }}">
+                                        {{ form.guarantee }}
+                                        <span>Garantie</span>
+                                    </label>
+                                </div>
+                                <div class="input-field col s6">
+                                    {{ form.guarantee_period }}
+                                    <label for="{{ form.delai_garantie.id_for_label }}">Delai garantie</label>
+                                </div>
+
                             </span>
-                        </div>                
-                        </li>
-                    </ul>
-                </div>
-                </div>
+                        </div>
 
-                <div class="info_text valign-wrapper">
-                    <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i class="material-icons">local_mall</i> </small></span>
-                </div>
-
-                <div class="modal-footer">
-                    <a href="{% url 'dashboard:productPage' %}" class="waves-effect btn-flat nopadding"><i class="material-icons">local_mall</i></a>
-                    <button class="modal-close waves-effect waves-green btn-flat" type="submit">
-                        <i class="material-icons right">thumb_up_alt</i>
-                    </button>
-                </div>
-            </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+
+        <div class="info_text valign-wrapper">
+            <span class="blue-text lighten-2"><small>Vous pouvez ajouter un produit avec le bouton d'icon <i
+                        class="material-icons">local_mall</i> </small></span>
+        </div>
+
+        <div class="modal-footer">
+            <a href="{% url 'dashboard:ventePage' %}" class="waves-effect btn-flat nopadding"><i
+                    class="material-icons">local_mall</i></a>
+            <button class="modal-close waves-effect waves-green btn-flat" type="submit">
+                <i class="material-icons right">thumb_up_alt</i>
+            </button>
+        </div>
+    </form>
+</div>
+</div>
 
 {% endblock body_content %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}
