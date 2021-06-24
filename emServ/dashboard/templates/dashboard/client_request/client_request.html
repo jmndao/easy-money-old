@@ -54,6 +54,9 @@
 
 <div class=" card-panel row">
 
+    <div class="card-title center-align">
+        <h4>Ajouter une demande d'un client.</h4>
+    </div>
     <div class="card-container col s12 center-align">
 
         <div class=" col s12">
@@ -69,6 +72,12 @@
                     <div class="input-field col s12">
                         {{ form.produit_demander }}
                         <label for="{{ form.produit_demander.id_for_label }}">Produit</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 textarea">
+                        {{ form.description }}
+                        <label for="{{ form.description.id_for_label }}"> Description</label>
                     </div>
                 </div>
                 <div class=" for-hover">

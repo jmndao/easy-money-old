@@ -94,7 +94,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["n_product"] = ProductModel.objects.all().count()
-            context["n_client"] = ClientModel.objects.all().count()
+            context["n_client"] =  ClientModel.objects.all().count()
         else: 
             context["achat_directs"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
@@ -184,7 +184,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-created_date')
+        context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by('-created_date')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.price for p in self.q if p.price != None])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
@@ -365,7 +365,7 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
                 AchatDirectModel(
                     produit = latest_record,
                     price = latest_record.price,
-                    client = latest_record.client
+                    # client = latest_record.client
                 ).save()
             # messages.success(request, 'Item created successfully!')    
             # Redirect to success page    
@@ -477,14 +477,21 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
-
-
-
+    context_object_name = 'client'
+    def get_queryset(self):
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            self.client = ClientModel.objects.filter(pk=self.kwargs["pk"],
+                                        shop__owner__user__username=u_user.username)
+        else:
+            self.client = ClientModel.objects.filter(pk=self.kwargs["pk"])
+        return self.client
+    
 #Rendering the pdf class here:
 class GeneratePDF(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/invoice/invoice.html'
 
-    model = ClientModel
+    model = VenteModel
     fields = '__all__'
 
     # def get(self, *args, **kwargs):
@@ -494,16 +501,10 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-
         context['all_vente'] = self.a = VenteModel.objects.all()
         context['f_number'] = self.a.count()
-
-
         # context['v_shop'] = self.s = Shop.objects.all()
-
-
-        context['vente'] = self.q = VenteModel.objects.last()
+        context['vente'] = self.q = VenteModel.objects.get(pk=self.kwargs["pk"])
         context['c_fname'] = self.q.client.fname
         context['c_lname'] = self.q.client.lname
         context['c_price'] = self.q.price

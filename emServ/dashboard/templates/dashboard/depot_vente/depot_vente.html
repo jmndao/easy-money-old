@@ -121,19 +121,19 @@
 
         <!--- Form -->
         <div class="row">
-            <div class="input-field col s6">
-                {{ form.produit }}
-                <label for="{{ form.produit.id_for_label }}">Nom du vendeur</label>
-            </div>
-            <div class="input-field col s6">
+            <!-- <div class="input-field col s6">
+                {{ form.client }}
+                <label for="{{ form.client.id_for_label }}">Nom du vendeur</label>
+            </div> -->
+            <div class="input-field col s12">
                 {{ form.produit }}
                 <label for="{{ form.produit.id_for_label }}">Produit</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12">
                 {{ form.produit }}
                 <label for="{{ form.prduit.id_for_label }}">Qualite</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12">
                 {{ form.price }}
                 <label for="{{ form.price.id_for_label }}">Prix de Depot</label>
             </div>
@@ -192,7 +192,8 @@
                         {% if dv.produit.estate == "NEUF" %}
                         <td><span class="new badge green" data-badge-caption="{{ dv.produit.estate }}"></span></td>
                         {% elif dv.produit.estate == "BON" %}
-                        <td><span class="new badge light-green" data-badge-caption="{{ dv.produit.estate }}"></span></td>
+                        <td><span class="new badge light-green" data-badge-caption="{{ dv.produit.estate }}"></span>
+                        </td>
                         {% elif dv.produit.estate == "MOYEN" %}
                         <td><span class="new badge yellow" data-badge-caption="{{ dv.produit.estate }}"></span></td>
                         {% elif dv.produit.estate == "MAUVAIS" %}
@@ -230,7 +231,7 @@
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 
 <script>
-        var dataset_depot = JSON.parse('{{ dataset_depot }}');
+    var dataset_depot = JSON.parse('{{ dataset_depot }}');
 </script>
 <script type="text/javascript" src="{% static 'dashboard/js/chart_depot.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>

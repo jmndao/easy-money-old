@@ -15,19 +15,19 @@ urlpatterns = [
     path('client/supprimer/<int:pk>/', d_views.ClientDeleteView.as_view(), name='clientDeletePage'),
     path('client/detail/<int:pk>/', d_views.ClientDetailView.as_view(), name='clientDetailPage'),
     # ClientRequest Routers
-    path('demande_client/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
-    path('demande_client/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),
-    path('demande_client/detail/<int:pk>/', d_views.ClientRequestDetailView.as_view(), name='clientRequestDetailPage'),
+    path('demande_clien/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
+    path('demande_clien/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),
+    path('demande_clien/detail/<int:pk>/', d_views.ClientRequestDetailView.as_view(), name='clientRequestDetailPage'),
     # Achat Direct Routers
     path('achat_direct/', d_views.AchatDirectView.as_view(), name="achatDirectPage"),
     path('achat_direct/modifier/<int:pk>/', d_views.AchatDirectUpdateView.as_view(), name='achatDirectEditPage'),
     path('achat_direct/supprimer/<int:pk>/', d_views.AchatDirectDeleteView.as_view(), name='achatDirectDeletePage'),
     path('achat_direct/detail/<int:pk>/', d_views.AchatDirectDetailView.as_view(), name='achatDirectDetailPage'),
     # DepotVenteStock Routers
-    path('depot_vente/', d_views.DepotVenteView.as_view(), name = 'depotVentePage'),
-    path('depot_vente/detail/<int:pk>/', d_views.DepotVenteDetailView.as_view(), name='depotVenteDetailPage'),
-    path('depot_vente/supprimer/<int:pk>/', d_views.DepotVenteDeleteView.as_view(), name='depotVenteDeletePage'),
-    path('depot_vente/modifier/<int:pk>/', d_views.DepotVenteEditView.as_view(), name='depotVenteEditPage'),
+    path('depot_vent/', d_views.DepotVenteView.as_view(), name = 'depotVentePage'),
+    path('depot_vent/detail/<int:pk>/', d_views.DepotVenteDetailView.as_view(), name='depotVenteDetailPage'),
+    path('depot_vent/supprimer/<int:pk>/', d_views.DepotVenteDeleteView.as_view(), name='depotVenteDeletePage'),
+    path('depot_vent/modifier/<int:pk>/', d_views.DepotVenteEditView.as_view(), name='depotVenteEditPage'),
     # BuyingStock Routers
     path('vente/', d_views.VenteView.as_view(), name="ventePage"),
     path('vente/modifier/<int:pk>/', d_views.VenteUpdateView.as_view(), name='venteEditPage'),

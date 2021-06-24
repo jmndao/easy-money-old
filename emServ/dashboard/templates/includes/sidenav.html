@@ -19,43 +19,50 @@
         </div>
         <ul class="add_scroll">
             <li>
-                <a href="{% url 'dashboard:homePage' %}" class="active">
+                <a {% if '/' == request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:homePage' %}">
                     <span class="material-icons"> dashboard </span>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'dashboard:clientPage' %}">
+                <a {% if 'client' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:clientPage' %}">
                     <span class="material-icons"> person_add </span>
                     <span>Clients</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'dashboard:productPage' %}" class="">
+                <a {% if 'produit' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:productPage' %}" class="">
                     <span class="material-icons"> local_mall </span>
                     <span>Produits</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'dashboard:ventePage' %}">
+                <a {% if 'vente' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:ventePage' %}">
                     <span class="material-icons"> price_check </span>
                     <span>Ventes</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'dashboard:achatDirectPage' %}">
+                <a {% if 'achat_direct' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:achatDirectPage' %}">
                     <span class="material-icons"> add_shopping_cart </span>
                     <span>Achats Directs</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'dashboard:depotVentePage' %}">
+                <a {% if 'depot_vent' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:depotVentePage' %}">
                     <span class="material-icons"> airline_stops </span>
                     <span>Dépots Ventes</span>
                 </a>
             </li>
             <li>
-                <a href="{% url 'dashboard:clientRequestPage' %}">
+                <a {% if 'demande_clien' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:clientRequestPage' %}">
                     <span class="material-icons"> history_edu </span>
                     <span>Demande Client</span>
                 </a>

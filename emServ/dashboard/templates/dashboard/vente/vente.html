@@ -13,7 +13,7 @@
 <div class="row">
   <!----Row 1-->
   <div class="col s12 m4">
-    <div class="card-panel">
+    <div class="card-panel resize">
       <div class="row valign-wrapper">
         <div class="col s4">
           <span class="material-icons dummy_icon">category</span>
@@ -23,13 +23,13 @@
         </div>
       </div>
     </div>
-    <div class="card-panel black deep-orange-text accent-3">
+    <div class="card-panel resize black deep-orange-text accent-3">
       <div class="card-title center dummy_info">{{ count_item }}</div>
     </div>
   </div>
   <!----Row 2-->
   <div class="col s12 m4">
-    <div class="card-panel">
+    <div class="card-panel resize">
       <div class="row valign-wrapper">
         <div class="col s4">
           <span class="material-icons dummy_icon">paid</span>
@@ -39,13 +39,13 @@
         </div>
       </div>
     </div>
-    <div class="card-panel black deep-orange-text accent-3">
+    <div class="card-panel resize black deep-orange-text accent-3">
       <div class="card-title center dummy_info">{{ revenue|floatformat:0|intcomma}} C.FCA</div>
     </div>
   </div>
   <!----Row 3-->
   <div class="col s12 m4">
-    <div class="card-panel black deep-orange-text accent-3">
+    <div class="card-panel resize black deep-orange-text accent-3">
       <div class="row valign-wrapper">
         <div class="col s4">
           <span class="material-icons dummy_icon">savings</span>
@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div class="card-panel">
+    <div class="card-panel resize">
       <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
     </div>
   </div>
@@ -134,12 +134,6 @@
             <i class="material-icons right">local_mall</i>
           </a>
         </div>
-        <div class="input-field col m6 s12">
-          {{ form.price }}
-          <label for="{{ form.price.id_for_label }}">Prix de vente </label>
-        </div>
-      </div>
-      <div class="row center-align">
         <div class="input-field col m5 s10">
           {{ form.client }}
           <label for="{{form.client.id_for_label}}">Client</label>
@@ -149,6 +143,18 @@
             class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Vendeur">
             <i class="material-icons right">person_add</i>
           </a>
+        </div>
+
+      </div>
+      <div class="row center-align">
+        <div class="input-field col m6 s12">
+          {{ form.price }}
+          <label for="{{ form.price.id_for_label }}">Prix de vente </label>
+        </div>
+
+        <div class="input-field col m6 s12">
+          {{ form.acompte }}
+          <label for="{{form.acompte.id_for_label}}">Acompte</label>
         </div>
       </div>
       <div class="col s12">
@@ -175,7 +181,7 @@
       </div>
 
       <div class="col s12">
-        <button class="waves-effect waves-green btn-flat" type="submit">
+        <button class="waves-effect waves-green btn-flat black" type="submit">
           <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
           <b class="deep-orange-text accent-3">Enregistrer</b>
         </button>
@@ -199,11 +205,10 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-            <th>Produit</th>
             <th>Date vendu</th>
+            <th>Clients</th>
+            <th>Produit</th>
             <th>Prix vendu</th>
-            <th>Garantie</th>
-            <th>Delai garantie</th>
             <th>Actions</th>
             <th>Devis</th>
           </tr>
@@ -211,15 +216,10 @@
         <tbody>
           {% for v in vente %}
           <tr>
+            <td> {{ v.created_date|date:"d M" }}</td>
+            <td> {{ v.client.fname }} {{ v.client.lname }}</td>
             <td> {{ v.produit }} </td>
-            <td> {{ v.created_date }}</td>
             <td> {{ v.price|floatformat:0|intcomma }}</td>
-            <td>{{ v.garantee|yesno:"OUI, NON" }}</td>
-            {% if v.guarantee %}
-            <td> {{ v.guarantee_period }} mois</td>
-            {% else %}
-            <td> Pas de Garantie </td>
-            {% endif %}
             <td class="actions">
               <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
