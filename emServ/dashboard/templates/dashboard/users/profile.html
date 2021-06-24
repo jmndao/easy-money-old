@@ -97,7 +97,9 @@
             <div class="collection-header deep-orange accent-3 white-text">
               Menu de Creation
             </div>
-            <a href="{% url 'accounts:userCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouveau Agent</a>
+            <a href="{% url 'accounts:userCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouveau Agent 
+                <span class="badge deep-orange accent-3 white-text" data-badge-caption="{{ n_users }}"></span>
+            </a>
             <a href="{% url 'accounts:shopCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouvelle Boutique</a>
           </div>
         {% endif %}
@@ -118,11 +120,20 @@
             </div>
           </div>
           <div class="divider" style="margin:10px"></div>
-            <div class="row">
-              <a href="{% url 'accounts:userUpdatePage' user.pk %}" class="btn-flat deep-orange accent-3 waves-effect">
-                <i class="material-icons right">edit</i>
-                <b>Modifier</b> 
-              </a>
+            <div class="row valign-wrapper">
+              <div class="col s6">
+                <a href="{% url 'accounts:userUpdatePage' user.pk %}" class="btn-flat deep-orange accent-3 waves-effect white-text">
+                  <i class="material-icons right">badge</i>
+                  <b>Modifier</b> 
+                </a>
+              </div>
+              <div class="col s6">
+                <a href="{% url 'accounts:passwordChangePage' user.pk %}" class="btn-flat deep-orange accent-3 waves-effect white-text">
+                  <i class="material-icons right">password</i>
+                  <b>Modifier</b> 
+                </a>
+              </div>
+              
             </div>
         </div>
       </div>

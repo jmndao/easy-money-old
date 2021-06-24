@@ -9,14 +9,27 @@
             <div class="card-panel">
                 <div class="card-panel deep-orange accent-3">
                     <i class="material-icons right">edit</i>
-                    Editer ...
+                    Editer ... 
                 </div>
                 <form action="" method="post">
                     {% csrf_token %}
-                    {{ form  }}
+                    
+                    <div class="input-field col s12 m6">
+                        <label for="{{ form.first_name.id_for_label }}">Prenom</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <label for="{{ form.last_name.id_for_label }}">Nom</label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <div class="input-field col s12">
+                        <label for="{{ form.email.id_for_label }}">Nouveau Email</label>
+                        {{ form.email }}
+                    </div>
 
                     <button type="submit" class="btn-flat deep-orange-text accent-3 waves-effect">
-                        <i class="material-icons right">thumbs_up</i>
+                        <i class="material-icons right">recommend</i>
                         Enregistrer
                     </button>
                 </form>

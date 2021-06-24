@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
@@ -15,27 +16,34 @@ from dashboard.models import Shop
 
 class UserCreationView(LoginRequiredMixin, CreateView):
 
-    model = User
-    fields = ['username', 'password1', 'password2']
-    success_url = reverse_lazy('accounts:profilePage')
+    form_class = UserCreationForm
     template_name = 'dashboard/users/user_create.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["users"] = User.objects.all()
-        context["n_users"] = context["users"].count()
-        return context
+    def form_valid(self, form):
+        messages.success(self.request, "Agent {} a ete ajoute avec succes !".format(form.instance.username))
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.success(self.request, "Un agent existe avec ce nom d'utilisateur !")
+        return super().form_invalid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.pk,))
     
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = '__all__'
-    success_url = reverse_lazy('accounts:userCreationPage')
+    fields = ['first_name', 'last_name', 'email']
+    success_url = reverse_lazy('accounts:profileUpdatePage')
     template_name = 'dashboard/users/user_update.html'
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Vos modifications ont ete accepte !') 
+        return super().form_valid(form)
 
+    
 
 class UserDeleteView(LoginRequiredMixin, DeleteView):
 
@@ -68,6 +76,12 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["users"] = User.objects.all()
+        context["n_users"] = context["users"].count()
+        return context
 
 
 

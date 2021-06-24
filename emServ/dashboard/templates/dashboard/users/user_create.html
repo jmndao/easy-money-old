@@ -3,6 +3,44 @@
 
 {% block body_content %}
 
+<div class="card-panel">
+
+    <div class="row">
+        <div class="col s12">
+            <div class="card-panel deep-orange accent-3 white-text">
+                <i class="material-icons right">person_add</i>
+                Ajouter un nouveau Agent
+            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">person</i>
+                    <label for="{{ form.username.id_for_label }}">Nom d'Utilisateur</label>
+                    {{ form.username }}
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">password</i>
+                    <label for="{{ form.password1.id_for_label }}">Mot de Passe</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">password</i>
+                    <label for="{{ form.password2.id_for_label }}">Mot de Passe de Confirmation</label>
+                    {{ form.password2 }}
+                </div>
+                <button type="submit" class="btn-flat deep-orange-text accent-3 waves-effect">
+                    <i class="material-icons right">recommend</i>
+                    Creer
+                </button>
+                <a href="{% url 'accounts:profileUpdatePage' user.pk %}" class="btn-flat deep-orange-text accent-3 waves-effect">
+                    <i class="material-icons right">keyboard_return</i>
+                    Retour
+                </a>
+            </form>
+        </div>
+    </div>
+
+</div>
     
 
 {% endblock body_content %}
