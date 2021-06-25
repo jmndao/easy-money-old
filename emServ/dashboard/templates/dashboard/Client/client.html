@@ -23,7 +23,7 @@
         <i class="material-icons medium deep-orange-text accent-3 separate_two">people</i>
       </div>
       <div class="ajouter ">
-        <p class="deep-orange-text accent-3 big">2034</p>
+        <p class="deep-orange-text accent-3 big">{{c_number|stringformat:"03d" }}</p>
       </div>
     </div>
   </div>
@@ -44,6 +44,10 @@
       <div class="input-field col s6">
         {{ form.shop }}
         <label for="{{ form.shop.id_for_label }}">Boutique</label>
+      </div>
+      <div class="input-field col s6">
+        {{ form.address }}
+        <label for="{{ form.address.id_for_label }}">Adresse</label>
       </div>
     </div>
     {% endif %}
@@ -73,10 +77,12 @@
     </div>
 
     <div class="row">
+
       <div class="input-field col m4 s6">
-        {{ form.address }}
-        <label for="{{ form.address.id_for_label }}">Adresse</label>
+        {{ form.vente_or_achat }}
+        <label for="{{ form.vene_or_achat.id_for_label }}">Vente ou Achat</label>
       </div>
+
       <div class="input-field col m4 s6">
         {{ form.email }}
         <label for="{{ form.email.id_for_label }}">Email</label>
@@ -87,12 +93,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="input-field col m3 s6">
-        {{ form.passage }}
-        <label for="{{ form.passage.id_for_label }}">Passage</label>
-      </div>
       <div class="col m3 s6 right">
-        <button class="waves-effect waves-green btn-flat" type="submit">
+        <button class="waves-effect waves-green black btn-flat" type="submit">
           <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
           <b class="deep-orange-text accent-3">Enregistrer</b>
         </button>

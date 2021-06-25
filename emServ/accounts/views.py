@@ -28,7 +28,7 @@ class UserCreationView(LoginRequiredMixin, CreateView):
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.pk,))
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
     
 
 
@@ -36,12 +36,14 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
     fields = ['first_name', 'last_name', 'email']
-    success_url = reverse_lazy('accounts:profileUpdatePage')
     template_name = 'dashboard/users/user_update.html'
 
     def form_valid(self, form):
         messages.success(self.request, 'Vos modifications ont ete accepte !') 
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
 
     
 
@@ -56,7 +58,6 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
 class UserProfileCreationView(LoginRequiredMixin, CreateView):
 
     model = UserProfile
-    success_url = reverse_lazy('accounts:profileUpdatePage')
     template_name = 'dashboard/users/profile.html'
     fields = '__all__'
 
@@ -64,12 +65,14 @@ class UserProfileCreationView(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+
 
 
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     model = UserProfile
-    success_url = reverse_lazy('accounts:profileUpdatePage')
     template_name = 'dashboard/users/profile.html'
     fields = '__all__'
 
@@ -83,13 +86,14 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         context["n_users"] = context["users"].count()
         return context
 
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
 
 
 class ShopCreationView(LoginRequiredMixin, CreateView):
 
     model = Shop
     fields = '__all__'
-    success_url = reverse_lazy('accounts:profilePage')
     template_name = 'dashboard/shop/shop_create.html'
 
     def get_context_data(self, **kwargs):
@@ -97,6 +101,9 @@ class ShopCreationView(LoginRequiredMixin, CreateView):
         context["shops"] = Shop.objects.all()
         context["n_shop"] = context["shops"].count()
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
 
 
 
@@ -106,6 +113,9 @@ class ShopUpdateView(LoginRequiredMixin, UpdateView):
     fields = '__all__'
     success_url = reverse_lazy('accounts:shopCreationPage')
     template_name = 'accounts/shop/shop_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
         
 
 

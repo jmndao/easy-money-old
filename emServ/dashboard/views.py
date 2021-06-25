@@ -1,35 +1,29 @@
 import datetime
-from django.utils import timezone
-
-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import (TemplateView,
-                                  DetailView,
-                                  View)
+                                  DetailView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
-                                       DeleteView
-                                       )
+                                       DeleteView)
 from dashboard.models import (  ProductModel, 
                                 ClientModel,
                                 ClientRequestModel,
                                 AchatDirectModel,
                                 DepotVenteModel,
                                 VenteModel,
-                                Shop
-                            )
+                                Shop)
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
+from django.contrib import messages
 
 
 # Rendering the pdf file
 from django.template.loader import get_template
-from django.http import HttpResponse
 
 
 
@@ -82,6 +76,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
         context = super().get_context_data(**kwargs)
+        context['n_shops'] = Shop.objects.all().count()
         context['benefice_day'] = self.benefice_per_day(VenteModel, DepotVenteModel, AchatDirectModel)
         context['benefice_month'] = self.benefice_per_month(VenteModel, DepotVenteModel, AchatDirectModel)
 
@@ -94,7 +89,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["n_product"] = ProductModel.objects.all().count()
-            context["n_client"] = ClientModel.objects.all().count()
+            context["n_client"] =  ClientModel.objects.all().count()
         else: 
             context["achat_directs"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
@@ -184,7 +179,8 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['deposit_stocks'] = self.q = AchatDirectModel.objects.order_by('-created_date')
+        uname = self.request.user.username
+        context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by('-created_date')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.price for p in self.q if p.price != None])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
@@ -352,7 +348,7 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
             # Call parent form_valid to create model record object
             u_user = self.request.user
             if not u_user.is_superuser:
-                form.instance.shop = Shop.objects.get(shop__owner__user__username=u_user.username)
+                form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
             super().form_valid(form)
             # latest record
             latest_record = ProductModel.objects.last()
@@ -365,7 +361,7 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
                 AchatDirectModel(
                     produit = latest_record,
                     price = latest_record.price,
-                    client = latest_record.client
+                    # client = latest_record.client
                 ).save()
             # messages.success(request, 'Item created successfully!')    
             # Redirect to success page    
@@ -434,6 +430,10 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
             shop = Shop.objects.get(owner__user__username=self.request.user.username)
             form.instance.shop = shop
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Votre formulaire est incorrect!")
+        return super().form_invalid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -442,16 +442,15 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
             # What the superAdmin will see
             context['clients'] = self.c = ClientModel.objects.all()
             context['c_number'] = count = self.c.count()
+            context["dataset_client"] = self.chart_client(ClientModel, key='passage', dt_col_name='created_date')
         else:
             # What the simpleAdmin sill see
             context['clients'] = ClientModel.objects.filter(shop__owner__user__username=uname)
+            context["dataset_client"] = self.chart_client(ClientModel, key='passage', dt_col_name='created_date', uname=uname, is_superuser=False)
+
 
         # What both will see
         context['title'] = 'Espace Client'
-        if self.request.user.is_superuser:
-            context["dataset_client"] = self.chartObject(ClientModel, key='passage', dt_col_name='created_date')
-        else:
-            context["dataset_client"] = self.chartObject(ClientModel, key='passage', dt_col_name='created_date', uname=uname, is_superuser=False)
         return context
 
 class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
@@ -477,14 +476,21 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
-
-
-
+    context_object_name = 'client'
+    def get_queryset(self):
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            self.client = ClientModel.objects.filter(pk=self.kwargs["pk"],
+                                        shop__owner__user__username=u_user.username)
+        else:
+            self.client = ClientModel.objects.filter(pk=self.kwargs["pk"])
+        return self.client
+    
 #Rendering the pdf class here:
 class GeneratePDF(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/invoice/invoice.html'
 
-    model = ClientModel
+    model = VenteModel
     fields = '__all__'
 
     # def get(self, *args, **kwargs):
@@ -494,16 +500,10 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-
         context['all_vente'] = self.a = VenteModel.objects.all()
         context['f_number'] = self.a.count()
-
-
         # context['v_shop'] = self.s = Shop.objects.all()
-
-
-        context['vente'] = self.q = VenteModel.objects.last()
+        context['vente'] = self.q = VenteModel.objects.get(pk=self.kwargs["pk"])
         context['c_fname'] = self.q.client.fname
         context['c_lname'] = self.q.client.lname
         context['c_price'] = self.q.price

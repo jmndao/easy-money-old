@@ -27,9 +27,15 @@
                 {{ form.shop}}
                 <label for="{{form.shop.id_for_label}}">Choisir la Boutique</label>
             </div>
-            <div class="input-field col m6 s12">
-                {{ form.name }}
-                <label for="{{form.name.id_for_label}}">Nom Produit</label>
+            <div class="col m6 s12">
+                <div class="input-field col m6 s12">
+                    {{ form.name }}
+                    <label for="{{form.name.id_for_label}}">Nom Produit</label>
+                </div>
+                <div class="input-field col m6 s12">
+                    {{ form.color }}
+                    <label for="{{form.color.id_for_label}}">Couleur</label>
+                </div>
             </div>
         </div>
         <div class="row">
