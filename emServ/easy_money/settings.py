@@ -29,7 +29,8 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = config('DEBUG', cast=bool)
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 config('SERVER', default='127.0.0.1')]
 
 
 # Application definition
@@ -45,7 +46,6 @@ INSTALLED_APPS = [
     # Adding Apps
     'dashboard',
     'accounts',
-    'notifications',
     'message'
 ]
 
@@ -96,10 +96,12 @@ if config('USE_POSTGRES', cast=bool):
     # If using postgreSQL
     if config('DEVELOPMENT_MODE', cast=bool):
         # Deployment on Heroku with PostgreSQL
-        DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+        DATABASES['default'] = dj_database_url.config(
+            conn_max_age=600, ssl_require=True)
     else:
         # Local deployment with PostgreSQL
-        DATABASES['default'] = dj_database_url.config(default=f'postgres://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+        DATABASES['default'] = dj_database_url.config(
+            default=f'postgres://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 else:
     # if using a sqlite file locally
     DATABASES = {
@@ -157,4 +159,3 @@ MEDIA_URL = '/media/'
 # Redirect url
 REDIRECT_URL_LOGIN = 'dashboard:homePage'
 REDIRECT_URL = 'dashboard:homePage'
-
