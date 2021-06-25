@@ -1,6 +1,6 @@
 <!-- Static assets -->
 {% load static %}
-
+{% load notification_tags %}
 
  <!------ Navigation Bar: Based on materializecss -->
 
@@ -17,7 +17,7 @@
         </div>
         <div class="miscellaneous">
             <a class="waves-effect waves-light btn-flat deep-orange-text accent-" href="{% url 'message:messagePage' %}">
-                <span class="new badge left">0</span>
+                <span class="new badge red">{% notification_count %}</span>
                 <span class="material-icons">notifications</span>
             </a>
             <a class="waves-effect waves-light dropdown-trigger btn-flat deep-orange-text accent-3" data-target="dropdown_notif">

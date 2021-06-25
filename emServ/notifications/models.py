@@ -21,6 +21,7 @@ class NotificationModel(models.Model):
     to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_to')
     message = models.TextField()
     notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
+    read = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
 
     @receiver(post_save, sender=ProductModel)
