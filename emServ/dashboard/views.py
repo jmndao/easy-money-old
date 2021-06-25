@@ -82,6 +82,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
         context = super().get_context_data(**kwargs)
+        context['n_shops'] = Shop.objects.all().count()
         context['benefice_day'] = self.benefice_per_day(VenteModel, DepotVenteModel, AchatDirectModel)
         context['benefice_month'] = self.benefice_per_month(VenteModel, DepotVenteModel, AchatDirectModel)
 
@@ -184,6 +185,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        uname = self.request.user.username
         context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by('-created_date')
         context['count_item'] = self.q.count()
         context['spent'] = sum([p.price for p in self.q if p.price != None])
@@ -442,16 +444,15 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
             # What the superAdmin will see
             context['clients'] = self.c = ClientModel.objects.all()
             context['c_number'] = count = self.c.count()
+            context["dataset_client"] = self.chart_client(ClientModel, key='passage', dt_col_name='created_date')
         else:
             # What the simpleAdmin sill see
             context['clients'] = ClientModel.objects.filter(shop__owner__user__username=uname)
+            context["dataset_client"] = self.chart_client(ClientModel, key='passage', dt_col_name='created_date', uname=uname, is_superuser=False)
+
 
         # What both will see
         context['title'] = 'Espace Client'
-        if self.request.user.is_superuser:
-            context["dataset_client"] = self.chartObject(ClientModel, key='passage', dt_col_name='created_date')
-        else:
-            context["dataset_client"] = self.chartObject(ClientModel, key='passage', dt_col_name='created_date', uname=uname, is_superuser=False)
         return context
 
 class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):

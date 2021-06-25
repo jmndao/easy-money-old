@@ -14,10 +14,10 @@
     <div class="col s12 m6 l3">
         <div class="card resize black">
             <div class="card-content deep-orange-text accent-3">
-                <span class="card-title"> Nombre de Boutiques</span>
+                <span class="card-title"> Boutiques</span>
                 <p class="p-adjust add_size ">
                     <i class="material-icons small right deep-orange-text accent-3"> store </i>
-                    <span class="p-large i-adjust deep-orange-text accent-3">003</span>
+                    <span class="p-large i-adjust deep-orange-text accent-3">{{ n_shops }}</span>
                 </p>
             </div>
         </div>
@@ -28,7 +28,7 @@
     <div class="col  s12 m6 l3">
         <div class="card resize black">
             <div class="card-content deep-orange-text accent-3">
-                <span class="card-title">Nombre de Produits</span>
+                <span class="card-title">Produits</span>
                 <p class="p-adjust add_size ">
                     <i class="material-icons small right deep-orange-text accent-3">shopping_cart</i>
                     <span class="p-large i-adjust deep-orange-text accent-3 ">{{ n_product|stringformat:"03d" }}</span>
@@ -41,7 +41,7 @@
     <div class="col s12 m6 l3">
         <div class="card resize black">
             <div class="card-content deep-orange-text accent-3">
-                <span class="card-title">Nombre de Clients</span>
+                <span class="card-title">Clients</span>
                 <p class="p-adjust add_size">
                     <i class="material-icons small right deep-orange-text accent-3">groups</i>
                     <span class="p-large i-adjust deep-orange-text accent-3">{{ n_client|stringformat:"03d" }}</span>
@@ -55,8 +55,8 @@
         <div class="card resize deep-orange accent-3">
             <div class="card-content black-text">
                 <span class="card-title">Benefice</span>
-                <p>Mois: <b>{{benefice_month|floatformat|intcomma}}f </b> </p> <br>
-                <p>Jours:<b> {{benefice_day|floatformat|intcomma}}f </b> </p>
+                <div>Mois: <b>{{benefice_month|floatformat|intcomma}} f.cfa </b> </div>
+                <div>Jours:<b> {{benefice_day|floatformat|intcomma}} f.cfa </b> </div>
             </div>
         </div>
     </div>

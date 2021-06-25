@@ -15,9 +15,9 @@ urlpatterns = [
     path('client/supprimer/<int:pk>/', d_views.ClientDeleteView.as_view(), name='clientDeletePage'),
     path('client/detail/<int:pk>/', d_views.ClientDetailView.as_view(), name='clientDetailPage'),
     # ClientRequest Routers
-    path('demande_clien/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
-    path('demande_clien/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),
-    path('demande_clien/detail/<int:pk>/', d_views.ClientRequestDetailView.as_view(), name='clientRequestDetailPage'),
+    path('demande_client/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
+    path('demande_client/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),
+    path('demande_client/detail/<int:pk>/', d_views.ClientRequestDetailView.as_view(), name='clientRequestDetailPage'),
     # Achat Direct Routers
     path('achat_direct/', d_views.AchatDirectView.as_view(), name="achatDirectPage"),
     path('achat_direct/modifier/<int:pk>/', d_views.AchatDirectUpdateView.as_view(), name='achatDirectEditPage'),

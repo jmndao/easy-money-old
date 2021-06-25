@@ -107,7 +107,11 @@ class ClientModel(models.Model):
     numero = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     passage = models.IntegerField(default=1)
+    vente_or_achat = models.CharField(max_length=100, choices=ACHATVENTE, default="ACHAT")
     created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['fname', 'lname', 'numero']
 
     def __str__(self):
         return '{} {}'.format(self.fname, self.lname)
@@ -148,7 +152,6 @@ class ProductModel(models.Model):
     model = models.CharField(max_length=100,  null=True, blank=True)
     category = models.CharField(max_length=100, choices=CATEGORY, blank=True, null=True)
     dv_or_ad = models.CharField(max_length=100, choices=TYPE, blank=True, null=True)
-    vente_or_achat = models.CharField(max_length=100, choices=ACHATVENTE)
     quantity = models.IntegerField(blank=True, null=True)
     price = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
     estate = models.CharField(max_length=20, choices=ETAT, blank=True, null=True)
@@ -241,7 +244,7 @@ class VenteModel(models.Model):
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="l'avance du client", blank=True, null=True)
+        max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
     client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
     guarantee_period = models.IntegerField(blank=True, null=True, verbose_name="Periode de garantie [en mois]")
@@ -275,20 +278,3 @@ class ClientRequestModel(models.Model):
 
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)
-
-
-# class NotificationModel(models.Model):
-
-#     NOTIFICATION_TYPES = [
-#         (1, 'Message'),
-#         (2, 'Deletion')
-#     ]
-
-#     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_sender')
-#     to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_to')
-#     message = models.TextField()
-#     notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
-#     overview = models.CharField(max_length=90, blank=True, null=True)
-
-#     def __str__(self):
-#         return '[{}|{}]->{}'.format(self.sender, self.to, self.overview)
