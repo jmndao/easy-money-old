@@ -1,35 +1,29 @@
 import datetime
-from django.utils import timezone
-
-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import (TemplateView,
-                                  DetailView,
-                                  View)
+                                  DetailView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
-                                       DeleteView
-                                       )
+                                       DeleteView)
 from dashboard.models import (  ProductModel, 
                                 ClientModel,
                                 ClientRequestModel,
                                 AchatDirectModel,
                                 DepotVenteModel,
                                 VenteModel,
-                                Shop
-                            )
+                                Shop)
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
+from django.contrib import messages
 
 
 # Rendering the pdf file
 from django.template.loader import get_template
-from django.http import HttpResponse
 
 
 
@@ -354,7 +348,7 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
             # Call parent form_valid to create model record object
             u_user = self.request.user
             if not u_user.is_superuser:
-                form.instance.shop = Shop.objects.get(shop__owner__user__username=u_user.username)
+                form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
             super().form_valid(form)
             # latest record
             latest_record = ProductModel.objects.last()
@@ -436,6 +430,10 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
             shop = Shop.objects.get(owner__user__username=self.request.user.username)
             form.instance.shop = shop
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Votre formulaire est incorrect!")
+        return super().form_invalid(form)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

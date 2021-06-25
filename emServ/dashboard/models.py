@@ -97,7 +97,7 @@ class ClientModel(models.Model):
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, blank=True, null=True)
     fname = models.CharField(max_length=100, blank=True, null=True, verbose_name="First Name")
     lname = models.CharField(max_length=100, blank=True, null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
@@ -106,13 +106,23 @@ class ClientModel(models.Model):
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+<<<<<<< HEAD
     passage = models.IntegerField(default=1)
+=======
+    passage = models.IntegerField(default=0, blank=True, null=True)
+>>>>>>> jmndao
     vente_or_achat = models.CharField(max_length=100, choices=ACHATVENTE, default="ACHAT")
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ['fname', 'lname', 'numero']
 
+<<<<<<< HEAD
+=======
+    def get_passage_count(self):
+        return self.passage
+
+>>>>>>> jmndao
     def __str__(self):
         return '{} {}'.format(self.fname, self.lname)
 
