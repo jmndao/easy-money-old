@@ -1,85 +1,122 @@
-from django.db.models import fields
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
-from django.urls.base import reverse
-from django.views.generic import DetailView, CreateView
+from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import DeleteView, FormView
-from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import DeleteView, FormView, UpdateView
 from django.contrib.auth import login
 
-from django.forms.models import inlineformset_factory
-
-
-from accounts.forms import UserForm
 from accounts.models import UserProfile
+from dashboard.models import Shop
 
 
-@login_required()
-def user_edit(request, pk):
 
-    user = User.objects.get(pk=pk)
+class UserCreationView(LoginRequiredMixin, CreateView):
 
-    ProfileInlineFormset = inlineformset_factory(User, UserProfile, fields='__all__', extra=0)
-    user_form = UserForm(instance=user)
-    formset = ProfileInlineFormset(instance=user)
+    form_class = UserCreationForm
+    template_name = 'dashboard/users/user_create.html'
 
-    if request.method == "POST":
-        user_form = UserForm(request.POST, request.FILES, instance=user)
+    def form_valid(self, form):
+        messages.success(self.request, "Agent {} a ete ajoute avec succes !".format(form.instance.username))
+        return super().form_valid(form)
 
-        if user_form.is_valid():
-            created_user = user_form.save(commit=False)
-            formset = ProfileInlineFormset(request.POST, request.FILES, instance=created_user)
+    def form_invalid(self, form):
+        messages.success(self.request, "Un agent existe avec ce nom d'utilisateur !")
+        return super().form_invalid(form)
 
-            if formset.is_valid():
-                created_user.save()
-                formset.save()
-                return HttpResponseRedirect(reverse('accounts:profilePage', args=[pk]))
-
-    context = {
-        'pk' : pk,
-        'user_form' : user_form,
-        'formset' : formset
-    }
-
-    return render(request, 'dashboard/users/user_edit.html', context)
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+    
 
 
-class UserProfileView(LoginRequiredMixin, CreateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+
+    model = User
+    fields = ['first_name', 'last_name', 'email']
+    template_name = 'dashboard/users/user_update.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Vos modifications ont ete accepte !') 
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+
+    
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+
+    model = User
+    template_name = 'accounts/users/user_delete.html'
+    success_url = reverse_lazy('accounts:userCreationPage')
+
+
+
+class UserProfileCreationView(LoginRequiredMixin, CreateView):
 
     model = UserProfile
-    success_url = reverse_lazy('dashboard:homePage')
-    template_name = 'dashboard/users/user.html'
+    template_name = 'dashboard/users/profile.html'
     fields = '__all__'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["me"] = User.objects.get(username=self.request.user.username)
-        return context
-    
-    
-
-class UserProfileDeleteView(LoginRequiredMixin, DeleteView):
-    
-    model = User
-    success_url = reverse_lazy('accounts:profileUpdatePage')
-    context_object_name = 'profile'
-    template_name = 'dashboard/users/user_delete.html'
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
 
 
-class UserProfileDetailView(LoginRequiredMixin, DetailView):
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     model = UserProfile
-    context_object_name = 'profile'
-    template_name = 'dashboard/users/user_detail.html'
+    template_name = 'dashboard/users/profile.html'
+    fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["users"] = User.objects.all()
+        context["n_users"] = context["users"].count()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+
+
+class ShopCreationView(LoginRequiredMixin, CreateView):
+
+    model = Shop
+    fields = '__all__'
+    template_name = 'dashboard/shop/shop_create.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["shops"] = Shop.objects.all()
+        context["n_shop"] = context["shops"].count()
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+
+
+
+class ShopUpdateView(LoginRequiredMixin, UpdateView):
+
+    model = Shop
+    fields = '__all__'
+    success_url = reverse_lazy('accounts:shopCreationPage')
+    template_name = 'accounts/shop/shop_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+        
 
 
 class AppLoginView(LoginView):

@@ -1,6 +1,5 @@
 <!-- Static assets -->
 {% load static %}
-{% load notifications_tags %}
 
 
  <!------ Navigation Bar: Based on materializecss -->
@@ -18,10 +17,7 @@
         </div>
         <div class="miscellaneous">
             <a class="waves-effect waves-light btn-flat deep-orange-text accent-" href="{% url 'message:messagePage' %}">
-                {% notifications_unread as unread_count %}
-                {% if unread_count %}
-                    <span class="new badge left">{{ unread_count }}</span>
-                {% endif %}
+                <span class="new badge left">0</span>
                 <span class="material-icons">notifications</span>
             </a>
             <a class="waves-effect waves-light dropdown-trigger btn-flat deep-orange-text accent-3" data-target="dropdown_notif">
@@ -29,7 +25,7 @@
             </a>
             <ul id='dropdown_notif' class=' collection dropdown-content'>
                 <li class="collection-item">
-                    <a href="{% url 'accounts:profilePage' %}" class="orange-text darken-4">
+                    <a href="{% url 'accounts:profileUpdatePage' user.shop_user_related.pk %}" class="orange-text darken-4">
                         Mon Profile
                         <i class="material-icons secondary-content right">settings</i>
                     </a>

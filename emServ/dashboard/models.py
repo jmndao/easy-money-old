@@ -52,6 +52,11 @@ DIMENSION = [
     ('GRAND', 'Grand')
 ]
 
+ACHATVENTE = [
+    ('ACHAT', 'Achat'),
+    ('VENTE', 'Vente')
+]
+
 
 class Shop(models.Model):
     """
@@ -72,7 +77,7 @@ class Shop(models.Model):
 
     def __str__(self):
 
-        return 'Shop/{}:{}'.format(self.name, self.owner.user.username)
+        return '{} {}'.format(self.name, self.owner.user.username)
 
 
 class ClientModel(models.Model):
@@ -92,7 +97,7 @@ class ClientModel(models.Model):
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, blank=True, null=True)
     fname = models.CharField(max_length=100, blank=True, null=True, verbose_name="First Name")
     lname = models.CharField(max_length=100, blank=True, null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
@@ -101,9 +106,23 @@ class ClientModel(models.Model):
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+<<<<<<< HEAD
     passage = models.IntegerField(default=1)
+=======
+    passage = models.IntegerField(default=0, blank=True, null=True)
+>>>>>>> jmndao
+    vente_or_achat = models.CharField(max_length=100, choices=ACHATVENTE, default="ACHAT")
     created_date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ['fname', 'lname', 'numero']
+
+<<<<<<< HEAD
+=======
+    def get_passage_count(self):
+        return self.passage
+
+>>>>>>> jmndao
     def __str__(self):
         return '{} {}'.format(self.fname, self.lname)
 
@@ -235,14 +254,14 @@ class VenteModel(models.Model):
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="l'avance du client", blank=True, null=True)
+        max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
     client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
     guarantee_period = models.IntegerField(blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{}:{}'.format(self.produit.name, self.price)
+        return '{} {}'.format(self.produit.name, self.price)
 
 
 
@@ -268,21 +287,4 @@ class ClientRequestModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return 'Client/{}:{}:{}'.format(self.client.prenom_du_client, self.nom_du_client, self.produit_trouver)
-
-
-# class NotificationModel(models.Model):
-
-#     NOTIFICATION_TYPES = [
-#         (1, 'Message'),
-#         (2, 'Deletion')
-#     ]
-
-#     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_sender')
-#     to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_to')
-#     message = models.TextField()
-#     notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
-#     overview = models.CharField(max_length=90, blank=True, null=True)
-
-#     def __str__(self):
-#         return '[{}|{}]->{}'.format(self.sender, self.to, self.overview)
+        return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)

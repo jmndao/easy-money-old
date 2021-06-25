@@ -1,5 +1,4 @@
 {% load static %}
-{% load notifications_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +30,18 @@
     <main class="easy-main-content">
 
         {% include 'includes/navbar.html' %}
+
+        {% if messages %}
+            <div class="row">
+            {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="card-panel green center-center-align col s11 accent-2">{{message}}</div>
+                {% elif message.tags == "error" %}
+                    <div class="card-panel red accent-2 center-align col s11">{{message}}</div>
+                {% endif %}
+            {% endfor %}
+            </div>
+        {% endif %}
 
         <div class="easy-body-wrapper">
 

@@ -79,6 +79,26 @@ class Utils:
 
         return mark_safe(escapejs(json.dumps(dataset)))
 
+    def chart_client(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
+        # Let's check is user is superuser or not
+        if is_superuser:
+            df = pd.DataFrame(db.objects.all().values())
+        else:
+            df = pd.DataFrame(db.objects.filter(shop__owner__user__username=uname).values())
+        if not df.empty:
+            un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
+            # Parsed it 
+            monthtly_data = json.loads(un_x.to_json())
+            # the monthly key
+            msp = monthtly_data[key]
+            dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
+
+        else:
+            dataset = {   'months': ['Jan', 'Fev', 'Avr'],
+                            'data': [0, 0, 0]   }
+
+        return mark_safe(escapejs(json.dumps(dataset)))
+
     def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)
         html  = template.render(context_dict)
