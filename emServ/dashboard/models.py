@@ -46,7 +46,7 @@ RARETE = [
     ('TRES_COURANT', 'Tres courant')
 ]
 
-DIMENSION = [ 
+DIMENSION = [
     ('PETIT', 'Petit'),
     ('MOYEN', 'Moyen'),
     ('GRAND', 'Grand')
@@ -97,36 +97,32 @@ class ClientModel(models.Model):
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE, blank=True, null=True)
-    fname = models.CharField(max_length=100, blank=True, null=True, verbose_name="First Name")
-    lname = models.CharField(max_length=100, blank=True, null=True, verbose_name="Last Name")
+    shop = models.ForeignKey(
+        Shop, on_delete=models.CASCADE, blank=True, null=True)
+    fname = models.CharField(max_length=100, blank=True,
+                             null=True, verbose_name="First Name")
+    lname = models.CharField(max_length=100, blank=True,
+                             null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     sexe = models.CharField(max_length=1, choices=SEXE)
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
-<<<<<<< HEAD
-    passage = models.IntegerField(default=1)
-=======
     passage = models.IntegerField(default=0, blank=True, null=True)
->>>>>>> jmndao
-    vente_or_achat = models.CharField(max_length=100, choices=ACHATVENTE, default="ACHAT")
+    vente_or_achat = models.CharField(
+        max_length=100, choices=ACHATVENTE, default="ACHAT")
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ['fname', 'lname', 'numero']
 
-<<<<<<< HEAD
-=======
     def get_passage_count(self):
         return self.passage
 
->>>>>>> jmndao
     def __str__(self):
         return '{} {}'.format(self.fname, self.lname)
 
- 
 
 class ProductModel(models.Model):
     """
@@ -160,15 +156,22 @@ class ProductModel(models.Model):
     """
     name = models.CharField(max_length=100)
     model = models.CharField(max_length=100,  null=True, blank=True)
-    category = models.CharField(max_length=100, choices=CATEGORY, blank=True, null=True)
-    dv_or_ad = models.CharField(max_length=100, choices=TYPE, blank=True, null=True)
+    category = models.CharField(
+        max_length=100, choices=CATEGORY, blank=True, null=True)
+    dv_or_ad = models.CharField(
+        max_length=100, choices=TYPE, blank=True, null=True)
     quantity = models.IntegerField(blank=True, null=True)
-    price = models.DecimalField(max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
-    estate = models.CharField(max_length=20, choices=ETAT, blank=True, null=True)
-    obsolescence = models.CharField(max_length=20, choices=OBSOLESCENCE, blank=True, null=True)
-    rarety = models.CharField(max_length=20, choices=RARETE, blank=True, null=True)
+    price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
+    estate = models.CharField(
+        max_length=20, choices=ETAT, blank=True, null=True)
+    obsolescence = models.CharField(
+        max_length=20, choices=OBSOLESCENCE, blank=True, null=True)
+    rarety = models.CharField(
+        max_length=20, choices=RARETE, blank=True, null=True)
     sale_bill = models.BooleanField(default=False)
-    dimension = models.CharField(max_length=20, choices=DIMENSION, null=True, blank=True)
+    dimension = models.CharField(
+        max_length=20, choices=DIMENSION, null=True, blank=True)
     edition = models.CharField(max_length=100, null=True, blank=True)
     annee = models.CharField(max_length=20, null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
@@ -176,18 +179,17 @@ class ProductModel(models.Model):
     charger = models.BooleanField(default=True)
     original_box = models.BooleanField(default=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
-    seller = models.ForeignKey(ClientModel, null=True, on_delete=models.SET_NULL)
+    seller = models.ForeignKey(
+        ClientModel, null=True, on_delete=models.SET_NULL)
     created_date = models.DateTimeField(auto_now_add=True)
     sold = models.BooleanField(default=False)
-    color = models.CharField(max_length=100, blank = True, null=True)
-    
+    color = models.CharField(max_length=100, blank=True, null=True)
 
-    def __str__ (self):
+    def __str__(self):
         return '{}'.format(self.name)
 
 
-
-# Model --  Achat Direct 
+# Model --  Achat Direct
 class AchatDirectModel(models.Model):
     """
         This model talks about all the products that the shops has bought directly
@@ -202,13 +204,12 @@ class AchatDirectModel(models.Model):
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-    client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
+    client = models.ForeignKey(
+        ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return '{}[{}]'.format(self.produit.seller, self.produit.name)
-
 
 
 # Depot Vente Model
@@ -227,15 +228,14 @@ class DepotVenteModel(models.Model):
     """
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)    
+        max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return '{}[{}]'.format(self.produit.name, self.produit.name)
 
 
-
-# Model -- Vente 
+# Model -- Vente
 class VenteModel(models.Model):
     """
         The Sale Stock holds the information about the all transaction that the
@@ -256,13 +256,14 @@ class VenteModel(models.Model):
     acompte = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
-    client = models.ForeignKey(ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
-    guarantee_period = models.IntegerField(blank=True, null=True, verbose_name="Periode de garantie [en mois]")
+    client = models.ForeignKey(
+        ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
+    guarantee_period = models.IntegerField(
+        blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return '{} {}'.format(self.produit.name, self.price)
-
 
 
 # Model -- Client Request Model
