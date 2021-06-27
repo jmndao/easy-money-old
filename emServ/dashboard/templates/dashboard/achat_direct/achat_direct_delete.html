@@ -3,25 +3,25 @@
 
 {% block body_content %}
 
-    <div class="card-panel">
-        <div class="card-panel orange darken-4">
-            Suppression de produit 
-            <i class="material-icons right">delete_forever</i>
-        </div>
-        <form method="post">
-            {% csrf_token %}
-        
-            <p>Etes-vous certain de vouloir supprimer "{{ object.produit }}"?</p>
-            
-                <button type="submit" class="btn-flat waves-effect">
-                    Confirmer
-                <i class="material-icons right red-text">delete_forever</i>
-                </button>
-                <a href="{% url 'dashboard:achatDirectPage' %}" class="btn-flat waves-effect">
-                    Retourner
-                    <i class="material-icons right">keyboard_return</i>
-                </a>
-        </form>
+<div class="card-panel">
+    <div class="card-panel orange darken-4">
+        Suppression de produit
+        <i class="material-icons right">delete_forever</i>
     </div>
+    <form method="post">
+        {% csrf_token %}
+        <p>Etes-vous certain de vouloir supprimer l'achat direct du produit "{{ object.produit }}"?</p>
+        <br><br>
+        <a href="{% url 'dashboard:ventePage' %}" class="btn-flat white-text blue waves-effect">
+            Retourner
+            <i class="material-icons right">keyboard_return</i>
+        </a>
+        <button type="submit" class="btn-flat white-text red accent-4 waves-effect">
+            Confirmer
+            <i class="material-icons right ">delete_forever</i>
+        </button>
+
+    </form>
+</div>
 
 {% endblock body_content %}

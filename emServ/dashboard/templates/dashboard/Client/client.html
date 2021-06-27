@@ -3,9 +3,9 @@
 
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block title %} {{ title }} {% endblock title %}
@@ -35,7 +35,7 @@
   </div>
 </div>
 <div class="card-panel ">
-  <form action="" method="post">
+  <form action="#" method="post">
     {% csrf_token %}
     <input type="hidden" name="next" value="{{ request.path }}">
     <!--- Form -->
@@ -52,13 +52,17 @@
     </div>
     {% endif %}
     <div class="row">
-      <div class="input-field col m6 s12">
+      <div class="input-field col m4 s12">
         {{ form.fname }}
         <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
       </div>
-      <div class="input-field col m6 s12">
+      <div class="input-field col m4 s12">
         {{ form.lname }}
         <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
+      </div>
+      <div class="input-field col m4 s12">
+        {{ form.passage }}
+        <label for="{{ form.passage.id_for_label }}">Nombre de passage</label>
       </div>
     </div>
     <div class="row">

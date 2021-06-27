@@ -332,6 +332,7 @@ class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/vente/vente_delete.html'
     model = VenteModel
+    context_object_name = 'vente'
 
 
 
@@ -469,6 +470,8 @@ class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/client/client_delete.html'
     model = ClientModel
+    context_object_name = 'client'
+
 
 
 

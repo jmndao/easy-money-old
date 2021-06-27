@@ -12,8 +12,8 @@
 
 <div class="row">
   <!----Row 1-->
-  <div class="col s12 m4">
-    <div class="card-panel">
+  <div class="col s12 m6">
+    <div class="card-panel resize">
       <div class="row valign-wrapper">
         <div class="col s4">
           <span class="material-icons dummy_icon">category</span>
@@ -23,13 +23,13 @@
         </div>
       </div>
     </div>
-    <div class="card-panel black deep-orange-text accent-3">
+    <div class="card-panel resize black deep-orange-text accent-3">
       <div class="card-title center dummy_info">{{ count_item }}</div>
     </div>
   </div>
   <!----Row 2-->
-  <div class="col s12 m4">
-    <div class="card-panel">
+  <div class="col s12 m6">
+    <div class="card-panel resize">
       <div class="row valign-wrapper">
         <div class="col s4">
           <span class="material-icons dummy_icon">paid</span>
@@ -39,24 +39,8 @@
         </div>
       </div>
     </div>
-    <div class="card-panel black deep-orange-text accent-3">
+    <div class="card-panel resize black deep-orange-text accent-3">
       <div class="card-title center dummy_info">{{ spent|floatformat:0|intcomma}} C.FCA</div>
-    </div>
-  </div>
-  <!----Row 3-->
-  <div class="col s12 m4">
-    <div class="card-panel black deep-orange-text accent-3">
-      <div class="row valign-wrapper">
-        <div class="col s4">
-          <span class="material-icons dummy_icon">savings</span>
-        </div>
-        <div class="col s8">
-          <span class="dummy_info">Benefice</span>
-        </div>
-      </div>
-    </div>
-    <div class="card-panel">
-      <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
     </div>
   </div>
 </div>
@@ -72,8 +56,8 @@
   </div>
   <div class="col s4">
     <ul class="deposit collection with-header">
-      <li class="collection-header">
-        Tendance Dépot
+      <li class="collection-header black deep-orange-text accent-3">
+        Tendance Achats
       </li>
       <li class="collection-item avatar">
         <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>

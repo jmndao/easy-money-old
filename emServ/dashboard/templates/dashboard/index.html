@@ -134,11 +134,10 @@
                         <thead class="">
                             <tr>
                                 <th>Produit</th>
+                                <th>Clients</th>
                                 <th>Date d' achat</th>
                                 <th>Prix d'achat</th>
                                 <th>Garantie</th>
-                                <th>Clients</th>
-
                             </tr>
                         </thead>
 
@@ -146,24 +145,17 @@
                             <!----- Row: 1-->
                             {% with count=0 %}
                             {% endwith %}
-
                             {% for achat in achat_directs %}
                             {% if forloop.counter < 5%}
                             <tr>
                                 <td>{{ achat.produit.name }}</td>
+                                <td>{{ achat.produit.seller}}</td>
                                 <td>{{ achat.created_date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td>{{ achat.price|floatformat:0|intcomma }}</td>
                                 <td>{{ achat.guarantee|yesno:"OUI, NON" }}</td>
-                                <td>{{ achat.client.fname}} {{ achat.client.lname}}</td>
-
                             </tr>
                             {% endif %}
                             {% endfor %}
-
-
-
-
-
                             <!----- Row: 2-->
                         </tbody>
                     </table>
@@ -206,7 +198,7 @@
                                 <td>{{ vente.produit.name }}</td>
                                 <td>{{ vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td>{{ vente.price|floatformat:0|intcomma }}</td>
-                                <td>{{ vente.produit.seller }}</td>
+                                <td>{{ vente.client.fname }} {{ vente.client.lname }}</td>
                                 {% if vente.produit.estate == "NEUF" %}
                                 <td><span class="new badge green"
                                         data-badge-caption="{{ vente.produit.estate }}"></span></td>

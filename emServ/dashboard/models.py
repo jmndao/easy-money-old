@@ -152,9 +152,11 @@ class ProductModel(models.Model):
             - price                 : If it's Depot Vente (see line: 192) - that price so
             - description           : description of the product
             - created_date          : the day and time all of these above information has been added.
-
+            -montatnt_restauration  : The amount spent to fix the product.
+            -description            : To give a quick description of the product we're putting in.
     """
     name = models.CharField(max_length=100)
+    description = models.TextField(max_length=300, null=True, blank=True)
     model = models.CharField(max_length=100,  null=True, blank=True)
     category = models.CharField(
         max_length=100, choices=CATEGORY, blank=True, null=True)
@@ -163,6 +165,8 @@ class ProductModel(models.Model):
     quantity = models.IntegerField(blank=True, null=True)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
+    montant_restauration = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Montant de la Restauration")
     estate = models.CharField(
         max_length=20, choices=ETAT, blank=True, null=True)
     obsolescence = models.CharField(
