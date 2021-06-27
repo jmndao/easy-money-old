@@ -79,6 +79,13 @@ class Utils:
 
         return mark_safe(escapejs(json.dumps(dataset)))
 
+    def label_notif_as_read(self, obj):
+        notifs = obj.objects.filter(read=False)
+        for notif in notifs:
+            notif.read = True
+            notif.save()
+        return 
+
     def chart_client(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
         # Let's check is user is superuser or not
         if is_superuser:
