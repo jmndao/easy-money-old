@@ -1,0 +1,18 @@
+{% extends 'dashboard/base.html' %}
+
+{% block body_content %}
+
+    <ul class="collection">
+        {% for notification in notifications %}
+            <li class="collection-item avatar">
+                <img src="{{ notification.sender.shop_user_related.avatar.url }}" alt="" class="circle">
+                <span class="title">{{ notification.notification_type }}</span>
+                <p>
+                    {{ notifications.message }}
+                </p>
+                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock body_content %}
