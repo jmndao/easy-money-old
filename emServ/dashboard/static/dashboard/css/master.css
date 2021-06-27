@@ -406,6 +406,13 @@ i.right {
 .row .col.s8.add_pd {
     padding-bottom: 30px;
 }
+.row .col.m4.s12.with_border {
+    width: 33.3333333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+    border-color: green;
+}
 
 
 /* .row .col.s6.separate_one {

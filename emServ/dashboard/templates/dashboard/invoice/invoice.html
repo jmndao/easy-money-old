@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">.
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Invoice</title>
@@ -49,6 +49,8 @@
 
         body {
             font-size: 22px;
+            padding-top: 10px;
+
         }
 
         .hide {
@@ -58,10 +60,7 @@
 </head>
 
 <body id="capture">
-
-    <div class="row card-panel row_pd">
-
-
+    <div class="row card-panel row_pd ttl" title="Faites un click pour télécharger la facture sous format bdf">
         <!-- This is the start of the first row -->
         <div class="row html_to_pdf">
             <div class="card-content col s8">
@@ -74,8 +73,7 @@
                 <div class="card">
                     <div class=" card-content card-t deep-orange accent-3 ">
                         <span class="card-title white-text center-align">
-                            <button onclick="to_pdf()" name="button">Facture</button>
-                        </span>
+                            <h4>Facture</h4>
                     </div>
                     <div class="divider"></div>
                     <div class=" row black white-text fd">
@@ -175,6 +173,8 @@
 
             });
         }
+        const body = document.body;
+        body.onclick = to_pdf();
     </script>
 
 </body>

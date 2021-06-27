@@ -86,8 +86,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["dataset_achat"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date')
             context['dataset_depot'] = self.chartObject(DepotVenteModel, key = 'price', dt_col_name = 'created_date')
             context["dataset_stock"] = self.chartObject(AchatDirectModel, key='price', dt_col_name='created_date')
-            context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
-            context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by()
+            context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
+            context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
+            context["tendance_depot_vente"] = DepotVenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context["n_product"] = ProductModel.objects.all().count()
             context["n_client"] =  ClientModel.objects.all().count()
         else: 
@@ -182,6 +183,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
         uname = self.request.user.username
         context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by('-created_date')
         context['count_item'] = self.q.count()
+        context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
         context['spent'] = sum([p.price for p in self.q if p.price != None])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
         if self.request.user.is_superuser:
@@ -208,7 +210,7 @@ class AchatDirectDetailView(LoginRequiredMixin, DetailView):
 
     template_name = 'dashboard/achat_direct/achat_direct_detail.html'
     model = AchatDirectModel
-    context_object_name = 'deposit'
+    context_object_name = 'achat_direct'
 
 
 
@@ -233,7 +235,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Ut
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
         self.q = DepotVenteModel.objects.order_by('-created_date')    
-
+        context["tendance_depot_vente"] = DepotVenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
         #Nombre de produit
         context['depot_ventes'] = self.q
         context['total_item'] = self.q.count()
@@ -294,6 +296,7 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
+        context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
         context['count_item'] = self.q.count()
         context['revenue'] = sales = sum([p.price for p in self.q if p.price != None])
         context['benefice'] = self.benefice_vente(AchatDirectModel, DepotVenteModel, sales)

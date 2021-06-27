@@ -3,6 +3,7 @@ from django.urls import reverse
 from accounts.models import UserProfile
 
 
+
 # Create your models here.
 
 SEXE = [
@@ -180,7 +181,7 @@ class ProductModel(models.Model):
     annee = models.CharField(max_length=20, null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
     ram = models.IntegerField(null=True, blank=True)
-    charger = models.BooleanField(default=True)
+    charger = models.BooleanField(default=False)
     original_box = models.BooleanField(default=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     seller = models.ForeignKey(
@@ -189,6 +190,9 @@ class ProductModel(models.Model):
     sold = models.BooleanField(default=False)
     color = models.CharField(max_length=100, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        return super(ProductModel, self).save(*args, **kwargs)
     def __str__(self):
         return '{}'.format(self.name)
 
@@ -205,13 +209,13 @@ class AchatDirectModel(models.Model):
             - created_date      : date and time of the sale
             - price             : the price the product has been purchased
     """
+    
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
     client = models.ForeignKey(
         ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return '{}[{}]'.format(self.produit.seller, self.produit.name)
 
@@ -257,6 +261,8 @@ class VenteModel(models.Model):
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
+    price_total = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
@@ -265,7 +271,11 @@ class VenteModel(models.Model):
     guarantee_period = models.IntegerField(
         blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
-
+    quantity = models.IntegerField(null=True, blank=True, default=1)
+    def save(self, *args, **kwargs):
+        self.price_total = self.price * self.quantity
+        return super(VenteModel, self).save(*args, **kwargs)
+        
     def __str__(self):
         return '{} {}'.format(self.produit.name, self.price)
 

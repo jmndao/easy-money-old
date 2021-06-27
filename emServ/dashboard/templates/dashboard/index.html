@@ -11,7 +11,7 @@
 <div class="row with-gap">
 
     <!--- Boutique Card -->
-    <div class="col s12 m6 l3">
+    <div class="col s12 m4 l4">
         <div class="card resize black">
             <div class="card-content deep-orange-text accent-3">
                 <span class="card-title"> Boutiques</span>
@@ -25,7 +25,7 @@
 
 
     <!--- Produit Card -->
-    <div class="col  s12 m6 l3">
+    <div class="col  s12 m4 l4">
         <div class="card resize black">
             <div class="card-content deep-orange-text accent-3">
                 <span class="card-title">Produits</span>
@@ -38,7 +38,7 @@
     </div>
 
     <!--- Client Card -->
-    <div class="col s12 m6 l3">
+    <div class="col s12 m4 l4">
         <div class="card resize black">
             <div class="card-content deep-orange-text accent-3">
                 <span class="card-title">Clients</span>
@@ -49,63 +49,181 @@
             </div>
         </div>
     </div>
-
-    <!--- Revenue Card -->
-    <div class="col s12 m6 l3">
-        <div class="card resize deep-orange accent-3">
-            <div class="card-content black-text">
-                <span class="card-title">Benefice</span>
-                <div>Mois: <b>{{benefice_month|floatformat|intcomma}} f.cfa </b> </div>
-                <div>Jours:<b> {{benefice_day|floatformat|intcomma}} f.cfa </b> </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!---- Adding Chart Achat -->
 <div class="row">
-    <div class="col m8 s12">
+    <div class="col m8 s12 ">
         <div class="card-panel">
             <canvas id="myChart" class="chart_bar"></canvas>
         </div>
     </div>
+    <!--- Revenue Card -->
+    <div class="col s12 m4 l4">
+        <div class="card resize deep-orange accent-3">
+            <div class="card-content black-text big-text">
+                <span class="card-title">Benefice</span>
+                <div>Mois: <b>{{benefice_month|floatformat|intcomma}} f.cfa </b> </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m4 l4">
+        <div class="card resize deep-orange accent-3">
+            <div class="card-content black-text big-text">
+                <span class="card-title">Benefice</span>
+
+                <div>Jours:<b> {{benefice_day|floatformat|intcomma}} f.cfa </b> </div>
+                <br>
+            </div>
+        </div>
+    </div>
 
 
-    <div class="section-info-easy col m4 s12">
+
+    <div class="section-info-easy card-panel grey darken-1 col m12 s12 ">
         <!------ Product Trend Section -->
-        <ul class="deposit collection with-header ">
-            <li class="collection-header black deep-orange-text accent-3">
-                Tendance Produits
-            </li>
-            {% for tv in tendance_vente %}
-            {% if forloop.counter < 4%}
-            <!-- #Display the three first vente trend -->
-            {% if tv.freq >= 1 %}
-            <li class="collection-item avatar">
-                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                <span class="title"><i>Vente</i></span>
-                <p>{{ tv.produit.name }}<br>
-                    Frequence de Vente: {{ tv.freq }}
-                </p>
-            </li>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-            {% for ts in tendance_achat_direct %}
-            {% if forloop.counter < 4%}
-            <!-- Display the three first vente trend -->
-            {% if ts.freq <= 1 %}
-            <li class="collection-item avatar">
-                <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-                <span class="title"><i>Achat Direct</i></span>
-                <p>{{ ts.produit.name }}<br>
-                    Produit en manque: {{ ts.freq }}
-                </p>
-            </li>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-        </ul>
+        <div class="card-title center-align">
+            <h4 class="white-text accent-3 "> Tendance Produits</h4>
+        </div>
+        <!-- Les produits les plus vendus -->
+        <div class="row">
+            <div class="col m4 s12  ">
+                <ul class="deposit collection with-header ">
+                    <li class="collection-header black-text deep-orange accent-3">
+                        les plus vendus
+                    </li>
+                    {% for tv in tendance_vente %}
+                    {% if forloop.counter < 3%}
+                    <!-- #Display the three first vente trend -->
+                    {% if tv.freq > 2 %}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                        <p class="deep-orange-text accent-3">{{ tv.produit__name }}
+                            <p> Frequence de Vente: {{ tv.freq }}</p>
+                        </p>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Les produits les plus achetes -->
+            <div class="col m4 s12 ">
+
+                <ul class="deposit collection with-header ">
+                    <li class="collection-header black-text deep-orange accent-3">
+                        les plus achetés
+                    </li>
+                    {% for t_ad in tendance_achat_direct %}
+                    {% if forloop.counter < 4%}
+                    {% if t_ad.freq > 2%}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+                        <p class="deep-orange-text accent-3">{{ t_ad.produit__name }}</p>
+                        <p>
+                            frequence d'achat: {{ t_ad.freq }}
+                        </p>
+                        <br>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Les produits les plus Deposes -->
+            <div class="col m4 s12">
+
+                <ul class="deposit collection with-header ">
+                    <li class="collection-header black-text deep-orange accent-3">
+                        les plus déposés
+                    </li>
+                    {% for t_dv in tendance_depot_vente %}
+                    {% if forloop.counter < 3%}
+                    {% if t_dv.freq > 2%}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+
+                        <p class="deep-orange-text accent-3">{{ t_dv.produit__name }}</p>
+                        <p>frequence de depots: {{ t_dv.freq }}
+                        </p>
+                        <br>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!-- Les produits les moins vendus -->
+        <div class="row">
+            <div class="col m4 s12  ">
+                <ul class="deposit collection with-header ">
+                    <li class="collection-header black-text deep-orange accent-3">
+                        les moins vendus
+                    </li>
+                    {% for tv in tendance_vente %}
+                    {% if forloop.counter < 3%}
+                    <!-- #Display the three first vente trend -->
+                    {% if tv.freq < 2 %}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+                        <p class="deep-orange-text accent-3">{{ tv.produit__name }}
+                            <p> Frequence de Vente: {{ tv.freq }}</p>
+                        </p>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Les produits les moins achetes -->
+            <div class="col m4 s12 ">
+
+                <ul class="deposit collection with-header ">
+                    <li class="collection-header black-text deep-orange accent-3">
+                        les moins achetés
+                    </li>
+                    {% for t_ad in tendance_achat_direct %}
+                    {% if forloop.counter < 4%}
+                    {% if t_ad.freq < 2 %}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+                        <p class="deep-orange-text accent-3">{{ t_ad.produit__name }}</p>
+                        <p>
+                            frequence d'achat: {{ t_ad.freq }}
+                        </p>
+                        <br>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Les produits les moins Deposes -->
+            <div class="col m4 s12">
+
+                <ul class="deposit collection with-header ">
+                    <li class="collection-header black-text deep-orange accent-3">
+                        les moins déposés
+                    </li>
+                    {% for t_dv in tendance_depot_vente %}
+                    {% if forloop.counter < 3%}
+                    {% if t_dv.freq < 2%}
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+
+                        <p class="deep-orange-text accent-3">{{ t_dv.produit__name }}</p>
+                        <p>frequence de depots: {{ t_dv.freq }}
+                        </p>
+                        <br>
+                    </li>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
     </div>
 

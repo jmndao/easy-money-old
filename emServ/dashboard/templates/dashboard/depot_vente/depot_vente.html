@@ -11,7 +11,7 @@
 {% block body_content %}
 <div class="row">
     <!----Row 1-->
-    <div class="col s12 m4">
+    <div class="col s12 m6">
         <div class="card-panel resize">
             <div class="row valign-wrapper">
                 <div class="col s4">
@@ -27,7 +27,7 @@
         </div>
     </div>
     <!----Row 2-->
-    <div class="col s12 m4">
+    <div class="col s12 m6">
         <div class="card-panel resize">
             <div class="row valign-wrapper">
                 <div class="col s4">
@@ -40,22 +40,6 @@
         </div>
         <div class="card-panel resize black deep-orange-text accent-3 ">
             <div class="card-title center dummy_info">{{ spent_depot|floatformat:0|intcomma}} C.FCA</div>
-        </div>
-    </div>
-    <!----Row 3-->
-    <div class="col s12 m4">
-        <div class="card-panel resize black deep-orange-text accent-3 ">
-            <div class="row valign-wrapper">
-                <div class="col s4">
-                    <span class="material-icons dummy_icon">savings</span>
-                </div>
-                <div class="col s8">
-                    <span class="dummy_info">Benefice</span>
-                </div>
-            </div>
-        </div>
-        <div class="card-panel resize">
-            <div class="card-title center dummy_info">{{ benefice|floatformat:0|intcomma}} C.FCA</div>
         </div>
     </div>
 </div>
@@ -72,36 +56,43 @@
         <!------ Product Trend Section -->
         <ul class="deposit collection with-header">
             <li class="collection-header black deep-orange-text accent-3">
-                Tendance des Dépots
+                les plus déposés
             </li>
+            {% for t_dpv in tendance_depot_vente %}
+            {% if forloop.counter < 5%}
+            <!-- #Display the three first vente trend -->
+            {% if t_dpv.freq > 2 %}
             <li class="collection-item avatar">
                 <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                <span class="title"><i> Dépot plus Vendus</i></span>
-                <p>MacBook Pro<br>
-                    achat: 10
+                <p class="deep-orange-text accent-3">{{ t_dpv.produit__name }}
+                    <p> Frequence de Vente: {{ t_dpv.freq }}</p>
                 </p>
             </li>
+
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col s4">
+        <ul class="deposit collection with-header">
+            <li class="collection-header black-text deep-orange accent-3">
+                les moins déposés
+            </li>
+            {% for t_dpv_d in tendance_depot_vente %}
+            {% if forloop.counter < 5%}
+            <!-- #Display the three first vente trend -->
+            {% if t_dpv_d.freq < 2 %}
             <li class="collection-item avatar">
-                <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                <span class="title"><i> Dépot plus Vendus</i></span>
-                <p>Galaxy S20<br>
-                    achat: 7
+                <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+                <p class="deep-orange-text accent-3">{{ t_dpv_d.produit__name }}
+                    <p> Frequence de Vente: {{ t_dpv_d.freq }}</p>
                 </p>
             </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle red darken-3">trending_down</i>
-                <span class="title"><i>Dépot moins Vendus</i></span>
-                <p>Nokia Chargeur HP <br>
-                    1
-                </p>
-            </li>
-            <li class="collection-item avatar">
-                <i class="material-icons circle red darken-3">trending_down</i>
-                <span class="title"><i></i>Dépot moins Vendus</span>
-                <p>Nokia Ventilo<br>
-                    0
-                </p>
-            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
         </ul>
 
     </div>

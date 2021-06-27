@@ -57,36 +57,42 @@
   <div class="col s4">
     <ul class="deposit collection with-header">
       <li class="collection-header black deep-orange-text accent-3">
-        Tendance Achats
+        les plus achetés
       </li>
+      {% for t_ad in tendance_achat_direct %}
+      {% if forloop.counter < 5%}
+      <!-- #Display the three first vente trend -->
+      {% if t_ad.freq > 2 %}
+      <li class="collection-item avatar">
+        <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
+        <p class="deep-orange-text accent-3">{{ t_ad.produit__name }}
+          <p> Frequence de Vente: {{ t_ad.freq }}</p>
+        </p>
+      </li>
+
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col s4">
+    <ul class="deposit collection with-header">
+      <li class="collection-header black-text deep-orange accent-3">
+        les moins achetés
+      </li>
+      {% for t_ad_d in tendance_achat_direct %}
+      {% if forloop.counter < 5%}
+      <!-- #Display the three first vente trend -->
+      {% if t_ad_d.freq < 2 %}
       <li class="collection-item avatar">
         <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
+        <p class="deep-orange-text accent-3">{{ t_ad_d.produit__name }}
+          <p> Frequence de Vente: {{ t_ad_d.freq }}</p>
         </p>
       </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle">folder</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
-        </p>
-      </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle green">insert_chart</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
-        </p>
-      </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle red">play_arrow</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
-        </p>
-      </li>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
     </ul>
   </div>
 </div>
