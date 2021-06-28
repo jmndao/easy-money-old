@@ -166,6 +166,8 @@ class ProductModel(models.Model):
     quantity = models.IntegerField(blank=False, null=False)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
+    price_total = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix D'Achat Total", blank=True, null=True)
     montant_restauration = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Montant de la Restauration")
     estate = models.CharField(
@@ -192,6 +194,7 @@ class ProductModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
+        self.price_total = self.price * self.quantity
         return super(ProductModel, self).save(*args, **kwargs)
     def __str__(self):
         return '{} [{}] ({})'.format(self.name,self.dv_or_ad,self.quantity)

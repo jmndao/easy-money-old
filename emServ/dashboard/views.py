@@ -49,9 +49,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
                            created_date__day=today.day)
         achat = db_achat.objects.filter(
                            created_date__day=today.day)
-        sum_vente = sum([p.price for p in vente if p.price != None])
-        sum_depot = sum([p.price for p in depot if p.price != None])
-        sum_achat = sum([p.price for p in achat if p.price != None])
+        sum_vente = sum([p.price_total for p in vente if p.price_total != None])
+        sum_depot = sum([p.produit.price_total for p in depot if p.produit.price_total != None])
+        sum_achat = sum([p.produit.price_total for p in achat if p.produit.price_total != None])
         return (sum_vente - (sum_depot + sum_achat))
     
     def benefice_per_month(self, db_vente, db_depot, db_achat):
@@ -68,9 +68,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
                            created_date__month=today.month)
         achat = db_achat.objects.filter(
                            created_date__month=today.month)
-        sum_vente = sum([p.price for p in vente if p.price != None])
-        sum_depot = sum([p.price for p in depot if p.price != None])
-        sum_achat = sum([p.price for p in achat if p.price != None])
+        sum_vente = sum([p.price_total for p in vente if p.price_total != None])
+        sum_depot = sum([p.produit.price_total for p in depot if p.produit.price_total != None])
+        sum_achat = sum([p.produit.price_total for p in achat if p.produit.price_total != None])
         return (sum_vente - (sum_depot + sum_achat))
 
 
@@ -186,7 +186,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
         context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by('-created_date')
         context['count_item'] = self.q.count()
         context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
-        context['spent'] = sum([p.price for p in self.q if p.price != None])
+        context['spent'] = sum([p.produit.price_total for p in self.q if p.produit.price_total != None])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
         if self.request.user.is_superuser:
             context["dataset_achat_direct"] = self.chartObject(AchatDirectModel, key='price', dt_col_name='created_date')
@@ -242,7 +242,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Ut
         context['depot_ventes'] = self.q
         context['total_item'] = self.q.count()
         #Sum des produits de depots ventes
-        context['spent_depot'] = sum([p.price for p in self.q if p.price != None])
+        context['spent_depot'] = sum([p.produit.price_total for p in self.q if p.produit.price_total != None])
         #benefice 
         context['benefice'] = self.benefice_depot_vente(AchatDirectModel, VenteModel, context['spent_depot'])
         if self.request.user.is_superuser:
@@ -294,13 +294,14 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
             form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
         product.sold = True 
-        if product.sold == True:
-            if product.quantity == 0:
-                ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
+        
+        
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
         if remaining_qty < 0:
-            raise ValueError 
+            raise ValueError
+        elif remaining_qty == 0:
+            ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
         else:
             product.quantity = remaining_qty
         
@@ -311,15 +312,9 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
-        ##############
-
-
-
-
-        ##############
         context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
         context['count_item'] = self.q.count()
-        context['revenue'] = sales = sum([p.price for p in self.q if p.price != None])
+        context['revenue'] = sales = sum([p.price_total for p in self.q if p.price_total != None])
         context['benefice'] = self.benefice_vente(AchatDirectModel, DepotVenteModel, sales)
 
         uname = self.request.user.username

@@ -29,8 +29,8 @@ class Utils:
         """
         a_directs = db_a_direct.objects.all()
         dvs = db_dvs.objects.all()
-        sum_a_directs = sum([p.price for p in a_directs if p.price != None])
-        sum_dvs = sum([p.price for p in dvs if p.price != None])
+        sum_a_directs = sum([p.produit.price_total for p in a_directs if p.produit.price_total != None])
+        sum_dvs = sum([p.produit.price_total for p in dvs if p.produit.price_total != None])
         return (sales - (sum_a_directs + sum_dvs))
     
     def benefice_depot_vente(self, db_a_direct, db_sales, dv):
