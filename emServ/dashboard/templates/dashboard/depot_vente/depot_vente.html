@@ -169,7 +169,7 @@
                     <tr>
                         <th>Vendeur</th>
                         <th>Produit</th>
-                        <th>Qualite</th>
+                        <th>Quantité</th>
                         <th>Prix Dépot</th>
                         <th>Date Dépot</th>
                         <th>Actions</th>
@@ -180,18 +180,7 @@
                     <tr>
                         <td> {{ dv.produit.seller.fname }} {{ dv.produit.seller.lname }} </td>
                         <td> {{ dv.produit.name }}</td>
-                        {% if dv.produit.estate == "NEUF" %}
-                        <td><span class="new badge green" data-badge-caption="{{ dv.produit.estate }}"></span></td>
-                        {% elif dv.produit.estate == "BON" %}
-                        <td><span class="new badge light-green" data-badge-caption="{{ dv.produit.estate }}"></span>
-                        </td>
-                        {% elif dv.produit.estate == "MOYEN" %}
-                        <td><span class="new badge yellow" data-badge-caption="{{ dv.produit.estate }}"></span></td>
-                        {% elif dv.produit.estate == "MAUVAIS" %}
-                        <td><span class="new badge light-red" data-badge-caption="{{ dv.produit.estate }}"></span></td>
-                        {% else %}
-                        <td><span class="new badge red" data-badge-caption="{{ dv.produit.estate }}"></span></td>
-                        {% endif %}
+                        <td> {{ dv.produit.quantity }}</td>
                         <td>{{ dv.price|floatformat:0|intcomma}}</td>
                         <td>{{ dv.created_date|date:"SHORT_DATE_FORMAT"}}</td>
                         <td class="actions">

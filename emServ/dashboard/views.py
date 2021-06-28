@@ -25,6 +25,8 @@ from django.contrib import messages
 # Rendering the pdf file
 from django.template.loader import get_template
 
+from django.db.models import F
+
 
 
 # Create your views here.
@@ -285,17 +287,36 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
     fields = '__all__'    
 
     def form_valid(self, form):
+        # check if we choose the right quantities or not?        
+        ################################################################
         u_user = self.request.user
         if not u_user.is_superuser:
             form.instance.shop = Shop.objects.get(owner__user__username=u_user.username)
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
         product.sold = True 
+        if product.sold == True:
+            if product.quantity == 0:
+                ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
+        vente_qty = form.instance.quantity
+        remaining_qty = product.quantity - vente_qty
+        if remaining_qty < 0:
+            raise ValueError 
+        else:
+            product.quantity = remaining_qty
+        
         product.save()
         return super().form_valid(form)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['vente'] = self.q = VenteModel.objects.order_by('-created_date')
+        ##############
+
+
+
+
+        ##############
         context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
         context['count_item'] = self.q.count()
         context['revenue'] = sales = sum([p.price for p in self.q if p.price != None])

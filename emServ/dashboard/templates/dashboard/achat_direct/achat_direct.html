@@ -165,7 +165,7 @@
           <tr>
             <th>Vendeur</th>
             <th>Produit</th>
-            <th>Etat</th>
+            <th>Quantité</th>
             <th>Prix Achat</th>
             <th>Date Achat</th>
             <th>Actions</th>
@@ -176,17 +176,7 @@
           <tr>
             <td> {{ ad.produit.seller }} </td>
             <td> {{ ad.produit.name }}</td>
-            {% if ad.produit.estate == "NEUF" %}
-            <td><span class="new badge green" data-badge-caption="{{ ad.produit.estate }}"></span></td>
-            {% elif ad.produit.estate == "BON" %}
-            <td><span class="new badge light-green" data-badge-caption="{{ ad.produit.estate }}"></span></td>
-            {% elif ad.produit.estate == "MOYEN" %}
-            <td><span class="new badge yellow" data-badge-caption="{{ ad.produit.estate }}"></span></td>
-            {% elif ad.produit.estate == "MAUVAIS" %}
-            <td><span class="new badge light-red" data-badge-caption="{{ ad.produit.estate }}"></span></td>
-            {% else %}
-            <td><span class="new badge red" data-badge-caption="{{ ad.produit.estate }}"></span></td>
-            {% endif %}
+            <td> {{ ad.produit.quantity }}</td>
             <td>{{ ad.price|floatformat:0|intcomma}}</td>
             <td>{{ ad.created_date|date:"SHORT_DATE_FORMAT"}}</td>
             <td class="actions">
