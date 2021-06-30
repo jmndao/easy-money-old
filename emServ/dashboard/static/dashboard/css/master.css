@@ -21,6 +21,9 @@ body {
     list-style-type: none;
     text-decoration: none;
 }
+.easy-sidebar{
+    overflow: scroll;
+}/* Track */
 
 .easy-sidebar-brand {
     height: 8vh;
@@ -35,6 +38,7 @@ body {
 
 .easy-sidebar-menu {
     margin-top: 1rem;
+    overflow: scroll;
 }
 
 .easy-sidebar-menu li {
@@ -212,8 +216,12 @@ header label span {
 .user-inner-wrapper {
     padding: 10px 0;
 }
-
+ul .add_scroll{
+    overflow: scroll;
+    height: 400px;
+}
 .add_scroll {
+    
     overflow-y: auto;
 }
 

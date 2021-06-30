@@ -36,6 +36,7 @@ TYPE = [
 ]
 
 OBSOLESCENCE = [
+    ('TRES_RAPIDE', 'Tres_Rapide'),
     ('RAPIDE', 'Rapide'),
     ('MOYENNE', 'Moyenne'),
     ('LENTE', 'Lente')
@@ -308,3 +309,57 @@ class ClientRequestModel(models.Model):
 
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)
+
+
+# Model -- Devis Model
+class DevisModel(models.Model):
+    shop = models.ForeignKey(
+        Shop, on_delete=models.CASCADE, blank=True, null=True)
+    product_name = models.CharField(max_length=100)
+    description = models.TextField(max_length=300, null=True, blank=True)
+    quantity = models.IntegerField(blank=False, null=False, default = 1)
+    price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
+    price_total = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
+    client = models.ForeignKey(
+        ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
+    created_date = models.DateTimeField(auto_now_add= True)
+    def save(self, *args, **kwargs):
+        self.product_name = self.product_name.lower()
+        self.price_total = self.price * self.quantity
+        return super(DevisModel, self).save(*args, **kwargs)
+    def __str__(self):
+        return '{} {} {}'.format(self.client.fname, self.client.lname, self.product_name)
+
+#Estimation Model 
+
+class EstimationModel(models.Model):
+    shop = models.ForeignKey(
+        Shop, on_delete=models.CASCADE, blank=True, null=True)
+    client_name = models.CharField(max_length=100, blank=True,
+                             null=True, verbose_name="First Name")
+    product_name = models.CharField(max_length=100)
+    new_price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix neuf")
+    used_price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix occasion")
+    estate = models.CharField(
+        max_length=20, choices=ETAT, blank=True, null=True)
+    obsolescence = models.CharField(
+        max_length=20, choices=OBSOLESCENCE, blank=True, null=True)
+    rarety = models.CharField(
+        max_length=20, choices=RARETE, blank=True, null=True)
+    sale_bill = models.BooleanField(default=False)
+    dimension = models.CharField(
+        max_length=20, choices=DIMENSION, null=True, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    charger = models.BooleanField(default=False)
+    original_box = models.BooleanField(default=False)
+    year_of_release = models.IntegerField(null=True, blank=True)
+    def save(self, *args, **kwargs):
+        self.product_name = self.product_name.lower()
+        self.used_price = self.new_price / 2
+        return super(EstimationModel, self).save(*args, **kwargs)
+    def __str__(self):
+        return '{}'.format(self.product_name)

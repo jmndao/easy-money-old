@@ -59,12 +59,18 @@ class Utils:
         sum_dvs = sum([p.price for p in dvs if p.price != None])
         return (sum_sales - (d_stock + sum_dvs))
 
-    def chartObject(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
+    def chartObject(self, db, key=None, dv_or_ad=None, dt_col_name=None, uname=None, is_superuser=True):
         # Let's check is user is superuser or not
         if is_superuser:
-            df = pd.DataFrame(db.objects.all().values())
+            if dv_or_ad:
+                df = pd.DataFrame(db.objects.filter(dv_or_ad=dv_or_ad).values())
+            else:
+                df = pd.DataFrame(db.objects.all().values())
         else:
-            df = pd.DataFrame(db.objects.filter(produit__shop__owner__user__username=uname).values())
+            if dv_or_ad:
+                df = pd.DataFrame(db.objects.filter(shop__owner__user__username=uname, dv_or_ad=dv_or_ad).values())
+            else:
+                df = pd.DataFrame(db.objects.filter(shop__owner__user__username=uname).values())       
         if not df.empty:
             un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
             # Parsed it 
@@ -143,7 +149,7 @@ class RedirectToPreviousMixin:
         achat = db_achat.objects.filter(mydatefield__year=today.year,
                            mydatefield__month=today.month)
 
-        sum_vente = sum([p.price for p in vente if p.price != None])
-        sum_depot = sum([p.price for p in depot if p.price != None])
-        sum_achat = sum([p.price for p in achat if p.price != None])
+        sum_vente = sum([p.price_total for p in vente if p.price_total != None])
+        sum_depot = sum([p.produit.price_total for p in depot if p.produit.price_total != None])
+        sum_achat = sum([p.produit.price_total for p in achat if p.produit.price_total != None])
         return (sum_vente - (sum_depot + sum_achat))

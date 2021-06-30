@@ -16,7 +16,9 @@ from dashboard.models import (  ProductModel,
                                 AchatDirectModel,
                                 DepotVenteModel,
                                 VenteModel,
-                                Shop)
+                                Shop,
+                                DevisModel,
+                                EstimationModel)
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
 from django.contrib import messages
@@ -82,12 +84,12 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         context['benefice_day'] = self.benefice_per_day(VenteModel, DepotVenteModel, AchatDirectModel)
         context['benefice_month'] = self.benefice_per_month(VenteModel, DepotVenteModel, AchatDirectModel)
 
+        context["dataset_achat"] = self.chartObject(VenteModel, key='price_total', dt_col_name='created_date')
+        context['dataset_depot'] = self.chartObject(ProductModel, key = 'price_total', dv_or_ad='DV', dt_col_name = 'created_date')
+        context["dataset_stock"] = self.chartObject(ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
         if self.request.user.is_superuser:
             context["achat_directs"] = AchatDirectModel.objects.all().order_by('-created_date')
             context["ventes"] = VenteModel.objects.all().order_by('-created_date')
-            context["dataset_achat"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date')
-            context['dataset_depot'] = self.chartObject(DepotVenteModel, key = 'price', dt_col_name = 'created_date')
-            context["dataset_stock"] = self.chartObject(AchatDirectModel, key='price', dt_col_name='created_date')
             context["tendance_vente"] = VenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context["tendance_depot_vente"] = DepotVenteModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
@@ -96,7 +98,6 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         else: 
             context["achat_directs"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by('-created_date')
-            context["dataset_achat"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
             context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["tendance_achat_direct"] = AchatDirectModel.objects.filter(produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["n_product"] = ProductModel.objects.filter(shop__owner__user__username=uname).count()
@@ -188,10 +189,11 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
         context["tendance_achat_direct"] = AchatDirectModel.objects.values('produit__name').annotate(freq=Count('produit__name')).order_by("?")
         context['spent'] = sum([p.produit.price_total for p in self.q if p.produit.price_total != None])
         context['benefice'] = self.benefice_achat_direct(VenteModel, DepotVenteModel, context['spent'])
+
         if self.request.user.is_superuser:
-            context["dataset_achat_direct"] = self.chartObject(AchatDirectModel, key='price', dt_col_name='created_date')
+            context["dataset_achat_direct"] = self.chartObject(ProductModel, key='price_total', dv_or_ad='AD', dt_col_name = 'created_date')
         else:
-            context["dataset_achat_direct"] = self.chartObject(AchatDirectModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
+            context["dataset_achat_direct"] = self.chartObject(ProductModel, key='price_total', dt_col_name='created_date' , dv_or_ad='AD', uname=uname, is_superuser=False)
         return context
 
 
@@ -246,9 +248,9 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Ut
         #benefice 
         context['benefice'] = self.benefice_depot_vente(AchatDirectModel, VenteModel, context['spent_depot'])
         if self.request.user.is_superuser:
-            context["dataset_depot"] = self.chartObject(DepotVenteModel, key='price', dt_col_name='created_date')
+            context['dataset_depot'] = self.chartObject(ProductModel, key = 'price_total', dv_or_ad='DV', dt_col_name = 'created_date')
         else:
-            context["dataset_depot"] = self.chartObject(DepotVenteModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
+            context["dataset_depot"] = self.chartObject(ProductModel, key='price_total',dv_or_ad='DV', dt_col_name='created_date', uname=uname, is_superuser=False)
         return context
 
 
@@ -319,9 +321,9 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
         uname = self.request.user.username
         if self.request.user.is_superuser:
-            context["dataset_vente"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date')
+            context["dataset_vente"] = self.chartObject(VenteModel, key='price_total', dt_col_name='created_date')
         else:
-            context["dataset_vente"] = self.chartObject(VenteModel, key='price', dt_col_name='created_date', uname=uname, is_superuser=False)
+            context["dataset_vente"] = self.chartObject(VenteModel, key='price_total', dt_col_name='created_date', uname=uname, is_superuser=False)
 
 
            
@@ -491,11 +493,7 @@ class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
     model = ClientModel
     context_object_name = 'client'
 
-
-
-
 class ClientDetailView(LoginRequiredMixin, DetailView):
-
     template_name = 'dashboard/client/client_detail.html'
     model = ClientModel
     context_object_name = 'client'
@@ -511,54 +509,99 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
 #Rendering the pdf class here:
 class GeneratePDF(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/invoice/invoice.html'
-
     model = VenteModel
     fields = '__all__'
-
-    # def get(self, *args, **kwargs):
-    #     template = get_template('dashboard/invoice/invoice.html')
-
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['all_vente'] = self.a = VenteModel.objects.all()
         context['f_number'] = self.a.count()
         # context['v_shop'] = self.s = Shop.objects.all()
         context['vente'] = self.q = VenteModel.objects.get(pk=self.kwargs["pk"])
+        context['quantity'] = self.q.quantity
         context['c_fname'] = self.q.client.fname
         context['c_lname'] = self.q.client.lname
         context['c_price'] = self.q.price
+        context['c_price_total'] = self.q.price_total
         context['v_date'] = date =self.q.created_date
         date =  date.strftime("%B-%d")
         context['v_date'] = date
         context['c_address'] = self.q.client.address
         context['c_tel'] = self.q.client.numero
         context['v_product'] = self.q.produit.name
-        
-
-        context['quantity'] = 1
-        
-        
-        
         ################################################################
        
         return context
         
-        # vente = get_object_or_404(VenteModel, pk=self.kwargs['pk'])
-        # context = {
-        #     'vente':vente,
-        #     'invoice_id' : 123,
-        #     'customer_name' : 'akhad', 
-        # }
-        # pdf = self.render_to_pdf('dashboard/invoice/invoice.html', context)
-        # if pdf:
-        #     response = HttpResponse(pdf, content_type='application/pdf')
-        #     filename = "Invoice_%s.pdf" %("facture easy money")
-        #     content = "inline; filename='%s'" %(filename)
-        #     download = self.request.GET.get("download")
-        #     if download:
-        #         content = "attachment; filename='%s'" %(filename)
-        #     response['Content-Disposition'] = content
-        #     return response
-        # return pdf
+# Rendering the devis class here 
+class GenerateDevis(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/devis/devis.html'
+    model = DevisModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:devisPage')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['devis'] = self.a = DevisModel.objects.all()
+        # context['f_number'] = self.a.count()
+        return context
+
+
+class DevisDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
+    template_name = 'dashboard/devis/devisDelete.html'
+    model = DevisModel
+    context_object_name = 'devis'
+
+class TirerDevis(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/devis/tirerDevis.html'
+    model = VenteModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:devisPage')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_devis'] = self.a = DevisModel.objects.all()
+        context['f_number'] = self.a.count()
+        # context['v_shop'] = self.s = Shop.objects.all()
+        context['devis'] = self.q = DevisModel.objects.get(pk=self.kwargs["pk"])
+        context['quantity'] = self.q.quantity
+        context['c_fname'] = self.q.client.fname
+        context['c_lname'] = self.q.client.lname
+        context['c_price'] = self.q.price
+        context['c_price_total'] = self.q.price_total
+        context['v_date'] = date =self.q.created_date
+        date =  date.strftime("%B-%d")
+        context['v_date'] = date
+        context['c_address'] = self.q.client.address
+        context['c_tel'] = self.q.client.numero
+        context['v_product'] = self.q.product_name
+        ################################################################
+       
+        return context
+class EstimationPage(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/estimation/estimation.html'
+    model = EstimationModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:estimationPage')
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['estimate'] = self.e = EstimationModel.objects.all()
+    #     used_price = self.e.used_price
+    #     percentage = 0
+    #     if self.charger == True:
+    #         percentage = 0.2
+    #     context['used_price'] = used_price * percentage
+    #     return context
+class EstimationResultPage(LoginRequiredMixin, CreateView):
+    template_name = 'dashboard/estimation/estimationResult.html'
+    model = EstimationModel
+    fields = '__all__'
+    success_url = reverse_lazy('dashboard:estimationPage')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['estimate'] = self.e = EstimationModel.objects.all()
+        used_price = self.e.used_price
+        percentage = 0
+        if self.charger == True:
+            percentage = 0.2
+        context['used_price'] = used_price * percentage
+        return context
