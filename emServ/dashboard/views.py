@@ -604,4 +604,4 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         if self.charger == True:
             percentage = 0.2
         context['used_price'] = used_price * percentage
-        return context
+        return context 
