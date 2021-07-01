@@ -3,7 +3,7 @@ var ctx_in = document.getElementById("myChart");
 var data = {
     labels: dataset_stock["months"], // or dataset_achat["months"]
     datasets: [{
-            label: 'Stock',
+            label: 'Achat Direct',
             data: dataset_stock["data"],
             borderWidth: 2,
             backgroundColor: 'rgb(255, 61, 0)',
@@ -13,7 +13,7 @@ var data = {
 
         },
         {
-            label: 'Achat',
+            label: 'Vente',
             data: dataset_achat["data"],
             borderWidth: 2,
             backgroundColor: 'rgb(0, 0, 0)',

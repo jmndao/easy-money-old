@@ -73,36 +73,43 @@
   <div class="col s4">
     <ul class="deposit collection with-header">
       <li class="collection-header black deep-orange-text accent-3">
-        Tendance des Ventes
+        les plus vendus
       </li>
+      {% for tv in tendance_vente %}
+      {% if forloop.counter < 5%}
+      <!-- #Display the three first vente trend -->
+      {% if tv.freq > 2 %}
       <li class="collection-item avatar">
         <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
+        <p class="deep-orange-text accent-3">{{ tv.produit__name }}
+          <p> Frequence de Vente: {{ tv.freq }}</p>
         </p>
       </li>
+
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="col s4">
+    <ul class="deposit collection with-header">
+      <li class="collection-header black-text deep-orange accent-3">
+        les moins vendus
+      </li>
+      {% for tv_d in tendance_vente %}
+      {% if forloop.counter < 5%}
+      <!-- #Display the three first vente trend -->
+      {% if tv_d.freq < 2 %}
       <li class="collection-item avatar">
-        <i class="material-icons circle">folder</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
+        <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
+        <p class="deep-orange-text accent-3">{{ tv_d.produit__name }}
+          <p> Frequence de Vente: {{ tv_d.freq }}</p>
         </p>
       </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle green">insert_chart</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
-        </p>
-      </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle red">play_arrow</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-          Second Line
-        </p>
-      </li>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+
     </ul>
   </div>
 </div>
@@ -167,27 +174,33 @@
           <label for="{{form.acompte.id_for_label}}">Acompte</label>
         </div>
       </div>
-      <div class="col s12">
-        <ul class="collapsible">
-          <li>
-            <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Assurez-vous une garantie
-              pour ce produit ?</div>
-            <div class="collapsible-body">
-              <div class="row">
-                <div class="input-field col m6 s12">
-                  <label for="{{ form.guarantee.id_for_label }}">
-                    {{ form.guarantee }}
-                    <span>Garantie</span>
-                  </label>
-                </div>
-                <div class="input-field col m6 s12">
-                  {{ form.guarantee_period }}
-                  <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
+      <div class="row">
+        <div class="input-field col m6 s12">
+          {{ form.quantity }}
+          <label for="{{form.quantity.id_for_label}}">Quantité</label>
+        </div>
+        <div class="col m6 s12">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">health_and_safety</i> Assurez-vous une garantie
+                pour ce produit ?</div>
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="input-field col m6 s12">
+                    <label for="{{ form.guarantee.id_for_label }}">
+                      {{ form.guarantee }}
+                      <span>Garantie</span>
+                    </label>
+                  </div>
+                  <div class="input-field col m6 s12">
+                    {{ form.guarantee_period }}
+                    <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="col s12">
@@ -215,10 +228,13 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-            <th>Date vendu</th>
+
             <th>Clients</th>
             <th>Produit</th>
-            <th>Prix vendu</th>
+            <th>Quantité <br></th>
+            <th>Prix total <br> vendu</th>
+            <th>date<br> vendue</th>
+
             <th>Actions</th>
             <th>Factures</th>
           </tr>
@@ -226,10 +242,11 @@
         <tbody>
           {% for v in vente %}
           <tr>
-            <td> {{ v.created_date|date:"d M" }}</td>
             <td> {{ v.client.fname }} {{ v.client.lname }}</td>
-            <td> {{ v.produit }} </td>
-            <td> {{ v.price|floatformat:0|intcomma }}</td>
+            <td> {{ v.produit.name }} ({{ v.produit.dv_or_ad}}) </td>
+            <td> {{ v.quantity }}</td>
+            <td> {{ v.price_total|floatformat:0|intcomma }}</td>
+            <td> {{ v.created_date}} </td>
             <td class="actions">
               <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
