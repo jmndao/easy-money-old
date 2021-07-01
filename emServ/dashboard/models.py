@@ -306,7 +306,7 @@ class ClientRequestModel(models.Model):
     description = models.TextField(blank=True, null=True)
     found = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
-
+ 
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)
 
