@@ -99,6 +99,52 @@
     </form>
 </div>
 <section class="center-align">
-    <a href="{% url 'dashboard:estimationResultPage' %}"> Resultat de L'estimation</a>
+    <div class="card material-table">
+        <div class="table-header">
+            <span class="table-title">Liste Des Devis</span>
+            <div class="actions">
+                <!-- Here is where we should make the linking-->
+                <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
+                        class="material-icons">search</i></a>
+            </div>
+        </div>
+        <table id="datatable" class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Produit</th>
+                    <th>quantity</th>
+                    <th>chargeur</th>
+                    <th>estimation</th>
+                    <th>supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for estimate in estimates %}
+                <tr>
+                    <th class="black-text"> {{ estimate.client_name }}</th>
+                    <th class="black-text">{{ estimate.product_name}}</th>
+                    <th class="black-text">{{ estimate.used_price }}</th>
+                    <th class="black-text">{{ estimate.charger }}</th>
+
+                    <th>
+                        <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
+                            class="green-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                            data-tooltip="tirer"><span class="material-icons">receipt</span></a>
+                    </th>
+                    <th>
+                        <a href="{% url 'dashboard:estimationDeletePage' estimate.pk %}"
+                            class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                            data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+                    </th>
+
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <p>final_price: {{final_price}}</p>
+
+    </div>
 </section>
 {% endblock body_content%}

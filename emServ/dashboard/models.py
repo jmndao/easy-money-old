@@ -341,20 +341,20 @@ class EstimationModel(models.Model):
                              null=True, verbose_name="First Name")
     product_name = models.CharField(max_length=100)
     new_price = models.DecimalField(
-        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix neuf")
+        max_digits=20, decimal_places=3, blank=False, null=True, verbose_name="Prix neuf")
     used_price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix occasion")
     estate = models.CharField(
-        max_length=20, choices=ETAT, blank=True, null=True)
+        max_length=20, choices=ETAT, blank=False, null=True)
     obsolescence = models.CharField(
-        max_length=20, choices=OBSOLESCENCE, blank=True, null=True)
+        max_length=20, choices=OBSOLESCENCE, blank=False, null=True)
     rarety = models.CharField(
-        max_length=20, choices=RARETE, blank=True, null=True)
+        max_length=20, choices=RARETE, blank=False, null=True)
     sale_bill = models.BooleanField(default=False)
     dimension = models.CharField(
-        max_length=20, choices=DIMENSION, null=True, blank=True)
+        max_length=20, choices=DIMENSION, null=True, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
-    charger = models.BooleanField(default=False)
+    charger = models.BooleanField(default=False, )
     original_box = models.BooleanField(default=False)
     year_of_release = models.IntegerField(null=True, blank=True)
     def save(self, *args, **kwargs):
