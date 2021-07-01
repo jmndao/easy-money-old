@@ -1,0 +1,147 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block body_content %}
+<div class="card-panel deep-orange accent-3">
+    <div class="card-container center-align">
+        <h4 class="deep-orange-text accent-3 white-text ">Vous pouvez toujours ajouter un nouveau client.</h4>
+        <p class="white-text lighten-4">remplissez seul les informations que vous avez sur le client</p>
+    </div>
+</div>
+<div class="row with-gaps">
+    <div class=" black white-text width-border valign-wrapper z-depth-2 ">
+        <div class="col s8 add_pd">
+            <h4 class="deep-orange-text accent-3">Effectuer un devis en dessous</h4>
+            <p>Voila le nombre total de devis deja fait</p>
+        </div>
+        <div class="col s4  center-align">
+            <div class="icon z-depth-2">
+                <i class="material-icons medium deep-orange-text accent-3 separate_two">people</i>
+            </div>
+            <div class="ajouter ">
+                <p class="deep-orange-text accent-3 big">{{c_number|stringformat:"03d" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-panel ">
+    <form action="#" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <!--- Form -->
+        {% if user.is_superuser %}
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form.shop }}
+                <label for="{{ form.shop.id_for_label }}">Boutique</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.client }}
+                <label for="{{ form.client.id_for_label }}">Client</label>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="input-field col m4 s12">
+                {{ form.product_name }}
+                <label for="{{ form.product_name.id_for_label }}">Produit</label>
+            </div>
+            <div class="input-field col m4 s12">
+                {{ form.price }}
+                <label for="{{ form.price.id_for_label }}">Prix Unitaire</label>
+            </div>
+            <div class="input-field col m4 s12">
+                {{ form.quantity }}
+                <label for="{{ form.quantity.id_for_label }}">Quantité</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.description }}
+                <label for="{{ form.description.id_for_label }}">Description</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m3 s6 right">
+                <button class="waves-effect waves-green black btn-flat" type="submit">
+                    <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+                    <b class="deep-orange-text accent-3">Enregistrer</b>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div id="man" class="col s12">
+        <div class="card material-table">
+            <div class="table-header">
+                <span class="table-title">Liste Des Devis</span>
+                <div class="actions">
+                    <!-- Here is where we should make the linking-->
+                    <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
+                            class="material-icons">search</i></a>
+                </div>
+            </div>
+            <table id="datatable" class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Produit</th>
+                        <th>quantity</th>
+                        <th>prix unitaire</th>
+                        <th>prix total</th>
+                        <th>Date</th>
+                        <th>devis</th>
+                        <th>delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for devis in devis %}
+                    <tr>
+                        <th class="black-text"> {{ devis.client.fname }} {{ devis.client.lname }}</th>
+                        <th class="black-text">{{ devis.product_name }}</th>
+                        <th class="black-text">{{ devis.quantity }}</th>
+                        <th class="black-text">{{ devis.price|floatformat:0 }}fcfa</th>
+                        <th class="black-text">{{ devis.price_total|floatformat:0 }}fcfa</th>
+                        <th class="black-text">{{ devis.created_date|date:"SHORT_DATE_FORMAT" }}</th>
+                        <th>
+                            <a href="{% url 'dashboard:tirerDevisPage' devis.pk %}"
+                                class="green-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="tirer"><span class="material-icons">receipt</span></a>
+                        </th>
+                        <th>
+                            <a href="{% url 'dashboard:devisDeletePage' devis.pk %}"
+                                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body_content %}
+
+{% block javascripts %}
+<script>
+    var dataset_client = JSON.parse('{{dataset_client}}')
+</script>
+<script type="text/javascript" src="{% static 'dashboard/js/chartClient.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+{% endblock javascripts %}

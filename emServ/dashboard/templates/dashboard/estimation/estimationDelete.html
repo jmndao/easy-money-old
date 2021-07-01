@@ -1,0 +1,29 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block body_content %}
+
+<div class="card-panel">
+    <div class="card-panel orange darken-4">
+        <b> Suppression d'une estimation deja faite</b>
+        <i class="material-icons right">delete_forever</i>
+    </div>
+    <br><br>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <p>Etes-vous certain de vouloir supprimer "{{ estimates }}"?</p>
+        <br><br>
+        <a href="{% url 'dashboard:estimationPage' %}" class="btn-flat blue white-text waves-effect">
+            Retourner
+            <i class="material-icons right">keyboard_return</i>
+        </a>
+        <button type="submit" class="btn-flat white-text waves-effect red accent-4">
+            Confirmer
+            <i class="material-icons right ">delete_forever</i>
+        </button>
+
+    </form>
+</div>
+
+{% endblock body_content %}

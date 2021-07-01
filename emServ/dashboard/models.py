@@ -3,6 +3,7 @@ from django.urls import reverse
 from accounts.models import UserProfile
 
 
+
 # Create your models here.
 
 SEXE = [
@@ -35,6 +36,7 @@ TYPE = [
 ]
 
 OBSOLESCENCE = [
+    ('TRES_RAPIDE', 'Tres_Rapide'),
     ('RAPIDE', 'Rapide'),
     ('MOYENNE', 'Moyenne'),
     ('LENTE', 'Lente')
@@ -162,9 +164,11 @@ class ProductModel(models.Model):
         max_length=100, choices=CATEGORY, blank=True, null=True)
     dv_or_ad = models.CharField(
         max_length=100, choices=TYPE, blank=True, null=True)
-    quantity = models.IntegerField(blank=True, null=True)
+    quantity = models.IntegerField(blank=False, null=False)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
+    price_total = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix D'Achat Total", blank=True, null=True)
     montant_restauration = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Montant de la Restauration")
     estate = models.CharField(
@@ -180,7 +184,7 @@ class ProductModel(models.Model):
     annee = models.CharField(max_length=20, null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
     ram = models.IntegerField(null=True, blank=True)
-    charger = models.BooleanField(default=True)
+    charger = models.BooleanField(default=False)
     original_box = models.BooleanField(default=False)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     seller = models.ForeignKey(
@@ -189,8 +193,12 @@ class ProductModel(models.Model):
     sold = models.BooleanField(default=False)
     color = models.CharField(max_length=100, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        self.name = self.name.lower()
+        self.price_total = self.price * self.quantity
+        return super(ProductModel, self).save(*args, **kwargs)
     def __str__(self):
-        return '{}'.format(self.name)
+        return '{} [{}] ({})'.format(self.name,self.dv_or_ad,self.quantity)
 
 
 # Model --  Achat Direct
@@ -205,13 +213,13 @@ class AchatDirectModel(models.Model):
             - created_date      : date and time of the sale
             - price             : the price the product has been purchased
     """
+    
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
     client = models.ForeignKey(
         ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return '{}[{}]'.format(self.produit.seller, self.produit.name)
 
@@ -257,6 +265,8 @@ class VenteModel(models.Model):
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
+    price_total = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True)
     guarantee = models.BooleanField(default=False)
@@ -265,7 +275,13 @@ class VenteModel(models.Model):
     guarantee_period = models.IntegerField(
         blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
+    quantity = models.IntegerField(null=True, blank=True, default=1)
+    def save(self, *args, **kwargs):
+        self.price_total = self.price * self.quantity
+        return super(VenteModel, self).save(*args, **kwargs)
+    
 
+        
     def __str__(self):
         return '{} {}'.format(self.produit.name, self.price)
 
@@ -290,6 +306,60 @@ class ClientRequestModel(models.Model):
     description = models.TextField(blank=True, null=True)
     found = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
-
+ 
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)
+
+
+# Model -- Devis Model
+class DevisModel(models.Model):
+    shop = models.ForeignKey(
+        Shop, on_delete=models.CASCADE, blank=True, null=True)
+    product_name = models.CharField(max_length=100)
+    description = models.TextField(max_length=300, null=True, blank=True)
+    quantity = models.IntegerField(blank=False, null=False, default = 1)
+    price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
+    price_total = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
+    client = models.ForeignKey(
+        ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
+    created_date = models.DateTimeField(auto_now_add= True)
+    def save(self, *args, **kwargs):
+        self.product_name = self.product_name.lower()
+        self.price_total = self.price * self.quantity
+        return super(DevisModel, self).save(*args, **kwargs)
+    def __str__(self):
+        return '{} {} {}'.format(self.client.fname, self.client.lname, self.product_name)
+
+#Estimation Model 
+
+class EstimationModel(models.Model):
+    shop = models.ForeignKey(
+        Shop, on_delete=models.CASCADE, blank=True, null=True)
+    client_name = models.CharField(max_length=100, blank=True,
+                             null=True, verbose_name="First Name")
+    product_name = models.CharField(max_length=100)
+    new_price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=False, null=True, verbose_name="Prix neuf")
+    used_price = models.DecimalField(
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix occasion")
+    estate = models.CharField(
+        max_length=20, choices=ETAT, blank=False, null=True)
+    obsolescence = models.CharField(
+        max_length=20, choices=OBSOLESCENCE, blank=False, null=True)
+    rarety = models.CharField(
+        max_length=20, choices=RARETE, blank=False, null=True)
+    sale_bill = models.BooleanField(default=False)
+    dimension = models.CharField(
+        max_length=20, choices=DIMENSION, null=True, blank=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    charger = models.BooleanField(default=False, )
+    original_box = models.BooleanField(default=False)
+    year_of_release = models.IntegerField(null=True, blank=True)
+    def save(self, *args, **kwargs):
+        self.product_name = self.product_name.lower()
+        self.used_price = self.new_price / 2
+        return super(EstimationModel, self).save(*args, **kwargs)
+    def __str__(self):
+        return '{}'.format(self.product_name)

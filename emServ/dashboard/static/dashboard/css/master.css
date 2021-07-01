@@ -21,6 +21,9 @@ body {
     list-style-type: none;
     text-decoration: none;
 }
+.easy-sidebar{
+    overflow: scroll;
+}/* Track */
 
 .easy-sidebar-brand {
     height: 8vh;
@@ -35,6 +38,7 @@ body {
 
 .easy-sidebar-menu {
     margin-top: 1rem;
+    overflow: scroll;
 }
 
 .easy-sidebar-menu li {
@@ -212,8 +216,12 @@ header label span {
 .user-inner-wrapper {
     padding: 10px 0;
 }
-
+ul .add_scroll{
+    overflow: scroll;
+    height: 400px;
+}
 .add_scroll {
+    
     overflow-y: auto;
 }
 
@@ -405,6 +413,13 @@ i.right {
 
 .row .col.s8.add_pd {
     padding-bottom: 30px;
+}
+.row .col.m4.s12.with_border {
+    width: 33.3333333333%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+    border-color: green;
 }
 
 

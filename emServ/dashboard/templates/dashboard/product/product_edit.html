@@ -22,25 +22,50 @@
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
         <div class="row">
-            <div class="input-field col m6 s12">
+            <div class="input-field col m5 s6">
                 {{ form.shop}}
                 <label for="{{form.shop.id_for_label}}">Choisir la Boutique</label>
             </div>
+            <div class="input-field col m1 s6">
+                <a href="{% url 'dashboard:clientPage' %}" name="clientID"
+                    class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+                    data-tooltip="Nouveau Vendeur">
+                    <i class="material-icons right">person_add</i>
+                </a>
+            </div>
             <div class="col m6 s12">
+                <div class="input-field col m6 s12">
+                    {{ form.seller }}
+                    <label for="{{form.seller.id_for_label}}">Vendeur</label>
+                </div>
                 <div class="input-field col m6 s12">
                     {{ form.name }}
                     <label for="{{form.name.id_for_label}}">Nom Produit</label>
-                </div>
-                <div class="input-field col m6 s12">
-                    {{ form.color }}
-                    <label for="{{form.color.id_for_label}}">Couleur</label>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="input-field col m3 s6">
-                {{ form.category }}
-                <label for="{{form.category.id_for_label}}">Category</label>
+                {{ form.quantity }}
+                <label for="{{form.quantity.id_for_label}}">Quantité</label>
+            </div>
+            <div class="input-field col m3 s6">
+                {{ form.dv_or_ad }}
+                <label for="{{form.dv_or_ad.id_for_label}}">Depot Vente ou Achat</label>
+            </div>
+            <div class="input-field col m3 s6">
+                {{ form.price }}
+                <label for="{{form.price.id_for_label}}">Prix Unitaire</label>
+            </div>
+            <div class="input-field col m3 s6">
+                {{ form.montant_restauration }}
+                <label for="{{form.montant_restauration.id_for_label}}">Montant Restauration </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col m3 s6">
+                {{ form.dimension }}
+                <label for="{{form.dimension.id_for_label}}">Dimension</label>
             </div>
             <div class="input-field col m3 s6">
                 {{ form.estate }}
@@ -53,24 +78,6 @@
             <div class="input-field col m3 s6">
                 {{ form.rarety }}
                 <label for="{{form.rarety.id_for_label}}">Rarete</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col m3 s6">
-                {{ form.dimension }}
-                <label for="{{form.dimension.id_for_label}}">Dimension</label>
-            </div>
-            <div class="input-field col m3 s6">
-                {{ form.dv_or_ad }}
-                <label for="{{form.dv_or_ad.id_for_label}}">Depot Vente ou Achat</label>
-            </div>
-            <div class="input-field col m3 s6">
-                {{ form.price }}
-                <label for="{{form.price.id_for_label}}">Prix d'Achat</label>
-            </div>
-            <div class="input-field col m3 s6">
-                {{ form.montant_restauration }}
-                <label for="{{form.montant_restauration.id_for_label}}">Montant Restauration </label>
             </div>
         </div>
 
@@ -98,19 +105,14 @@
                 <label for="{{form.annee.id_for_label}}">Annee </label>
             </div>
             <div class="input-field col m4 s6">
-                {{ form.seller }}
-                <label for="{{form.seller.id_for_label}}">Vendeur</label>
+                {{ form.color }}
+                <label for="{{form.color.id_for_label}}">Couleur</label>
             </div>
+
+
             <div class="input-field col m2 s6">
-                <a href="{% url 'dashboard:clientPage' %}" name="clientID"
-                    class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
-                    data-tooltip="Nouveau Vendeur">
-                    <i class="material-icons right">person_add</i>
-                </a>
-            </div>
-            <div class="input-field col m2 s6">
-                {{ form.quantity }}
-                <label for="{{form.quantity.id_for_label}}">Quantite</label>
+                {{ form.category }}
+                <label for="{{form.category.id_for_label}}">Catégory</label>
             </div>
         </div>
         <div class="col s12">
@@ -138,10 +140,11 @@
                     <span>Facture d'Achat</span>
                 </label>
             </div>
+
             <div class="input-field col m3 s6">
-                <button class="waves-effect black waves-green btn-flat" type="submit">
+                <button class="waves-effect waves-green black btn-flat" type="submit">
                     <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-                    <b class="deep-orange-text  accent-3">Enregistrer</b>
+                    <b class="deep-orange-text accent-3">Enregistrer</b>
                 </button>
             </div>
         </div>

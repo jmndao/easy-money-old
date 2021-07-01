@@ -67,6 +67,22 @@
                     <span>Demande Client</span>
                 </a>
             </li>
+            <li>
+                <a {% if 'devis' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:devisPage' %}">
+                    <span class="material-icons">receipt </span>
+                    <span>Devis</span>
+                </a>
+            </li>
+            <li>
+                <a {% if 'estimation' in request.path  %} class="active" {% else %} class="" {% endif %}
+                    href="{% url 'dashboard:estimationPage' %}">
+                    <!-- <span class="material-icons"> history_edu </span> -->
+                    <span><img src="{% static 'dashboard/images/estimate.png' %}" width="33px" height="33px"
+                            style="background-color:#fff;"></span>
+                    <span>Estimation</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

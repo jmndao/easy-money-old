@@ -9,7 +9,7 @@
     </div>
     <div class="row">
         <div class="col s12">
-            <h4>Produit Déposé: {{ d_vente.produit.name }}</h4> 
+            <h4>Produit Déposé: {{ d_vente.produit.name }}</h4>
         </div>
         <div class="col s6">
             Nom du Déposeur
@@ -18,27 +18,30 @@
             <b>{{ d_vente.produit.seller }}</b>
         </div>
         <div class="col s6">
-            Qualité du produit: 
+            Prix du déposeur:
+        </div>
+        <div class="col s6">
+            <b>{{ d_vente.price|floatformat:0|intcomma }}fcfa</b>
+        </div>
+        <div class="col s6">
+            Qualité du produit:
         </div>
         <div class="col s6">
             <b>{{ d_vente.produit.estate }}</b>
         </div>
         <div class="col s6">
-            Date deposée [à la boutique]: 
+            Date deposée [à la boutique]:
         </div>
         <div class="col s6">
             <b>{{ d_vente.created_date }}</b>
         </div>
-        <div class="col s6">
-            Prix mis:
-        </div>
-        <div class="col s6">
-            <b>{{ d_vente.min_price|floatformat:0|intcomma }}</b>
-        </div>
-        
+
+
     </div>
 
-        <a href="{% url 'dashboard:depotVentePage' %}" class="btn-flat waves-effect">Retourner <i class="material-icons right">keyboard_return</i></a>
-    
+    <a href="{% url 'dashboard:depotVentePage' %}"
+        class="btn-flat black deep-orange-text accent-3 waves-effect">Retourner <i
+            class="material-icons right">keyboard_return</i></a>
+
 </div>
 {% endblock body_content %}

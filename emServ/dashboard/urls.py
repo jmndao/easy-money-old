@@ -8,6 +8,15 @@ app_name = 'dashboard'
 urlpatterns = [
     # For handling bills
     path('invoice/<int:pk>/', d_views.GeneratePDF.as_view(), name = 'invoice'),
+    #Handling the devis page
+    path('devis/', d_views.GenerateDevis.as_view(), name = 'devisPage'),
+    path('devis/supprimer/<int:pk>/', d_views.DevisDeleteView.as_view(), name = 'devisDeletePage'),
+    path('devis/tirer/<int:pk>/', d_views.TirerDevis.as_view(), name = 'tirerDevisPage'),
+    #Handling the estimation page
+    path('estimation/', d_views.EstimationPage.as_view(), name = 'estimationPage'),
+    path('estimation/resultat/<int:pk>/', d_views.EstimationResultPage.as_view(), name = 'estimationResultPage'),
+    path('estimation/supprimer/<int:pk>/', d_views.EstimationDeletePage.as_view(), name = 'estimationDeletePage'),
+    #This is the home page
     path('', d_views.IndexView.as_view(), name="homePage"),
     # Client Routers
     path('client/', d_views.ClientView.as_view(), name="clientPage"),
