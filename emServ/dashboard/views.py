@@ -5,7 +5,8 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import (TemplateView,
-                                  DetailView)
+                                  DetailView,
+                                  ListView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
@@ -167,15 +168,9 @@ class ClientRequestDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, Delet
 
 
 
-class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
+class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, Utils):
 
     template_name = 'dashboard/achat_direct/achat_direct.html'
-    model = AchatDirectModel
-    fields = '__all__'
-    
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -220,14 +215,8 @@ class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteV
 
 
 # First, creating the DepotVenteView
-class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
+class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, Utils):
     template_name = 'dashboard/depot_vente/depot_vente.html'
-    model = DepotVenteModel
-    fields = '__all__'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

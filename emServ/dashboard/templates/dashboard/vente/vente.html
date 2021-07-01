@@ -1,6 +1,7 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% load humanize %}
+{% load product_tags %}
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
@@ -108,7 +109,16 @@
 
 <!-- End graph -->
 
-<!-------- Modal -->
+<!-- Modal Structure -->
+<div id="productDetail" class="modal">
+  <div class="modal-content">
+    <h4>{{ productDetail.name }}</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
+</div>
 
 <div class="card-panel deep-orange accent-3 white-text big-text">
   <b>Formulaire de Vente</b>
@@ -250,7 +260,15 @@
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script>
-  var dataset_vente = JSON.parse('{{dataset_vente}}')
+  var dataset_vente = JSON.parse('{{dataset_vente}}');
+  
+  $(document).ready(function(){
+    $('#id_produit').on('change', {
+      console.log($(this)) });
+    $('select').formSelect();
+  });
+  
+
 </script>
 <script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>

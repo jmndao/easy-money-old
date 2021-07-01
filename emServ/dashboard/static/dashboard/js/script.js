@@ -28,3 +28,6 @@ M.Dropdown.init(dropdown, {
     gutter: 0, // Spacing from edge
     belowOrigin: true, // Displays dropdown
 });
+
+const chips = document.querySelectorAll('.chips');
+M.Chips.init(chips, {});
