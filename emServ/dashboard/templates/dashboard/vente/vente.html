@@ -222,7 +222,7 @@
       <div class="table-header">
         <span class="table-title">Liste des Ventes</span>
         <div class="actions">
-          <a href="" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+          <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
       </div>
       <table id="datatable" class="responsive-table">
@@ -243,20 +243,14 @@
           {% for v in vente %}
           <tr>
             <td> {{ v.client.fname }} {{ v.client.lname }}</td>
-            <td> {{ v.produit.name }} ({{ v.produit.dv_or_ad}}) </td>
+            <td> {{ v.produit.name }} </td>
             <td> {{ v.quantity }}</td>
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>
-            <td> {{ v.created_date}} </td>
-            <td class="actions">
+            <td> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
+            <td class="center">
               <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-              <a href="{% url 'dashboard:venteEditPage' v.pk %}"
-                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier"><span class="material-icons">update</span></a>
-              <a href="{% url 'dashboard:venteDeletePage' v.pk %}"
-                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
             </td>
             <td>
               <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">

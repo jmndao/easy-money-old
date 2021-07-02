@@ -1,19 +1,19 @@
 from django import forms
-from dashboard.models import ProductModel,ClientModel,DepotVenteStockModel
+from dashboard.models import (VenteModel, ProductModel)
 
 
+class VenteForm(forms.ModelForm):
 
-class ProductModelForm(forms.Form):
     class Meta:
-        model = ProductModel
+        model = VenteModel
         fields = '__all__'
 
-class DepotVenteModel(forms.Form):
-    class Meta:
-        model = DepotVenteStockModel
-        fields = [
-            'nom_vendeur',
-            'produit',
-            'quantite',
-            'prix_d_depot'
-        ]
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(VenteForm, self).__init__(*args, **kwargs)
+        if self.user.is_superuser:
+            self.fields['produit'].queryset = ProductModel.objects.filter(
+                quantity__gt=0)
+        else:
+            self.fields['produit'].queryset = ProductModel.objects.filter(
+                quantity__gt=0, shop__owner__user=self.user)
