@@ -11,24 +11,19 @@
 {% block title %} {{ title }} {% endblock title %}
 
 {% block body_content %}
-<div class="card-panel deep-orange accent-3">
-    <div class="card-container center-align">
-        <h4 class="deep-orange-text accent-3 white-text ">Vous pouvez toujours ajouter un nouveau client.</h4>
-        <p class="white-text lighten-4">remplissez seul les informations que vous avez sur le client</p>
-    </div>
-</div>
+
 <div class="row with-gaps">
     <div class=" black white-text width-border valign-wrapper z-depth-2 ">
         <div class="col s8 add_pd">
             <h4 class="deep-orange-text accent-3">Effectuer un devis en dessous</h4>
-            <p>Voila le nombre total de devis deja fait</p>
+            <p>Voilà le nombre total de devis dejà fait</p>
         </div>
         <div class="col s4  center-align">
             <div class="icon z-depth-2">
-                <i class="material-icons medium deep-orange-text accent-3 separate_two">people</i>
+                <i class="material-icons medium white-text  separate_two">receipt</i>
             </div>
             <div class="ajouter ">
-                <p class="deep-orange-text accent-3 big">{{c_number|stringformat:"03d" }}</p>
+                <p class=" big2 white-text">{{d_number|stringformat:"03d" }}</p>
             </div>
         </div>
     </div>
@@ -117,13 +112,13 @@
                         <th class="black-text">{{ devis.created_date|date:"SHORT_DATE_FORMAT" }}</th>
                         <th>
                             <a href="{% url 'dashboard:tirerDevisPage' devis.pk %}"
-                                class="green-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                                class="deep-orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="tirer"><span class="material-icons">receipt</span></a>
                         </th>
                         <th>
                             <a href="{% url 'dashboard:devisDeletePage' devis.pk %}"
-                                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+                                class=" waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Supprimer"><span class="material-icons grblackey-text">delete</span></a>
                         </th>
                     </tr>
                     {% endfor %}

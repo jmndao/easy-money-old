@@ -48,6 +48,12 @@ RARETE = [
     ('TRES_COURANT', 'Tres courant')
 ]
 
+CHARGEUR = [
+    ('OUI','Oui'),
+    ('NON','Non'),
+    ('PAS_BESOIN','Pas_besoin'),
+]
+
 DIMENSION = [
     ('PETIT', 'Petit'),
     ('MOYEN', 'Moyen'),
@@ -354,9 +360,13 @@ class EstimationModel(models.Model):
     dimension = models.CharField(
         max_length=20, choices=DIMENSION, null=True, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
-    charger = models.BooleanField(default=False, )
+    charger = models.CharField(max_length=20, choices=CHARGEUR, null=True, blank=False )
     original_box = models.BooleanField(default=False)
     year_of_release = models.IntegerField(null=True, blank=True)
+    numero = models.CharField(max_length=20, blank=True, null=True)
+    address = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+
     def save(self, *args, **kwargs):
         self.product_name = self.product_name.lower()
         self.used_price = self.new_price / 2
