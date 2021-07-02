@@ -21,9 +21,13 @@ body {
     list-style-type: none;
     text-decoration: none;
 }
-.easy-sidebar{
-    overflow: scroll;
-}/* Track */
+
+.easy-sidebar {
+    overflow-y: scroll;
+}
+
+
+/* Track */
 
 .easy-sidebar-brand {
     height: 8vh;
@@ -38,7 +42,6 @@ body {
 
 .easy-sidebar-menu {
     margin-top: 1rem;
-    overflow: scroll;
 }
 
 .easy-sidebar-menu li {
@@ -215,14 +218,6 @@ header label span {
 
 .user-inner-wrapper {
     padding: 10px 0;
-}
-ul .add_scroll{
-    overflow: scroll;
-    height: 400px;
-}
-.add_scroll {
-    
-    overflow-y: auto;
 }
 
 .card-panel-header__wrapper {
@@ -401,7 +396,6 @@ i.right {
     margin-bottom: 30px;
 }
 
-
 .deep-orange-text.big {
     color: #ff5722 !important;
     font-size: 28px;
@@ -414,6 +408,7 @@ i.right {
 .row .col.s8.add_pd {
     padding-bottom: 30px;
 }
+
 .row .col.m4.s12.with_border {
     width: 33.3333333333%;
     margin-left: auto;
@@ -434,7 +429,8 @@ i.right {
 
 
 /* Hndling the color of the border and text when on focus  */
-.card-panel.resize{
+
+.card-panel.resize {
     position: relative;
     margin: 0.5rem 0 1rem 0;
     background-color: #fff;
@@ -444,6 +440,7 @@ i.right {
     transition: box-shadow .25s, -webkit-box-shadow .25s;
     border-radius: 10px;
 }
+
 .card.resize {
     position: relative;
     margin: 0.5rem 0 1rem 0;
@@ -662,7 +659,7 @@ element.style {
     }
     .with-gaps {
         display: grid;
-        grid-template-columns:1fr; 
+        grid-template-columns: 1fr;
     }
 }
 

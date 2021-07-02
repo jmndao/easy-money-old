@@ -1,43 +1,56 @@
-{% extends 'dashboard/base.html' %}
-{% load static %}
-
-
-{% block stylesheets %}
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
-{% endblock stylesheets %}
-
-{% block title %} {{ title }} {% endblock title %}
-
-{% block body_content %}
+{% extends 'dashboard/base.html' %} {% load static %} {% block stylesheets %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'dashboard/datatables/datatables.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'dashboard/css/addon_datatables.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'dashboard/css/style.css' %}"
+/>
+{% endblock stylesheets%} {% block title %} {{ title }} {% endblock title %}
+{%block body_content %}
 
 <div class="row with-gaps">
-  <div class=" black white-text width-border valign-wrapper z-depth-2 ">
+  <div class="black white-text width-border valign-wrapper z-depth-2">
     <div class="col s8 add_pd">
       <h4 class="deep-orange-text accent-3">Total Client</h4>
       <p>Voila le nombre total de clients ayant visité</p>
     </div>
-    <div class="col s4  center-align">
+    <div class="col s4 center-align">
       <div class="icon z-depth-2">
-        <i class="material-icons medium deep-orange-text accent-3 separate_two">people</i>
+        <i class="material-icons medium deep-orange-text accent-3 separate_two"
+          >people</i
+        >
       </div>
-      <div class="ajouter ">
-        <p class="deep-orange-text accent-3 big">{{c_number|stringformat:"03d" }}</p>
+      <div class="ajouter">
+        <p class="deep-orange-text accent-3 big">
+          {{c_number|stringformat:"03d" }}
+        </p>
       </div>
     </div>
   </div>
 </div>
 <div class="card-panel deep-orange accent-3">
   <div class="card-container center-align">
-    <h4 class="deep-orange-text accent-3 white-text ">Vous pouvez toujours ajouter un nouveau client.</h4>
-    <p class="white-text lighten-4">remplissez seul les informations que vous avez sur le client</p>
+    <h4 class="deep-orange-text accent-3 white-text">
+      Vous pouvez toujours ajouter un nouveau client.
+    </h4>
+    <p class="white-text lighten-4">
+      remplissez seul les informations que vous avez sur le client
+    </p>
   </div>
 </div>
-<div class="card-panel ">
+<div class="card-panel">
   <form action="#" method="post">
     {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}">
+    <input type="hidden" name="next" value="{{ request.path }}" />
     <!--- Form -->
     {% if user.is_superuser %}
     <div class="row">
@@ -52,18 +65,20 @@
     </div>
     {% endif %}
     <div class="row">
-      <div class="input-field col m4 s12">
+      <div class="input-field col m6 s12">
         {{ form.fname }}
         <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
       </div>
-      <div class="input-field col m4 s12">
+      <div class="input-field col m6 s12">
         {{ form.lname }}
         <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
       </div>
+      {% comment %}
       <div class="input-field col m4 s12">
         {{ form.passage }}
         <label for="{{ form.passage.id_for_label }}">Nombre de passage</label>
       </div>
+      {% endcomment %}
     </div>
     <div class="row">
       <div class="input-field col m4 s6">
@@ -81,10 +96,11 @@
     </div>
 
     <div class="row">
-
       <div class="input-field col m4 s6">
         {{ form.vente_or_achat }}
-        <label for="{{ form.vene_or_achat.id_for_label }}">Vente ou Achat</label>
+        <label for="{{ form.vene_or_achat.id_for_label }}"
+          >Vente ou Achat</label
+        >
       </div>
 
       <div class="input-field col m4 s6">
@@ -99,7 +115,9 @@
     <div class="row">
       <div class="col m3 s6 right">
         <button class="waves-effect waves-green black btn-flat" type="submit">
-          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+          <i class="material-icons right deep-orange-text accent-3 right"
+            >thumb_up_alt</i
+          >
           <b class="deep-orange-text accent-3">Enregistrer</b>
         </button>
       </div>
@@ -114,7 +132,9 @@
         <span class="table-title">Liste Des Clients</span>
         <div class="actions">
           <!-- Here is where we should make the linking-->
-          <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+          <a href="#man" class="search-toggle waves-effect btn-flat nopadding"
+            ><i class="material-icons">search</i></a
+          >
         </div>
       </div>
       <table id="datatable" class="responsive-table">
@@ -131,21 +151,35 @@
         <tbody>
           {% for client in clients %}
           <tr>
-            <th class="black-text"> {{ client.fname }}</th>
+            <th class="black-text">{{ client.fname }}</th>
             <th class="black-text">{{ client.lname }}</th>
             <th class="black-text">{{ client.numero }}</th>
             <th class="black-text">{{ client.passage }}</th>
-            <th class="black-text">{{ client.created_date|date:"SHORT_DATE_FORMAT" }}</th>
+            <th class="black-text">
+              {{ client.created_date|date:"SHORT_DATE_FORMAT" }}
+            </th>
             <td class="actions black-text">
-              <a href="{% url 'dashboard:clientDetailPage' client.pk %}"
-                class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-              <a href="{% url 'dashboard:clientEditPage' client.pk %}"
-                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier"><span class="material-icons">update</span></a>
-              <a href="{% url 'dashboard:clientDeletePage' client.pk %}"
-                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+              <a
+                href="{% url 'dashboard:clientDetailPage' client.pk %}"
+                class="orange-text darken-4 waves-effect btn-flat tooltipped"
+                data-position="left"
+                data-tooltip="Voir"
+                ><span class="material-icons">visibility</span></a
+              >
+              <a
+                href="{% url 'dashboard:clientEditPage' client.pk %}"
+                class="green-text darken-4 waves-effect btn-flat tooltipped"
+                data-position="left"
+                data-tooltip="Modifier"
+                ><span class="material-icons">update</span></a
+              >
+              <a
+                href="{% url 'dashboard:clientDeletePage' client.pk %}"
+                class="red-text accent-4 waves-effect btn-flat tooltipped"
+                data-position="left"
+                data-tooltip="Supprimer"
+                ><span class="material-icons">delete</span></a
+              >
             </td>
           </tr>
           {% endfor %}
@@ -165,14 +199,24 @@
   </div>
 </div>
 
-{% endblock body_content %}
-
-{% block javascripts %}
+{% endblock body_content %} {% block javascripts %}
 <script>
-  var dataset_client = JSON.parse('{{dataset_client}}')
+  var dataset_client = JSON.parse("{{dataset_client}}");
 </script>
-<script type="text/javascript" src="{% static 'dashboard/js/chartClient.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/chartClient.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/datatables/datatables.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/main.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/materialize_setup.js' %}"
+></script>
 {% endblock javascripts %}

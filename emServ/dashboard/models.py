@@ -3,7 +3,6 @@ from django.urls import reverse
 from accounts.models import UserProfile
 
 
-
 # Create your models here.
 
 SEXE = [
@@ -49,9 +48,9 @@ RARETE = [
 ]
 
 CHARGEUR = [
-    ('OUI','Oui'),
-    ('NON','Non'),
-    ('PAS_BESOIN','Pas_besoin'),
+    ('OUI', 'Oui'),
+    ('NON', 'Non'),
+    ('PAS_BESOIN', 'Pas_besoin'),
 ]
 
 DIMENSION = [
@@ -63,6 +62,11 @@ DIMENSION = [
 ACHATVENTE = [
     ('ACHAT', 'Achat'),
     ('VENTE', 'Vente')
+]
+
+CLIENT = [
+    ('CR', 'Client Regulier'),
+    ('CV', 'Vendeur')
 ]
 
 
@@ -119,14 +123,14 @@ class ClientModel(models.Model):
     email = models.EmailField(blank=True, null=True)
     passage = models.IntegerField(default=0, blank=True, null=True)
     vente_or_achat = models.CharField(
-        max_length=100, choices=ACHATVENTE, default="ACHAT")
+        max_length=100, choices=CLIENT, default="CR")
     created_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ['fname', 'lname', 'numero']
 
-    def get_passage_count(self):
-        return self.passage
+    def new_passage(self):
+        self.passage += 1
 
     def __str__(self):
         return '{} {}'.format(self.fname, self.lname)
@@ -192,7 +196,8 @@ class ProductModel(models.Model):
     ram = models.IntegerField(null=True, blank=True)
     charger = models.BooleanField(default=False)
     original_box = models.BooleanField(default=False)
-    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    shop = models.ForeignKey(
+        Shop, on_delete=models.SET_NULL, null=True, blank=True)
     seller = models.ForeignKey(
         ClientModel, null=True, on_delete=models.SET_NULL)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -203,8 +208,9 @@ class ProductModel(models.Model):
         self.name = self.name.lower()
         self.price_total = self.price * self.quantity
         return super(ProductModel, self).save(*args, **kwargs)
+
     def __str__(self):
-        return '{} [{}] ({})'.format(self.name,self.dv_or_ad,self.quantity)
+        return '{} /{} /{} / {} '.format(self.name, self.dv_or_ad, self.quantity, self.price)
 
 
 # Model --  Achat Direct
@@ -219,13 +225,14 @@ class AchatDirectModel(models.Model):
             - created_date      : date and time of the sale
             - price             : the price the product has been purchased
     """
-    
+
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
     client = models.ForeignKey(
         ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return '{}[{}]'.format(self.produit.seller, self.produit.name)
 
@@ -282,12 +289,11 @@ class VenteModel(models.Model):
         blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=True, blank=True, default=1)
+
     def save(self, *args, **kwargs):
         self.price_total = self.price * self.quantity
         return super(VenteModel, self).save(*args, **kwargs)
-    
 
-        
     def __str__(self):
         return '{} {}'.format(self.produit.name, self.price)
 
@@ -312,7 +318,7 @@ class ClientRequestModel(models.Model):
     description = models.TextField(blank=True, null=True)
     found = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
- 
+
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)
 
@@ -323,28 +329,31 @@ class DevisModel(models.Model):
         Shop, on_delete=models.CASCADE, blank=True, null=True)
     product_name = models.CharField(max_length=100)
     description = models.TextField(max_length=300, null=True, blank=True)
-    quantity = models.IntegerField(blank=False, null=False, default = 1)
+    quantity = models.IntegerField(blank=False, null=False, default=1)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
     client = models.ForeignKey(
         ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
-    created_date = models.DateTimeField(auto_now_add= True)
+    created_date = models.DateTimeField(auto_now_add=True)
+
     def save(self, *args, **kwargs):
         self.product_name = self.product_name.lower()
         self.price_total = self.price * self.quantity
         return super(DevisModel, self).save(*args, **kwargs)
+
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.product_name)
 
-#Estimation Model 
+# Estimation Model
+
 
 class EstimationModel(models.Model):
     shop = models.ForeignKey(
         Shop, on_delete=models.CASCADE, blank=True, null=True)
     client_name = models.CharField(max_length=100, blank=True,
-                             null=True, verbose_name="First Name")
+                                   null=True, verbose_name="First Name")
     product_name = models.CharField(max_length=100)
     new_price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=False, null=True, verbose_name="Prix neuf")
@@ -360,7 +369,8 @@ class EstimationModel(models.Model):
     dimension = models.CharField(
         max_length=20, choices=DIMENSION, null=True, blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
-    charger = models.CharField(max_length=20, choices=CHARGEUR, null=True, blank=False )
+    charger = models.CharField(
+        max_length=20, choices=CHARGEUR, null=True, blank=False)
     original_box = models.BooleanField(default=False)
     year_of_release = models.IntegerField(null=True, blank=True)
     numero = models.CharField(max_length=20, blank=True, null=True)
@@ -371,5 +381,6 @@ class EstimationModel(models.Model):
         self.product_name = self.product_name.lower()
         self.used_price = self.new_price / 2
         return super(EstimationModel, self).save(*args, **kwargs)
+
     def __str__(self):
         return '{}'.format(self.product_name)
