@@ -33,14 +33,10 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        uname = self.request.user.username
+        user = self.request.user
         context = super().get_context_data(**kwargs)
         context['n_shops'] = Shop.objects.all().count()
-        context['benefice_day'] = self.benefice_per_day(
-            VenteModel, ProductModel)
-        context['benefice_month'] = self.benefice_per_month(
-            VenteModel, ProductModel)
-
+    
         context["dataset_achat"] = self.chartObject(
             VenteModel, key='price_total', dt_col_name='created_date')
         context['dataset_depot'] = self.chartObject(
@@ -60,19 +56,23 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
                 'produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context["n_product"] = ProductModel.objects.all().count()
             context["n_client"] = ClientModel.objects.all().count()
+            context['benefice_day'] = self.benefice_per_day(VenteModel, ProductModel)
+            context['benefice_month'] = self.benefice_per_month(VenteModel, ProductModel)
         else:
             context["achat_directs"] = AchatDirectModel.objects.filter(
-                produit__shop__owner__user__username=uname).order_by('-created_date')
+                produit__shop__owner__user__username=user.username).order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(
-                produit__shop__owner__user__username=uname).order_by('-created_date')
-            context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).values(
+                produit__shop__owner__user__username=user.username).order_by('-created_date')
+            context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=user.username).values(
                 'produit__name').annotate(freq=Count('produit__name')).order_by()
             context["tendance_achat_direct"] = AchatDirectModel.objects.filter(
-                produit__shop__owner__user__username=uname).values('produit__name').annotate(freq=Count('produit__name')).order_by()
+                produit__shop__owner__user__username=user.username).values('produit__name').annotate(freq=Count('produit__name')).order_by()
             context["n_product"] = ProductModel.objects.filter(
-                shop__owner__user__username=uname).count()
+                shop__owner__user__username=user.username).count()
             context["n_client"] = ClientModel.objects.filter(
-                shop__owner__user__username=uname).count()
+                shop__owner__user__username=user.username).count()
+            context['benefice_day'] = self.benefice_per_day(VenteModel, ProductModel, is_superuser=False,user=user)
+            context['benefice_month'] = self.benefice_per_month(VenteModel, ProductModel, is_superuser=False, user=user)
 
         # Having the benefice
 
