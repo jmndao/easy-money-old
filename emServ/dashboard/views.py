@@ -576,6 +576,7 @@ class GenerateDevis(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['devis'] = self.a = DevisModel.objects.all()
+        context['d_number'] = self.a.count()
         # context['f_number'] = self.a.count()
         return context
 
@@ -650,6 +651,7 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         else:
             percentage_1 = None
 
+        i_price = i_price - i_price * percentage_1
         percentage_2 = 0
         if my_estimation.obsolescence == 'LENTE':
             percentage_2 = 0
@@ -661,55 +663,76 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
             percentage_2 = 0.2
         else:
             percentage_2 = None
+        i_price = i_price - i_price * percentage_2
 
         percentage_3 = 0
-        if my_estimation.original_box == True:
+        if my_estimation.rarety == 'RARE':
             percentage_3 = 0
-        else:
+        elif my_estimation.rarety == 'COURANT':
             percentage_3 = 0.05
+        elif my_estimation.rarety == 'TRES_COURANT':
+            percentage_3 = 0.1
+        else:
+            percentage_3 = None
+
+        i_price = i_price - i_price * percentage_3
 
         percentage_4 = 0
-        if my_estimation.rarety == 'RARE':
+        if my_estimation.original_box == True:
             percentage_4 = 0
-        elif my_estimation.rarety == 'COURANT':
-            percentage_4 = 0.05
-        elif my_estimation.rarety == 'TRES_COURANT':
-            percentage_4 = 0.1
         else:
-            percentage_4 = None
+            percentage_4 = 0.05
+
+        i_price = i_price - i_price * percentage_4
 
         percentage_5 = 0
-        if my_estimation.charger == True:
+        if my_estimation.charger == 'OUI':
+            percentage_5 = 0
+        elif my_estimation.charger == 'NON':
+            percentage_5 = 0.05
+        elif my_estimation.charger == 'PAS_BESOIN':
             percentage_5 = 0
         else:
-            percentage_5 = 0.15
+            percentage_5 = 0
+        i_price = i_price - i_price * percentage_5
 
         percentage_6 = 0
         if my_estimation.sale_bill == True:
             percentage_6 = 0
         else:
             percentage_6 = 0.05
+        i_price = i_price - i_price * percentage_6
 
         percentage_7 = 0
-        if my_estimation.rarety == 'RARE':
+        if my_estimation.dimension == 'PETIT':
             percentage_7 = 0
-        elif my_estimation.rarety == 'COURANT':
+        elif my_estimation.dimension == 'MOYEN':
             percentage_7 = 0.05
-        elif my_estimation.rarety == 'TRES_COURANT':
+        elif my_estimation.dimension == 'GRAND':
             percentage_7 = 0.1
         else:
             percentage_7 = None
+        i_price = i_price - i_price * percentage_7
 
-        final_price = i_price - i_price * (percentage_1 * percentage_2 *
-                                           percentage_3 * percentage_4 * percentage_5 * percentage_6 * percentage_7)
-        return final_price
+        return int(i_price)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['estimates'] = self.e = EstimationModel.objects.get(
+        context['all_devis'] = self.a = EstimationModel.objects.all()
+        context['e_number'] = self.a.count()
+        context['estimates'] = self.q = EstimationModel.objects.get(
             pk=self.kwargs["pk"])
         context['estimation_result'] = self.estimation(EstimationModel)
+        context['c_fname'] = self.q.client_name
+        context['c_address'] = self.q.address
+        context['c_tel'] = self.q.numero
+        context['v_date'] = date = self.q.created_date
+        date = date.strftime("%B-%d")
+        context['v_date'] = date
+        context['v_product'] = self.q.product_name
         return context
+    
+
 
 
 class EstimationDeletePage(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):

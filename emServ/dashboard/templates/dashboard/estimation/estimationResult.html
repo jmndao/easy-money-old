@@ -1,3 +1,250 @@
-<h1>It is working</h1>
+<!-- Static assets -->
+{% load static %}
 
-{{ estimation_result}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Devis</title>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" charset="utf-8"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js" charset="utf-8"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="invoice.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+
+
+    <style>
+        .fd {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .row_pd {
+            padding: 20px 130px 50px;
+        }
+
+        .row {
+            border: none;
+        }
+
+        .inline {
+            display: inline-block;
+            width: 150px;
+            font-size: 22px;
+            font-weight: bolder;
+            height: 42px;
+            border-bottom-right-radius: 15px;
+            border-top-right-radius: 15px;
+            padding-left: 10px;
+            padding-top: 5px;
+
+        }
+
+
+        .image img {
+            margin-left: 50px;
+        }
+
+        body {
+            font-size: 22px;
+            height: 100%;
+
+        }
+
+        .row .col {
+            float: left;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 0 !important;
+            min-height: 1px;
+        }
+
+        table {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        table {
+            border: 3px solid;
+        }
+
+        table th,
+        table td {
+            border: 3px solid;
+        }
+
+        .payer {
+            margin-top: 20px;
+            border: 3px solid #ff3d00;
+
+        }
+
+        .hide {
+            visibility: hidden;
+        }
+
+        .line-height {
+            line-height: .8;
+        }
+
+        .pd {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body id="capture">
+    <div class="row card-panel row_pd ttl" title="Faites un click pour télécharger la facture sous format bdf">
+        <!-- This is the start of the first row -->
+        <div class="row html_to_pdf">
+            <div class="card-content col s7 line-height">
+                <div class="image">
+                    <img src="{% static 'dashboard/images/logo.png' %}" alt="Easy Money Logo" width="80" height="80">
+                </div>
+                <p> <b> Easy Money Sarl {{client}}</b></p>
+                <p><b> Centre Commercial Saly Center</b></p>
+                <p><b>+221 77 457 49 25</b></p>
+                <p><b> easymoneysaly@gmail.com</b></p>
+            </div>
+            <div class="col s5">
+                <div class="card">
+                    <div class=" card-content card-t deep-orange accent-3 ">
+                        <span class="card-title white-text center-align">
+                            <h4>DEVIS</h4>
+                    </div>
+                    <div class="divider"></div>
+                    <div class=" row black white-text fd">
+                        <p class="row col s6 pd ">
+                            <span class="">
+                                <span>&#8470; </span>DEVIS</span><br><br>
+                            <span class="f_number"> {{e_number}}</span>
+                        </p>
+                        <p class="col s6 pd">
+                            <span class=""> DATE DEVIS</span><br><br>
+                            <span class=""> {{v_date}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- This is the start of the second row -->
+        <div class="row">
+            <div class="card-content col s8 l">
+
+                <p class="black white-text inline">devis à: </p>
+                <div class="line-height">
+                    <br>
+                    <p> <b> {{ c_fname }}</b></p>
+                    <p> <b>{% if estimate.address %}{{ c_address }}{% else %}{% endif %}</b></p>
+
+                    <p> <b>{% if estimate.telephone %}{{ c_tel }}{% else %}{% endif %}</b></p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- This is where a small table starts -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Description Produit</th>
+                    <th>Prix Proposer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> {{v_product}} </td>
+                    <td> {{estimation_result|floatformat:0}} fcfa </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="row">
+            <div class="row">
+                <div class="col s6 m0"></div>
+                <div class="col s6 m0">
+                    <table>
+                        <tbody>
+                            <tr>
+
+                                <td> TOTAL &ensp; HT</td>
+                                <th>{{estimation_result|floatformat:0}} fcfa </th>
+                            </tr>
+                            <tr>
+
+                                <td> TVA &ensp;0%</td>
+                                <th> 0 fcfa </th>
+                            </tr>
+
+                            <tr>
+
+                                <td> TOTAL &ensp; TTC</td>
+                                <th>{{estimation_result|floatformat:0}} fcfa </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col s7"></div>
+                <div class="col s5 payer">
+                    <p> Montant à payer :&ensp; <b>{{estimation_result|floatformat:0}} fcfa</b></p>
+                </div>
+            </div>
+
+            <!-- Le Nom et la Signature -->
+            <footer>
+                <div class="row">
+                    <div class="col 12">
+                        <p class="">Merci pour la <b> Confiance </b></p>
+                    </div>
+
+                </div>
+            </footer>
+        </div>
+
+        <!-- <button onclick="window.print()" id="doc" type="button" name="button">
+      click me
+    </button>
+  -->
+        <script src="jspdf.js"></script>
+        <script>
+            var f_number = document.getElementsByClassName('f_number');
+            f_number = f_number.innerHTML + '.pdf';
+
+            function to_pdf() {
+                var data = document.getElementById('capture');
+                html2canvas(data).then(canvas => {
+                    var imgWidth = 208;
+                    var imgHeight = canvas.height * imgWidth / canvas.width;
+                    const contentDataURL = canvas.toDataURL('image/png')
+                    let pdf = new jspdf('p', 'mm', 'a4');
+                    var position = 0;
+                    pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+                    pdf.save('devis.pdf');
+
+                });
+            }
+            const body = document.body;
+            //body.onclick = to_pdf();
+        </script>
+
+</body>
+
+</html>
