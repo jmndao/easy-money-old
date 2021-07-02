@@ -32,32 +32,32 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
     template_name = 'dashboard/index.html'
 
     # benefice par mois
-    def benefice_per_day(self, db_vente, db_depot, db_achat):
-        """
-        Calculate the Total benefice of the Shop:
-            db_vente : is the Sales Model object (VenteModel)
-            db_depot : is the Depot Vente Model object (DepotVenteModel)
-            db_achat : is the total sum of all Achat Direct Model (AchatDirectModel)
-        """
-        today = datetime.date.today()
-        vente = db_vente.objects.filter(
-            created_date__day=today.day)
-        depot = db_depot.objects.filter(
-            created_date__day=today.day)
-        achat = db_achat.objects.filter(
-            created_date__day=today.day)
+    # def benefice_per_day(self, db_vente, db_depot, db_achat):
+    #     """
+    #     Calculate the Total benefice of the Shop:
+    #         db_vente : is the Sales Model object (VenteModel)
+    #         db_depot : is the Depot Vente Model object (DepotVenteModel)
+    #         db_achat : is the total sum of all Achat Direct Model (AchatDirectModel)
+    #     """
+    #     today = datetime.date.today()
+    #     vente = db_vente.objects.filter(
+    #         created_date__day=today.day)
+    #     depot = db_depot.objects.filter(
+    #         created_date__day=today.day)
+    #     achat = db_achat.objects.filter(
+    #         created_date__day=today.day)
             
-        # sum_vente = sum(
-        #     [p.price_total for p in vente if p.price_total != None])
-        # sum_depot = sum(
-        #     [p.produit.price_total for p in depot if p.produit.price_total != None])
-        # sum_achat = sum(
-        #     [p.produit.price_total for p in achat if p.produit.price_total != None])
-        sales = sum(
-            [p.price_total for p in vente if p.price_total != None])
-        context['benefice'] = self.benefice_vente(
-            AchatDirectModel, DepotVenteModel, sales)
-        return (sum_vente - (sum_depot + sum_achat))
+    #     # sum_vente = sum(
+    #     #     [p.price_total for p in vente if p.price_total != None])
+    #     # sum_depot = sum(
+    #     #     [p.produit.price_total for p in depot if p.produit.price_total != None])
+    #     # sum_achat = sum(
+    #     #     [p.produit.price_total for p in achat if p.produit.price_total != None])
+    #     sales = sum(
+    #         [p.price_total for p in vente if p.price_total != None])
+    #     # context['benefice'] = self.benefice_vente(
+    #     #     AchatDirectModel, DepotVenteModel, sales)
+    #     return (sum_vente - (sum_depot + sum_achat))
 
     def benefice_per_month(self, db_vente, db_depot, db_achat):
         """
@@ -86,8 +86,8 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         uname = self.request.user.username
         context = super().get_context_data(**kwargs)
         context['n_shops'] = Shop.objects.all().count()
-        context['benefice_day'] = self.benefice_per_day(
-            VenteModel, DepotVenteModel, AchatDirectModel)
+        # context['benefice_day'] = self.benefice_per_day(
+            # VenteModel, DepotVenteModel, AchatDirectModel)
         context['benefice_month'] = self.benefice_per_month(
             VenteModel, DepotVenteModel, AchatDirectModel)
 

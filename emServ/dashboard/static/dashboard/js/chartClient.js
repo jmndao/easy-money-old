@@ -6,6 +6,7 @@ var dataClient = {
         label: 'Fréquence clientèle',
         data: dataset_client['data'],
         borderWidth: 2,
+        // fill = false,
         borderColor: [
             'rgb(255, 61, 0)'
         ]
