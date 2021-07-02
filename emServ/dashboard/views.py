@@ -50,12 +50,17 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             created_date__day=today.day)
         achat = db_achat.objects.filter(
             created_date__day=today.day)
-        sum_vente = sum(
+            
+        # sum_vente = sum(
+        #     [p.price_total for p in vente if p.price_total != None])
+        # sum_depot = sum(
+        #     [p.produit.price_total for p in depot if p.produit.price_total != None])
+        # sum_achat = sum(
+        #     [p.produit.price_total for p in achat if p.produit.price_total != None])
+        sales = sum(
             [p.price_total for p in vente if p.price_total != None])
-        sum_depot = sum(
-            [p.produit.price_total for p in depot if p.produit.price_total != None])
-        sum_achat = sum(
-            [p.produit.price_total for p in achat if p.produit.price_total != None])
+        context['benefice'] = self.benefice_vente(
+            AchatDirectModel, DepotVenteModel, sales)
         return (sum_vente - (sum_depot + sum_achat))
 
     def benefice_per_month(self, db_vente, db_depot, db_achat):

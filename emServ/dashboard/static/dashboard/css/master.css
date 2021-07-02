@@ -471,7 +471,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #ff3d00;
     -webkit-box-shadow: 0 1px 0 0 #ff3d00;
     box-shadow: 0 1px 0 0 #ff3d00;
-    color: #fff;
+    color: #ff3d00;
 }
 
 .select-wrapper input.select-dropdown {
@@ -493,7 +493,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
     -ms-user-select: none;
     user-select: none;
     z-index: 1;
-    color: white;
+    color: #ff3d00;
 }
 
 input:not([type]):focus:not([readonly])+label,

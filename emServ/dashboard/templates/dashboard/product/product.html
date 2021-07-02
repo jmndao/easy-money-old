@@ -167,7 +167,7 @@
                     <tr>
                         <th>Nom</th>
                         <th>DV or AD</th>
-                        <th>prix total</th>
+                        <th>prix unitaire</th>
                         <th>quantité</th>
                         <th>Vendu</th>
                         <th>Actions</th>
@@ -178,7 +178,7 @@
                     <tr>
                         <th class="black-text">{{ product.name }}</th>
                         <th class="black-text">{{ product.dv_or_ad }}</th>
-                        <th class="black-text">{{ product.price }}</th>
+                        <th class="black-text">{{ product.price|floatformat}}</th> }}</th>
                         <th class="black-text">{{ product.quantity }}</th>
                         <th class="black-text">{{ product.sold|yesno:"OUI, NON" }}</th>
                         <td class="actions black-text">
