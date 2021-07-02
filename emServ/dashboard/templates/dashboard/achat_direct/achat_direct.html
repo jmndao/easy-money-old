@@ -99,56 +99,6 @@
 
 <!-- End graph -->
 
-<div class="card-panel deep-orange accent-3 white-text big-text">
-  <b>Formulaire d'Achat</b>
-  <i class="material-icons right">sell</i>
-</div>
-<div class="card-panel">
-  <form action="" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <!--- Form -->
-    <div class="row" id="venteID">
-      <div class="input-field col s10">
-        {{ form.produit }}
-        <label for="{{form.produit.id_for_label}}">Produit</label>
-      </div>
-      <div class="input-field col s2">
-        <a href="{% url 'dashboard:productPage' %}" name="clientID"
-          class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Produit">
-          <i class="material-icons right">local_mall</i>
-        </a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        {{ form.price }}
-        <label for="{{ form.price.id_for_label }}">Prix d'Achat</label>
-      </div>
-
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
-        {{ form.client }}
-        <label for="{{ form.client.id_for_label }}">Nom du Client</label>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s7">
-
-      </div>
-      <div class="col s5">
-        <button type="submit" class="waves-effect black waves-green btn-flat right">
-          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-          <b class="deep-orange-text accent-3">Enregistrer</b>
-        </button>
-      </div>
-    </div>
-  </form>
-</div>
-
-
-
 <!------- Section R3002: - Deposit stock [] -->
 
 <div class="row">

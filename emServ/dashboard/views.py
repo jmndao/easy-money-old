@@ -5,7 +5,8 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Count
 # from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import (TemplateView,
-                                  DetailView)
+                                  DetailView,
+                                  ListView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
@@ -22,12 +23,7 @@ from dashboard.models import (ProductModel,
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
 from django.contrib import messages
-
-
-# Rendering the pdf file
-from django.template.loader import get_template
-
-from django.db.models import F
+from dashboard.forms import VenteForm
 
 
 # Create your views here.
@@ -131,11 +127,6 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         # Having the benefice
 
         return context
-
-
-class ProfileView(LoginRequiredMixin, TemplateView):
-
-    template_name = 'dashboard/profile.html'
 
 
 class ClientRequestView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
@@ -253,14 +244,8 @@ class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteV
 
 
 # First, creating the DepotVenteView
-class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
+class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, Utils):
     template_name = 'dashboard/depot_vente/depot_vente.html'
-    model = DepotVenteModel
-    fields = '__all__'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -313,8 +298,12 @@ class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteVi
 class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
     template_name = 'dashboard/vente/vente.html'
-    model = VenteModel
-    fields = '__all__'
+    form_class = VenteForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def form_valid(self, form):
         # check if we choose the right quantities or not?
@@ -329,13 +318,25 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
         if remaining_qty < 0:
-            raise ValueError
-        elif remaining_qty == 0:
-            ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
+            messages.error(self.request, "Il ne reste que {} object(s) de {}".format(
+                product.quantity, product.name))
+        # elif remaining_qty == 0:
+        #     ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
         else:
             product.quantity = remaining_qty
-
         product.save()
+        # Checking whether client has already passed or not
+        client = form.instance.client
+        try:
+            not_new_client = ClientModel.objects.get(pk=client.pk)
+        except Exception as e:
+            not_new_client = None
+        if not_new_client:
+            # the client is not new.
+            not_new_client.passage += 1
+            not_new_client.save()
+        else:
+            pass
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -352,10 +353,10 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
         uname = self.request.user.username
         if self.request.user.is_superuser:
-            context["dataset_vente"] = self.chartObject(
+            context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date')
         else:
-            context["dataset_vente"] = self.chartObject(
+            context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date', uname=uname, is_superuser=False)
 
         return context

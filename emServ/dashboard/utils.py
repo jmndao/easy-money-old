@@ -12,14 +12,12 @@ from xhtml2pdf import pisa
 import datetime
 
 
-
 class Utils:
 
     '''
-        
+
     '''
 
-        
     def benefice_vente(self, db_a_direct, db_dvs, sales):
         """
         Calculate the Total benefice of the Shop:
@@ -29,10 +27,12 @@ class Utils:
         """
         a_directs = db_a_direct.objects.all()
         dvs = db_dvs.objects.all()
-        sum_a_directs = sum([p.produit.price_total for p in a_directs if p.produit.price_total != None])
-        sum_dvs = sum([p.produit.price_total for p in dvs if p.produit.price_total != None])
+        sum_a_directs = sum(
+            [p.produit.price_total for p in a_directs if p.produit.price_total != None])
+        sum_dvs = sum(
+            [p.produit.price_total for p in dvs if p.produit.price_total != None])
         return (sales - (sum_a_directs + sum_dvs))
-    
+
     def benefice_depot_vente(self, db_a_direct, db_sales, dv):
         """
         Calculate the Total benefice of the Shop:
@@ -63,58 +63,94 @@ class Utils:
         # Let's check is user is superuser or not
         if is_superuser:
             if dv_or_ad:
-                df = pd.DataFrame(db.objects.filter(dv_or_ad=dv_or_ad).values())
+                df = pd.DataFrame(db.objects.filter(
+                    dv_or_ad=dv_or_ad).values())
             else:
                 df = pd.DataFrame(db.objects.all().values())
         else:
             if dv_or_ad:
-                df = pd.DataFrame(db.objects.filter(shop__owner__user__username=uname, dv_or_ad=dv_or_ad).values())
+                df = pd.DataFrame(db.objects.filter(
+                    shop__owner__user__username=uname, dv_or_ad=dv_or_ad).values())
             else:
-                df = pd.DataFrame(db.objects.filter(shop__owner__user__username=uname).values())       
+                df = pd.DataFrame(db.objects.filter(
+                    shop__owner__user__username=uname).values())
         if not df.empty:
-            un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
-            # Parsed it 
+            un_x = df.groupby(
+                df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})
+            # Parsed it
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
+            dataset = {'months': [m for m in msp.keys()], 'data': [
+                d for d in msp.values()]}
 
         else:
-            dataset = {   'months': ['Jan', 'Fev', 'Avr'],
-                            'data': [0, 0, 0]   }
+            dataset = {'months': ['Jan', 'Fev', 'Avr'],
+                       'data': [0, 0, 0]}
 
         return mark_safe(escapejs(json.dumps(dataset)))
+
+    def label_notif_as_read(self, obj):
+        notifs = obj.objects.filter(read=False)
+        for notif in notifs:
+            notif.read = True
+            notif.save()
+        return
 
     def chart_client(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
         # Let's check is user is superuser or not
         if is_superuser:
             df = pd.DataFrame(db.objects.all().values())
         else:
-            df = pd.DataFrame(db.objects.filter(shop__owner__user__username=uname).values())
+            df = pd.DataFrame(db.objects.filter(
+                shop__owner__user__username=uname).values())
         if not df.empty:
-            un_x = df.groupby(df[dt_col_name].dt.strftime('%B')).agg({key : 'sum'})
-            # Parsed it 
+            un_x = df.groupby(
+                df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})
+            # Parsed it
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = {'months':[m for m in msp.keys()], 'data':[d for d in msp.values()]}
+            dataset = {'months': [m for m in msp.keys()], 'data': [
+                d for d in msp.values()]}
 
         else:
-            dataset = {   'months': ['Jan', 'Fev', 'Avr'],
-                            'data': [0, 0, 0]   }
+            dataset = {'months': ['Jan', 'Fev', 'Avr'],
+                       'data': [0, 0, 0]}
+
+        return mark_safe(escapejs(json.dumps(dataset)))
+
+    def chart_vente(self, db, key=None, dt_col_name=None, uname=None, is_superuser=True):
+        # Let's check is user is superuser or not
+        if is_superuser:
+            df = pd.DataFrame(db.objects.all().values())
+        else:
+            df = pd.DataFrame(db.objects.filter(
+                produit__shop__owner__user__username=uname).values())
+        if not df.empty:
+            un_x = df.groupby(
+                df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})
+            # Parsed it
+            monthtly_data = json.loads(un_x.to_json())
+            # the monthly key
+            msp = monthtly_data[key]
+            dataset = {'months': [m for m in msp.keys()], 'data': [
+                d for d in msp.values()]}
+
+        else:
+            dataset = {'months': ['Jan', 'Fev', 'Avr'],
+                       'data': [0, 0, 0]}
 
         return mark_safe(escapejs(json.dumps(dataset)))
 
     def render_to_pdf(self, template_src, context_dict={}):
         template = get_template(template_src)
-        html  = template.render(context_dict)
+        html = template.render(context_dict)
         result = BytesIO()
         pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
         if not pdf.err:
             return HttpResponse(result.getvalue(), content_type='application/pdf')
         return None
-
-
 
 
 class RedirectToPreviousMixin:
@@ -126,14 +162,15 @@ class RedirectToPreviousMixin:
     default_redirect = '/'
 
     def get(self, request, *args, **kwargs):
-        request.session['previous_page'] = request.META.get('HTTP_REFERER', self.default_redirect)
+        request.session['previous_page'] = request.META.get(
+            'HTTP_REFERER', self.default_redirect)
         return super().get(request, *args, **kwargs)
 
     def get_success_url(self):
         return self.request.session['previous_page']
 
+    # benefice par mois
 
-    #benefice par mois
     def benefice_per_month(self, db_vente, db_depot, db_achat):
         """
         Calculate the Total benefice of the Shop:
@@ -143,13 +180,16 @@ class RedirectToPreviousMixin:
         """
         today = datetime.date.today()
         vente = db_vente.objects.filter(mydatefield__year=today.year,
-                           mydatefield__month=today.month)
+                                        mydatefield__month=today.month)
         depot = db_depot.objects.filter(mydatefield__year=today.year,
-                           mydatefield__month=today.month)
+                                        mydatefield__month=today.month)
         achat = db_achat.objects.filter(mydatefield__year=today.year,
-                           mydatefield__month=today.month)
+                                        mydatefield__month=today.month)
 
-        sum_vente = sum([p.price_total for p in vente if p.price_total != None])
-        sum_depot = sum([p.produit.price_total for p in depot if p.produit.price_total != None])
-        sum_achat = sum([p.produit.price_total for p in achat if p.produit.price_total != None])
+        sum_vente = sum(
+            [p.price_total for p in vente if p.price_total != None])
+        sum_depot = sum(
+            [p.produit.price_total for p in depot if p.produit.price_total != None])
+        sum_achat = sum(
+            [p.produit.price_total for p in achat if p.produit.price_total != None])
         return (sum_vente - (sum_depot + sum_achat))

@@ -78,9 +78,8 @@
                 <a {% if 'estimation' in request.path  %} class="active" {% else %} class="" {% endif %}
                     href="{% url 'dashboard:estimationPage' %}">
                     <!-- <span class="material-icons"> history_edu </span> -->
-                    <span><img src="{% static 'dashboard/images/estimate.png' %}" width="33px" height="33px"
-                            style="background-color:#fff;"></span>
-                    <span>Estimation</span>
+                        <span class="material-icons">table_view</span>
+                        <span>Estimation</span>
                 </a>
             </li>
         </ul>

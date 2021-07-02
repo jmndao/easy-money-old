@@ -3,14 +3,13 @@ var clientChart = document.getElementById('chart_client');
 var dataClient = {
     labels: dataset_client["months"],
     datasets: [{
-        label: 'Vente',
+        label: 'Fréquence clientèle',
         data: dataset_client['data'],
         borderWidth: 2,
-        backgroundColor: 'rgb(0, 0, 0)',
         borderColor: [
             'rgb(255, 61, 0)'
         ]
-        
+
 
     }]
 };
