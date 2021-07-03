@@ -18,7 +18,7 @@ class Utils:
 
     '''
 
-    def benefice_per_day(self, db_vente, db_produit):
+    def benefice_per_day(self, db_vente, db_produit, is_superuser=True, user=None):
         """
         Calculate the Total benefice of the Shop:
             db_vente : is the Sales Model object (VenteModel)
@@ -27,9 +27,12 @@ class Utils:
         """
         # today day
         today = datetime.date.today()
-
-        vente = db_vente.objects.filter(created_date__day=today.day)
-        achat = db_produit.objects.filter(created_date__day=today.day)
+        if is_superuser:
+            vente = db_vente.objects.filter(created_date__day=today.day)
+            achat = db_produit.objects.filter(created_date__day=today.day)
+        else:
+            vente = db_vente.objects.filter(created_date__day=today.day, produit__shop__owner__user=user)
+            achat = db_produit.objects.filter(created_date__day=today.day, shop__owner__user=user)
 
         sum_vente = sum(
             [v.price_total for v in vente if v.price_total != None])
@@ -37,7 +40,7 @@ class Utils:
             [a.price_total for a in achat if a.price_total != None])
         return (sum_vente - sum_achat)
 
-    def benefice_per_month(self, db_vente, db_produit):
+    def benefice_per_month(self, db_vente, db_produit, is_superuser=True, user=None):
         """
         Calculate the Total benefice of the Shop:
             db_vente : is the Sales Model object (VenteModel)
@@ -45,9 +48,12 @@ class Utils:
             db_achat : is the total sum of all Achat Direct Model (AchatDirectModel)
         """
         today = datetime.date.today()
-        vente = db_vente.objects.filter(created_date__month=today.month)
-
-        achat = db_produit.objects.filter(created_date__month=today.month)
+        if is_superuser:
+            vente = db_vente.objects.filter(created_date__month=today.month)
+            achat = db_produit.objects.filter(created_date__month=today.month)
+        else:
+            vente = db_vente.objects.filter(created_date__month=today.month, produit__shop__owner__user=user)
+            achat = db_produit.objects.filter(created_date__month=today.month, shop__owner__user=user)
         sum_vente = sum(
             [v.price_total for v in vente if v.price_total != None])
         sum_achat = sum(
@@ -117,8 +123,8 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = {'months': [m for m in msp.keys()], 'data': [
-                d for d in msp.values()]}
+            dataset = { 'months': ([m for m in msp.keys()]).reverse(), 
+                        'data': ([d for d in msp.values()]).reverse()}
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
@@ -147,8 +153,8 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = {'months': [m for m in msp.keys()], 'data': [
-                d for d in msp.values()]}
+            dataset = { 'months': ([m for m in msp.keys()]).reverse(), 
+                        'data': ([d for d in msp.values()]).reverse()}
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],

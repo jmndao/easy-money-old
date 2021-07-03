@@ -6,16 +6,6 @@ M.Modal.init(modal, {});
 const select = document.querySelectorAll('select');
 M.FormSelect.init(select, {});
 
-// Setting up the Autocomplete
-const req_autocomplete = document.querySelector('.req_autocomplete');
-M.Autocomplete.init(req_autocomplete, {
-    data: {
-        "Alassane Ouattara": null,
-        "Souleymane Faye": null,
-        "Anta Lo": null
-    },
-});
-
 // Setting up the Dropdown
 const dropdown = document.querySelectorAll('.dropdown-trigger');
 M.Dropdown.init(dropdown, {
