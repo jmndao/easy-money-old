@@ -1,24 +1,33 @@
-{% extends 'dashboard/base.html' %}
+{% extends 'dashboard/base.html' %} {% block body_content %}
 
-{% block body_content %}
-
-    <ul class="collection with-header">
-        <li class="collection-item header deep-orange accent-3 white-text">
-        <h5>
-            <b>Vos Notifications</b>
-            <i class="material-icons right">notifications</i>
-        </h5>
-        </li>
-        {% for notification in notifications %}
-            <li class="collection-item avatar">
-                <img src="{{ notification.sender.shop_user_related.avatar.url }}" alt="" class="circle">
-                <span class="title">{{ notification.notification_type }}</span>
-                <p>
-                    {{ notification.message }}
-                </p>
-                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-            </li>
-        {% endfor %}
-    </ul>
+<ul class="collection with-header">
+  <li class="collection-item header deep-orange accent-3 white-text">
+    <h5>
+      <b>Vos Notifications</b>
+      <i class="material-icons right">notifications</i>
+    </h5>
+  </li>
+  {% for notification in notifications %}
+  <li class="collection-item avatar">
+    <img
+      src="{{ notification.sender.shop_user_related.avatar.url }}"
+      alt=""
+      class="circle"
+    />
+    <span class="title">
+      <b>
+        Type:
+        {%if notification.notification_type == 1%} Message 
+        {%elif notifications.notification_type == 2%} Suppression {%else%} Ajout
+        {%endif %}
+      </b>
+    </span>
+    <p>{{ notification.message }}</p>
+    <a href="#!" class="secondary-content"
+      ><i class="material-icons">grade</i></a
+    >
+  </li>
+  {% endfor %}
+</ul>
 
 {% endblock body_content %}

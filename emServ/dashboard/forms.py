@@ -1,5 +1,6 @@
 from django import forms
-from dashboard.models import (VenteModel, ProductModel)
+from django.forms import fields
+from dashboard.models import (VenteModel, ProductModel, ClientModel)
 
 
 class VenteForm(forms.ModelForm):
@@ -17,3 +18,20 @@ class VenteForm(forms.ModelForm):
         else:
             self.fields['produit'].queryset = ProductModel.objects.filter(
                 quantity__gt=0, shop__owner__user=self.user)
+
+
+class ProductModelForm(forms.ModelForm):
+
+    class Meta:
+        model = ProductModel
+        fields = '__all__'
+
+    def __init__(self,*args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(ProductModelForm, self).__init__(*args, **kwargs)
+        if self.user.is_superuser:
+            self.fields['seller'].queryset = ClientModel.objects.filter(
+                vente_or_achat='CV')
+        else:
+            self.fields['seller'].queryset = ClientModel.objects.filter(
+                vente_or_achat='CV', shop__owner__user=self.user)
