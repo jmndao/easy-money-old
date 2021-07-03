@@ -18,6 +18,42 @@ class Utils:
 
     '''
 
+    def benefice_per_day(self, db_vente, db_produit):
+        """
+        Calculate the Total benefice of the Shop:
+            db_vente : is the Sales Model object (VenteModel)
+            db_depot : is the Depot Vente Model object (DepotVenteModel)
+            db_achat : is the total sum of all Achat Direct Model (AchatDirectModel)
+        """
+        # today day
+        today = datetime.date.today()
+
+        vente = db_vente.objects.filter(created_date__day=today.day)
+        achat = db_produit.objects.filter(created_date__day=today.day)
+
+        sum_vente = sum(
+            [v.price_total for v in vente if v.price_total != None])
+        sum_achat = sum(
+            [a.price_total for a in achat if a.price_total != None])
+        return (sum_vente - sum_achat)
+
+    def benefice_per_month(self, db_vente, db_produit):
+        """
+        Calculate the Total benefice of the Shop:
+            db_vente : is the Sales Model object (VenteModel)
+            db_depot : is the Depot Vente Model object (DepotVenteModel)
+            db_achat : is the total sum of all Achat Direct Model (AchatDirectModel)
+        """
+        today = datetime.date.today()
+        vente = db_vente.objects.filter(created_date__month=today.month)
+
+        achat = db_produit.objects.filter(created_date__month=today.month)
+        sum_vente = sum(
+            [v.price_total for v in vente if v.price_total != None])
+        sum_achat = sum(
+            [a.price_total for a in achat if a.price_total != None])
+        return (sum_vente - sum_achat)
+
     def benefice_vente(self, db_a_direct, db_dvs, sales):
         """
         Calculate the Total benefice of the Shop:

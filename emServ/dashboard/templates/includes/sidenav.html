@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li>
-                <a {% if 'demande_clien' in request.path  %} class="active" {% else %} class="" {% endif %}
+                <a {% if 'demande_cliant' in request.path  %} class="active" {% else %} class="" {% endif %}
                     href="{% url 'dashboard:clientRequestPage' %}">
                     <span class="material-icons"> history_edu </span>
                     <span>Demande Client</span>
@@ -78,8 +78,8 @@
                 <a {% if 'estimation' in request.path  %} class="active" {% else %} class="" {% endif %}
                     href="{% url 'dashboard:estimationPage' %}">
                     <!-- <span class="material-icons"> history_edu </span> -->
-                        <span class="material-icons">table_view</span>
-                        <span>Estimation</span>
+                    <span class="material-icons">table_view</span>
+                    <span>Estimation</span>
                 </a>
             </li>
         </ul>
