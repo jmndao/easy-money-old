@@ -1,4 +1,5 @@
 {% load static %}
+{% load search_loader_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,7 +58,17 @@
 {% include 'includes/scripts.html' %}
 <!-- Specific Page JS goes here...  -->
 {% block javascripts %}
-
+ 
 {% endblock javascripts %}
+    <script>
+        var products = JSON.parse('{% list_item %}');
+        console.log(products)
+        // Setting up the Autocomplete
+        var elems = document.querySelectorAll('.autocomplete');
+        console.log(elems)
+        M.Autocomplete.init(elems, {
+            data: products,
+        });
+    </script>
 
 </html>

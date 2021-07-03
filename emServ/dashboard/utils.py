@@ -123,8 +123,8 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = {'months': [m for m in msp.keys()], 'data': [
-                d for d in msp.values()]}
+            dataset = { 'months': ([m for m in msp.keys()]).reverse(), 
+                        'data': ([d for d in msp.values()]).reverse()}
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
@@ -153,8 +153,8 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = {'months': [m for m in msp.keys()], 'data': [
-                d for d in msp.values()]}
+            dataset = { 'months': ([m for m in msp.keys()]).reverse(), 
+                        'data': ([d for d in msp.values()]).reverse()}
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],

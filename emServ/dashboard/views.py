@@ -23,7 +23,7 @@ from dashboard.models import (ProductModel,
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
 from django.contrib import messages
-from dashboard.forms import VenteForm
+from dashboard.forms import VenteForm, ProductModelForm
 
 
 # Create your views here.
@@ -339,9 +339,13 @@ class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
 class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
 
-    model = ProductModel
+    form_class = ProductModelForm
     template_name = 'dashboard/product/product.html'
-    fields = '__all__'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({ 'user': self.request.user })
+        return kwargs
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
