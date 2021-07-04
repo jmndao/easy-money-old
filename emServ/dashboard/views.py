@@ -36,7 +36,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         user = self.request.user
         context = super().get_context_data(**kwargs)
         context['n_shops'] = Shop.objects.all().count()
-    
+
         context["dataset_achat"] = self.chartObject(
             VenteModel, key='price_total', dt_col_name='created_date')
         context['dataset_depot'] = self.chartObject(
@@ -45,6 +45,8 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
         if self.request.user.is_superuser:
             context["achat_directs"] = AchatDirectModel.objects.all().order_by(
+                '-created_date')
+            context["depot_ventes"] = DepotVenteModel.objects.all().order_by(
                 '-created_date')
             context["ventes"] = VenteModel.objects.all().order_by(
                 '-created_date')
@@ -56,10 +58,14 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
                 'produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context["n_product"] = ProductModel.objects.all().count()
             context["n_client"] = ClientModel.objects.all().count()
-            context['benefice_day'] = self.benefice_per_day(VenteModel, ProductModel)
-            context['benefice_month'] = self.benefice_per_month(VenteModel, ProductModel)
+            context['benefice_day'] = self.benefice_per_day(
+                VenteModel, ProductModel)
+            context['benefice_month'] = self.benefice_per_month(
+                VenteModel, ProductModel)
         else:
             context["achat_directs"] = AchatDirectModel.objects.filter(
+                produit__shop__owner__user__username=user.username).order_by('-created_date')
+            context["depot_ventes"] = DepotVenteModel.objects.filter(
                 produit__shop__owner__user__username=user.username).order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(
                 produit__shop__owner__user__username=user.username).order_by('-created_date')
@@ -71,8 +77,10 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
                 shop__owner__user__username=user.username).count()
             context["n_client"] = ClientModel.objects.filter(
                 shop__owner__user__username=user.username).count()
-            context['benefice_day'] = self.benefice_per_day(VenteModel, ProductModel, is_superuser=False,user=user)
-            context['benefice_month'] = self.benefice_per_month(VenteModel, ProductModel, is_superuser=False, user=user)
+            context['benefice_day'] = self.benefice_per_day(
+                VenteModel, ProductModel, is_superuser=False, user=user)
+            context['benefice_month'] = self.benefice_per_month(
+                VenteModel, ProductModel, is_superuser=False, user=user)
 
         # Having the benefice
 
@@ -264,7 +272,7 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
                 owner__user__username=u_user.username)
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
         product.sold = True
-        
+
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
         if remaining_qty < 0:
@@ -344,7 +352,7 @@ class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({ 'user': self.request.user })
+        kwargs.update({'user': self.request.user})
         return kwargs
 
     def post(self, request, *args, **kwargs):
@@ -691,8 +699,6 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['v_product'] = self.q.product_name
         return context
-    
-
 
 
 class EstimationDeletePage(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):

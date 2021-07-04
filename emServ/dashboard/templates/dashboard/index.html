@@ -280,6 +280,53 @@
                 </div>
             </div>
         </div>
+        <!----- Table -->
+        <div class="row-table-inner">
+            <div class=" col  s12">
+                <div class="card-panel">
+                    <div class="colright card-panel-header__wrapper">
+                        <div class="black-text big-text"><b> Depot Ventes </b></div>
+                        <div class="bbtn">
+                            <a href="{% url 'dashboard:achatDirectPage' %}#datatable" class=" waves-effect waves-light btn-small
+                                deep-orange accent-3">
+                                <i class="material-icons left">visibility</i>
+                                Voir Tout
+                            </a>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <table class="responsive-table highlight">
+                        <thead class="">
+                            <tr>
+                                <th>Produit</th>
+                                <th>Clients</th>
+                                <th>Date d' achat</th>
+                                <th>Prix d'achat</th>
+                                <th>Garantie</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!----- Row: 1-->
+                            {% with count=0 %}
+                            {% endwith %}
+                            {% for depot_vente in depot_ventes %}
+                            {% if forloop.counter < 5%}
+                            <tr>
+                                <td>{{ depot_vente.produit.name }}</td>
+                                <td>{{ depot_vente.produit.seller}}</td>
+                                <td>{{ depot_vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td>{{ depot_vente.produit.price_total|floatformat:0|intcomma }}</td>
+                                <td>{{ depot_vente.guarantee|yesno:"OUI, NON" }}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            <!----- Row: 2-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <div class="row-table-inner">
             <!----- Table -->

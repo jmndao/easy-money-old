@@ -272,15 +272,7 @@
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script>
   var dataset_vente = JSON.parse('{{dataset_vente}}');
-  
-  $(document).ready(function(){
-    $('#id_produit').on('change', {
-      console.log($(this)) });
-    $('select').formSelect();
-  });
-  
-
-</script>
+ </script>
 <script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}
