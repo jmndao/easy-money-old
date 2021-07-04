@@ -7,7 +7,7 @@
 <div class="card-panel">
 
     <div class="card-panel orange darken-4">
-        <b>Details Produit</b><i class="material-icons right">visibility</i>
+        <h4> <b>Details du Produit</b><i class="material-icons right">visibility</i></h4>
     </div>
 
     <div class="row">
@@ -15,149 +15,197 @@
             <h4>Produit: {{ product.name }}</h4>
         </div>
         <div class="row">
-            <div class="col s6">
-                Quantité:
-            </div>
-            <div class="col s6">
-                <b>{% if product.quantity %}{{ product.quantity }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Quantité:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.quantity %}{{ product.quantity }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Depot Vente ou Achat Direct:
-            </div>
-            <div class="col s6">
-                <b>{% if product.dv_or_ad %}{{ product.dv_or_ad }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Quantité Initiale:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.initial_quantity %}{{ product.initial_quantity }}{% else %}Non
+                        spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Prix d'un produit:
-            </div>
-            <div class="col s6">
-                <b>{% if product.price %}{{ product.price }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Depot Vente ou Achat Direct:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.dv_or_ad %}{{ product.dv_or_ad }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Montant de la Restauration:
-            </div>
-            <div class="col s6">
-                <b>{% if product.montant_restauration %}{{ product.montant_restauration }}{% else %}Non
-                    spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Prix d'un produit:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.price %}{{ product.price }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Vendeur:
-            </div>
-            <div class="col s6">
-                <b>{% if product.seller %}{{ product.seller }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Montant de la Restauration:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.montant_restauration %}{{ product.montant_restauration }}{% else %}Non
+                        spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Couleur:
-            </div>
-            <div class="col s6">
-                <b>{% if product.color %}{{ product.color }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Vendeur:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.seller %}{{ product.seller }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Category:
-            </div>
-            <div class="col s6">
-                <b>{% if product.category %}{{ product.category }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Couleur:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.color %}{{ product.color }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Etat:
-            </div>
-            <div class="col s6">
-                <b>{% if product.estate %}{{ product.estate }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Category:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.category %}{{ product.category }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Obsolesence:
-            </div>
-            <div class="col s6">
-                <b>{% if product.obsolesence %}{{ product.obsolesence }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Etat:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.estate %}{{ product.estate }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Rareté:
-            </div>
-            <div class="col s6">
-                <b>{% if product.rarety %}{{ product.rarety }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Obsolesence:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.obsolesence %}{{ product.obsolesence }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Model:
-            </div>
-            <div class="col s6">
-                <b>{% if product.model %}{{ product.model }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Rareté:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.rarety %}{{ product.rarety }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
+        </div>
+
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Model:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.model %}{{ product.model }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Edition:
-            </div>
-            <div class="col s6">
-                <b>{% if product.edition %}{{ product.edition }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Edition:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.edition %}{{ product.edition }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Année:
-            </div>
-            <div class="col s6">
-                <b>{% if product.annee %}{{ product.annee }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Année:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.annee %}{{ product.annee }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Capacite Stockage (Giga):
-            </div>
-            <div class="col s6">
-                <b>{% if product.storage %}{{ product.storage }} Giga{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Capacite Stockage (Giga):
+                </div>
+                <div class="col s6">
+                    <b>{% if product.storage %}{{ product.storage }} Giga{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                RAM (Giga):
-            </div>
-            <div class="col s6">
-                <b>{% if product.ram %}{{ product.ram }} Giga {% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    RAM (Giga):
+                </div>
+                <div class="col s6">
+                    <b>{% if product.ram %}{{ product.ram }} Giga {% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Dimension:
-            </div>
-            <div class="col s6">
-                <b>{% if product.dimension %}{{ product.dimension }}{% else %}Non spécifiée{% endif %}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Dimension:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.dimension %}{{ product.dimension }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Chargeur:
-            </div>
-            <div class="col s6">
-                <b>{{ product.charger|yesno:"OUI, NON" }}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Chargeur:
+                </div>
+                <div class="col s6">
+                    <b>{{ product.charger|yesno:"OUI, NON" }}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
-            <div class="col s6">
-                Boite d'origine:
-            </div>
-            <div class="col s6">
-                <b>{{ product.original_box|yesno:"OUI, NON" }}</b>
-            </div>
+            <h6>
+                <div class="col s6">
+                    Boite d'origine:
+                </div>
+                <div class="col s6">
+                    <b>{{ product.original_box|yesno:"OUI, NON" }}</b>
+                </div>
+            </h6>
         </div>
     </div>
 

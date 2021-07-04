@@ -242,12 +242,12 @@
         <tbody>
           {% for v in vente %}
           <tr>
-            <td> {{ v.client.fname }} {{ v.client.lname }}</td>
-            <td> {{ v.produit.name }} </td>
-            <td> {{ v.quantity }}</td>
+            <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
+            <td class=''> {{ v.produit.name }} </td>
+            <td class=''> {{ v.quantity }} / {{v.produit.initial_quantity}} </td>
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>
-            <td> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
-            <td class="center">
+            <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
+            <td class='' class="center">
               <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
@@ -272,7 +272,7 @@
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script>
   var dataset_vente = JSON.parse('{{dataset_vente}}');
- </script>
+</script>
 <script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}

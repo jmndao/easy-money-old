@@ -174,7 +174,8 @@ class ProductModel(models.Model):
         max_length=100, choices=CATEGORY, blank=True, null=True)
     dv_or_ad = models.CharField(
         max_length=100, choices=TYPE, blank=True, null=True)
-    quantity = models.IntegerField(blank=False, null=False)
+    quantity = models.IntegerField(blank=False, null=False,default = 1)
+    initial_quantity = models.IntegerField(blank=True, null=True,default = 1, editable=False)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
     price_total = models.DecimalField(
@@ -207,6 +208,8 @@ class ProductModel(models.Model):
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
         self.price_total = self.price * self.quantity
+        if self.initial_quantity == 1 or self.initial_quantity == None:
+            self.initial_quantity = self.quantity
         return super(ProductModel, self).save(*args, **kwargs)
 
     def __str__(self):

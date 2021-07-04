@@ -273,6 +273,7 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
         product.sold = True
 
+
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
         if remaining_qty < 0:
@@ -282,6 +283,7 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
         #     ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
         else:
             product.quantity = remaining_qty
+            product.initial_quantity = product.quantity + vente_qty
         product.save()
         # Checking whether client has already passed or not
         client = form.instance.client
@@ -299,6 +301,9 @@ class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # context['product_initial'] = self.pi = ProductModel.objects.all()
+        # context['p_init'] = self.pi.initial_quantity
+
         context['vente'] = self.q = VenteModel.objects.order_by(
             '-created_date')
         context["tendance_vente"] = VenteModel.objects.values(
@@ -345,10 +350,17 @@ class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
     context_object_name = 'vente'
 
 
-class ProductView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
+class ProductView(LoginRequiredMixin, CreateView):
 
     form_class = ProductModelForm
     template_name = 'dashboard/product/product.html'
+    success_url = reverse_lazy('dashboard:productPage')
+
+    def form_valid(self, form):
+        # check if we choose the right quantities or not?
+        ################################################################   
+        initial_quantity = form.instance.quantity
+        return super().form_valid(form)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

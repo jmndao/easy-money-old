@@ -119,22 +119,23 @@
             <table id="datatable" class="responsive-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Nom</th>
-                        <th>Addresse</th>
-                        <th>Produit</th>
+                        <th class="white-text">Date</th>
+                        <th class="white-text">Nom</th>
+                        <th class="white-text">Addresse</th>
+                        <th class="white-text">Produit</th>
 
-                        <th>estimation</th>
-                        <th>supprimer</th>
+                        <th class="white-text">estimation</th>
+                        <th class="white-text">supprimer</th>
                     </tr>
                 </thead>
                 <tbody class="black">
                     {% for estimate in estimates %}
                     <tr class="black">
-                        <th class="deep-orange-text accent-3">{{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</th>
-                        <th class="deep-orange-text accent-3"> {{ estimate.client_name }}</th>
-                        <th class="deep-orange-text accent-3">{{ estimate.address }}</th>
-                        <th class="deep-orange-text accent-3">{{ estimate.product_name }}</th>
+                        <th class="deep-orange-text accent-3 left-align">
+                            {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</th>
+                        <th class="deep-orange-text accent-3 left-align"> {{ estimate.client_name }}</th>
+                        <th class="deep-orange-text accent-3 left-align">{{ estimate.address }}</th>
+                        <th class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</th>
                         <th>
                             <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
                                 class="white-text waves-effect btn-flat tooltipped" data-position="left"

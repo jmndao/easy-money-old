@@ -129,7 +129,7 @@
                     <tr>
                         <td> {{ dv.produit.seller.fname }} {{ dv.produit.seller.lname }} </td>
                         <td> {{ dv.produit.name }}</td>
-                        <td> {{ dv.produit.quantity }}</td>
+                        <td> {{ dv.produit.quantity }} / {{ dv.produit.initial_quantity }}</td>
                         <td>{{ dv.produit.price_total|floatformat:0|intcomma}}</td>
                         <td>{{ dv.created_date|date:"SHORT_DATE_FORMAT"}}</td>
                         <td class="actions">

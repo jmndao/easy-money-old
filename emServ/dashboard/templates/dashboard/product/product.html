@@ -157,21 +157,23 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-            <th>Nom</th>
+            <th>date</th>
+            <th>nom</th>
             <th>DV or AD</th>
             <th>prix total</th>
             <th>quantité</th>
-            <th>Vendu</th>
-            <th>Actions</th>
+            <th>vendu</th>
+            <th>actions</th>
           </tr>
         </thead>
         <tbody>
           {% for product in products %}
           <tr>
+            <th class="black-text">{{ product.created_date|date:"SHORT_DATE_FORMAT" }}</th>
             <th class="black-text">{{ product.name }}</th>
             <th class="black-text">{{ product.dv_or_ad }}</th>
-            <th class="black-text">{{ product.price }}</th>
-            <th class="black-text">{{ product.quantity }}</th>
+            <th class="black-text">{{ product.price|floatformat:0 }} fcfa</th>
+            <th class="black-text">{{ product.quantity }} / {{product.initial_quantity}}</th>
             <th class="black-text">{{ product.sold|yesno:"OUI, NON" }}</th>
             <td class="actions black-text">
               <a href="{% url 'dashboard:productDetailPage' product.pk %}"

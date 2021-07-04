@@ -8,6 +8,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from collections import OrderedDict
 
 import datetime
 
@@ -116,6 +117,7 @@ class Utils:
             else:
                 df = pd.DataFrame(db.objects.filter(
                     shop__owner__user__username=uname).values())
+        print(df)
         if not df.empty:
             un_x = df.groupby(
                 df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})
@@ -123,12 +125,13 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = { 'months': ([m for m in msp.keys()]).reverse(), 
-                        'data': ([d for d in msp.values()]).reverse()}
+            dataset = { 'months': [m for m in msp.keys()], 
+                        'data': [d for d in msp.values()]}
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
                        'data': [0, 0, 0]}
+        print(dataset)
 
         return mark_safe(escapejs(json.dumps(dataset)))
 
@@ -153,8 +156,9 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            dataset = { 'months': ([m for m in msp.keys()]).reverse(), 
-                        'data': ([d for d in msp.values()]).reverse()}
+            msp
+            dataset = { 'months': [m for m in msp.keys()], 
+                        'data': [d for d in msp.values()]}
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
