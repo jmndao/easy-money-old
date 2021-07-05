@@ -129,8 +129,9 @@
                     </tr>
                 </thead>
                 <tbody class="black">
+
                     {% for estimate in estimates %}
-                    <tr class="black">
+                    <tr id="{{estimate.id}}" class="black">
                         <th class="deep-orange-text accent-3 left-align">
                             {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</th>
                         <th class="deep-orange-text accent-3 left-align"> {{ estimate.client_name }}</th>
@@ -142,9 +143,11 @@
                                 data-tooltip="tirer"><span class="material-icons">calculate</span></a>
                         </th>
                         <th>
-                            <a href="{% url 'dashboard:estimationDeletePage' estimate.pk %}"
-                                class="grey-text lighten-5 waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+                            <label>
+                                <input type="checkbox" name='estimate_id[]' value='{{estimate.id}}'
+                                    id='delete_estimate' />
+                                <span></span>
+                            </label>
                         </th>
 
                     </tr>
@@ -153,13 +156,51 @@
                 </tbody>
             </table>
         </div>
+        <div class="row center-align ">
+            <button id='delete' type='submit' class=" btn way-bigger black b-large deep-orange-text accent-3">
+                <i class="material-icons left"></i>Supprimer
+            </button>
+        </div>
     </div>
 </section>
 {% endblock body_content%}
 {% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    var dataset_client = JSON.parse('{{dataset_client}}')
+    //var dataset_client = JSON.parse('{{dataset_client}}')
+    $(document).ready(function () {
+        $('#delete').click(function () {
+            if (confirm('Are you sure you want to delete this item?'))
+                var id = [];
+            $(':checkbox:checked').each(function (i) {
+                id[i] = $(this).val()
+                var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            })
+            if (id.length === 0) {
+                alert('Please Select the item')
+            } else {
+                console.log(id)
+                $.ajax({
+                    url: '.',
+                    method: 'POST',
+                    data: {
+                        id,
+                        csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+                    },
+                    success: function (response) {
+                        console.log('succeded')
+                        for (var i = 0; i < id.length; i++) {
+                            $('#tr' + id[i] + '').css('background-color', 'black');
+                            $('#tr' + id[i] + '').fadeOut('slow');
+                        }
+                    }
+                })
+            }
+        })
+    })
 </script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+
+
 {% endblock javascripts %}

@@ -24,6 +24,7 @@ from dashboard.models import (ProductModel,
 from dashboard.utils import Utils, RedirectToPreviousMixin
 from django.contrib import messages
 from dashboard.forms import VenteForm, ProductModelForm
+from django.shortcuts import redirect
 
 
 # Create your views here.
@@ -607,6 +608,8 @@ class EstimationPage(LoginRequiredMixin, CreateView):
         context['estimates'] = self.e = EstimationModel.objects.all()
         return context
 
+    # 
+
 
 class EstimationResultPage(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/estimation/estimationResult.html'
@@ -711,6 +714,7 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['v_product'] = self.q.product_name
         return context
+    
 
 
 class EstimationDeletePage(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
