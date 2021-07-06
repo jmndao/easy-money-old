@@ -616,7 +616,7 @@ class EstimationPage(LoginRequiredMixin, CreateView):
                 estimate.delete()
 
             return redirect('dashboard:homePage')
-
+   
 
 class EstimationResultPage(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/estimation/estimationResult.html'
