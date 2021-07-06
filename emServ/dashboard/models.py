@@ -355,8 +355,8 @@ class DevisModel(models.Model):
 class EstimationModel(models.Model):
     shop = models.ForeignKey(
         Shop, on_delete=models.CASCADE, blank=True, null=True)
-    client_name = models.CharField(max_length=100, blank=True,
-                                   null=True, verbose_name="First Name")
+    seller = models.ForeignKey(
+        ClientModel, null=True, on_delete=models.SET_NULL)
     product_name = models.CharField(max_length=100)
     new_price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=False, null=True, verbose_name="Prix neuf")
@@ -379,6 +379,9 @@ class EstimationModel(models.Model):
     numero = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+    reparatinon_price = models.IntegerField(null=True, blank=True, default= 0)
+    category = models.CharField(
+        max_length=100, choices=CATEGORY, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.product_name = self.product_name.lower()

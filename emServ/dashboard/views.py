@@ -1,5 +1,5 @@
 import datetime
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
@@ -608,7 +608,14 @@ class EstimationPage(LoginRequiredMixin, CreateView):
         context['estimates'] = self.e = EstimationModel.objects.all()
         return context
 
-    # 
+    def post (self, request, *args, **kwargs):
+        if request.method == 'POST':
+            estimate_ids = request.POST.getlist('id[]')
+            for id in estimate_ids:
+                estimate = EstimationModel.objects.get(pk=id)
+                estimate.delete()
+
+            return redirect('dashboard:homePage')
 
 
 class EstimationResultPage(LoginRequiredMixin, CreateView):
@@ -621,6 +628,7 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         my_estimation = db_estimation.objects.get(pk=self.kwargs["pk"])
 
         i_price = float(my_estimation.used_price)
+        repair_amount = float(my_estimation.reparatinon_price)
 
         percentage_1 = 0
         if my_estimation.estate == 'NEUF':
@@ -697,6 +705,7 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
             percentage_7 = None
         i_price = i_price - i_price * percentage_7
 
+        i_price = i_price - repair_amount
         return int(i_price)
 
     def get_context_data(self, **kwargs):
@@ -706,7 +715,7 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         context['estimates'] = self.q = EstimationModel.objects.get(
             pk=self.kwargs["pk"])
         context['estimation_result'] = self.estimation(EstimationModel)
-        context['c_fname'] = self.q.client_name
+        context['c_fname'] = self.q.seller
         context['c_address'] = self.q.address
         context['c_tel'] = self.q.numero
         context['v_date'] = date = self.q.created_date
