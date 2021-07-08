@@ -128,7 +128,13 @@
                     <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">recherche</i></a>
                 </div>
+                <div class="row center-align with-pd">
+                    <button id='delete' type='submit' class="red darken-1 btn white-text">
+                        <i class="material-icons left"></i>Supprimer
+                    </button>
+                </div>
             </div>
+
             <table id="datatable" class="responsive-table">
                 <thead>
                     <tr>
@@ -138,7 +144,7 @@
                         <th class="white-text">Produit</th>
 
                         <th class="white-text">estimation</th>
-                        <th class="white-text">voir/suppr</th>
+                        <th class="white-text">Action</th>
                     </tr>
                 </thead>
                 <tbody class="black">
@@ -153,13 +159,13 @@
                         <th>
                             <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
                                 class="white-text waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="tirer"><span class="material-icons">picture_as_pdf</span></a>
+                                data-tooltip="Faire Devis"><span class="material-icons">picture_as_pdf</span></a>
                         </th>
                         <th>
                             <a href="{% url 'dashboard:estimationDetailPage' estimate.pk %}"
-                                class="orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                                class="orange-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-                            <label>
+                            <label class="">
                                 <input type="checkbox" name='estimate_id[]' value='{{estimate.id}}'
                                     id='delete_estimate' />
                                 <span></span>
@@ -172,12 +178,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="row center-align ">
-            <button id='delete' type='submit' class=" btn way-bigger black b-large deep-orange-text accent-3">
-                <i class="material-icons left"></i>Supprimer
-            </button>
 
-        </div>
     </div>
 </section>
 {% endblock body_content%}
@@ -212,6 +213,7 @@
         })
     })
 </script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 

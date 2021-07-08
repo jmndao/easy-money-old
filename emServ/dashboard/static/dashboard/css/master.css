@@ -395,7 +395,9 @@ i.right {
     grid-gap: 20px; */
     margin-bottom: 30px;
 }
-
+.with-pd{
+    padding-top: 20px;
+}
 .deep-orange-text.big {
     color: #ff5722 !important;
     font-size: 28px;

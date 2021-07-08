@@ -296,7 +296,8 @@ class VenteModel(models.Model):
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True)
+        max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True, default = 0)
+    restant_du = models.DecimalField( decimal_places=3, verbose_name="Restant du Client", blank=True, null=True, max_digits=20, default = 0)
     guarantee = models.BooleanField(default=False)
     client = models.ForeignKey(
         ClientModel, on_delete=models.SET_NULL, blank=True, null=True)
@@ -307,6 +308,7 @@ class VenteModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.price_total = self.price * self.quantity
+        self.restant_du = self.price_total -  self.acompte
         return super(VenteModel, self).save(*args, **kwargs)
 
     def __str__(self):

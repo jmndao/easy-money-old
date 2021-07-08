@@ -6,12 +6,15 @@
 
 <div class="card-panel">
 
-    <div class="card-panel orange center-align darken-4">
+    <div class="card-panel deep-orange accent-3 center-align darken-4">
         <h3> <b>Details du Client</b><i class="material-icons right">visibility</i></h3>
     </div>
 
     <div class="row">
-
+        <div class="col s12">
+            <h4>Ajouter à la boutique: {{ client.shop }}</h4>
+            <!-- {% if product.price %}{{ product.price }}{% else %}Non spécifiée{% endif %} -->
+        </div>
         <div class="col s12">
             <h4>Prenom: {{ client.fname }}</h4>
             <!-- {% if product.price %}{{ product.price }}{% else %}Non spécifiée{% endif %} -->
@@ -23,6 +26,10 @@
             <h4>Nombre de Passage: {{ client.passage }}</h4>
         </div>
         <div class="col s12">
+            <h4>Type de Client:{% if client.vente_or_achat == 'ACHAT' %} Achéteur
+                {% elif client.vente_or_achat == 'VENTE'%} Vendeur {% else %}{% endif %}</h4>
+        </div>
+        <div class="col s12">
             <h4>Numéro: {% if client.numero %} {{ client.numero }}{% else %}Non spécifié{% endif %}</h4>
         </div>
         <div class="col s12">
@@ -30,6 +37,13 @@
         </div>
         <div class="col s12">
             <h4>Email: {% if client.email %} {{ client.email }}{% else %}Non spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Carte d'Identité: {% if client.id_card %} {{ client.id_card }}{% else %}Non spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Numéro Passport: {% if client.passport_number %} {{ client.passport_number }}{% else %}Non
+                spécifié{% endif %}</h4>
         </div>
         <div class="col s12">
             <h4>age: {% if client.age %} {{ client.age }}{% else %}Non spécifié{% endif %}</h4>
@@ -41,7 +55,8 @@
             <h4>Sexe: {% if client.sexe %} {{ client.sexe }}{% else %}Non spécifié{% endif %}</h4>
         </div>
     </div>
-    <a href="{% url 'dashboard:clientPage' %}" class="btn-flat waves-effect black deep-orange-text accent-3">Retourner
+    <a href="{% url 'dashboard:clientPage' %}"
+        class="btn-flat btn-large waves-effect black deep-orange-text accent-3">Retourner
         <i class="material-icons right">keyboard_return</i></a>
 </div>
 
