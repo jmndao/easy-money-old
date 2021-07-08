@@ -133,12 +133,12 @@
                 <thead>
                     <tr>
                         <th class="white-text">Date</th>
-                        <th class="white-text">Nom</th>
-                        <th class="white-text">Addresse</th>
+                        <th class="white-text">Vendeur</th>
+                        <th class="white-text">Category</th>
                         <th class="white-text">Produit</th>
 
                         <th class="white-text">estimation</th>
-                        <th class="white-text">supprimer</th>
+                        <th class="white-text">voir/suppr</th>
                     </tr>
                 </thead>
                 <tbody class="black">
@@ -148,14 +148,17 @@
                         <th class="deep-orange-text accent-3 left-align">
                             {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</th>
                         <th class="deep-orange-text accent-3 left-align"> {{ estimate.seller }}</th>
-                        <th class="deep-orange-text accent-3 left-align">{{ estimate.address }}</th>
+                        <th class="deep-orange-text accent-3 left-align">{{ estimate.category }}</th>
                         <th class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</th>
                         <th>
                             <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
                                 class="white-text waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="tirer"><span class="material-icons">calculate</span></a>
+                                data-tooltip="tirer"><span class="material-icons">picture_as_pdf</span></a>
                         </th>
                         <th>
+                            <a href="{% url 'dashboard:estimationDetailPage' estimate.pk %}"
+                                class="orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
                             <label>
                                 <input type="checkbox" name='estimate_id[]' value='{{estimate.id}}'
                                     id='delete_estimate' />
@@ -173,6 +176,7 @@
             <button id='delete' type='submit' class=" btn way-bigger black b-large deep-orange-text accent-3">
                 <i class="material-icons left"></i>Supprimer
             </button>
+
         </div>
     </div>
 </section>
@@ -194,18 +198,14 @@
             } else {
                 console.log(id)
                 $.ajax({
-                    url: '.',
+                    url: "{% url 'dashboard:multipleDeleteEstimationPage' %}",
                     method: 'POST',
                     data: {
                         id,
                         csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
                     },
                     success: function (response) {
-                        console.log('succeded')
-                        for (var i = 0; i < id.length; i++) {
-                            $('#tr' + id[i] + '').css('background-color', 'black');
-                            $('#tr' + id[i] + '').fadeOut('slow');
-                        }
+                        window.location.reload();
                     }
                 })
             }

@@ -120,6 +120,8 @@ class ClientModel(models.Model):
     sexe = models.CharField(max_length=1, choices=SEXE)
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
+    id_card = models.IntegerField(blank =True, null=True)
+    passport_number = models.IntegerField(blank =True, null = True)
     email = models.EmailField(blank=True, null=True)
     passage = models.IntegerField(default=0, blank=True, null=True)
     vente_or_achat = models.CharField(
@@ -180,8 +182,12 @@ class ProductModel(models.Model):
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix D'Achat Total", blank=True, null=True)
+    price_vente_minimum_ad = models.DecimalField(
+        max_digits=20, decimal_places=0, verbose_name="Prix Vente Minimu", blank=True, null=True, editable=True)
+    price_vente_minimum_dv = models.DecimalField(
+        max_digits=20, decimal_places=0, verbose_name="Prix Vente Minimu", blank=True, null=True, editable=True)
     montant_restauration = models.DecimalField(
-        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Montant de la Restauration")
+        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Montant de la Restauration", default=0)
     estate = models.CharField(
         max_length=20, choices=ETAT, blank=True, null=True)
     obsolescence = models.CharField(
@@ -207,13 +213,19 @@ class ProductModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
-        self.price_total = self.price * self.quantity
+        self.price_total = self.price + self.montant_restauration
         if self.initial_quantity == 1 or self.initial_quantity == None:
             self.initial_quantity = self.quantity
+        self.price_vente_minimum_ad = self.price_total * 2
+        self.price_vente_minimum_dv = float(self.price_total) * 1.3
         return super(ProductModel, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '{} /{} /{} / {} '.format(self.name, self.dv_or_ad, self.quantity, self.price)
+        if self.dv_or_ad == 'DV':
+            return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_dv)
+        else:
+            print(self.price_vente_minimum_dv)
+            return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_ad)
 
 
 # Model --  Achat Direct
@@ -358,10 +370,10 @@ class EstimationModel(models.Model):
     seller = models.ForeignKey(
         ClientModel, null=True, on_delete=models.SET_NULL)
     product_name = models.CharField(max_length=100)
-    new_price = models.DecimalField(
-        max_digits=20, decimal_places=3, blank=False, null=True, verbose_name="Prix neuf")
-    used_price = models.DecimalField(
-        max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix occasion")
+    new_price = models.IntegerField(
+        blank=False, null=True, verbose_name="Prix neuf")
+    used_price = models.IntegerField(
+        blank=True, null=True, verbose_name="Prix occasion")
     estate = models.CharField(
         max_length=20, choices=ETAT, blank=False, null=True)
     obsolescence = models.CharField(
@@ -382,7 +394,7 @@ class EstimationModel(models.Model):
     reparatinon_price = models.IntegerField(null=True, blank=True, default= 0)
     category = models.CharField(
         max_length=100, choices=CATEGORY, blank=True, null=True)
-
+    final_price = models.IntegerField(null=True, blank=True, default= 0)
     def save(self, *args, **kwargs):
         self.product_name = self.product_name.lower()
         self.used_price = self.new_price / 2

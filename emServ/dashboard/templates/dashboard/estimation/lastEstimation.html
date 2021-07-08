@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,900;1,400&display=swap');
+
+    /**** CSS for login Page *****/
+    body {
+        font-family: 'Source Code Pro', monospace;
+        font-size: 12px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 50px;
+        background: #333333;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+
+
+    .count {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        background-color: #000;
+        color: #f2f2f2;
+        padding: 60px;
+        font-weight: 600;
+        width: 120px;
+        height: 120px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        margin: 10px;
+    }
+
+    .info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        background-color: #000;
+        color: #f2f2f2;
+        padding: 10px 60px;
+        font-weight: 600;
+        width: 120px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    h1 {
+        text-transform: uppercase;
+
+    }
+
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container3 {
+        display: flex;
+        align-items: left;
+        justify-content: center;
+    }
+
+    .last {
+        background-color: #ff3d00;
+    }
+
+    b {
+        background-color: #000;
+        color: #ff3d00;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    section {
+        color: #fff;
+        margin-bottom: 60px;
+    }
+
+    .button {
+        background-color: #2196f3;
+        display: inline-block;
+        width: 230px;
+        margin-top: 50px;
+        padding: 12px;
+        font-size: 25px;
+        border-radius: 3px;
+        text-transform: uppercase;
+    }
+
+    .button:hover {
+        background-color: #1976d2;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+</style>
+
+<body>
+    <section>
+        <div class="title">
+            <h1>
+                Resultat de l'estimation du produit <b> {{name_product}}</b>
+            </h1>
+        </div>
+    </section>
+    <div class="container2">
+        <span class="info">Prix Neuf</span>
+        <span class="info">Réparation </span>
+        <span class="info last">Proposition</span>
+    </div>
+    <div class=container>
+        <span class="count">{{ new_price }}</span>
+        <span class="count">{{reparation}}</span>
+        <span class="count last">{{estimation_result}}</span>
+    </div>
+    <div class="button">
+        <a href="{% url 'dashboard:estimationPage' %}" class="">
+            Retourner
+        </a>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<script>
+    Number.prototype.format = function (n) {
+        var r = new RegExp('\\d(?=(\\d{3})+' + (n > 0 ? '\\.' : '$') + ')', 'g');
+        return this.toFixed(Math.max(0, Math.floor(n))).replace(r, '$&,');
+    };
+
+    $('.count').each(function () {
+        $(this).prop('counter', 0).animate({
+            counter: $(this).text()
+        }, {
+            duration: 10000,
+            easing: 'easeOutExpo',
+            step: function (step) {
+                $(this).text('' + step.format());
+            }
+        });
+    });
+</script>
+
+</html>

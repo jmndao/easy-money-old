@@ -116,7 +116,7 @@
             <th>Vendeur</th>
             <th>Produit</th>
             <th>Quantité</th>
-            <th>Prix Achat <br>total </th>
+            <th>Cout du Produit<br> </th>
             <th>Date Achat</th>
             <th>Actions</th>
           </tr>
@@ -128,7 +128,7 @@
             <td> {{ ad.produit.name }}</td>
             <td> {{ ad.produit.quantity }} / {{ad.produit.initial_quantity}}</td>
             <td>{{ ad.produit.price_total|floatformat:0|intcomma}}</td>
-            <td>{{ ad.created_date|date:"SHORT_DATE_FORMAT"}}</td>
+            <td>{{ ad.produit.created_date|date:"SHORT_DATE_FORMAT"}}</td>
             <td class="actions">
               <a href="{% url 'dashboard:achatDirectDetailPage' ad.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"

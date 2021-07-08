@@ -1,19 +1,7 @@
 {% extends 'dashboard/base.html' %} {% load static %} {% block stylesheets %}
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'dashboard/datatables/datatables.css' %}"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'dashboard/css/addon_datatables.css' %}"
-/>
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{% static 'dashboard/css/style.css' %}"
-/>
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}" />
 {% endblock stylesheets%} {% block title %} {{ title }} {% endblock title %}
 {%block body_content %}
 
@@ -25,9 +13,7 @@
     </div>
     <div class="col s4 center-align">
       <div class="icon z-depth-2">
-        <i class="material-icons medium deep-orange-text accent-3 separate_two"
-          >people</i
-        >
+        <i class="material-icons medium deep-orange-text accent-3 separate_two">people</i>
       </div>
       <div class="ajouter">
         <p class="deep-orange-text accent-3 big">
@@ -54,53 +40,64 @@
     <!--- Form -->
     {% if user.is_superuser %}
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col m4 s6">
         {{ form.shop }}
-        <label for="{{ form.shop.id_for_label }}">Boutique</label>
+        <label for="{{ form.shop.id_for_label }}">Boutiques</label>
       </div>
-      <div class="input-field col s6">
-        {{ form.address }}
-        <label for="{{ form.address.id_for_label }}">Adresse</label>
-      </div>
-    </div>
-    {% endif %}
-    <div class="row">
-      <div class="input-field col m6 s12">
+      <div class="input-field col m4 s6">
         {{ form.fname }}
         <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
       </div>
-      <div class="input-field col m6 s12">
+      <div class="input-field col m4 s6">
         {{ form.lname }}
         <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
       </div>
+
+
+
+      {% endif %}
+
+      <div class="input-field col m4 s6">
+        {{ form.vente_or_achat }}
+        <label for="{{ form.vente_or_achat.id_for_label }}">Vendeur ou Acheteur</label>
+      </div>
+      <div class="input-field col m4 s6">
+        {{ form.address }}
+        <label for="{{ form.address.id_for_label }}">Adresse</label>
+      </div>
+
       {% comment %}
-      <div class="input-field col m4 s12">
+      <div class="input-field col m4 s6">
         {{ form.passage }}
         <label for="{{ form.passage.id_for_label }}">Nombre de passage</label>
       </div>
       {% endcomment %}
-    </div>
-    <div class="row">
       <div class="input-field col m4 s6">
         {{ form.age }}
         <label for="{{ form.age.id_for_label }}">Age</label>
       </div>
+
+
+
       <div class="input-field col m4 s6">
         {{ form.nationality }}
         <label for="{{ form.nationality.id_for_label }}">Nationalite</label>
       </div>
       <div class="input-field col m4 s6">
+        {{ form.id_card }}
+        <label for="{{ form.id_card.id_for_label }}">ID card</label>
+      </div>
+      <div class="input-field col m4 s6">
+        {{ form.passport_number }}
+        <label for="{{ form.passport_number.id_for_label }}">Numero Passport</label>
+      </div>
+
+
+
+
+      <div class="input-field col m4 s6">
         {{ form.sexe }}
         <label for="{{ form.sexe.id_for_label }}">Sexe</label>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="input-field col m4 s6">
-        {{ form.vente_or_achat }}
-        <label for="{{ form.vene_or_achat.id_for_label }}"
-          >Vente ou Achat</label
-        >
       </div>
 
       <div class="input-field col m4 s6">
@@ -115,9 +112,7 @@
     <div class="row">
       <div class="col m3 s6 right">
         <button class="waves-effect waves-green black btn-flat" type="submit">
-          <i class="material-icons right deep-orange-text accent-3 right"
-            >thumb_up_alt</i
-          >
+          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
           <b class="deep-orange-text accent-3">Enregistrer</b>
         </button>
       </div>
@@ -132,9 +127,7 @@
         <span class="table-title">Liste Des Clients</span>
         <div class="actions">
           <!-- Here is where we should make the linking-->
-          <a href="#man" class="search-toggle waves-effect btn-flat nopadding"
-            ><i class="material-icons">search</i></a
-          >
+          <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
       </div>
       <table id="datatable" class="responsive-table">
@@ -159,27 +152,15 @@
               {{ client.created_date|date:"SHORT_DATE_FORMAT" }}
             </th>
             <td class="actions black-text">
-              <a
-                href="{% url 'dashboard:clientDetailPage' client.pk %}"
-                class="orange-text darken-4 waves-effect btn-flat tooltipped"
-                data-position="left"
-                data-tooltip="Voir"
-                ><span class="material-icons">visibility</span></a
-              >
-              <a
-                href="{% url 'dashboard:clientEditPage' client.pk %}"
-                class="green-text darken-4 waves-effect btn-flat tooltipped"
-                data-position="left"
-                data-tooltip="Modifier"
-                ><span class="material-icons">update</span></a
-              >
-              <a
-                href="{% url 'dashboard:clientDeletePage' client.pk %}"
-                class="red-text accent-4 waves-effect btn-flat tooltipped"
-                data-position="left"
-                data-tooltip="Supprimer"
-                ><span class="material-icons">delete</span></a
-              >
+              <a href="{% url 'dashboard:clientDetailPage' client.pk %}"
+                class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
+              <a href="{% url 'dashboard:clientEditPage' client.pk %}"
+                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Modifier"><span class="material-icons">update</span></a>
+              <a href="{% url 'dashboard:clientDeletePage' client.pk %}"
+                class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
             </td>
           </tr>
           {% endfor %}
@@ -203,20 +184,8 @@
 <script>
   var dataset_client = JSON.parse("{{dataset_client}}");
 </script>
-<script
-  type="text/javascript"
-  src="{% static 'dashboard/js/chartClient.js' %}"
-></script>
-<script
-  type="text/javascript"
-  src="{% static 'dashboard/datatables/datatables.js' %}"
-></script>
-<script
-  type="text/javascript"
-  src="{% static 'dashboard/js/main.js' %}"
-></script>
-<script
-  type="text/javascript"
-  src="{% static 'dashboard/js/materialize_setup.js' %}"
-></script>
+<script type="text/javascript" src="{% static 'dashboard/js/chartClient.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 {% endblock javascripts %}
