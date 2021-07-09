@@ -118,23 +118,22 @@
 
     </form>
 </div>
+
 <section class="center-align">
     <div id="man" class="col s12">
         <div class="card resize material-table ">
             <div class="table-header">
-                <span class="table-title deep-orange-text accent-3">Liste Des Produits Estimés</span>
+                <span class="table-title">Liste des Estimations</span>
                 <div class="actions">
-                    <!-- Here is where we should make the linking-->
                     <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
-                            class="material-icons">recherche</i></a>
+                            class="material-icons">search</i></a>
                 </div>
-                <div class="row center-align with-pd">
+                <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
                     <button id='delete' type='submit' class="red darken-1 btn white-text">
                         <i class="material-icons left"></i>Supprimer
                     </button>
                 </div>
             </div>
-
             <table id="datatable" class="responsive-table">
                 <thead>
                     <tr>
@@ -145,6 +144,7 @@
 
                         <th class="white-text">estimation</th>
                         <th class="white-text">Action</th>
+                        <th class="white-text">Supprimer</th>
                     </tr>
                 </thead>
                 <tbody class="black">
@@ -160,18 +160,20 @@
                             <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
                                 class="white-text waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Faire Devis"><span class="material-icons">picture_as_pdf</span></a>
-                        </th>
                         <th>
+                            <a href="{% url 'dashboard:estimationEditPage' estimate.pk %}"
+                                class="orange-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="modifier"><span class="material-icons">update</span></a>
                             <a href="{% url 'dashboard:estimationDetailPage' estimate.pk %}"
                                 class="orange-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-                            <label class="">
+                        </th>
+                        <th><label class="">
                                 <input type="checkbox" name='estimate_id[]' value='{{estimate.id}}'
                                     id='delete_estimate' />
                                 <span></span>
                             </label>
                         </th>
-
                     </tr>
 
                     {% endfor %}
@@ -188,7 +190,7 @@
     //var dataset_client = JSON.parse('{{dataset_client}}')
     $(document).ready(function () {
         $('#delete').click(function () {
-            if (confirm('Are you sure you want to delete this item?'))
+            if (confirm('Êtes vous sures de vouloir supprimer les éléments selectionnés?'))
                 var id = [];
             $(':checkbox:checked').each(function (i) {
                 id[i] = $(this).val()

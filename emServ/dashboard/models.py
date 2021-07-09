@@ -210,6 +210,7 @@ class ProductModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     sold = models.BooleanField(default=False)
     color = models.CharField(max_length=100, blank=True, null=True)
+    connectic = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()

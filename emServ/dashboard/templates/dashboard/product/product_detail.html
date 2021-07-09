@@ -237,6 +237,16 @@
                 </div>
             </h6>
         </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Connectiques du Produit:
+                </div>
+                <div class="col s6">
+                    <b>{{ product.connectic|yesno:"OUI, NON" }}</b>
+                </div>
+            </h6>
+        </div>
     </div>
 
     <a href="{% url 'dashboard:productPage' %}"

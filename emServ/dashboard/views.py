@@ -616,14 +616,22 @@ class EstimationPage(LoginRequiredMixin, CreateView, Utils):
         return context
     
 
-
+#Delete Multiple Estimation
 def multiple_delete_estimation(request):
     if request.method == 'POST':
         estimate_ids = request.POST.getlist('id[]')
         for id in estimate_ids:
             estimate = EstimationModel.objects.get(pk=id)
             estimate.delete()
+    return redirect('dashboard:homePage')
 
+#Delete Multiple Estimation
+def multiple_delete_client(request):
+    if request.method == 'POST':
+        client_ids = request.POST.getlist('id[]')
+        for id in client_ids:
+            client = ClientModel.objects.get(pk=id)
+            client.delete()
     return redirect('dashboard:homePage')
     
 
@@ -655,6 +663,15 @@ class EstimationDetail(LoginRequiredMixin, DetailView):
             self.estimation = EstimationModel.objects.filter(pk=self.kwargs["pk"])
         return self.estimation
 
+class EstimationEdit(LoginRequiredMixin, UpdateView):
+    template_name = 'dashboard/estimation/estimationEdit.html'
+    fields = '__all__'
+    model = EstimationModel
+    success_url = reverse_lazy('dashboard:estimationPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class EstimationResultPage(LoginRequiredMixin, CreateView, Utils):
     template_name = 'dashboard/estimation/estimationResult.html'
