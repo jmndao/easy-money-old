@@ -32,6 +32,7 @@ urlpatterns = [
     # ClientRequest Routers
     path('demande_cliant/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
     path('demande_cliant/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),
+    path('demande_cliant/supprimer_plusieur/', d_views.multiple_delete_clientRequest, name='multipleDeleteClientRequestPage'),
     path('demande_cliant/detail/<int:pk>/', d_views.ClientRequestDetailView.as_view(), name='clientRequestDetailPage'),
     # Achat Direct Routers
     path('achat_direct/', d_views.AchatDirectView.as_view(), name="achatDirectPage"),
@@ -47,11 +48,13 @@ urlpatterns = [
     path('vente/', d_views.VenteView.as_view(), name="ventePage"),
     path('vente/modifier/<int:pk>/', d_views.VenteUpdateView.as_view(), name='venteEditPage'),
     path('vente/supprimer/<int:pk>/', d_views.VenteDeleteView.as_view(), name='venteDeletePage'),
+    path('vente/supprimer_plusieur/', d_views.multiple_delete_vente, name='multipleDeleteVentePage'),
     path('vente/detail/<int:pk>/', d_views.VenteDetailView.as_view(), name='venteDetailPage'),
     # Product Routers
     path('produit/', d_views.ProductView.as_view(), name="productPage"),
     path('produit/modifier/<int:pk>/', d_views.ProductUpdateView.as_view(), name='productEditPage'),
     path('produit/supprimer/<int:pk>/', d_views.ProductDeleteView.as_view(), name='productDeletePage'),
+    path('product/supprimer_plusieur/', d_views.multiple_delete_product, name='multipleDeleteProductPage'),
     path('produit/detail/<int:pk>/', d_views.ProductDetailView.as_view(), name='productDetailPage'),
     # Profile Router
     # path('profile/', d_views.ProfileView.as_view(), name="profilePage"),

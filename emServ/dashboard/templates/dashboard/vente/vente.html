@@ -216,51 +216,61 @@
 
 <!------- Section R3002: - Deposit stock [] -->
 
-<div class="row">
+<div class="row card">
   <div id="man" class="col s12">
-    <div class="card material-table">
+    <div class=" material-table">
       <div class="table-header">
         <span class="table-title">Liste des Ventes</span>
         <div class="actions">
           <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
+        <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
+          <button id='delete' type='submit' class="red darken-1 btn white-text">
+            <i class="material-icons left"></i>Supprimer
+          </button>
+        </div>
       </div>
+
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
 
             <th>Clients</th>
             <th>Produit</th>
-            <th>Prix total <br> vendu</th>
+            <th>Prix de <br> vente</th>
             <th>Restant Du <br></th>
             <th>date<br> vendue</th>
             <th>Factures</th>
             <th>Actions</th>
+            <th>Supprimer</th>
           </tr>
         </thead>
         <tbody>
           {% for v in vente %}
-          <tr {% if v.restant_du != 0%} class="red" {% else %} class="" {% endif %}>
+          <tr id="v.id" {% if v.restant_du != 0%} class="red" {% else %} class="" {% endif %}>
             <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
             <td class=''> {{ v.produit.name }} </td>
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>
             <td class=''> {{ v.restant_du }} </td>
             <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
-            <td>
+            <td class=''>
               <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
                 <span class="material-icons black">picture_as_pdf</span>
               </a>
             </td>
-            <td class="actions black-text">
+            <td class="black-text center-align-element">
               <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
                 class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
               <a href="{% url 'dashboard:venteEditPage' v.pk %}"
                 class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Modifier"><span class="material-icons">update</span></a>
-              <a href="{% url 'dashboard:venteDeletePage' v.pk %}"
-                class="grey-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Supprimer"><span class="material-icons">delete</span></a>
+            <td>
+              <label class="">
+                <input type="checkbox" name='vente_id[]' value='{{v.id}}' id='delete_vente' />
+                <span></span>
+              </label>
+            </td>
             </td>
           </tr>
           {% endfor %}
@@ -280,6 +290,37 @@
 
 <script>
   var dataset_vente = JSON.parse('{{dataset_vente}}');
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  //var dataset_client = JSON.parse('{{dataset_client}}')
+  $(document).ready(function () {
+    $('#delete').click(function () {
+      if (confirm('Êtes vous sures de vouloir supprimer les éléments selectionnés?'))
+        var id = [];
+      $(':checkbox:checked').each(function (i) {
+        id[i] = $(this).val()
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+      })
+      if (id.length === 0) {
+        alert('Please Select the item')
+      } else {
+        console.log(id)
+        $.ajax({
+          url: "{% url 'dashboard:multipleDeleteVentePage' %}",
+          method: 'POST',
+          data: {
+            id,
+            csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+          },
+          success: function (response) {
+            console.log(response)
+            window.location.reload();
+          }
+        })
+      }
+    })
+  })
 </script>
 <script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
 {% endblock javascripts %}

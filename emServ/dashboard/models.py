@@ -309,7 +309,10 @@ class VenteModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.price_total = self.price * self.quantity
-        self.restant_du = self.price_total -  self.acompte
+        if self.acompte != 0 or None: 
+            self.restant_du = self.price_total -  self.acompte
+        else: 
+            self.restant_du = 0
         return super(VenteModel, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -336,6 +339,7 @@ class ClientRequestModel(models.Model):
     description = models.TextField(blank=True, null=True)
     found = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
+    wished_price = models.IntegerField(blank = True, null = True)
 
     def __str__(self):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.found)

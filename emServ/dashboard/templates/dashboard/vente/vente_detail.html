@@ -59,7 +59,7 @@
             Montant d'accompte :
         </div>
         <div class="col s6">
-            <b>{% if sales.acompte %}{{ sales.acompte|floatformat:0|intcomma }}fcfa {% else %} 0fcfa
+            <b>{% if sales.acompte %}{{ sales.acompte|floatformat:0|intcomma }} fcfa {% else %} 0 fcfa
                 {% endif %} </b>
         </div>
         <div class="col s6">
@@ -68,7 +68,7 @@
         <div class="col s6">
             <b class="deep-orange accent-3 white-text"
                 style="padding:10px; border-radius:5px">{% if sales.restant_du %}{{ sales.restant_du|floatformat:0|intcomma }}fcfa
-                {% else %} 0fcfa
+                {% else %} 0 fcfa
                 {% endif %} </b>
         </div>
     </div>

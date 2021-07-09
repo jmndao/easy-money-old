@@ -216,7 +216,7 @@ class Utils:
         elif my_estimation.estate == 'MAUVAIS':
             percentage_1 = 0.2
         else:
-            percentage_1 = None
+            percentage_1 = 1
 
         i_price = i_price - i_price * percentage_1
         percentage_2 = 0
@@ -229,7 +229,7 @@ class Utils:
         elif my_estimation.obsolescence == 'TRES_RAPIDE':
             percentage_2 = 0.2
         else:
-            percentage_2 = None
+            percentage_2 = 1
         i_price = i_price - i_price * percentage_2
 
         percentage_3 = 0
@@ -299,7 +299,7 @@ class Utils:
         elif form.instance.estate == 'MAUVAIS':
             percentage_1 = 0.2
         else:
-            percentage_1 = None
+            percentage_1 = 1
 
         i_price = i_price - i_price * percentage_1
         percentage_2 = 0

@@ -150,30 +150,31 @@
                 <tbody class="black">
 
                     {% for estimate in estimates %}
-                    <tr id="{{estimate.id}}" class="black">
-                        <th class="deep-orange-text accent-3 left-align">
-                            {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</th>
-                        <th class="deep-orange-text accent-3 left-align"> {{ estimate.seller }}</th>
-                        <th class="deep-orange-text accent-3 left-align">{{ estimate.category }}</th>
-                        <th class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</th>
-                        <th>
+                    <tr id="{{estimate.id}}" class="">
+                        <td class="deep-orange-text accent-3 left-align">
+                            {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td class="deep-orange-text accent-3 left-align"> {{ estimate.seller }}</td>
+                        <td class="deep-orange-text accent-3 left-align">{{ estimate.category }}</td>
+                        <td class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</td>
+                        <td>
                             <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
-                                class="white-text waves-effect btn-flat tooltipped" data-position="left"
+                                class="black-text waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Faire Devis"><span class="material-icons">picture_as_pdf</span></a>
-                        <th>
+                        <td class="center-align-element">
                             <a href="{% url 'dashboard:estimationEditPage' estimate.pk %}"
-                                class="orange-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
+                                class="green-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="modifier"><span class="material-icons">update</span></a>
                             <a href="{% url 'dashboard:estimationDetailPage' estimate.pk %}"
-                                class="orange-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-                        </th>
-                        <th><label class="">
+                                class="deep-orange-text accent-3 btn waves-effect btn-flat tooltipped"
+                                data-position="left" data-tooltip="Voir"><span
+                                    class="material-icons">visibility</span></a>
+                        </td>
+                        <td><label class="">
                                 <input type="checkbox" name='estimate_id[]' value='{{estimate.id}}'
                                     id='delete_estimate' />
                                 <span></span>
                             </label>
-                        </th>
+                        </td>
                     </tr>
 
                     {% endfor %}

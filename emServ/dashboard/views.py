@@ -89,12 +89,12 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         return context
 
 
-class ClientRequestView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
+class ClientRequestView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/client_request/client_request.html'
     model = ClientRequestModel
     fields = '__all__'
-
+    success_url = reverse_lazy('dashboard:clientRequestPage')
     def form_valid(self, form):
         if not self.request.user.is_superuser:
             form.instance.shop = Shop.objects.get(
@@ -257,10 +257,11 @@ class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteVi
     context_object_name = 'dv_delete'
 
 
-class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
+class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/vente/vente.html'
     form_class = VenteForm
+    success_url = reverse_lazy('dashboard:ventePage')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -616,23 +617,7 @@ class EstimationPage(LoginRequiredMixin, CreateView, Utils):
         return context
     
 
-#Delete Multiple Estimation
-def multiple_delete_estimation(request):
-    if request.method == 'POST':
-        estimate_ids = request.POST.getlist('id[]')
-        for id in estimate_ids:
-            estimate = EstimationModel.objects.get(pk=id)
-            estimate.delete()
-    return redirect('dashboard:homePage')
 
-#Delete Multiple Estimation
-def multiple_delete_client(request):
-    if request.method == 'POST':
-        client_ids = request.POST.getlist('id[]')
-        for id in client_ids:
-            client = ClientModel.objects.get(pk=id)
-            client.delete()
-    return redirect('dashboard:homePage')
     
 
 class LastEstimationPage(LoginRequiredMixin, CreateView, Utils):
@@ -701,3 +686,53 @@ class EstimationDeletePage(LoginRequiredMixin, RedirectToPreviousMixin, DeleteVi
     template_name = 'dashboard/estimation/estimationDelete.html'
     model = EstimationModel
     context_object_name = 'estimates'
+
+
+"""
+Here Is where we are going to make our models to be able to delete multiple times
+"""
+#Delete Multiple Estimation
+def multiple_delete_estimation(request):
+    if request.method == 'POST':
+        estimate_ids = request.POST.getlist('id[]')
+        for id in estimate_ids:
+            estimate = EstimationModel.objects.get(pk=id)
+            estimate.delete()
+    return redirect('dashboard:homePage')
+
+
+#Delete Multiple Client
+def multiple_delete_client(request):
+    if request.method == 'POST':
+        client_ids = request.POST.getlist('id[]')
+        for id in client_ids:
+            client = ClientModel.objects.get(pk=id)
+            client.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple Product
+def multiple_delete_product(request):
+    if request.method == 'POST':
+        product_ids = request.POST.getlist('id[]')
+        for id in product_ids:
+            product = ProductModel.objects.get(pk=id)
+            product.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple Vente
+def multiple_delete_vente(request):
+    if request.method == 'POST':
+        vente_ids = request.POST.getlist('id[]')
+        for id in vente_ids:
+            vente = VenteModel.objects.get(pk=id)
+            vente.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple Delete ClientRequest
+def multiple_delete_clientRequest(request):
+    if request.method == 'POST':
+        c_req_ids = request.POST.getlist('id[]')
+        for id in c_req_ids:
+            c_req = ClientRequestModel.objects.get(pk=id)
+            c_req.delete()
+    return redirect('dashboard:homePage')
