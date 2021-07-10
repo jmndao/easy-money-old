@@ -771,26 +771,6 @@ def multiple_delete_clientRequest(request):
             c_req.delete()
     return redirect('dashboard:homePage')
 
-<<<<<<< HEAD
-#Delete Multiple  DepotVente
-# def multiple_delete_depotVente(request):
-#     if request.method == 'POST':
-#         depot_vente_ids = request.POST.getlist('id[]')
-#         for id in depot_vente_ids:
-#             dv = DepotVenteModel.objects.get(pk=id)
-#             dv.delete()
-#     return redirect('dashboard:homePage')
-
-
-#Delete Multiple AchatDirect
-# def multiple_delete_achatDirect(request):
-#     if request.method == 'POST':
-#         achat_direct_ids = request.POST.getlist('id[]')
-#         for id in achat_direct_ids:
-#             ad = AchatDirectModel.objects.get(pk=id)
-#             ad.delete()
-#     return redirect('dashboard:homePage')
-=======
 # Delete Multiple  DepotVente
 def multiple_delete_depotVente(request):
     if request.method == 'POST':
@@ -809,4 +789,3 @@ def multiple_delete_achatDirect(request):
             ad = ProductModel.objects.filter(dv_or_ad='AD').get(pk=id)
             ad.delete()
     return redirect('dashboard:homePage')
->>>>>>> b7bf481b3dc6c15e627308866a2d0d16d60d9126

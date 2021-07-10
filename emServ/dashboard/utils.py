@@ -95,10 +95,7 @@ class Utils:
             else:
                 df = pd.DataFrame(db.objects.filter(
                     shop__owner__user__username=uname).values())
-<<<<<<< HEAD
-=======
         
->>>>>>> b7bf481b3dc6c15e627308866a2d0d16d60d9126
         if not df.empty:
             un_x = df.groupby(
                 df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})
