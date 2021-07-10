@@ -52,3 +52,5 @@ class DevisModelForm(forms.ModelForm):
         else:
             self.fields['client'].queryset = ClientModel.objects.filter(
                 vente_or_achat='CR', shop__owner__user=self.user)
+            self.fields['produit'].queryset = ProductModel.objects.filter(
+                shop__owner__user=self.user)

@@ -349,7 +349,7 @@ class ClientRequestModel(models.Model):
 class DevisModel(models.Model):
     shop = models.ForeignKey(
         Shop, on_delete=models.CASCADE, blank=True, null=True)
-    product_name = models.CharField(max_length=100)
+    produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     description = models.TextField(max_length=300, null=True, blank=True)
     quantity = models.IntegerField(blank=False, null=False, default=1)
     price = models.DecimalField(

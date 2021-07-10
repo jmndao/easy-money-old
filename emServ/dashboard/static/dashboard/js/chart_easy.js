@@ -1,10 +1,10 @@
 var ctx_in = document.getElementById("myChart");
 
 var data = {
-    labels: dataset_stock["months"], // or dataset_achat["months"]
+    labels: dataset_achat["months"], // or dataset_achat["months"]
     datasets: [{
-            label: 'Achat Direct',
-            data: dataset_stock["data"],
+            label: 'Vente',
+            data: dataset_vente["data"],
             borderWidth: 2,
             backgroundColor: 'rgb(255, 61, 0)',
             borderColor: [
@@ -13,10 +13,20 @@ var data = {
 
         },
         {
-            label: 'Vente',
+            label: 'Achat Direct',
             data: dataset_achat["data"],
             borderWidth: 2,
             backgroundColor: 'rgb(0, 0, 0)',
+            borderColor: [
+                'rgb(255, 61, 0)',
+            ]
+
+        },
+        {
+            label: 'Depot',
+            data: dataset_depot["data"],
+            borderWidth: 2,
+            backgroundColor: 'rgb(218, 223, 225)',
             borderColor: [
                 'rgb(255, 61, 0)',
             ]
