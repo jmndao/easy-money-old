@@ -59,12 +59,12 @@
                 les plus déposés
             </li>
             {% for t_dpv in tendance_depot_vente %}
-            {% if forloop.counter < 5%}
+            {% if forloop.counter < 5 %}
             <!-- #Display the three first vente trend -->
             {% if t_dpv.freq > 2 %}
             <li class="collection-item avatar">
                 <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
-                <p class="deep-orange-text accent-3">{{ t_dpv.produit__name }}
+                <p class="deep-orange-text accent-3">{{ t_dpv.name }}
                     <p> Frequence de Vente: {{ t_dpv.freq }}</p>
                 </p>
             </li>

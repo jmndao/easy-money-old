@@ -86,7 +86,7 @@
       {% if t_ad_d.freq < 2 %}
       <li class="collection-item avatar">
         <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-        <p class="deep-orange-text accent-3">{{ t_ad_d.produit__name }}
+        <p class="deep-orange-text accent-3">{{ t_ad_d.name }}
           <p> Frequence de Vente: {{ t_ad_d.freq }}</p>
         </p>
       </li>
@@ -130,11 +130,11 @@
         <tbody>
           {% for ad in achat_directs %}
           <tr id='ad.id'>
-            <th class="black-text"> {{ ad.produit.seller }} </th>
-            <th class="black-text"> {{ ad.produit.name }}</th>
-            <th class="black-text"> {{ ad.produit.quantity }} / {{ad.produit.initial_quantity}}</th>
-            <th class="black-text">{{ ad.produit.price_total|floatformat:0|intcomma}}</th>
-            <th class="black-text">{{ ad.produit.created_date|date:"SHORT_DATE_FORMAT"}}</th>
+            <th class="black-text"> {{ ad.seller }} </th>
+            <th class="black-text"> {{ ad.name }}</th>
+            <th class="black-text"> {{ ad.quantity }} / {{ad.initial_quantity}}</th>
+            <th class="black-text">{{ ad.price_total|floatformat:0|intcomma}}</th>
+            <th class="black-text">{{ ad.created_date|date:"SHORT_DATE_FORMAT"}}</th>
             <th class="center-align-element black-text">
               <a href="{% url 'dashboard:achatDirectDetailPage' ad.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"

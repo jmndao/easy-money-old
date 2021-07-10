@@ -61,46 +61,24 @@ class Utils:
             [a.price_total for a in achat if a.price_total != None])
         return (sum_vente - sum_achat)
 
-    def benefice_vente(self, db_a_direct, db_dvs, sales):
+    def benefice_vente(self, db_vente, db_produit , is_superuser=True, user=None):
         """
         Calculate the Total benefice of the Shop:
             db_a_direct : is the Achat Direct Model object (DepositStockModel)
             db_dvs : is the Depot Vente Model object (DepotVenteStockModel)
             sales : is the total sum of all sales 
         """
-        a_directs = db_a_direct.objects.all()
-        dvs = db_dvs.objects.all()
-        sum_a_directs = sum(
-            [p.produit.price_total for p in a_directs if p.produit.price_total != None])
-        sum_dvs = sum(
-            [p.produit.price_total for p in dvs if p.produit.price_total != None])
-        return (sales - (sum_a_directs + sum_dvs))
-
-    def benefice_depot_vente(self, db_a_direct, db_sales, dv):
-        """
-        Calculate the Total benefice of the Shop:
-            db_a_direct: is the Achat Direct model object
-            db_sales: is the BuyingStock model object
-            dv: is the sum of the depot vente from DepotVenteStockModel
-        """
-        a_directs = db_a_direct.objects.all()
-        sales = db_sales.objects.all()
-        sum_a_directs = sum([p.price for p in a_directs if p.price != None])
-        sum_sales = sum([p.price for p in sales if p.price != None])
-        return (sum_sales - (dv + sum_a_directs))
-
-    def benefice_achat_direct(self, db_sales, db_dvs, d_stock):
-        """
-        Calculate the Total benefice of the Shop:
-            db_sales : is the Sales Model object (BuyingStockModel)
-            db_dvs : is the Depot Vente Model object (DepotVenteStockModel)
-            d_stock : is the total sum of all Achat Direct Model (DepositStockModel) 
-        """
-        sales = db_sales.objects.all()
-        dvs = db_dvs.objects.all()
-        sum_sales = sum([p.price for p in sales if p.price != None])
-        sum_dvs = sum([p.price for p in dvs if p.price != None])
-        return (sum_sales - (d_stock + sum_dvs))
+        if is_superuser:
+            vente = db_vente.objects.all()
+            achat = db_produit.objects.all()
+        else:
+            vente = db_vente.objects.filter(produit__shop__owner__user=user)
+            achat = db_produit.objects.filter(shop__owner__user=user)
+        sum_vente = sum(
+            [v.price_total for v in vente if v.price_total != None])
+        sum_achat = sum(
+            [a.price_total for a in achat if a.price_total != None])
+        return (sum_vente - sum_achat)
 
     def chartObject(self, db, key=None, dv_or_ad=None, dt_col_name=None, uname=None, is_superuser=True):
         # Let's check is user is superuser or not
@@ -117,7 +95,7 @@ class Utils:
             else:
                 df = pd.DataFrame(db.objects.filter(
                     shop__owner__user__username=uname).values())
-        print(df)
+        
         if not df.empty:
             un_x = df.groupby(
                 df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})

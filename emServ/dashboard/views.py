@@ -24,7 +24,7 @@ from dashboard.models import (ProductModel,
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
 from django.contrib import messages
-from dashboard.forms import VenteForm, ProductModelForm
+from dashboard.forms import VenteForm, ProductModelForm, DevisModelForm
 from django.shortcuts import redirect
 
 
@@ -160,18 +160,15 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
-        context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by(
+        context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad='AD').order_by(
             '-created_date')
         # context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad = 'AD').order_by(
         #     '-created_date')
         context['count_item'] = self.q.count()
-        context["tendance_achat_direct"] = AchatDirectModel.objects.values(
-            'produit__name').annotate(freq=Count('produit__name')).order_by("?")
+        context["tendance_achat_direct"] = ProductModel.objects.filter(dv_or_ad='AD').values(
+            'name').annotate(freq=Count('name')).order_by("?")
         context['spent'] = sum(
-            [p.produit.price_total for p in self.q if p.produit.price_total != None])
-        context['benefice'] = self.benefice_achat_direct(
-            VenteModel, DepotVenteModel, context['spent'])
-
+            [p.price_total for p in self.q if p.price_total != None])
         if self.request.user.is_superuser:
             context["dataset_achat_direct"] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
@@ -213,17 +210,14 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
         self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
-        context["tendance_depot_vente"] = DepotVenteModel.objects.values(
-            'produit__name').annotate(freq=Count('produit__name')).order_by("?")
+        context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV').values(
+            'name').annotate(freq=Count('name')).order_by("?")
         # Nombre de produit
         context['depot_ventes'] = self.q
         context['total_item'] = self.q.count()
         # Sum des produits de depots ventes
         context['spent_depot'] = sum(
             [p.price_total for p in self.q if p.price_total != None])
-        # benefice
-        context['benefice'] = self.benefice_depot_vente(
-            AchatDirectModel, VenteModel, context['spent_depot'])
         if self.request.user.is_superuser:
             context['dataset_depot'] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
@@ -306,9 +300,6 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['product_initial'] = self.pi = ProductModel.objects.all()
-        # context['p_init'] = self.pi.initial_quantity
-
         context['vente'] = self.q = VenteModel.objects.order_by(
             '-created_date')
         context["tendance_vente"] = VenteModel.objects.values(
@@ -316,16 +307,17 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         context['count_item'] = self.q.count()
         context['revenue'] = sales = sum(
             [p.price_total for p in self.q if p.price_total != None])
-        context['benefice'] = self.benefice_vente(
-            AchatDirectModel, DepotVenteModel, sales)
-
         uname = self.request.user.username
         if self.request.user.is_superuser:
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date')
+            context['benefice'] = self.benefice_vente(
+                VenteModel, ProductModel, sales)
         else:
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date', uname=uname, is_superuser=False)
+            context['benefice'] = self.benefice_vente(
+                VenteModel, ProductModel, sales, is_superuser=False, user=self.request.user)
 
         return context
 
@@ -554,9 +546,13 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
 
 class GenerateDevis(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/devis/devis.html'
-    model = DevisModel
-    fields = '__all__'
+    form_class = DevisModelForm
     success_url = reverse_lazy('dashboard:devisPage')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -737,21 +733,21 @@ def multiple_delete_clientRequest(request):
             c_req.delete()
     return redirect('dashboard:homePage')
 
-#Delete Multiple  DepotVente
-# def multiple_delete_depotVente(request):
-#     if request.method == 'POST':
-#         depot_vente_ids = request.POST.getlist('id[]')
-#         for id in depot_vente_ids:
-#             dv = DepotVenteModel.objects.get(pk=id)
-#             dv.delete()
-#     return redirect('dashboard:homePage')
+# Delete Multiple  DepotVente
+def multiple_delete_depotVente(request):
+    if request.method == 'POST':
+        depot_vente_ids = request.POST.getlist('id[]')
+        for id in depot_vente_ids:
+            dv = ProductModel.objects.filter(dv_or_ad='DV').get(pk=id)
+            dv.delete()
+    return redirect('dashboard:homePage')
 
 
-#Delete Multiple AchatDirect
-# def multiple_delete_achatDirect(request):
-#     if request.method == 'POST':
-#         achat_direct_ids = request.POST.getlist('id[]')
-#         for id in achat_direct_ids:
-#             ad = AchatDirectModel.objects.get(pk=id)
-#             ad.delete()
-#     return redirect('dashboard:homePage')
+# Delete Multiple AchatDirect
+def multiple_delete_achatDirect(request):
+    if request.method == 'POST':
+        achat_direct_ids = request.POST.getlist('id[]')
+        for id in achat_direct_ids:
+            ad = ProductModel.objects.filter(dv_or_ad='AD').get(pk=id)
+            ad.delete()
+    return redirect('dashboard:homePage')
