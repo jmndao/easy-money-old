@@ -1,4 +1,4 @@
-import datetime
+import json
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -717,7 +717,18 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
     
 
 
-class EstimationDeletePage(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
+class EstimationDeletePage(LoginRequiredMixin, DeleteView):
     template_name = 'dashboard/estimation/estimationDelete.html'
     model = EstimationModel
     context_object_name = 'estimates'
+
+
+def estimation_delete_multiple(request):
+
+    if request.is_ajax():
+        estimate_ids = request.POST['id']
+        print(estimate_ids, type(estimate_ids))
+        for id in estimate_ids:
+            estimate = EstimationModel.objects.get(pk=id)
+            estimate.delete()
+        return redirect('dashboard:homePage')

@@ -15,7 +15,7 @@ urlpatterns = [
     #Handling the estimation page
     path('estimation/', d_views.EstimationPage.as_view(), name = 'estimationPage'),
     path('estimation/resultat/<int:pk>/', d_views.EstimationResultPage.as_view(), name = 'estimationResultPage'),
-    path('estimation/supprimer/<int:pk>/', d_views.EstimationDeletePage.as_view(), name = 'estimationDeletePage'),
+    path('estimation/supprimer/', d_views.estimation_delete_multiple, name = 'estimationDeletePage'),
     #This is the home page
     path('', d_views.IndexView.as_view(), name="homePage"),
     # Client Routers

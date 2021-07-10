@@ -117,7 +117,6 @@ class Utils:
             else:
                 df = pd.DataFrame(db.objects.filter(
                     shop__owner__user__username=uname).values())
-        print(df)
         if not df.empty:
             un_x = df.groupby(
                 df[dt_col_name].dt.strftime('%B')).agg({key: 'sum'})
@@ -131,7 +130,6 @@ class Utils:
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
                        'data': [0, 0, 0]}
-        print(dataset)
 
         return mark_safe(escapejs(json.dumps(dataset)))
 

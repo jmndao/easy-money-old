@@ -170,7 +170,7 @@
     //var dataset_client = JSON.parse('{{dataset_client}}')
     $(document).ready(function () {
         $('#delete').click(function () {
-            if (confirm('Are you sure you want to delete this item?'))
+            if (confirm('Etes vous sure de vouloir achevez cette operation?'))
                 var id = [];
             $(':checkbox:checked').each(function (i) {
                 id[i] = $(this).val()
@@ -179,20 +179,16 @@
             if (id.length === 0) {
                 alert('Please Select the item')
             } else {
-                console.log(id)
                 $.ajax({
-                    url: '.',
+                    url: "{% url 'dashboard:estimationDeletePage' %}",
                     method: 'POST',
                     data: {
-                        id,
+                        'id': JSON.stringify(id),
                         csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
                     },
                     success: function (response) {
-                        console.log('succeded')
-                        for (var i = 0; i < id.length; i++) {
-                            $('#tr' + id[i] + '').css('background-color', 'black');
-                            $('#tr' + id[i] + '').fadeOut('slow');
-                        }
+                        
+                        console.log(id + " " + url + " " + response);
                     }
                 })
             }
