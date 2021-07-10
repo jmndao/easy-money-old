@@ -1,0 +1,130 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+{% endblock stylesheets %}
+
+{% block body_content %}
+
+<div class="card-panel">
+    <div class="card-panel deep-orange accent-3">
+        <h4>Modifier un produit estimé
+            <a href="{% url 'dashboard:productPage' %}" class="btn-flat waves-effect right"><i
+                    class="medium material-icons right ">keyboard_return</i></a>
+        </h4>
+    </div>
+    <div class="info_text valign-wrapper">
+        <p class="blue-text lighten-2">
+            <small>
+                Vous êtes entrain de modifier les informations d'un produit.
+                Vous pouvez toujours retourner en cliquant sur l'icon d'en haut.
+            </small>
+        </p>
+    </div>
+    <div class="card-panel resize black" id="">
+        <form action="" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <div class="row ">
+                <!-- <div class="col m6 s12"> -->
+                <div class="input-field col m3 s12 white-text ">
+                    {{ form.shop }}
+                    <label class="white-text" class="white-text" for="{{form.shop.id_for_label}}">Boutique</label>
+                </div>
+                <div class="input-field col m3 s12">
+                    {{ form.seller }}
+                    <label class="white-text" class="white-text" for="{{form.client_name.id_for_label}}">Vendeur</label>
+                </div>
+                <div class="input-field col m3 s12">
+                    {{ form.numero }}
+                    <label class="white-text" for="{{form.numero.id_for_label}}">&#8470; Telephone</label>
+                </div>
+                <div class="input-field col m3 s12">
+                    {{ form.address }}
+                    <label class="white-text" for="{{form.address.id_for_label}}">Addresse</label>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="input-field col m3 s6">
+                    {{ form.product_name }}
+                    <label class="white-text" for="{{form.product_name.id_for_label}}">Nom Produit</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.year_of_release }}
+                    <label class="white-text" for="{{form.year_of_release.id_for_label}}">Année de sortie</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.new_price }}
+                    <label class="white-text" for="{{form.new_price.id_for_label}}">Prix Neuf</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.reparatinon_price }}
+                    <label class="white-text" for="{{form.reparatinon_price.id_for_label}}">Réparation à Prévoir</label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col m3 s6">
+                    {{ form.category }}
+                    <label class="white-text" for="{{form.category.id_for_label}}">Category</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.obsolescence }}
+                    <label class="white-text" for="{{form.obsolescence.id_for_label}}">Obsolescence</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.rarety }}
+                    <label class="white-text" for="{{form.rarety.id_for_label}}">Rareté </label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.charger }}
+                    <label class="white-text" for="{{form.charger.id_for_label}}">Chargeur </label>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="input-field col m3 s6">
+                    {{ form.estate }}
+                    <label class="white-text" for="{{form.estate.id_for_label}}">Etat</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    {{ form.dimension }}
+                    <label class="white-text" for="{{form.dimension.id_for_label}}">Dimension</label>
+                </div>
+                <div class="input-field col m3 s6">
+                    <label class="white-text" for="{{form.sale_bill.id_for_label}}">
+                        {{ form.sale_bill }}
+                        <span>Facture</span>
+                    </label>
+                </div>
+                <div class="input-field col m3 s6">
+                    <label class="white-text" for="{{form.original_box.id_for_label}}">
+                        {{ form.original_box }}
+                        <span>Boite d'origine</span>
+                    </label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="input-field col m6 s12">
+                    <button class="waves-effect waves-green white btn-flat" type="submit">
+                        <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+                        <b class="deep-orange-text accent-3">Enregistrer</b>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock body_content %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+{% endblock javascripts %}

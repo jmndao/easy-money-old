@@ -40,6 +40,16 @@ div.material-table .table-header .actions {
     margin-left: auto;
 }
 
+.center-align-element {
+    align-items: flex-end;
+    display: flex;
+    justify-content: center;
+}
+
+.center-align-element a {
+    padding: 0 10px;
+}
+
 div.material-table .table-header .btn-flat {
     min-width: 36px;
     padding: 0 8px;

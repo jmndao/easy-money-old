@@ -148,7 +148,8 @@
                 <p class="white black-text inline">devis à: </p>
                 <div class="line-height">
                     <br>
-                    <p> <b> {{c_fname}} {{c_lname}}</b></p>
+                    <p> <b> {%if c_fname %}{{c_fname}} {% else %} {% endif %} {%if c_lname %}{{c_lname}} {% else %}
+                            {% endif %}</b></p>
                     <p> <b>{{c_address}}</b></p>
                     <p> <b>{{c_tel}}</b> </span>
                 </div>

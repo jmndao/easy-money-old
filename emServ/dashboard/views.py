@@ -1,5 +1,6 @@
-import json
-from django.shortcuts import get_object_or_404
+import datetime
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
@@ -88,12 +89,12 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         return context
 
 
-class ClientRequestView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView):
+class ClientRequestView(LoginRequiredMixin, CreateView):
 
     template_name = 'dashboard/client_request/client_request.html'
     model = ClientRequestModel
     fields = '__all__'
-
+    success_url = reverse_lazy('dashboard:clientRequestPage')
     def form_valid(self, form):
         if not self.request.user.is_superuser:
             form.instance.shop = Shop.objects.get(
@@ -161,6 +162,8 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
         uname = self.request.user.username
         context['achat_directs'] = self.q = AchatDirectModel.objects.all().order_by(
             '-created_date')
+        # context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad = 'AD').order_by(
+        #     '-created_date')
         context['count_item'] = self.q.count()
         context["tendance_achat_direct"] = AchatDirectModel.objects.values(
             'produit__name').annotate(freq=Count('produit__name')).order_by("?")
@@ -209,7 +212,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
-        self.q = DepotVenteModel.objects.order_by('-created_date')
+        self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
         context["tendance_depot_vente"] = DepotVenteModel.objects.values(
             'produit__name').annotate(freq=Count('produit__name')).order_by("?")
         # Nombre de produit
@@ -217,7 +220,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
         context['total_item'] = self.q.count()
         # Sum des produits de depots ventes
         context['spent_depot'] = sum(
-            [p.produit.price_total for p in self.q if p.produit.price_total != None])
+            [p.price_total for p in self.q if p.price_total != None])
         # benefice
         context['benefice'] = self.benefice_depot_vente(
             AchatDirectModel, VenteModel, context['spent_depot'])
@@ -254,10 +257,11 @@ class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteVi
     context_object_name = 'dv_delete'
 
 
-class VenteView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
+class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     template_name = 'dashboard/vente/vente.html'
     form_class = VenteForm
+    success_url = reverse_lazy('dashboard:ventePage')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -597,107 +601,68 @@ class TirerDevis(LoginRequiredMixin, CreateView):
         return context
 
 
-class EstimationPage(LoginRequiredMixin, CreateView):
+class EstimationPage(LoginRequiredMixin, CreateView, Utils):
     template_name = 'dashboard/estimation/estimation.html'
     model = EstimationModel
     fields = '__all__'
-    success_url = reverse_lazy('dashboard:estimationPage')
+    success_url = reverse_lazy('dashboard:lastEstimationPage')
+
+    def form_valid(self, form):
+        form.instance.final_price = self.estimation_from_form(form)
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['estimates'] = self.e = EstimationModel.objects.all()
         return context
+    
 
-    # 
 
+    
 
-class EstimationResultPage(LoginRequiredMixin, CreateView):
+class LastEstimationPage(LoginRequiredMixin, CreateView, Utils):
+    template_name = 'dashboard/estimation/lastEstimation.html'
+    model = EstimationModel
+    fields = '__all__'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['estimates'] = self.q = EstimationModel.objects.last()
+        context['estimation_result'] = self.estimation_from_model(EstimationModel, last=True)
+        context['new_price'] = self.q.new_price
+        context['name_product'] = self.q.product_name
+        context['reparation'] = self.q.reparatinon_price
+        return context
+
+class EstimationDetail(LoginRequiredMixin, DetailView):
+    model = EstimationModel
+    template_name = 'dashboard/estimation/estimation_detail.html'
+    context_object_name = 'estimation'
+
+    def get_queryset(self):
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            self.estimation = EstimationModel.objects.filter(pk=self.kwargs["pk"],
+                                                     shop__owner__user__username=u_user.username)
+        else:
+            self.estimation = EstimationModel.objects.filter(pk=self.kwargs["pk"])
+        return self.estimation
+
+class EstimationEdit(LoginRequiredMixin, UpdateView):
+    template_name = 'dashboard/estimation/estimationEdit.html'
+    fields = '__all__'
+    model = EstimationModel
+    success_url = reverse_lazy('dashboard:estimationPage')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+class EstimationResultPage(LoginRequiredMixin, CreateView, Utils):
     template_name = 'dashboard/estimation/estimationResult.html'
     model = EstimationModel
     fields = '__all__'
     success_url = reverse_lazy('dashboard:estimationPage')
-
-    def estimation(self, db_estimation):
-        my_estimation = db_estimation.objects.get(pk=self.kwargs["pk"])
-
-        i_price = float(my_estimation.used_price)
-
-        percentage_1 = 0
-        if my_estimation.estate == 'NEUF':
-            percentage_1 = 0
-        elif my_estimation.estate == 'BON':
-            percentage_1 = 0.05
-        elif my_estimation.estate == 'MOYEN':
-            percentage_1 = 0.1
-        elif my_estimation.estate == 'MAUVAIS':
-            percentage_1 = 0.2
-        else:
-            percentage_1 = None
-
-        i_price = i_price - i_price * percentage_1
-        percentage_2 = 0
-        if my_estimation.obsolescence == 'LENTE':
-            percentage_2 = 0
-        elif my_estimation.obsolescence == 'MOYENNE':
-            percentage_2 = 0.05
-        elif my_estimation.obsolescence == 'RAPIDE':
-            percentage_2 = 0.1
-        elif my_estimation.obsolescence == 'TRES_RAPIDE':
-            percentage_2 = 0.2
-        else:
-            percentage_2 = None
-        i_price = i_price - i_price * percentage_2
-
-        percentage_3 = 0
-        if my_estimation.rarety == 'RARE':
-            percentage_3 = 0
-        elif my_estimation.rarety == 'COURANT':
-            percentage_3 = 0.05
-        elif my_estimation.rarety == 'TRES_COURANT':
-            percentage_3 = 0.1
-        else:
-            percentage_3 = None
-
-        i_price = i_price - i_price * percentage_3
-
-        percentage_4 = 0
-        if my_estimation.original_box == True:
-            percentage_4 = 0
-        else:
-            percentage_4 = 0.05
-
-        i_price = i_price - i_price * percentage_4
-
-        percentage_5 = 0
-        if my_estimation.charger == 'OUI':
-            percentage_5 = 0
-        elif my_estimation.charger == 'NON':
-            percentage_5 = 0.05
-        elif my_estimation.charger == 'PAS_BESOIN':
-            percentage_5 = 0
-        else:
-            percentage_5 = 0
-        i_price = i_price - i_price * percentage_5
-
-        percentage_6 = 0
-        if my_estimation.sale_bill == True:
-            percentage_6 = 0
-        else:
-            percentage_6 = 0.05
-        i_price = i_price - i_price * percentage_6
-
-        percentage_7 = 0
-        if my_estimation.dimension == 'PETIT':
-            percentage_7 = 0
-        elif my_estimation.dimension == 'MOYEN':
-            percentage_7 = 0.05
-        elif my_estimation.dimension == 'GRAND':
-            percentage_7 = 0.1
-        else:
-            percentage_7 = None
-        i_price = i_price - i_price * percentage_7
-
-        return int(i_price)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -705,8 +670,8 @@ class EstimationResultPage(LoginRequiredMixin, CreateView):
         context['e_number'] = self.a.count()
         context['estimates'] = self.q = EstimationModel.objects.get(
             pk=self.kwargs["pk"])
-        context['estimation_result'] = self.estimation(EstimationModel)
-        context['c_fname'] = self.q.client_name
+        context['estimation_result'] = self.estimation_from_model(EstimationModel, last=False, pk=self.kwargs["pk"])
+        context['c_fname'] = self.q.seller
         context['c_address'] = self.q.address
         context['c_tel'] = self.q.numero
         context['v_date'] = date = self.q.created_date
@@ -723,12 +688,70 @@ class EstimationDeletePage(LoginRequiredMixin, DeleteView):
     context_object_name = 'estimates'
 
 
-def estimation_delete_multiple(request):
-
-    if request.is_ajax():
-        estimate_ids = request.POST['id']
-        print(estimate_ids, type(estimate_ids))
+"""
+Here Is where we are going to make our models to be able to delete multiple times
+"""
+#Delete Multiple Estimation
+def multiple_delete_estimation(request):
+    if request.method == 'POST':
+        estimate_ids = request.POST.getlist('id[]')
         for id in estimate_ids:
             estimate = EstimationModel.objects.get(pk=id)
             estimate.delete()
-        return redirect('dashboard:homePage')
+    return redirect('dashboard:homePage')
+
+
+#Delete Multiple Client
+def multiple_delete_client(request):
+    if request.method == 'POST':
+        client_ids = request.POST.getlist('id[]')
+        for id in client_ids:
+            client = ClientModel.objects.get(pk=id)
+            client.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple Product
+def multiple_delete_product(request):
+    if request.method == 'POST':
+        product_ids = request.POST.getlist('id[]')
+        for id in product_ids:
+            product = ProductModel.objects.get(pk=id)
+            product.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple Vente
+def multiple_delete_vente(request): 
+    if request.method == 'POST':
+        vente_ids = request.POST.getlist('id[]')
+        for id in vente_ids:
+            vente = VenteModel.objects.get(pk=id)
+            vente.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple Delete ClientRequest
+def multiple_delete_clientRequest(request):
+    if request.method == 'POST':
+        c_req_ids = request.POST.getlist('id[]')
+        for id in c_req_ids:
+            c_req = ClientRequestModel.objects.get(pk=id)
+            c_req.delete()
+    return redirect('dashboard:homePage')
+
+#Delete Multiple  DepotVente
+# def multiple_delete_depotVente(request):
+#     if request.method == 'POST':
+#         depot_vente_ids = request.POST.getlist('id[]')
+#         for id in depot_vente_ids:
+#             dv = DepotVenteModel.objects.get(pk=id)
+#             dv.delete()
+#     return redirect('dashboard:homePage')
+
+
+#Delete Multiple AchatDirect
+# def multiple_delete_achatDirect(request):
+#     if request.method == 'POST':
+#         achat_direct_ids = request.POST.getlist('id[]')
+#         for id in achat_direct_ids:
+#             ad = AchatDirectModel.objects.get(pk=id)
+#             ad.delete()
+#     return redirect('dashboard:homePage')

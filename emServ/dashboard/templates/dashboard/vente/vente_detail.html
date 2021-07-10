@@ -6,8 +6,8 @@
 
 <div class="card-panel">
 
-    <div class="card-panel orange darken-4">
-        <b>Details de vente</b><i class="material-icons right">visibility</i>
+    <div class="card-panel deep-orange accent-3 center-align darken-4">
+        <h3> <b>Details de la Vente </b><i class="material-icons right">visibility</i></h3>
     </div>
 
     <div class="row">
@@ -20,20 +20,7 @@
         <div class="col s6">
             <b>{{ sales.quantity }}</b>
         </div>
-        <div class="col s6">
-            Prix de vente d'un {{ sales.produit.name }} :
-        </div>
-        <div class="col s6">
-            <b>{% if sales.price %}{{ sales.price|floatformat:0|intcomma }}fcfa {% else %} -------
-                {% endif %} </b>
-        </div>
-        <div class="col s6">
-            Prix de vente total :
-        </div>
-        <div class="col s6">
-            <b>{% if sales.price_total %}{{ sales.price_total|floatformat:0|intcomma }}fcfa {% else %} -------
-                {% endif %} </b>
-        </div>
+
         <div class="col s6">
             produit vendu à:
         </div>
@@ -53,6 +40,36 @@
         <div class="col s6">
             <b>{{ sales.garantie|yesno:"OUI, NON"}} {% if sales.garantie %} / Delai {{ sales.delai_garantie }}
                 {% else %} -------- {% endif %}</b>
+        </div>
+        <div class="col s6">
+            Prix de vente d'un {{ sales.produit.name }} :
+        </div>
+        <div class="col s6">
+            <b>{% if sales.price %}{{ sales.price|floatformat:0|intcomma }}fcfa {% else %} -------
+                {% endif %} </b>
+        </div>
+        <div class="col s6">
+            Prix de vente total :
+        </div>
+        <div class="col s6">
+            <b>{% if sales.price_total %}{{ sales.price_total|floatformat:0|intcomma }}fcfa {% else %} -------
+                {% endif %} </b>
+        </div>
+        <div class="col s6">
+            Montant d'accompte :
+        </div>
+        <div class="col s6">
+            <b>{% if sales.acompte %}{{ sales.acompte|floatformat:0|intcomma }} fcfa {% else %} 0 fcfa
+                {% endif %} </b>
+        </div>
+        <div class="col s6">
+            Montant Restant :
+        </div>
+        <div class="col s6">
+            <b class="deep-orange accent-3 white-text"
+                style="padding:10px; border-radius:5px">{% if sales.restant_du %}{{ sales.restant_du|floatformat:0|intcomma }}fcfa
+                {% else %} 0 fcfa
+                {% endif %} </b>
         </div>
     </div>
 

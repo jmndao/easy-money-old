@@ -1,0 +1,94 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block body_content %}
+<div class="card-panel">
+
+    <div class="card-panel deep-orange accent-3 center-align darken-4">
+        <h3> <b>Details de L'estimation </b><i class="material-icons right">visibility</i></h3>
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <h4>Nom: {{ estimation.shop }}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Prenom: {{ estimation.seller }}</h4>
+            <!-- {% if product.price %}{{ product.price }}{% else %}Non spécifiée{% endif %} -->
+        </div>
+
+        <div class="col s12">
+            <h4>Numéro: {% if estimation.numero %} {{ estimation.numero }}{% else %}Non spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Addresse: {% if estimation.address %} {{ estimation.address }}{% else %}Non spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Email: {% if estimation.email %} {{ estimation.email }}{% else %}Non spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Nom du Produit: {% if estimation.product_name %} {{ estimation.product_name }}{% else %}Non
+                spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Année de Sortie: {% if estimation.year_of_release %} {{ estimation.year_of_release }}{% else %}Non
+                spécifié{% endif %}</h4>
+        </div>
+        <div class="col s12">
+            <h4>Prix Neuf: {% if estimation.new_price %} {{ estimation.new_price }} cfa{% else %}Non spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Reparation à Prévoir: {% if estimation.reparatinon_price %}
+                {{ estimation.reparatinon_price }}{% else %}0{% endif %} cfa
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Category: {% if estimation.category %} {{ estimation.category }}{% else %}Non spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Obsolescence Neuf: {% if estimation.obsolescence %} {{ estimation.obsolescence }}{% else %}Non
+                spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Rareté: {% if estimation.rarety %} {{ estimation.rarety }}{% else %}Non spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Chargeur: {% if estimation.charger %} {{ estimation.charger }}{% else %}Non spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Etat : {% if estimation.estate %} {{ estimation.estate }}{% else %}Non spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Dimension: {% if estimation.dimension %} {{ estimation.dimension }}{% else %}Non spécifié{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Facture: {% if estimation.sale_bill %} OUI {% else %}NON{% endif %}
+            </h4>
+        </div>
+        <div class="col s12">
+            <h4>Boite d'Origine: {% if estimation.original_box %} OUI{% else %}NON
+                {% endif %}
+            </h4>
+        </div>
+        <div class="col s12" style="background-color:#ff3d00;color: #000; text-align: center; border-radius:10px;">
+            <h4>Prix à Proposer: <span style="color: #fff;"> {% if estimation.final_price %}
+                    {{ estimation.final_price }} cfa</span>{% else %}Non
+                spécifié{% endif %}
+            </h4>
+        </div>
+
+
+    </div>
+    <a href="{% url 'dashboard:estimationPage' %}"
+        class="btn-flat waves-effect black deep-orange-text accent-3">Retourner
+        <i class="material-icons right">keyboard_return</i></a>
+</div>
+{% endblock body_content %}

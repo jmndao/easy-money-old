@@ -29,7 +29,7 @@
                 <label class="white-text" class="white-text" for="{{form.shop.id_for_label}}">Boutique</label>
             </div>
             <div class="input-field col m3 s12">
-                {{ form.client_name }}
+                {{ form.seller }}
                 <label class="white-text" class="white-text" for="{{form.client_name.id_for_label}}">Vendeur</label>
             </div>
             <div class="input-field col m3 s12">
@@ -53,17 +53,21 @@
                 {{ form.year_of_release }}
                 <label class="white-text" for="{{form.year_of_release.id_for_label}}">Année de sortie</label>
             </div>
-
             <div class="input-field col m3 s6">
                 {{ form.new_price }}
                 <label class="white-text" for="{{form.new_price.id_for_label}}">Prix Neuf</label>
             </div>
             <div class="input-field col m3 s6">
-                {{ form.estate }}
-                <label class="white-text" for="{{form.estate.id_for_label}}">Etat</label>
+                {{ form.reparatinon_price }}
+                <label class="white-text" for="{{form.reparatinon_price.id_for_label}}">Réparation à Prévoir</label>
             </div>
+
         </div>
         <div class="row">
+            <div class="input-field col m3 s6">
+                {{ form.category }}
+                <label class="white-text" for="{{form.category.id_for_label}}">Category</label>
+            </div>
             <div class="input-field col m3 s6">
                 {{ form.obsolescence }}
                 <label class="white-text" for="{{form.obsolescence.id_for_label}}">Obsolescence</label>
@@ -76,13 +80,18 @@
                 {{ form.charger }}
                 <label class="white-text" for="{{form.charger.id_for_label}}">Chargeur </label>
             </div>
+
+        </div>
+
+        <div class="row">
+            <div class="input-field col m3 s6">
+                {{ form.estate }}
+                <label class="white-text" for="{{form.estate.id_for_label}}">Etat</label>
+            </div>
             <div class="input-field col m3 s6">
                 {{ form.dimension }}
                 <label class="white-text" for="{{form.dimension.id_for_label}}">Dimension</label>
             </div>
-        </div>
-
-        <div class="row">
             <div class="input-field col m3 s6">
                 <label class="white-text" for="{{form.sale_bill.id_for_label}}">
                     {{ form.sale_bill }}
@@ -95,7 +104,10 @@
                     <span>Boite d'origine</span>
                 </label>
             </div>
-            <div class="input-field col m6 s6">
+
+        </div>
+        <div class="row">
+            <div class="input-field col m6 s12">
                 <button class="waves-effect waves-green white btn-flat" type="submit">
                     <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
                     <b class="deep-orange-text accent-3">Enregistrer</b>
@@ -103,64 +115,73 @@
             </div>
         </div>
 
+
     </form>
 </div>
+
 <section class="center-align">
     <div id="man" class="col s12">
         <div class="card resize material-table ">
             <div class="table-header">
-                <span class="table-title deep-orange-text accent-3">Liste Des Produits Estimés</span>
+                <span class="table-title">Liste des Estimations</span>
                 <div class="actions">
-                    <!-- Here is where we should make the linking-->
                     <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
-                            class="material-icons">recherche</i></a>
+                            class="material-icons">search</i></a>
+                </div>
+                <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
+                    <button id='delete' type='submit' class="red darken-1 btn white-text">
+                        <i class="material-icons left"></i>Supprimer
+                    </button>
                 </div>
             </div>
             <table id="datatable" class="responsive-table">
                 <thead>
                     <tr>
                         <th class="white-text">Date</th>
-                        <th class="white-text">Nom</th>
-                        <th class="white-text">Addresse</th>
+                        <th class="white-text">Vendeur</th>
+                        <th class="white-text">Category</th>
                         <th class="white-text">Produit</th>
 
                         <th class="white-text">estimation</th>
-                        <th class="white-text">supprimer</th>
+                        <th class="white-text">Action</th>
+                        <th class="white-text">Supprimer</th>
                     </tr>
                 </thead>
                 <tbody class="black">
 
                     {% for estimate in estimates %}
-                    <tr id="{{estimate.id}}" class="black">
-                        <th class="deep-orange-text accent-3 left-align">
-                            {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</th>
-                        <th class="deep-orange-text accent-3 left-align"> {{ estimate.client_name }}</th>
-                        <th class="deep-orange-text accent-3 left-align">{{ estimate.address }}</th>
-                        <th class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</th>
-                        <th>
+                    <tr id="{{estimate.id}}" class="">
+                        <td class="deep-orange-text accent-3 left-align">
+                            {{ estimate.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td class="deep-orange-text accent-3 left-align"> {{ estimate.seller }}</td>
+                        <td class="deep-orange-text accent-3 left-align">{{ estimate.category }}</td>
+                        <td class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</td>
+                        <td>
                             <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
-                                class="white-text waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="tirer"><span class="material-icons">calculate</span></a>
-                        </th>
-                        <th>
-                            <label>
+                                class="black-text waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Faire Devis"><span class="material-icons">picture_as_pdf</span></a>
+                        <td class="center-align-element">
+                            <a href="{% url 'dashboard:estimationEditPage' estimate.pk %}"
+                                class="green-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="modifier"><span class="material-icons">update</span></a>
+                            <a href="{% url 'dashboard:estimationDetailPage' estimate.pk %}"
+                                class="deep-orange-text accent-3 btn waves-effect btn-flat tooltipped"
+                                data-position="left" data-tooltip="Voir"><span
+                                    class="material-icons">visibility</span></a>
+                        </td>
+                        <td><label class="">
                                 <input type="checkbox" name='estimate_id[]' value='{{estimate.id}}'
                                     id='delete_estimate' />
                                 <span></span>
                             </label>
-                        </th>
-
+                        </td>
                     </tr>
 
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        <div class="row center-align ">
-            <button id='delete' type='submit' class=" btn way-bigger black b-large deep-orange-text accent-3">
-                <i class="material-icons left"></i>Supprimer
-            </button>
-        </div>
+
     </div>
 </section>
 {% endblock body_content%}
@@ -170,7 +191,7 @@
     //var dataset_client = JSON.parse('{{dataset_client}}')
     $(document).ready(function () {
         $('#delete').click(function () {
-            if (confirm('Etes vous sure de vouloir achevez cette operation?'))
+            if (confirm('Êtes vous sures de vouloir supprimer les éléments selectionnés?'))
                 var id = [];
             $(':checkbox:checked').each(function (i) {
                 id[i] = $(this).val()
@@ -180,21 +201,21 @@
                 alert('Please Select the item')
             } else {
                 $.ajax({
-                    url: "{% url 'dashboard:estimationDeletePage' %}",
+                    url: "{% url 'dashboard:multipleDeleteEstimationPage' %}",
                     method: 'POST',
                     data: {
                         'id': JSON.stringify(id),
                         csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
                     },
                     success: function (response) {
-                        
-                        console.log(id + " " + url + " " + response);
+                        window.location.reload();
                     }
                 })
             }
         })
     })
 </script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 

@@ -6,10 +6,34 @@
 
 <div class="card-panel">
 
-    <div class="card-panel orange darken-4">
+    <div class="card-panel deep-orange accent-3 darken-4">
         <h4> <b>Details du Produit</b><i class="material-icons right">visibility</i></h4>
     </div>
-
+    <div class="row">
+        <div class="col s12">
+            <h4>Boutique: {{ product.shop }}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <h6>
+            <div class="col s6">
+                Vendeur:
+            </div>
+            <div class="col s6">
+                <b>{% if product.seller %}{{ product.seller }}{% else %}Non spécifiée{% endif %}</b>
+            </div>
+        </h6>
+    </div>
+    <div class="row">
+        <h6>
+            <div class="col s6">
+                Category:
+            </div>
+            <div class="col s6">
+                <b>{% if product.category %}{{ product.category }}{% else %}Non spécifiée{% endif %}</b>
+            </div>
+        </h6>
+    </div>
     <div class="row">
         <div class="col s12">
             <h4>Produit: {{ product.name }}</h4>
@@ -17,10 +41,20 @@
         <div class="row">
             <h6>
                 <div class="col s6">
-                    Quantité:
+                    Quantité Restante:
                 </div>
                 <div class="col s6">
                     <b>{% if product.quantity %}{{ product.quantity }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
+        </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Depot Vente ou Achat Direct:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.dv_or_ad %}{{ product.dv_or_ad }}{% else %}Non spécifiée{% endif %}</b>
                 </div>
             </h6>
         </div>
@@ -38,20 +72,10 @@
         <div class="row">
             <h6>
                 <div class="col s6">
-                    Depot Vente ou Achat Direct:
+                    Prix unitaire:
                 </div>
                 <div class="col s6">
-                    <b>{% if product.dv_or_ad %}{{ product.dv_or_ad }}{% else %}Non spécifiée{% endif %}</b>
-                </div>
-            </h6>
-        </div>
-        <div class="row">
-            <h6>
-                <div class="col s6">
-                    Prix d'un produit:
-                </div>
-                <div class="col s6">
-                    <b>{% if product.price %}{{ product.price }}{% else %}Non spécifiée{% endif %}</b>
+                    <b>{% if product.price %}{{ product.price|floatformat:0 }} cfa{% else %}Non spécifiée{% endif %}</b>
                 </div>
             </h6>
         </div>
@@ -61,7 +85,19 @@
                     Montant de la Restauration:
                 </div>
                 <div class="col s6">
-                    <b>{% if product.montant_restauration %}{{ product.montant_restauration }}{% else %}Non
+                    <b>{% if product.montant_restauration %}{{ product.montant_restauration|floatformat:0 }}
+                        cfa{% else %}
+                        0 cfa{% endif %}</b>
+                </div>
+            </h6>
+        </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Prix Total:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.price_total %}{{ product.price_total|floatformat:0 }} cfa{% else %}Non
                         spécifiée{% endif %}</b>
                 </div>
             </h6>
@@ -69,13 +105,16 @@
         <div class="row">
             <h6>
                 <div class="col s6">
-                    Vendeur:
+                    Prix de Vente Minimum:
                 </div>
                 <div class="col s6">
-                    <b>{% if product.seller %}{{ product.seller }}{% else %}Non spécifiée{% endif %}</b>
+                    <b>{% if product.dv_or_ad == 'DV' %}{{ product.price_vente_minimum_dv }}cfa{% else %}{{ product.price_vente_minimum_ad }}
+                        cfa
+                        {% endif %}</b>
                 </div>
             </h6>
         </div>
+
         <div class="row">
             <h6>
                 <div class="col s6">
@@ -89,10 +128,10 @@
         <div class="row">
             <h6>
                 <div class="col s6">
-                    Category:
+                    Dimension:
                 </div>
                 <div class="col s6">
-                    <b>{% if product.category %}{{ product.category }}{% else %}Non spécifiée{% endif %}</b>
+                    <b>{% if product.dimension %}{{ product.dimension }}{% else %}Non spécifiée{% endif %}</b>
                 </div>
             </h6>
         </div>
@@ -177,16 +216,7 @@
                 </div>
             </h6>
         </div>
-        <div class="row">
-            <h6>
-                <div class="col s6">
-                    Dimension:
-                </div>
-                <div class="col s6">
-                    <b>{% if product.dimension %}{{ product.dimension }}{% else %}Non spécifiée{% endif %}</b>
-                </div>
-            </h6>
-        </div>
+
         <div class="row">
             <h6>
                 <div class="col s6">
@@ -207,9 +237,20 @@
                 </div>
             </h6>
         </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Connectiques du Produit:
+                </div>
+                <div class="col s6">
+                    <b>{{ product.connectic|yesno:"OUI, NON" }}</b>
+                </div>
+            </h6>
+        </div>
     </div>
 
-    <a href="{% url 'dashboard:productPage' %}" class="btn-flat black deep-orange-text accent-3 waves-effect">Retourner
+    <a href="{% url 'dashboard:productPage' %}"
+        class="btn-flat btn-large black deep-orange-text accent-3 waves-effect">Retourner
         <i class="material-icons right">keyboard_return</i></a>
 
 </div>
