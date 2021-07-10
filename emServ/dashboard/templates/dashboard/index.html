@@ -238,7 +238,8 @@
 {% block javascripts %}
 <script>
     var dataset_achat = JSON.parse('{{ dataset_achat }}');
-    var dataset_stock = JSON.parse('{{ dataset_stock }}');
+    var dataset_vente = JSON.parse('{{ dataset_vente }}');
+    var dataset_depot = JSON.parse('{{ dataset_depot }}');
 </script>
 <script src="{% static 'dashboard/js/chart_easy.js' %}"></script>
 {% endblock javascripts %}

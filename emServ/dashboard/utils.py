@@ -109,7 +109,6 @@ class Utils:
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
                        'data': [0, 0, 0]}
-        print(dataset)
 
         return mark_safe(escapejs(json.dumps(dataset)))
 

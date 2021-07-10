@@ -38,14 +38,13 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
         user = self.request.user
         context = super().get_context_data(**kwargs)
         context['n_shops'] = Shop.objects.all().count()
-
-        context["dataset_achat"] = self.chartObject(
-            VenteModel, key='price_total', dt_col_name='created_date')
-        context['dataset_depot'] = self.chartObject(
-            ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
-        context["dataset_stock"] = self.chartObject(
-            ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
         if self.request.user.is_superuser:
+            context["dataset_vente"] = self.chart_vente(
+                VenteModel, key='price_total', dt_col_name='created_date')
+            context['dataset_depot'] = self.chartObject(
+                ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
+            context["dataset_achat"] = self.chartObject(
+                ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
             context["achat_directs"] = AchatDirectModel.objects.all().order_by(
                 '-created_date')
             context["depot_ventes"] = DepotVenteModel.objects.all().order_by(
@@ -65,6 +64,12 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context['benefice_month'] = self.benefice_per_month(
                 VenteModel, ProductModel)
         else:
+            context["dataset_vente"] = self.chart_vente(
+                VenteModel, key='price_total', dt_col_name='created_date', is_superuser=False, uname=user.username)
+            context['dataset_depot'] = self.chartObject(
+                ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date' , is_superuser=False, uname=user.username)
+            context["dataset_achat"] = self.chartObject(
+                ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context["achat_directs"] = AchatDirectModel.objects.filter(
                 produit__shop__owner__user__username=user.username).order_by('-created_date')
             context["depot_ventes"] = DepotVenteModel.objects.filter(
@@ -160,19 +165,28 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
-        context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad='AD').order_by(
-            '-created_date')
-        # context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad = 'AD').order_by(
-        #     '-created_date')
-        context['count_item'] = self.q.count()
-        context["tendance_achat_direct"] = ProductModel.objects.filter(dv_or_ad='AD').values(
-            'name').annotate(freq=Count('name')).order_by("?")
-        context['spent'] = sum(
-            [p.price_total for p in self.q if p.price_total != None])
         if self.request.user.is_superuser:
+            context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad='AD').order_by(
+                '-created_date')
+            # context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad = 'AD').order_by(
+            #     '-created_date')
+            context['count_item'] = self.q.count()
+            context["tendance_achat_direct"] = ProductModel.objects.filter(dv_or_ad='AD').values(
+                'name').annotate(freq=Count('name')).order_by("?")
+            context['spent'] = sum(
+                [p.price_total for p in self.q if p.price_total != None])
             context["dataset_achat_direct"] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
         else:
+            context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad='AD', shop__owner__user__username=uname).order_by(
+                '-created_date')
+            # context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad = 'AD').order_by(
+            #     '-created_date')
+            context['count_item'] = self.q.count()
+            context["tendance_achat_direct"] = ProductModel.objects.filter(dv_or_ad='AD', shop__owner__user__username=uname).values(
+                'name').annotate(freq=Count('name')).order_by("?")
+            context['spent'] = sum(
+                [p.price_total for p in self.q if p.price_total != None])
             context["dataset_achat_direct"] = self.chartObject(
                 ProductModel, key='price_total', dt_col_name='created_date', dv_or_ad='AD', uname=uname, is_superuser=False)
         return context
@@ -209,19 +223,28 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
-        self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
-        context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV').values(
-            'name').annotate(freq=Count('name')).order_by("?")
-        # Nombre de produit
-        context['depot_ventes'] = self.q
-        context['total_item'] = self.q.count()
-        # Sum des produits de depots ventes
-        context['spent_depot'] = sum(
-            [p.price_total for p in self.q if p.price_total != None])
         if self.request.user.is_superuser:
+            self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
+            context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV').values(
+                'name').annotate(freq=Count('name')).order_by("?")
+            # Nombre de produit
+            context['depot_ventes'] = self.q
+            context['total_item'] = self.q.count()
+            # Sum des produits de depots ventes
+            context['spent_depot'] = sum(
+                [p.price_total for p in self.q if p.price_total != None])
             context['dataset_depot'] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
         else:
+            self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV', shop__owner__user__username=uname)
+            context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV', shop__owner__user__username=uname).values(
+                'name').annotate(freq=Count('name')).order_by("?")
+            # Nombre de produit
+            context['depot_ventes'] = self.q
+            context['total_item'] = self.q.count()
+            # Sum des produits de depots ventes
+            context['spent_depot'] = sum(
+                [p.price_total for p in self.q if p.price_total != None])
             context["dataset_depot"] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date', uname=uname, is_superuser=False)
         return context
@@ -300,24 +323,31 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['vente'] = self.q = VenteModel.objects.order_by(
-            '-created_date')
-        context["tendance_vente"] = VenteModel.objects.values(
-            'produit__name').annotate(freq=Count('produit__name')).order_by("?")
-        context['count_item'] = self.q.count()
-        context['revenue'] = sales = sum(
-            [p.price_total for p in self.q if p.price_total != None])
         uname = self.request.user.username
         if self.request.user.is_superuser:
+            context['vente'] = self.q = VenteModel.objects.order_by(
+            '-created_date')
+            context["tendance_vente"] = VenteModel.objects.values(
+                'produit__name').annotate(freq=Count('produit__name')).order_by("?")
+            context['count_item'] = self.q.count()
+            context['revenue'] = sales = sum(
+                [p.price_total for p in self.q if p.price_total != None])
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date')
             context['benefice'] = self.benefice_vente(
-                VenteModel, ProductModel, sales)
+                VenteModel, ProductModel)
         else:
+            context['vente'] = self.q = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by(
+                '-created_date')
+            context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).values(
+                'produit__name').annotate(freq=Count('produit__name')).order_by("?")
+            context['count_item'] = self.q.count()
+            context['revenue'] = sales = sum(
+                [p.price_total for p in self.q if p.price_total != None])
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date', uname=uname, is_superuser=False)
             context['benefice'] = self.benefice_vente(
-                VenteModel, ProductModel, sales, is_superuser=False, user=self.request.user)
+                VenteModel, ProductModel, is_superuser=False, user=self.request.user)
 
         return context
 
@@ -556,9 +586,13 @@ class GenerateDevis(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['devis'] = self.a = DevisModel.objects.all()
-        context['d_number'] = self.a.count() 
-        # context['f_number'] = self.a.count()
+        user = self.request.user
+        if user.is_superuser:
+            context['devis'] = self.a = DevisModel.objects.all()
+            context['d_number'] = self.a.count() 
+        else:
+            context['devis'] = self.a = DevisModel.objects.filter(shop__owner__user=user)
+            context['d_number'] = self.a.count() 
         return context
 
 
@@ -609,7 +643,11 @@ class EstimationPage(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['estimates'] = self.e = EstimationModel.objects.all()
+        user = self.request.user
+        if user.is_superuser:
+            context['estimates'] = self.e = EstimationModel.objects.all()
+        else:
+            context['estimates'] = self.e = EstimationModel.objects.filter(shop__owner__user=user)
         return context
     
 

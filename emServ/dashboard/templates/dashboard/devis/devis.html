@@ -40,15 +40,11 @@
                 {{ form.shop }}
                 <label for="{{ form.shop.id_for_label }}">Boutique</label>
             </div>
-            <div class="input-field col s6">
-                {{ form.client }}
-                <label for="{{ form.client.id_for_label }}">Client</label>
-            </div>
         </div>
         {% endif %}
         <div class="row">
             <div class="input-field col m4 s12">
-                {{ form.product_name }}
+                {{ form.produit }}
                 <label for="{{ form.product_name.id_for_label }}">Produit</label>
             </div>
             <div class="input-field col m4 s12">
@@ -58,6 +54,10 @@
             <div class="input-field col m4 s12">
                 {{ form.quantity }}
                 <label for="{{ form.quantity.id_for_label }}">Quantité</label>
+            </div>
+            <div class="input-field col s6">
+                {{ form.client }}
+                <label for="{{ form.client.id_for_label }}">Client</label>
             </div>
         </div>
         <div class="row">
