@@ -361,7 +361,6 @@ class DevisModel(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        self.product_name = self.product_name.lower()
         self.price_total = self.price * self.quantity
         return super(DevisModel, self).save(*args, **kwargs)
 

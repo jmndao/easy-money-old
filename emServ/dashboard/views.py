@@ -625,7 +625,7 @@ class TirerDevis(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['c_address'] = self.q.client.address
         context['c_tel'] = self.q.client.numero
-        context['v_product'] = self.q.product_name
+        context['v_product'] = self.q.produit.name
         ################################################################
 
         return context
