@@ -212,7 +212,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         uname = self.request.user.username
-        self.q = DepotVenteModel.objects.order_by('-created_date')
+        self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
         context["tendance_depot_vente"] = DepotVenteModel.objects.values(
             'produit__name').annotate(freq=Count('produit__name')).order_by("?")
         # Nombre de produit
@@ -220,7 +220,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
         context['total_item'] = self.q.count()
         # Sum des produits de depots ventes
         context['spent_depot'] = sum(
-            [p.produit.price_total for p in self.q if p.produit.price_total != None])
+            [p.price_total for p in self.q if p.price_total != None])
         # benefice
         context['benefice'] = self.benefice_depot_vente(
             AchatDirectModel, VenteModel, context['spent_depot'])

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Estimation</title>
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,900;1,400&display=swap');
@@ -90,6 +90,7 @@
 
     .last {
         background-color: #ff3d00;
+        color: #f2f2f2;
     }
 
     b {
@@ -111,7 +112,8 @@
         margin-top: 50px;
         padding: 12px;
         font-size: 25px;
-        border-radius: 3px;
+        border-radius: 8px;
+        border: 1px solid #ff3d00;
         text-transform: uppercase;
     }
 
@@ -122,6 +124,30 @@
     a {
         text-decoration: none;
         color: #ff3d00;
+    }
+
+    @media (max-width: 880px) {
+        .info {
+            font-size: 15px;
+            padding: 10px 40px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .middle {
+            display: none;
+        }
+
+        .container,
+        .container2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .top,
+        .lasty {
+            margin-left: 30px;
+        }
     }
 </style>
 
@@ -134,13 +160,13 @@
         </div>
     </section>
     <div class="container2">
-        <span class="info">Prix Neuf</span>
-        <span class="info">Réparation </span>
-        <span class="info last">Proposition</span>
+        <span class="info top">Prix Neuf</span>
+        <span class="info middle">Réparation </span>
+        <span class="info last lasty">Proposition</span>
     </div>
     <div class=container>
-        <span class="count">{{ new_price }}</span>
-        <span class="count">{{reparation}}</span>
+        <span class="count ">{{ new_price }}</span>
+        <span class="count middle">{{reparation}}</span>
         <span class="count last">{{estimation_result}}</span>
     </div>
     <div class="button">
