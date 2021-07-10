@@ -557,7 +557,7 @@ class GenerateDevis(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['devis'] = self.a = DevisModel.objects.all()
-        context['d_number'] = self.a.count()
+        context['d_number'] = self.a.count() 
         # context['f_number'] = self.a.count()
         return context
 
