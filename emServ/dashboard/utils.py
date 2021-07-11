@@ -38,7 +38,7 @@ class Utils:
         sum_vente = sum(
             [v.price_total for v in vente if v.price_total != None])
         sum_achat = sum(
-            [a.price_total for a in achat if a.price_total != None])
+            [a.price_total_tt_produit for a in achat if a.price_total_tt_produit != None])
         return (sum_vente - sum_achat)
 
     def benefice_per_month(self, db_vente, db_produit, is_superuser=True, user=None):
@@ -58,7 +58,7 @@ class Utils:
         sum_vente = sum(
             [v.price_total for v in vente if v.price_total != None])
         sum_achat = sum(
-            [a.price_total for a in achat if a.price_total != None])
+            [a.price_total_tt_produit for a in achat if a.price_total_tt_produit != None])
         return (sum_vente - sum_achat)
 
     def benefice_vente(self, db_vente, db_produit , is_superuser=True, user=None):
@@ -77,7 +77,7 @@ class Utils:
         sum_vente = sum(
             [v.price_total for v in vente if v.price_total != None])
         sum_achat = sum(
-            [a.price_total for a in achat if a.price_total != None])
+            [a.price_total_tt_produit for a in achat if a.price_total_tt_produit != None])
         return (sum_vente - sum_achat)
 
     def chartObject(self, db, key=None, dv_or_ad=None, dt_col_name=None, uname=None, is_superuser=True):
@@ -259,6 +259,15 @@ class Utils:
         i_price = i_price - i_price * percentage_7
 
         i_price = i_price - repair_amount
+
+        percentage_8 = 0.02
+        
+        diff_year = int(my_estimation.created_date.year) - int(my_estimation.year_of_release)
+        assert diff_year > 0
+        
+        i_price = i_price - i_price * diff_year * percentage_8
+
+        print(diff_year)
         return int(i_price)
 
     def estimation_from_form(self, form):

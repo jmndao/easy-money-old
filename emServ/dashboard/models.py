@@ -182,6 +182,8 @@ class ProductModel(models.Model):
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix D'Achat Total", blank=True, null=True)
+    price_total_tt_produit = models.DecimalField(
+        max_digits=20, decimal_places=3, verbose_name="Prix D'Achat Total", blank=True, null=True)
     price_vente_minimum_ad = models.DecimalField(
         max_digits=20, decimal_places=0, verbose_name="Prix Vente Minimu", blank=True, null=True, editable=True)
     price_vente_minimum_dv = models.DecimalField(
@@ -214,9 +216,13 @@ class ProductModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
-        self.price_total = self.price + self.montant_restauration
+        if self.quantity == 1 or self.quantity == None:
+            self.quantity = 1
         if self.initial_quantity == 1 or self.initial_quantity == None:
             self.initial_quantity = self.quantity
+        if not self.price_total_tt_produit:
+            self.price_total_tt_produit = self.price_total * self.quantity
+        self.price_total = self.price + self.montant_restauration
         self.price_vente_minimum_ad = self.price_total * 2
         self.price_vente_minimum_dv = float(self.price_total) * 1.3
         return super(ProductModel, self).save(*args, **kwargs)
@@ -225,7 +231,6 @@ class ProductModel(models.Model):
         if self.dv_or_ad == 'DV':
             return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_dv)
         else:
-            print(self.price_vente_minimum_dv)
             return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_ad)
 
 
@@ -293,7 +298,7 @@ class VenteModel(models.Model):
 
     produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
     price = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
+        max_digits=20, decimal_places=3, verbose_name="Prix De Vente", blank=True, null=True)
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
@@ -308,7 +313,7 @@ class VenteModel(models.Model):
     quantity = models.IntegerField(null=True, blank=True, default=1)
 
     def save(self, *args, **kwargs):
-        self.price_total = self.price * self.quantity
+        # self.price_total = self.price * self.quantity
         if self.acompte != 0 or None: 
             self.restant_du = self.price_total -  self.acompte
         else: 

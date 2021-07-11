@@ -94,10 +94,22 @@
         <div class="row">
             <h6>
                 <div class="col s6">
-                    Prix Total:
+                    Prix Total Unitaire:
                 </div>
                 <div class="col s6">
                     <b>{% if product.price_total %}{{ product.price_total|floatformat:0 }} cfa{% else %}Non
+                        spécifiée{% endif %}</b>
+                </div>
+            </h6>
+        </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Prix Total:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.price_total_tt_produit %}{{ product.price_total_tt_produit|floatformat:0 }}
+                        cfa{% else %}Non
                         spécifiée{% endif %}</b>
                 </div>
             </h6>
