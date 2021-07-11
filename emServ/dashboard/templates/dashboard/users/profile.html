@@ -6,39 +6,51 @@
 />
 {% endblock stylesheets %} {% block body_content %}
 
+{% if user.is_superuser %}
 <div class="top-section">
   <a
     href="{% url 'accounts:userCreationPage' %}"
-    class="waves-effect waves-light btn"
-    class="left-align"
-  >
-    <i class="material-icons right">plus</i> Utilisateur
+    class="waves-effect waves-light btn black deep-orange-text accent-3">
+    <i class="material-icons right">add</i> <b>Utilisateur</b>
   </a>
   <a
     href="{% url 'accounts:shopCreationPage' %}"
-    class="waves-effect waves-light btn"
-    class="left-align"
-  >
-    <i class="material-icons right">plus</i> Boutique
+    class="waves-effect waves-light btn black deep-orange-text accent-3">
+    <i class="material-icons right">add</i> <b>Boutique</b>
   </a>
 
-  <a
-    href="#"
-    class="dropdown-trigger btn right-align"
-    data-target="documentDropdown"
-  >
-    <i class="material-icons">report</i>
-    Reports
+  <a href="#" class="dropdown-trigger btn right white deep-orange-text accent-3" data-target="documentDropdown">
+    <i class="material-icons right">summarize</i>
+    <b>Reports</b>
   </a>
   <ul id="documentDropdown" class="dropdown-content">
-    <li><a href="#!">Produits</a></li>
-    <li><a href="#!">Clients</a></li>
-    <li><a href="#!">Ventes</a></li>
+    <li>
+      <a href="{% url 'accounts:exportProductView' %}">
+        <span class="material-icons right">
+          file_download
+        </span>
+        Produits
+      </a>
+    </li>
+    <li><a href="#!">
+      <span class="material-icons right">
+          file_download
+        </span>
+      Clients</a></li>
+    <li><a href="#!">
+        <span class="material-icons right">
+          file_download
+        </span>
+      Ventes</a></li>
   </ul>
 </div>
+{% endif %}
 
 <div class="form-section">
-  <form action="{% url 'accounts:profilePage' %}" method="post">
+  <form
+    action="{% url 'accounts:profilePage' %}"
+    method="post"
+    enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
       <div class="col s12 m8">
@@ -55,7 +67,6 @@
                 name="first_name"
                 id="first_name"
                 value="{{ userprofile.user.first_name }}"
-                required
               />
               <label for="first_name">Prenom</label>
             </div>
@@ -65,32 +76,28 @@
                 name="last_name"
                 id="last_name"
                 value="{{ userprofile.user.last_name }}"
-                required
               />
               <label for="last_name">Nom</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <i class="material-icons prefix">calendar</i>
               <input
                 type="text"
-                class="datepicker"
-                name="birthday"
-                id="birthday"
-                value="{{ userprofile.birthday|date:'m/d/Y'|default:'' }}"
-                required
+                name="cin"
+                id="cin"
+                value="{{ userprofile.cin|default:'' }}"
+                placeholder="Numero Carte d'Identite"
               />
-              <label for="birthday">Date de Naissance</label>
+              <label for="cin">CIN</label>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="gender"
-                id="gender"
-                value="{{ userprofile.gender }}"
-                required
-              />
+              <select name="gender" id="gender">
+                <option value="" disabled selected>Votre Genre</option>
+                {% for key, value in userprofile.GENDER %}
+                  <option value="{{ key }}" {% if userprofile.gender == key %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+              </select>
               <label for="gender">Sexe</label>
             </div>
           </div>
@@ -101,7 +108,6 @@
                 name="email"
                 id="email"
                 value="{{ userprofile.user.email }}"
-                required
               />
               <label for="email">Email</label>
             </div>
@@ -112,7 +118,6 @@
                 placeholder="+221 7X XXX XX XX"
                 id="phone_number"
                 value="{{ userprofile.phone_number|default:'' }}"
-                required
               />
               <label for="phone_number">Telephone</label>
             </div>
@@ -129,7 +134,6 @@
                 name="address"
                 id="address"
                 value="{{ userprofile.address|default:'' }}"
-                required
               />
               <label for="address">Adresse</label>
             </div>
@@ -139,7 +143,6 @@
                 name="city"
                 id="city"
                 value="{{ userprofile.city|default:'' }}"
-                required
               />
               <label for="city">Ville</label>
             </div>
@@ -151,7 +154,6 @@
                 name="number"
                 id="number"
                 value="{{ userprofile.number|default:'' }}"
-                required
               />
               <label for="address">Numero Maison</label>
             </div>
@@ -161,14 +163,22 @@
                 name="zip"
                 id="zip"
                 value="{{ userprofile.zip|default:'' }}"
-                required
               />
               <label for="city">Code Postal</label>
             </div>
           </div>
           <div class="row">
             <div class="col s12">
-              <button class="waves-effect waves-light deep-orange accent-3 white-text">
+              <button
+                class="
+                  btn
+                  waves-effect waves-light
+                  deep-orange
+                  accent-3
+                  white-text
+                "
+                type="submit">
+                <i class="material-icons right">edit</i>
                 Tout Enregistrer
               </button>
             </div>
@@ -179,16 +189,64 @@
         <div class="card-panel">
           <div class="row center">
             <div class="col s12">
-              <img src="{{ userprofile.avatar.url }}" alt="User" width="100px" height="100px" class='circle' />
+              <img
+                src="{{ userprofile.avatar.url }}"
+                alt="User"
+                width="150px"
+                height="150px"
+                class="circle"
+              />
             </div>
             <div class="col s12">
-              <p><b>{{ userprofile.user.username }}</b></p>
+              <p class="pt-1 big-text">
+                <b>{{ userprofile.user.username }}</b>
+              </p>
             </div>
             <div class="col s12">
-              <p>{{ userprofile.user.first_name }}  {{ userprofile.user.last_name }}</p>
+              <p class="pt-1">
+                {{ userprofile.user.first_name }} {{ userprofile.user.last_name}}
+              </p>
             </div>
             <div class="col s12">
-              <p>{{ userprofile.user.email }}</p>
+              <p class="pt-1">{{ userprofile.user.email }}</p>
+            </div>
+            <div class="col s12">
+              <p class="pt-1 grey-text">{{ userprofile.city }}, SENEGAL</p>
+            </div>
+            <div class="col s12">
+              <a href="{% url 'accounts:passwordChangePage' user.pk %}"
+                class="btn deep-orange accent-3 waves-effect white-text">
+                <i class="material-icons right">password</i>
+                <b>Mot de Passe</b>
+              </a>
+            </div>
+            {% if user.is_superuser %}
+              <div class="col s12">
+                <p class="pt-1 big-text">Super Utilisateur</p>
+              </div>
+            {% else %}
+              <div class="col s12">
+                <p class="pt-1 big-text">Agent Utilisateur</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m4">
+        <div class="card-panel grey lighten-4">
+          <blockquote>Changer votre photo de profile</blockquote>
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Photo</span>
+              <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                value="{{ userprofile.avatar.url }}"
+              />
+            </div>
+            <div class="file-path-wrapper">
+              <input type="text" class="file-path" />
             </div>
           </div>
         </div>

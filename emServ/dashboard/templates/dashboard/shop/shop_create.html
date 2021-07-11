@@ -13,7 +13,6 @@
         <div class="col s12">
             <div class="card-panel deep-orange accent-3 white-text">
                 Creer Une Nouvelle Boutique
-                <i class="material-icons right">fiber_new</i>
             </div>
             <form action="" method="post">
                 {% csrf_token %}
@@ -35,10 +34,10 @@
                         <i class="material-icons right">recommend</i>
                         Creer
                     </button>
-                    <a href="{% url 'accounts:profileUpdatePage' user.pk %}" class="btn-flat deep-orange-text accent-3 waves-effect col s4 m2">
-                        <i class="material-icons right">keyboard_return</i>
-                        Retour
-                    </a>
+                    <a href="{% url 'accounts:profilePage' %}" class="btn-flat deep-orange-text accent-3 waves-effect left">
+                    <i class="material-icons right">keyboard_return</i>
+                    Retour
+                </a>
                 </div>
             </form>
         </div>

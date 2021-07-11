@@ -8,9 +8,10 @@
     padding: 0 10px;
 }
 
-.row a {
+
+/* .row a {
     width: 100%;
-}
+} */
 
 #togglePassword {
     cursor: pointer;
@@ -76,6 +77,11 @@ span.material-icons.dummy_icon {
     width: 100% !important;
     max-height: 400px;
     overflow-y: scroll;
+}
+
+.top-section {
+    width: 90%;
+    margin: 1rem auto;
 }
 
 

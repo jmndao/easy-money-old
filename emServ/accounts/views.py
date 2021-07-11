@@ -1,8 +1,10 @@
+from datetime import date
+from django.http import HttpResponse
 from accounts.forms import form_validation_error
 from accounts.models import UserProfile
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
@@ -16,6 +18,7 @@ from django.contrib.auth import login
 
 from dashboard.models import Shop
 from accounts.forms import UserProfileForm
+from accounts.resources import ProductExcel, VenteExcel, ClientExcel
 
 
 
@@ -82,7 +85,7 @@ class UserProfileView(View, LoginRequiredMixin):
             messages.success(request, 'Profile enregistre avec succes !')
         else:
             messages.error(request, form_validation_error(form))
-        return redirect('profilePage')
+        return redirect(reverse('accounts:profilePage'))
 
 
 class ShopCreationView(LoginRequiredMixin, CreateView):
@@ -142,4 +145,14 @@ class AppRegisterView(FormView):
         if self.request.user.is_authenticated:
             return redirect('dashboard:homePage')
         return super().get(*args, **kwargs)
+
+
+def export_product_view(request):
+    product_excel = ProductExcel()
+    dataset = product_excel.export()
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    today_date = str(date.today())
+    filename = "product " + today_date + ".xls"
+    response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+    return response
 

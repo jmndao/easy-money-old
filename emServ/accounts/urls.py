@@ -27,5 +27,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='accounts:loginPage'), name='logoutPage'),
     # Password Routers
     path('mot_de_passe/modifier/<int:pk>/', PasswordChangeView.as_view(template_name='dashboard/users/password_change.html', success_url=reverse_lazy('accounts:profilePage')), name='passwordChangePage'),
+    # Exporting Excel Files
+    path('export/produit/', a_views.export_product_view, name='exportProductView'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

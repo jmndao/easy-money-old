@@ -6,8 +6,8 @@ from django.db.models.signals import post_save
 # Create your models here.
 
 GENDER = [
-    (1, 'Male'),
-    (2, 'Femelle')
+    ("H", 'Homme'),
+    ("F", 'Femme')
 ]
 
 
@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.SET_NULL, null=True, related_name="shop_user_related")
     avatar = models.ImageField(upload_to="profiles/", default='default.png')
-    birthday = models.DateField()
+    cin = models.CharField(max_length=200, blank=True, null=True)
     phone_number = models.CharField(
         max_length=100, blank=True, null=True, verbose_name="Numero de Telephone")
     gender = models.IntegerField(

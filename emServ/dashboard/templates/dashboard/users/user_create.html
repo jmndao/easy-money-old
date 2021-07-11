@@ -14,17 +14,18 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">person</i>
                     <label for="{{ form.username.id_for_label }}">Nom d'Utilisateur</label>
                     {{ form.username }}
                 </div>
+                <div class="col s12">
+                    <p class="small grey-text">Votre mot de passe ne peut pas être entièrement numérique.</p>
+                    <p class="small grey-text"> Votre mot de passe doit contenir au minimum 8 caractères</p>
+                </div>
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">password</i>
                     <label for="{{ form.password1.id_for_label }}">Mot de Passe</label>
                     {{ form.password1 }}
                 </div>
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">password</i>
                     <label for="{{ form.password2.id_for_label }}">Mot de Passe de Confirmation</label>
                     {{ form.password2 }}
                 </div>
@@ -32,7 +33,7 @@
                     <i class="material-icons right">recommend</i>
                     Creer
                 </button>
-                <a href="{% url 'accounts:profileUpdatePage' user.pk %}" class="btn-flat deep-orange-text accent-3 waves-effect">
+                <a href="{% url 'accounts:profilePage' %}" class="btn-flat deep-orange-text accent-3 waves-effect">
                     <i class="material-icons right">keyboard_return</i>
                     Retour
                 </a>

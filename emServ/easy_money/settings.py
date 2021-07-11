@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'accounts',
     'message',
     'notifications',
-    'search'
+    'search',
+    'import_export'
 ]
 
 MIDDLEWARE = [
