@@ -12,8 +12,8 @@ app_name = 'accounts'
 
 urlpatterns = [
     # Profile Routers
-    path('profile/', a_views.UserProfileCreationView.as_view(), name='profilePage'),
-    path('profile/editer/<int:pk>/', a_views.UserProfileUpdateView.as_view(), name='profileUpdatePage'),
+    path('profile/', a_views.UserProfileView.as_view(), name='profilePage'),
+    # path('profile/editer/<int:pk>/', a_views.UserProfileUpdateView.as_view(), name='profileUpdatePage'),
     # User Routers
     path('agent/nouveau/', a_views.UserCreationView.as_view(), name='userCreationPage'),
     path('agent/modifier/<int:pk>/', a_views.UserUpdateView.as_view(), name='userUpdatePage'),

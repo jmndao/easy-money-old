@@ -1,16 +1,21 @@
+from accounts.forms import form_validation_error
+from accounts.models import UserProfile
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
 from django.views.generic.edit import DeleteView, FormView, UpdateView
 from django.contrib.auth import login
 
-from accounts.models import UserProfile
 from dashboard.models import Shop
+from accounts.forms import UserProfileForm
 
 
 
@@ -46,7 +51,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
 
     
-
 class UserDeleteView(LoginRequiredMixin, DeleteView):
 
     model = User
@@ -54,40 +58,31 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('accounts:userCreationPage')
 
 
+# @method_decorator(name='dispatch')
+class UserProfileView(View, LoginRequiredMixin):
+    userprofile = None 
 
-class UserProfileCreationView(LoginRequiredMixin, CreateView):
+    def dispatch(self, request, *args, **kwargs):
+        self.userprofile, _ = UserProfile.objects.get_or_create(user=request.user)
+        return super(UserProfileView, self).dispatch(request, *args, **kwargs)
 
-    model = UserProfile
-    template_name = 'dashboard/users/profile.html'
-    fields = '__all__'
+    def get(self, request):
+        context = {'userprofile': self.userprofile, 'segment': 'profile'}
+        return render(request, 'dashboard/users/profile.html', context)
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+    def post(self, request):
+        form = UserProfileForm(request.POST, request.FILES, instance=self.userprofile)
+        if form.is_valid():
+            userprofile = form.save()
+            userprofile.user.first_name = form.cleaned_data.get('first_name')
+            userprofile.user.last_name = form.cleaned_data.get('last_name')
+            userprofile.user.email = form.cleaned_data.get('email')
+            userprofile.user.save()
 
-    def get_success_url(self):
-        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
-
-
-
-class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
-
-    model = UserProfile
-    template_name = 'dashboard/users/profile.html'
-    fields = '__all__'
-
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["users"] = User.objects.all()
-        context["n_users"] = context["users"].count()
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+            messages.success(request, 'Profile enregistre avec succes !')
+        else:
+            messages.error(request, form_validation_error(form))
+        return redirect('profilePage')
 
 
 class ShopCreationView(LoginRequiredMixin, CreateView):

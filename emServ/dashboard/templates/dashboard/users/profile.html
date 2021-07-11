@@ -1,138 +1,205 @@
-{% extends 'dashboard/base.html' %}
-{% load static %}
+{% extends 'dashboard/base.html' %} {% load static %} {% block stylesheets %}
+<link
+  type="text/css"
+  rel="stylesheet"
+  href="{% static 'dashboard/css/style.css' %}"
+/>
+{% endblock stylesheets %} {% block body_content %}
 
-{% block stylesheets %}
-<link type="text/css" rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
-{% endblock stylesheets %}
+<div class="top-section">
+  <a
+    href="{% url 'accounts:userCreationPage' %}"
+    class="waves-effect waves-light btn"
+    class="left-align"
+  >
+    <i class="material-icons right">plus</i> Utilisateur
+  </a>
+  <a
+    href="{% url 'accounts:shopCreationPage' %}"
+    class="waves-effect waves-light btn"
+    class="left-align"
+  >
+    <i class="material-icons right">plus</i> Boutique
+  </a>
 
-{% block body_content %}
+  <a
+    href="#"
+    class="dropdown-trigger btn right-align"
+    data-target="documentDropdown"
+  >
+    <i class="material-icons">report</i>
+    Reports
+  </a>
+  <ul id="documentDropdown" class="dropdown-content">
+    <li><a href="#!">Produits</a></li>
+    <li><a href="#!">Clients</a></li>
+    <li><a href="#!">Ventes</a></li>
+  </ul>
+</div>
 
-
-<div class="row">
-
-  <div class="row">
-    <div class="col m8 s12">
-      <div class="card-panel">
-        <form method="post" enctype='multipart/form-data'>
-          {% csrf_token %}
-          <!------- Profile Image-->
-          <div class="col s12">
-            <div class="card-panel deep-orange accent-3">
-              <i class="material-icons left">account_circle</i>
-              <b>Image de Profil</b>
+<div class="form-section">
+  <form action="{% url 'accounts:profilePage' %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col s12 m8">
+        <div class="card-panel">
+          <div class="row">
+            <div class="col s12">
+              <div class="card-panel deep-orange accent-3 white-text">
+                <span> Information de Profile </span>
+              </div>
+            </div>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="first_name"
+                id="first_name"
+                value="{{ userprofile.user.first_name }}"
+                required
+              />
+              <label for="first_name">Prenom</label>
+            </div>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="last_name"
+                id="last_name"
+                value="{{ userprofile.user.last_name }}"
+                required
+              />
+              <label for="last_name">Nom</label>
             </div>
           </div>
-          <div class="file-field input-field">
-            <div class="btn">
-              <span>
-                <label for="{{ form.avatar.id_for_label }}"></label>
-              </span>
-              {{ form.avatar }}
+          <div class="row">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">calendar</i>
+              <input
+                type="text"
+                class="datepicker"
+                name="birthday"
+                id="birthday"
+                value="{{ userprofile.birthday|date:'m/d/Y'|default:'' }}"
+                required
+              />
+              <label for="birthday">Date de Naissance</label>
             </div>
-            <div class="file-path-wrapper">
-              <input type="text" class="file-path validate">
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="gender"
+                id="gender"
+                value="{{ userprofile.gender }}"
+                required
+              />
+              <label for="gender">Sexe</label>
             </div>
           </div>
-
-          <!------- Information Agent -->
-          <div class="col s12">
-            <div class="card-panel deep-orange accent-3">
-              <i class="material-icons right">assignment_ind</i>
-              <b>Information Agent</b>
+          <div class="row">
+            <div class="input-field col s6">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value="{{ userprofile.user.email }}"
+                required
+              />
+              <label for="email">Email</label>
             </div>
-          </div>
-          <div class="input-field col m6 s12">
-            <label for="{{ form.agency.id_for_label }}">Agence</label>
-            {{ form.agency }}
-          </div>
-          <div class="input-field col m6 s12">
-            {{ form.phone_number }}
-            <label for="{{ form.phone_number.id_for_label }}">Telephone</label>
-          </div>
-          <div class="input-field col m6 s12">
-            {{ form.address }}
-            <label for="{{ form.address.id_for_label }}">Adresse</label>
-          </div>
-          <div class="input-field col m6 s12">
-            {{ form.number }}
-            <label for="{{ form.number.id_for_label }}">Numéro</label>
-          </div>
-          <div class="input-field col m6 s12">
-            {{ form.city }}
-            <label for="{{ form.city.id_for_label }}">Ville</label>
-          </div>
-          <div class="input-field col m6 s12">
-            {{ form.zip }}
-            <label for="{{ form.zip.id_for_label }}">Zip Code</label>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="phone_number"
+                placeholder="+221 7X XXX XX XX"
+                id="phone_number"
+                value="{{ userprofile.phone_number|default:'' }}"
+                required
+              />
+              <label for="phone_number">Telephone</label>
+            </div>
           </div>
           <div class="row">
             <div class="col s12">
-              <button type="submit" class="btn-flat waves-effect deep-orange-text accent-3">
-                <i class="material-icons right">recommend</i>
-                Enregistrer
+              <div class="card-panel deep-orange accent-3 white-text">
+                <span> <b>Adresse</b> </span>
+              </div>
+            </div>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="address"
+                id="address"
+                value="{{ userprofile.address|default:'' }}"
+                required
+              />
+              <label for="address">Adresse</label>
+            </div>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="city"
+                id="city"
+                value="{{ userprofile.city|default:'' }}"
+                required
+              />
+              <label for="city">Ville</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="number"
+                id="number"
+                value="{{ userprofile.number|default:'' }}"
+                required
+              />
+              <label for="address">Numero Maison</label>
+            </div>
+            <div class="input-field col s6">
+              <input
+                type="text"
+                name="zip"
+                id="zip"
+                value="{{ userprofile.zip|default:'' }}"
+                required
+              />
+              <label for="city">Code Postal</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <button class="waves-effect waves-light deep-orange accent-3 white-text">
+                Tout Enregistrer
               </button>
             </div>
           </div>
-        </form>
-      </div>
-
-    </div>
-
-    <div class="col s12 m4">
-      {% if user.is_superuser %}
-      <div class="collection with-header">
-        <div class="collection-header deep-orange accent-3 white-text">
-          Menu de Creation
         </div>
-        <a href="{% url 'accounts:userCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouveau Agent
-          <span class="badge deep-orange accent-3 white-text" data-badge-caption="{{ n_users }}"></span>
-        </a>
-        <a href="{% url 'accounts:shopCreationPage' %}" class="collection-item deep-orange-text accent-3">Nouvelle
-          Boutique</a>
       </div>
-      {% endif %}
-      <div class="card-panel">
-        <div class="row">
-          <div class="col s6">
-            <img src="{{ userprofile.avatar.url }}" alt="Profil" class="circle center" width="100" height="100">
+      <div class="col s12 m4">
+        <div class="card-panel">
+          <div class="row center">
+            <div class="col s12">
+              <img src="{{ userprofile.avatar.url }}" alt="User" width="100px" height="100px" class='circle' />
+            </div>
+            <div class="col s12">
+              <p><b>{{ userprofile.user.username }}</b></p>
+            </div>
+            <div class="col s12">
+              <p>{{ userprofile.user.first_name }}  {{ userprofile.user.last_name }}</p>
+            </div>
+            <div class="col s12">
+              <p>{{ userprofile.user.email }}</p>
+            </div>
           </div>
-          <div class="col s6">
-            <p class="big-text deep-orange-text accent-3">@{{ userprofile.user.username }}</p>
-            <span>
-              <b>
-                {% if userprofile.user.first_name %}{{ userprofile.user.first_name }} {% else %} Prenom {% endif %}
-                {% if userprofile.user.last_name %}{{ userprofile.user.last_name }} {% else %} Nom {% endif %}
-              </b>
-            </span>
-            <span>{% if userprofile.user.email %}{{ userprofile.user.email }} {% else %} Email {% endif %} </span>
-          </div>
-        </div>
-        <div class="divider" style="margin:10px"></div>
-        <div class="row valign-wrapper">
-          <div class="col s6">
-            <a href="{% url 'accounts:userUpdatePage' user.pk %}"
-              class="btn-flat deep-orange accent-3 waves-effect white-text">
-              <i class="material-icons right">badge</i>
-              <b>Modifier</b>
-            </a>
-          </div>
-          <div class="col s6">
-            <a href="{% url 'accounts:passwordChangePage' user.pk %}"
-              class="btn-flat deep-orange accent-3 waves-effect white-text">
-              <i class="material-icons right">password</i>
-              <b>Modifier</b>
-            </a>
-          </div>
-
         </div>
       </div>
     </div>
-
-
-  </div>
-
-
+  </form>
 </div>
 
-
-{% endblock body_content %}
+{% endblock body_content %} {% block javascripts %}
+<script>
+  var datePicker = document.querySelectorAll(".datepicker");
+  M.Datepicker.init(datePicker, {});
+</script>
+{% endblock javascripts %}
