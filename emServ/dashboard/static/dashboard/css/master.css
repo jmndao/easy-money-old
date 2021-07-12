@@ -31,6 +31,10 @@ body {
     padding: 10px 0;
 }
 
+.pl-2 {
+    padding-left: 20px;
+}
+
 
 /* Track */
 
@@ -393,8 +397,9 @@ i.right {
 .width-border {
     border-radius: 10px;
 }
-/* Styling profile */
 
+
+/* Styling profile */
 
 .with-gaps {
     /* display: grid;

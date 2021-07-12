@@ -9,10 +9,10 @@
     <link rel="stylesheet" type="text/css" href="{% static 'dashboard/materialize/css/materialize.css' %}" />
     {% block stylesheets %}{% endblock stylesheets %}
     <title>
-        {% block title %}{% endblock title %} | Easy Money
+        Easy Money | {% if title %}{{ title }}{% endif %}
     </title>
 </head>
-<body>
+<body class="grey lighten-2">
 
     {% block body_content %}{% endblock body_content %}
    

@@ -1,0 +1,26 @@
+{% extends 'dashboard/base.html' %}
+{% load humanize %}
+
+{% block body_content %}
+<div class="card-panel">
+    <div class="card-panel orange darken-4">
+        Suppression d'un produit déposé
+        <i class="material-icons right">delete_forever</i>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <p>Etes-vous certain de vouloir supprimer cet Utilisateur "<b>{{ user.username }}</b>" ?</p>
+        <br><br>
+        <a href="{% url 'accounts:profilePage' %}" class="btn-flat white-text blue waves-effect">
+            Retourner
+            <i class="material-icons right">keyboard_return</i>
+        </a>
+        <button type="submit" class="btn-flat white-text red accent-4 waves-effect">
+            Confirmer
+            <i class="material-icons right ">delete_forever</i>
+        </button>
+
+    </form>
+    </div>
+
+    {% endblock body_content %}

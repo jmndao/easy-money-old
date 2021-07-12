@@ -47,7 +47,7 @@ class UserCreationView(LoginRequiredMixin, CreateView):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = ['first_name', 'last_name', 'email']
+    fields = '__all__'
     template_name = 'dashboard/users/user_update.html'
 
     def form_valid(self, form):
@@ -66,7 +66,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 class UserDeleteView(LoginRequiredMixin, DeleteView):
 
     model = User
-    template_name = 'accounts/users/user_delete.html'
+    template_name = 'dashboard/users/user_delete.html'
     success_url = reverse_lazy('accounts:userCreationPage')
 
     def get_context_data(self, **kwargs):
@@ -84,7 +84,9 @@ class UserProfileView(View, LoginRequiredMixin):
         return super(UserProfileView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
+        shops = Shop.objects.all()
         context = {
+            'shops': shops,
             'userprofile': self.userprofile, 
             'segment': 'profile',
             'title': "Profile"
