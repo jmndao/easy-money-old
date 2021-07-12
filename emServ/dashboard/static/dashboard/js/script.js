@@ -21,3 +21,5 @@ M.Dropdown.init(dropdown, {
 
 const chips = document.querySelectorAll('.chips');
 M.Chips.init(chips, {});
+
+$('#id_description').addClass('materialize-textarea');
