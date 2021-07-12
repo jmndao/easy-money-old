@@ -183,13 +183,7 @@ class Utils:
         i_price = float(my_estimation.used_price)
         repair_amount = float(my_estimation.reparatinon_price)
 
-        if my_estimation.estate == 'POUR_PIECE' and my_estimation.category == 'TABLETTE':
-            i_price = 3000
-            return  i_price
-
-        if my_estimation.estate == 'POUR_PIECE' and my_estimation.category == 'TELEPHONE' or 'ORDINATEUR' or 'TELEVISION':
-            i_price = 5000
-            return  i_price
+        
         
         percentage_1 = 0
         if my_estimation.estate == 'NEUF':
@@ -273,9 +267,19 @@ class Utils:
         assert diff_year > 0
 
         i_price = i_price - i_price * diff_year * percentage_8
-
-        print(diff_year)
+        if my_estimation.estate == 'POUR_PIECE':
+            if  my_estimation.category == 'TABLETTE':
+                i_price = 3000
+                return i_price
+            
+        if my_estimation.estate == 'POUR_PIECE': 
+            if  my_estimation.category == 'TELEPHONE' or 'ORDINATEUR' or 'TELEVISION':
+                i_price = 5000
+                return i_price
+            
         return int(i_price)
+
+        
 
     def estimation_from_form(self, form):
         
