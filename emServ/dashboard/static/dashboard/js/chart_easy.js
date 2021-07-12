@@ -2,18 +2,7 @@ var ctx_in = document.getElementById("myChart");
 
 var data = {
     labels: dataset_achat["months"], // or dataset_achat["months"]
-    datasets: [{
-            label: 'Vente',
-            data: dataset_vente["data"],
-            borderWidth: 2,
-            // Caracteristic of the thickness of the bar
-            //The thickness of the bar is going to change as the data increases
-            backgroundColor: 'rgb(255, 61, 0)',
-            borderColor: [
-                'rgb(0, 0, 0)',
-            ]
-
-        },
+    datasets: [
         {
             label: 'Achat Direct',
             data: dataset_achat["data"],
@@ -35,6 +24,18 @@ var data = {
             backgroundColor: 'rgb(218, 223, 225)',
             borderColor: [
                 'rgb(255, 61, 0)',
+            ]
+
+        },
+        {
+            label: 'Vente',
+            data: dataset_vente["data"],
+            borderWidth: 2,
+            // Caracteristic of the thickness of the bar
+            //The thickness of the bar is going to change as the data increases
+            backgroundColor: 'rgb(255, 61, 0)',
+            borderColor: [
+                'rgb(0, 0, 0)',
             ]
 
         }

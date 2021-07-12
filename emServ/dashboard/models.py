@@ -11,6 +11,10 @@ SEXE = [
 ]
 
 CATEGORY = [
+    ('TELEPHONE', 'Telephone'),
+    ('TABLETTE', 'Tablette'),
+    ('ORDINATEUR', 'Ordinateur'),
+    ('TELEVISION', 'Television'),
     ('ELECTRONIQUE', 'Electronique'),
     ('VETEMENT', 'Vetement'),
     ('DECORATIONS', 'Decorations'),
@@ -220,9 +224,9 @@ class ProductModel(models.Model):
             self.quantity = 1
         if self.initial_quantity == 1 or self.initial_quantity == None:
             self.initial_quantity = self.quantity
+        self.price_total = self.price + self.montant_restauration
         if not self.price_total_tt_produit:
             self.price_total_tt_produit = self.price_total * self.quantity
-        self.price_total = self.price + self.montant_restauration
         self.price_vente_minimum_ad = self.price_total * 2
         self.price_vente_minimum_dv = float(self.price_total) * 1.3
         return super(ProductModel, self).save(*args, **kwargs)
