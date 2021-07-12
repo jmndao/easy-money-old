@@ -253,14 +253,14 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
 # Second, create the DepotVenteDetailView
 class DepotVenteDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/depot_vente/depot_vente_detail.html'
-    model = DepotVenteModel
+    model = ProductModel
     context_object_name = 'd_vente'
 
 
 # Third, create the depotVenteStockEditView
 class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
     template_name = 'dashboard/depot_vente/depot_vente_edit.html'
-    model = DepotVenteModel
+    model = ProductModel
     fields = '__all__'
 
     def form_valid(self, form):
@@ -295,7 +295,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         product = ProductModel.objects.get(pk=form.instance.produit.pk)
         product.sold = True
 
-
+        form.instance.price_total = form.instance.price * form.instance.quantity
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
         if remaining_qty < 0:
@@ -330,7 +330,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             context["tendance_vente"] = VenteModel.objects.values(
                 'produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context['count_item'] = self.q.count()
-            context['revenue'] = sales = sum(
+            context['revenue'] = sum(
                 [p.price_total for p in self.q if p.price_total != None])
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date')
@@ -342,7 +342,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).values(
                 'produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context['count_item'] = self.q.count()
-            context['revenue'] = sales = sum(
+            context['revenue'] = sum(
                 [p.price_total for p in self.q if p.price_total != None])
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date', uname=uname, is_superuser=False)
@@ -625,7 +625,7 @@ class TirerDevis(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['c_address'] = self.q.client.address
         context['c_tel'] = self.q.client.numero
-        context['v_product'] = self.q.product_name
+        context['v_product'] = self.q.produit.name
         ################################################################
 
         return context

@@ -152,7 +152,25 @@ def export_product_view(request):
     dataset = product_excel.export()
     response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
     today_date = str(date.today())
-    filename = "product " + today_date + ".xls"
+    filename = "produit_" + today_date + ".xls"
+    response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+    return 
+    
+def export_vente_view(request):
+    vente_excel = VenteExcel()
+    dataset = vente_excel.export()
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    today_date = str(date.today())
+    filename = "vente_" + today_date + ".xls"
+    response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
+    return response
+
+def export_client_view(request):
+    client_excel = ClientExcel()
+    dataset = client_excel.export()
+    response = HttpResponse(dataset.xls, content_type='application/vnd.ms-excel')
+    today_date = str(date.today())
+    filename = "client_" + today_date + ".xls"
     response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
     return response
 
