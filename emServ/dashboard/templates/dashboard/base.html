@@ -19,7 +19,7 @@
     <!-- Specific Page CSS goes here...  -->
     {% block stylesheets %}{% endblock stylesheets %}
     <title>
-        Easy Money | {% block title %}{% endblock title %}
+        Easy Money | {% if title %} {{ title }} {% else %} Dashboard {% endif %}
     </title>
 </head>
 

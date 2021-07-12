@@ -12,6 +12,7 @@
                         {{ product.pk}} / {{ product.name }}
                         <span class="grey-text darken-4 small right">{{ product.created_date }}</span>
                     </div>
+                    <p class="{% if product.quantity == 0 %} red-text {% else %} green-text {% endif %} ">Quantité restant: {{ product.quantity }}</p>
                     <p class="grey-text darken-4 "><a href="{% url 'dashboard:productDetailPage' product.pk %}">Voir les details sur ce produit</a></p>
                 </div>
             </div>

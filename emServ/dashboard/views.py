@@ -108,6 +108,7 @@ class ClientRequestView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["title"] = "Demande Client"
         uuser = self.request.user
         if uuser.is_superuser:
             # What the super Admin will see
@@ -132,6 +133,12 @@ class ClientRequestUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, Updat
                 owner__user__username=self.request.user.username)
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Demande Utilisateur"
+        return context
+    
+
 
 class ClientRequestDetailView(LoginRequiredMixin, DetailView):
 
@@ -144,12 +151,24 @@ class ClientRequestDetailView(LoginRequiredMixin, DetailView):
                                                 pk=self.kwargs['pk'],
                                                 client__shop__owner__user__username=uname)
         return self.client_request
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Detail-Demande Utilisateur"
+        return context
+    
 
 
 class ClientRequestDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/client_request/client_request_delete.html'
     model = ClientRequestModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-Demande Utilisateur"
+        return context
+    
 
 
 class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
@@ -164,6 +183,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["title"] = "Achat Direct"
         uname = self.request.user.username
         if self.request.user.is_superuser:
             context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad='AD').order_by(
@@ -209,11 +229,23 @@ class AchatDirectDetailView(LoginRequiredMixin, DetailView):
     model = AchatDirectModel
     context_object_name = 'achat_direct'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Detail-Achat Direct"
+        return context
+    
+
 
 class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/achat_direct/achat_direct_delete.html'
     model = AchatDirectModel
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-Achat Direct"
+        return context
+    
 
 
 # First, creating the DepotVenteView
@@ -222,6 +254,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["title"] = "Depot Vente"
         uname = self.request.user.username
         if self.request.user.is_superuser:
             self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
@@ -256,6 +289,12 @@ class DepotVenteDetailView(LoginRequiredMixin, DetailView):
     model = ProductModel
     context_object_name = 'd_vente'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Detail-Depot Vente"
+        return context
+    
+
 
 # Third, create the depotVenteStockEditView
 class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
@@ -267,11 +306,23 @@ class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Depot Vente"
+        return context
+    
+
 
 class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
     model = ProductModel
     template_name = 'dashboard/depot_vente/depot_vente_delete.html'
     context_object_name = 'dv_delete'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-Depot Vente"
+        return context
+    
 
 
 class VenteView(LoginRequiredMixin, CreateView, Utils):
@@ -323,6 +374,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["title"] = "Vente"
         uname = self.request.user.username
         if self.request.user.is_superuser:
             context['vente'] = self.q = VenteModel.objects.order_by(
@@ -362,6 +414,12 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Vente"
+        return context
+    
+
 
 class VenteDetailView(LoginRequiredMixin, DetailView):
 
@@ -369,12 +427,24 @@ class VenteDetailView(LoginRequiredMixin, DetailView):
     model = VenteModel
     context_object_name = 'sales'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Detail-Vente"
+        return context
+    
+
 
 class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/vente/vente_delete.html'
     model = VenteModel
     context_object_name = 'vente'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-Vente"
+        return context
+    
 
 
 class ProductView(LoginRequiredMixin, CreateView):
@@ -428,6 +498,7 @@ class ProductView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["title"] = "Produit"
         u_user = self.request.user
         if u_user.is_superuser:
             context["products"] = ProductModel.objects.all()
@@ -447,6 +518,12 @@ class ProductUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView)
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Produit"
+        return context
+    
+
 
 class ProductDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
@@ -454,6 +531,12 @@ class ProductDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView)
     template_name = 'dashboard/product/product_delete.html'
     # deleting a product
     context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-Produit"
+        return context
+    
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -469,6 +552,12 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         else:
             self.product = ProductModel.objects.filter(pk=self.kwargs["pk"])
         return self.product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Detail-Produit"
+        return context
+    
 
 
 class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
@@ -519,12 +608,24 @@ class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Espace Client"
+        return context
+    
+
 
 class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
     template_name = 'dashboard/client/client_delete.html'
     model = ClientModel
     context_object_name = 'client'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-Espace Client"
+        return context
+    
 
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
@@ -540,6 +641,12 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
         else:
             self.client = ClientModel.objects.filter(pk=self.kwargs["pk"])
         return self.client
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Detail-Espace Client"
+        return context
+    
 
 # Rendering the pdf class here:
 
@@ -643,15 +750,13 @@ class EstimationPage(LoginRequiredMixin, CreateView, Utils):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["title"] = "Estimation"
         user = self.request.user
         if user.is_superuser:
             context['estimates'] = self.e = EstimationModel.objects.all()
         else:
             context['estimates'] = self.e = EstimationModel.objects.filter(shop__owner__user=user)
         return context
-    
-
-
     
 
 class LastEstimationPage(LoginRequiredMixin, CreateView, Utils):

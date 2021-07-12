@@ -38,7 +38,11 @@ class UserCreationView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
     
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Creation-Utilisateur"
+        return context
+    
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
@@ -53,6 +57,11 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Utilisateur"
+        return context
+    
     
 class UserDeleteView(LoginRequiredMixin, DeleteView):
 
@@ -60,8 +69,13 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'accounts/users/user_delete.html'
     success_url = reverse_lazy('accounts:userCreationPage')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression-utilisateur"
+        return context
+    
 
-# @method_decorator(name='dispatch')
+
 class UserProfileView(View, LoginRequiredMixin):
     userprofile = None 
 
@@ -70,7 +84,11 @@ class UserProfileView(View, LoginRequiredMixin):
         return super(UserProfileView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        context = {'userprofile': self.userprofile, 'segment': 'profile'}
+        context = {
+            'userprofile': self.userprofile, 
+            'segment': 'profile',
+            'title': "Profile"
+        }
         return render(request, 'dashboard/users/profile.html', context)
 
     def post(self, request):
@@ -98,6 +116,7 @@ class ShopCreationView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context["shops"] = Shop.objects.all()
         context["n_shop"] = context["shops"].count()
+        context["title"] = "Creation-Boutique"
         return context
 
     def get_success_url(self):
@@ -114,6 +133,12 @@ class ShopUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Modification-Boutique"
+        return context
+    
         
 
 
@@ -125,6 +150,12 @@ class AppLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('dashboard:homePage')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Se Connecter"
+        return context
+    
 
 
 class AppRegisterView(FormView):
@@ -145,6 +176,12 @@ class AppRegisterView(FormView):
         if self.request.user.is_authenticated:
             return redirect('dashboard:homePage')
         return super().get(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Registration"
+        return context
+    
 
 
 def export_product_view(request):
