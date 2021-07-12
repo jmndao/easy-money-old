@@ -102,21 +102,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for devis in devis %}
+                    {% for d in devis %}
                     <tr>
-                        <th class="black-text"> {{ devis.client.fname }} {{ devis.client.lname }}</th>
-                        <th class="black-text">{{ devis.product_name }}</th>
-                        <th class="black-text">{{ devis.quantity }}</th>
-                        <th class="black-text">{{ devis.price|floatformat:0 }}fcfa</th>
-                        <th class="black-text">{{ devis.price_total|floatformat:0 }}fcfa</th>
-                        <th class="black-text">{{ devis.created_date|date:"SHORT_DATE_FORMAT" }}</th>
+                        <th class="black-text"> {{ d.client.fname }} {{ d.client.lname }}</th>
+                        <th class="black-text">{{ d.produit.name }}</th>
+                        <th class="black-text">{{ d.quantity }}</th>
+                        <th class="black-text">{{ d.price|floatformat:0 }}fcfa</th>
+                        <th class="black-text">{{ d.price_total|floatformat:0 }}fcfa</th>
+                        <th class="black-text">{{ d.created_date|date:"SHORT_DATE_FORMAT" }}</th>
                         <th>
-                            <a href="{% url 'dashboard:tirerDevisPage' devis.pk %}"
+                            <a href="{% url 'dashboard:tirerDevisPage' d.pk %}"
                                 class="deep-orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="tirer"><span class="material-icons">receipt</span></a>
                         </th>
                         <th>
-                            <a href="{% url 'dashboard:devisDeletePage' devis.pk %}"
+                            <a href="{% url 'dashboard:devisDeletePage' d.pk %}"
                                 class=" waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Supprimer"><span class="material-icons grblackey-text">delete</span></a>
                         </th>

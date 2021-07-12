@@ -2,6 +2,8 @@ import json
 import pandas as pd
 from django.utils.html import escapejs
 from django.utils.safestring import mark_safe
+from django.db.models import Q
+from functools import reduce
 
 # For rendering a pdf File
 from io import BytesIO
@@ -359,6 +361,25 @@ class Utils:
 
         i_price = i_price - repair_amount
         return int(i_price)
+
+    def product_filter(self, products, paramDict):
+        # paramDict = request.GET
+        params = paramDict.keys()
+ 
+        # data filtering
+        if any(x!='' for x in paramDict.values()):
+
+            # filters records that contain any of the following keywords
+            if paramDict.get('search', '') != '':
+                kws = paramDict['search'].split()
+                q_lookups = [Q(name__icontains=kw) for kw in kws] 
+                            # [Q(street__icontains=kw) for kw in kws] + \
+                            # [Q(town__icontains=kw) for kw in kws]
+                filters = Q()
+                filters |= reduce(lambda x, y: x | y, q_lookups)
+                products = products.filter(filters)
+
+        return products
 
 
 class RedirectToPreviousMixin:

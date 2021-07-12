@@ -11,10 +11,10 @@
         </label>
         Dashboard
     </h5>
-    <div class="search-wrapper">
+    <form method="GET" action="{% url 'search:searchProductPage' %}" class="search-wrapper">
         <span class="material-icons">search</span>
-        <input type="text" name="search" id="search" placeholder="Rechercher un produit..." class="autocomplete" />
-    </div>
+        <input type="search" name="search" id="search" placeholder="Rechercher un produit..." class="autocomplete" />
+    </form>
     <div class="miscellaneous">
         <a class="waves-effect waves-light btn-flat deep-orange-text accent-3
             {% if not user.is_superuser %} disabled {% endif %}" href="{% url 'notifications:notificationPage' %}">
