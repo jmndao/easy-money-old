@@ -2,21 +2,21 @@
 {% load static %}
 {% load notification_tags %}
 
- <!------ Navigation Bar: Based on materializecss -->
+<!------ Navigation Bar: Based on materializecss -->
 
-    <header>
-        <h5 class="valign-wrapper">
-            <label for="nav-toggle">
-                <span class="material-icons">menu</span>
-            </label> 
-            Dashboard
-        </h5>
-        <div class="search-wrapper">
-            <span class="material-icons">search</span>
-            <input type="text" name="search" id="search" placeholder="Rechercher un produit..." class="autocomplete" />
-        </div>
-        <div class="miscellaneous">
-            <a class="waves-effect waves-light btn-flat deep-orange-text accent-3
+<header>
+    <h5 class="valign-wrapper">
+        <label for="nav-toggle">
+            <span class="material-icons">menu</span>
+        </label>
+        Dashboard
+    </h5>
+    <div class="search-wrapper">
+        <span class="material-icons">search</span>
+        <input type="text" name="search" id="search" placeholder="Rechercher un produit..." class="autocomplete" />
+    </div>
+    <div class="miscellaneous">
+        <a class="waves-effect waves-light btn-flat deep-orange-text accent-3
             {% if not user.is_superuser %} disabled {% endif %}" href="{% url 'notifications:notificationPage' %}">
                 {% if user.is_superuser %}
                     <span class="new badge red">{% notification_count %}</span>
@@ -44,4 +44,5 @@
         </div>
     </header>
 
- <!------ End of Navigation Bar -->
+
+<!------ End of Navigation Bar -->

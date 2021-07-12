@@ -183,6 +183,14 @@ class Utils:
         i_price = float(my_estimation.used_price)
         repair_amount = float(my_estimation.reparatinon_price)
 
+        if my_estimation.estate == 'POUR_PIECE' and my_estimation.category == 'TABLETTE':
+            i_price = 3000
+            return  i_price
+
+        if my_estimation.estate == 'POUR_PIECE' and my_estimation.category == 'TELEPHONE' or 'ORDINATEUR' or 'TELEVISION':
+            i_price = 5000
+            return  i_price
+        
         percentage_1 = 0
         if my_estimation.estate == 'NEUF':
             percentage_1 = 0
@@ -218,7 +226,6 @@ class Utils:
             percentage_3 = 0.1
         else:
             percentage_3 = None
-
         i_price = i_price - i_price * percentage_3
 
         percentage_4 = 0
@@ -264,7 +271,7 @@ class Utils:
         
         diff_year = int(my_estimation.created_date.year) - int(my_estimation.year_of_release)
         assert diff_year > 0
-        
+
         i_price = i_price - i_price * diff_year * percentage_8
 
         print(diff_year)
