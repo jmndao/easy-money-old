@@ -377,4 +377,4 @@ class DevisModel(models.Model):
         return '{} {} {}'.format(self.client.fname, self.client.lname, self.product_name)
 
 # Estimation Model
-# Moved to Estimatipn App
+# Moved to Estimatipn App 
