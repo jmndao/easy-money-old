@@ -1,5 +1,7 @@
 import datetime
 from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import render
+
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
@@ -801,3 +803,13 @@ def multiple_delete_achatDirect(request):
             ad = ProductModel.objects.filter(dv_or_ad='AD').get(pk=id)
             ad.delete()
     return redirect('dashboard:homePage')
+
+#Error handling
+def error_404(request, exception):
+        data = {}
+        return render(request,'myerrors/404.html', data)
+
+def error_500(request):
+        data = {}
+        template_name = 'dashboard/myerrors/500.html'
+        return render(request,template_name, data)

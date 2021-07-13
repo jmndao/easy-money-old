@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
+from django.shortcuts import render
 
 
 from django.contrib.auth.models import User
@@ -126,3 +127,15 @@ def multiple_delete_estimation(request):
             estimate = EstimationModel.objects.get(pk=id)
             estimate.delete()
     return redirect('dashboard:homePage')
+
+
+# Error handling
+def error_404(request, exception):
+    data = {}
+    return render(request, 'myerrors/404.html', data)
+
+
+def error_500(request):
+    data = {}
+    template_name = 'dashboard/myerrors/500.html'
+    return render(request, template_name, data)

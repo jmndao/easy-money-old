@@ -27,12 +27,12 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', cast=bool)
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 config('SERVER', default='127.0.0.1')]
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+#                  config('SERVER', default='127.0.0.1')]
 
-
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'notifications',
     'search',
     'import_export',
-    'estimation'
+    'estimation',
 ]
 
 MIDDLEWARE = [
