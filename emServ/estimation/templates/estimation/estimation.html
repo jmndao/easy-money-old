@@ -157,14 +157,14 @@
                         <td class="deep-orange-text accent-3 left-align">{{ estimate.category }}</td>
                         <td class="deep-orange-text accent-3 left-align">{{ estimate.product_name }}</td>
                         <td>
-                            <a href="{% url 'dashboard:estimationResultPage' estimate.pk %}"
+                            <a href="{% url 'estimation:estimationResultPage' estimate.pk %}"
                                 class="black-text waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="Faire Devis"><span class="material-icons">picture_as_pdf</span></a>
                         <td class="center-align-element">
-                            <a href="{% url 'dashboard:estimationEditPage' estimate.pk %}"
+                            <a href="{% url 'estimation:estimationEditPage' estimate.pk %}"
                                 class="green-text accent-3 btn waves-effect btn-flat tooltipped" data-position="left"
                                 data-tooltip="modifier"><span class="material-icons">update</span></a>
-                            <a href="{% url 'dashboard:estimationDetailPage' estimate.pk %}"
+                            <a href="{% url 'estimation:estimationDetailPage' estimate.pk %}"
                                 class="deep-orange-text accent-3 btn waves-effect btn-flat tooltipped"
                                 data-position="left" data-tooltip="Voir"><span
                                     class="material-icons">visibility</span></a>
@@ -201,13 +201,14 @@
                 alert('Please Select the item')
             } else {
                 $.ajax({
-                    url: "{% url 'dashboard:multipleDeleteEstimationPage' %}",
+                    url: "{% url 'estimation:multipleDeleteEstimationPage' %}",
                     method: 'POST',
                     data: {
-                        'id': JSON.stringify(id),
+                        id,
                         csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
                     },
                     success: function (response) {
+                        console.log(id)
                         window.location.reload();
                     }
                 })

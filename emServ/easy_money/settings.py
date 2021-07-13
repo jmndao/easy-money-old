@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     # Adding Apps
     'dashboard',
     'accounts',
-    'message',
     'notifications',
     'search',
     'import_export',
-    'clients'
+    'estimation',
+    'clients',
+    'ventes',
+    'devis',
+    'clientRequests'
 ]
 
 MIDDLEWARE = [

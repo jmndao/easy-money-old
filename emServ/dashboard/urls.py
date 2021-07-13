@@ -8,26 +8,8 @@ app_name = 'dashboard'
 urlpatterns = [
     # For handling bills
     path('invoice/<int:pk>/', d_views.GeneratePDF.as_view(), name = 'invoice'),
-    #Handling the devis page
-    path('devis/', d_views.GenerateDevis.as_view(), name = 'devisPage'),
-    path('devis/supprimer/<int:pk>/', d_views.DevisDeleteView.as_view(), name = 'devisDeletePage'),
-    path('devis/tirer/<int:pk>/', d_views.TirerDevis.as_view(), name = 'tirerDevisPage'),
-    #Handling the estimation page
-    path('estimation/', d_views.EstimationPage.as_view(), name = 'estimationPage'),
-    path('estimation/resultat/<int:pk>/', d_views.EstimationResultPage.as_view(), name = 'estimationResultPage'),
-    path('estimation/supprimer/<int:pk>/', d_views.EstimationDeletePage.as_view(), name = 'estimationDeletePage'),
-    path('estimation/dernier/', d_views.LastEstimationPage.as_view(), name = 'lastEstimationPage'),
-    path('estimation/supprimer_plusieur/', d_views.multiple_delete_estimation, name='multipleDeleteEstimationPage'),
-    path('estimation/detail/<int:pk>/', d_views.EstimationDetail.as_view(), name='estimationDetailPage'),
-    path('estimation/modifier/<int:pk>/', d_views.EstimationEdit.as_view(), name='estimationEditPage'),
-    
     #This is the home page
     path('', d_views.IndexView.as_view(), name="homePage"),
-    # ClientRequest Routers
-    path('demande_cliant/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
-    path('demande_cliant/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),
-    path('demande_cliant/supprimer_plusieur/', d_views.multiple_delete_clientRequest, name='multipleDeleteClientRequestPage'),
-    path('demande_cliant/detail/<int:pk>/', d_views.ClientRequestDetailView.as_view(), name='clientRequestDetailPage'),
     # Achat Direct Routers
     path('achat_direct/', d_views.AchatDirectView.as_view(), name="achatDirectPage"),
     path('achat_direct/modifier/<int:pk>/', d_views.AchatDirectUpdateView.as_view(), name='achatDirectEditPage'),
@@ -40,12 +22,6 @@ urlpatterns = [
     path('depot_vent/supprimer/<int:pk>/', d_views.DepotVenteDeleteView.as_view(), name='depotVenteDeletePage'),
     path('depot_vent/supprimer_plusieur/', d_views.multiple_delete_depotVente, name='multipleDeleteDepotVentePage'),
     path('depot_vent/modifier/<int:pk>/', d_views.DepotVenteEditView.as_view(), name='depotVenteEditPage'),
-    # BuyingStock Routers
-    path('vente/', d_views.VenteView.as_view(), name="ventePage"),
-    path('vente/modifier/<int:pk>/', d_views.VenteUpdateView.as_view(), name='venteEditPage'),
-    path('vente/supprimer/<int:pk>/', d_views.VenteDeleteView.as_view(), name='venteDeletePage'),
-    path('vente/supprimer_plusieur/', d_views.multiple_delete_vente, name='multipleDeleteVentePage'),
-    path('vente/detail/<int:pk>/', d_views.VenteDetailView.as_view(), name='venteDetailPage'),
     # Product Routers
     path('produit/', d_views.ProductView.as_view(), name="productPage"),
     path('produit/modifier/<int:pk>/', d_views.ProductUpdateView.as_view(), name='productEditPage'),

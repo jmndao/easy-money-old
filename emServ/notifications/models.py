@@ -2,8 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
-from dashboard.models import ProductModel, ClientModel
-from message.models import Message
+from dashboard.models import ProductModel
+from clients.models import ClientModel
 
 # Create your models here.
 
@@ -47,25 +47,6 @@ class NotificationModel(models.Model):
                     to=user,
                     message=msg,
                     notification_type=1).save()
-
-    @receiver(post_save, sender=Message)
-    def create_msg_post(sender, created, instance, **kwargs):
-        if created:
-            NotificationModel.objects.create(
-                sender = instance.sender,
-                to = instance.to,
-                message = instance.text_message,
-                notification_type = 0).save()
-
-    @receiver(post_delete, sender=Message)
-    def create_msg_delete(sender, instance, *args, **kwargs):
-        
-        NotificationModel.objects.create(
-            sender=instance.sender,
-            to=instance.to,
-            message=instance.text_message,
-            notification_type=0).save()
-
 
     def __str__(self):
         return '{} {}'.format(self.notification_type, self.sender)

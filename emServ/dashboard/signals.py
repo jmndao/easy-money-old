@@ -1,7 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from dashboard.models import ClientModel
-
+from clients.models import ClientModel
 
 @receiver(post_save, sender=ClientModel)
 def increment_passage(sender, created, instance, **kwargs):
