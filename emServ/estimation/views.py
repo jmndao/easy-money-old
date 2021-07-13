@@ -1,20 +1,12 @@
-from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.contrib.auth.views import LoginView
 
-
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import DeleteView, FormView, UpdateView
-from django.views.generic import (TemplateView,
-                                  DetailView,
-                                  ListView)
+from django.views.generic.edit import DeleteView, UpdateView
+from django.views.generic import DetailView
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
-                                       DeleteView
-                                       )
+                                       DeleteView)
 from django.contrib.auth import login
 from estimation.models import EstimationModel
 from estimation.utils import Utils
@@ -23,7 +15,7 @@ from estimation.utils import Utils
 
 
 class EstimationView(LoginRequiredMixin, CreateView, Utils):
-    template_name = 'dashboard/estimation/estimation.html'
+    template_name = 'estimation/estimation.html'
     model = EstimationModel
     fields = '__all__'
     success_url = reverse_lazy('estimation:lastEstimationPage')
@@ -45,7 +37,7 @@ class EstimationView(LoginRequiredMixin, CreateView, Utils):
 
 
 class LastEstimationPage(LoginRequiredMixin, CreateView, Utils):
-    template_name = 'dashboard/estimation/lastEstimation.html'
+    template_name = 'estimation/lastEstimation.html'
     model = EstimationModel
     fields = '__all__'
 
@@ -62,7 +54,7 @@ class LastEstimationPage(LoginRequiredMixin, CreateView, Utils):
 
 class EstimationDetail(LoginRequiredMixin, DetailView):
     model = EstimationModel
-    template_name = 'dashboard/estimation/estimation_detail.html'
+    template_name = 'estimation/estimation_detail.html'
     context_object_name = 'estimation'
 
     def get_queryset(self):
@@ -77,10 +69,10 @@ class EstimationDetail(LoginRequiredMixin, DetailView):
 
 
 class EstimationEdit(LoginRequiredMixin, UpdateView):
-    template_name = 'dashboard/estimation/estimationEdit.html'
+    template_name = 'estimation/estimationEdit.html'
     fields = '__all__'
     model = EstimationModel
-    success_url = reverse_lazy('dashboard:estimationPage')
+    success_url = reverse_lazy('estimation:estimationPage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -88,7 +80,7 @@ class EstimationEdit(LoginRequiredMixin, UpdateView):
 
 
 class EstimationResultPage(LoginRequiredMixin, CreateView, Utils):
-    template_name = 'dashboard/estimation/estimationResult.html'
+    template_name = 'estimation/estimationResult.html'
     model = EstimationModel
     fields = '__all__'
     success_url = reverse_lazy('estimation:estimationPage')
@@ -112,7 +104,7 @@ class EstimationResultPage(LoginRequiredMixin, CreateView, Utils):
 
 
 class EstimationDeletePage(LoginRequiredMixin, DeleteView):
-    template_name = 'dashboard/estimation/estimationDelete.html'
+    template_name = 'estimation/estimationDelete.html'
     model = EstimationModel
     context_object_name = 'estimates'
 
@@ -125,4 +117,4 @@ def multiple_delete_estimation(request):
         for id in estimate_ids:
             estimate = EstimationModel.objects.get(pk=id)
             estimate.delete()
-    return redirect('dashboard:homePage')
+    return redirect('estimation:estimationPage')

@@ -18,7 +18,7 @@
             <div class="table-header">
                 <span class="table-title">Produit Recherchés</span>
                 <div class="actions">
-                    <a href="{% url 'dashboard:clientPage'  %}" class="modal-trigger waves-effect btn-flat nopadding"><i
+                    <a href="{% url 'clients:clientPage'  %}" class="modal-trigger waves-effect btn-flat nopadding"><i
                             class="material-icons">person_add</i></a>
                     <a href="#" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">search</i></a>
@@ -63,7 +63,6 @@
         </div>
     </div>
 </div>
-<!-- #####################################  -->
 
 <!-- Adding Card Table End -->
 
@@ -108,7 +107,7 @@
                             <i class="material-icons left"></i>Enregistrer
                         </button>
                     </div>
-                    <a href="{% url 'dashboard:clientPage'  %}"
+                    <a href="{% url 'clients:clientPage'  %}"
                         class="waves-effect waves-light btn way-bigger deep-orange accent-3 center-align black-text">
                         ajouter le client <br> <i class="material-icons center-align medium">add</i>
                         <i class="material-icons large center-align">people</i>
@@ -138,7 +137,7 @@
             } else {
                 console.log(id)
                 $.ajax({
-                    url: "{% url 'dashboard:multipleDeleteClientRequestPage' %}",
+                    url: "{% url 'clients:multipleDeleteClientRequestPage' %}",
                     method: 'POST',
                     data: {
                         id,

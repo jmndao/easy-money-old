@@ -27,7 +27,7 @@
             </li>
             <li>
                 <a {% if 'client' in request.path  %} class="active" {% else %} class="" {% endif %}
-                    href="{% url 'dashboard:clientPage' %}">
+                    href="{% url 'clients:clientPage' %}">
                     <span class="material-icons"> person_add </span>
                     <span>Clients</span>
                 </a>
@@ -41,7 +41,7 @@
             </li>
             <li>
                 <a {% if 'vente' in request.path  %} class="active" {% else %} class="" {% endif %}
-                    href="{% url 'dashboard:ventePage' %}">
+                    href="{% url 'ventes:ventePage' %}">
                     <span class="material-icons"> price_check </span>
                     <span>Ventes</span>
                 </a>
@@ -62,14 +62,14 @@
             </li>
             <li>
                 <a {% if 'demande_cliant' in request.path  %} class="active" {% else %} class="" {% endif %}
-                    href="{% url 'dashboard:clientRequestPage' %}">
+                    href="{% url 'clientRequests:clientRequestPage' %}">
                     <span class="material-icons"> history_edu </span>
                     <span>Demande Client</span>
                 </a>
             </li>
             <li>
                 <a {% if 'devis' in request.path  %} class="active" {% else %} class="" {% endif %}
-                    href="{% url 'dashboard:devisPage' %}">
+                    href="{% url 'devis:devisPage' %}">
                     <span class="material-icons">receipt </span>
                     <span>Devis</span>
                 </a>

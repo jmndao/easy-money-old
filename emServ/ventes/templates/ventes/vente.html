@@ -156,7 +156,7 @@
           <label for="{{form.client.id_for_label}}">Client</label>
         </div>
         <div class="input-field col m1 s2">
-          <a href="{% url 'dashboard:clientPage' %}" name="clientID"
+          <a href="{% url 'clients:clientPage' %}" name="clientID"
             class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Vendeur">
             <i class="material-icons right">person_add</i>
           </a>
@@ -259,10 +259,10 @@
               </a>
             </td>
             <td class="black-text center-align-element">
-              <a href="{% url 'dashboard:venteDetailPage' v.pk %}"
+              <a href="{% url 'ventes:venteDetailPage' v.pk %}"
                 class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-              <a href="{% url 'dashboard:venteEditPage' v.pk %}"
+              <a href="{% url 'ventes:venteEditPage' v.pk %}"
                 class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Modifier"><span class="material-icons">update</span></a>
             <td>
@@ -307,7 +307,7 @@
       } else {
         console.log(id)
         $.ajax({
-          url: "{% url 'dashboard:multipleDeleteVentePage' %}",
+          url: "{% url 'ventes:multipleDeleteVentePage' %}",
           method: 'POST',
           data: {
             id,

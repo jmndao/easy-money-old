@@ -17,9 +17,9 @@ from ventes.forms import VenteForm
 
 class VenteView(LoginRequiredMixin, CreateView, Utils):
 
-    template_name = 'dashboard/vente/vente.html'
+    template_name = 'vente/vente.html'
     form_class = VenteForm
-    success_url = reverse_lazy('dashboard:ventePage')
+    success_url = reverse_lazy('ventes:ventePage')
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -96,9 +96,10 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
 
 class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
-    template_name = 'dashboard/vente/vente_edit.html'
+    template_name = 'vente/vente_edit.html'
     model = VenteModel
     fields = '__all__'
+    success_url = reverse_lazy('ventes:ventePage')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -113,7 +114,7 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
 class VenteDetailView(LoginRequiredMixin, DetailView):
 
-    template_name = 'dashboard/vente/vente_detail.html'
+    template_name = 'vente/vente_detail.html'
     model = VenteModel
     context_object_name = 'sales'
 
@@ -126,7 +127,7 @@ class VenteDetailView(LoginRequiredMixin, DetailView):
 
 class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
-    template_name = 'dashboard/vente/vente_delete.html'
+    template_name = 'vente/vente_delete.html'
     model = VenteModel
     context_object_name = 'vente'
 

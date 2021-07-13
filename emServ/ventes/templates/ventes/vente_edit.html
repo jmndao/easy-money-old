@@ -8,7 +8,7 @@
 {% block body_content %}
 
 <div class="card-panel">
-    <div class="card-panel orange darken-4">Editer un Achat <a href="{% url 'dashboard:ventePage' %}"
+    <div class="card-panel orange darken-4">Editer un Achat <a href="{% url 'ventes:ventePage' %}"
             class="btn-flat waves-effect right"><i class="material-icons right">keyboard_return</i></a></div>
     <div class="info_text valign-wrapper">
         <p class="blue-text lighten-2">
@@ -39,7 +39,7 @@
                 <label for="{{form.client.id_for_label}}">Client</label>
             </div>
             <div class="input-field col m1 s2">
-                <a href="{% url 'dashboard:clientPage' %}" name="clientID"
+                <a href="{% url 'clients:clientPage' %}" name="clientID"
                     class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
                     data-tooltip="Nouveau Vendeur">
                     <i class="material-icons right">person_add</i>

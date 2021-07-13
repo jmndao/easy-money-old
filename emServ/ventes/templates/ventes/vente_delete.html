@@ -13,7 +13,7 @@
         {% csrf_token %}
         <p>Etes-vous certain de vouloir supprimer la vente effectuée sur le "{{ object.produit }}"?</p>
         <br><br>
-        <a href="{% url 'dashboard:ventePage' %}" class="btn-flat white-text blue waves-effect">
+        <a href="{% url 'ventes:ventePage' %}" class="btn-flat white-text blue waves-effect">
             Retourner
             <i class="material-icons right">keyboard_return</i>
         </a>

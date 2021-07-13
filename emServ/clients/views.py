@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView
@@ -12,9 +13,10 @@ from clients.models import ClientModel
 
 class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
-    template_name = 'dashboard/client/client.html'
+    template_name = 'clients/client.html'
     model = ClientModel
     fields = '__all__'
+    success_url = reverse_lazy('clients:clientPage')
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
@@ -42,7 +44,6 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
                 shop__owner__user__username=uname)
             context["dataset_client"] = self.chart_client(
                 ClientModel, key='passage', dt_col_name='created_date', uname=uname, is_superuser=False)
-
         # What both will see
         context['title'] = 'Espace Client'
         return context
@@ -50,7 +51,7 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
 
 class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
-    template_name = 'dashboard/client/client_edit.html'
+    template_name = 'clients/client_edit.html'
     fields = '__all__'
     model = ClientModel
 
@@ -67,7 +68,7 @@ class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
 class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
-    template_name = 'dashboard/client/client_delete.html'
+    template_name = 'clients/client_delete.html'
     model = ClientModel
     context_object_name = 'client'
 
@@ -77,9 +78,8 @@ class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
         return context
     
 
-
 class ClientDetailView(LoginRequiredMixin, DetailView):
-    template_name = 'dashboard/client/client_detail.html'
+    template_name = 'clients/client_detail.html'
     model = ClientModel
     context_object_name = 'client'
 
@@ -104,4 +104,4 @@ def multiple_delete_client(request):
         for id in client_ids:
             client = ClientModel.objects.get(pk=id)
             client.delete()
-    return redirect('dashboard:homePage')
+    return redirect('clients:clientPage')
