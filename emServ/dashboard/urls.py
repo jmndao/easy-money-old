@@ -23,12 +23,6 @@ urlpatterns = [
     
     #This is the home page
     path('', d_views.IndexView.as_view(), name="homePage"),
-    # Client Routers
-    path('client/', d_views.ClientView.as_view(), name="clientPage"),
-    path('client/modifier/<int:pk>/', d_views.ClientUpdateView.as_view(), name='clientEditPage'),
-    path('client/supprimer/<int:pk>/', d_views.ClientDeleteView.as_view(), name='clientDeletePage'),
-    path('client/supprimer_plusieur/', d_views.multiple_delete_client, name='multipleDeleteClientPage'),
-    path('client/detail/<int:pk>/', d_views.ClientDetailView.as_view(), name='clientDetailPage'),
     # ClientRequest Routers
     path('demande_cliant/', d_views.ClientRequestView.as_view(), name="clientRequestPage"),
     path('demande_cliant/modifier/<int:pk>/', d_views.ClientRequestUpdateView.as_view(), name='clientRequestEditPage'),

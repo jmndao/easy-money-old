@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from clients.models import ClientModel
 from accounts.models import UserProfile
 
 
@@ -68,11 +69,6 @@ ACHATVENTE = [
     ('VENTE', 'Vente')
 ]
 
-CLIENT = [
-    ('CR', 'Client Regulier'),
-    ('CV', 'Vendeur')
-]
-
 
 class Shop(models.Model):
     """
@@ -94,52 +90,6 @@ class Shop(models.Model):
     def __str__(self):
 
         return '{} {}'.format(self.name, self.owner.user.username)
-
-
-class ClientModel(models.Model):
-    """
-        This is a model that hold client data so that we can keep
-        track of all the client that has ever enter in the shop.
-        Thus, we'll be able to link them with the newsletter and 
-        if ever they have ask for a product that was not in the shop
-        we'll have their personal data in here.
-        This store:
-            - shop              : shop in which the client has gone to
-            - fname             : the first name of the client
-            - lname             : the last name of the client
-            - nationality       : nationality of the client
-            - address           : address of the client
-            - sexe              : the sexe of the client (Male or Female)
-            - numero            : his phone numer if he wills to.
-            - address_email     : his email address that will serve for newsletter
-    """
-    shop = models.ForeignKey(
-        Shop, on_delete=models.CASCADE, blank=True, null=True)
-    fname = models.CharField(max_length=100, blank=True,
-                             null=True, verbose_name="First Name")
-    lname = models.CharField(max_length=100, blank=True,
-                             null=True, verbose_name="Last Name")
-    nationality = models.CharField(max_length=100, blank=True, null=True)
-    address = models.CharField(max_length=100, blank=True, null=True)
-    sexe = models.CharField(max_length=1, choices=SEXE)
-    age = models.IntegerField()
-    numero = models.CharField(max_length=20, blank=True, null=True)
-    id_card = models.IntegerField(blank =True, null=True)
-    passport_number = models.IntegerField(blank =True, null = True)
-    email = models.EmailField(blank=True, null=True)
-    passage = models.IntegerField(default=0, blank=True, null=True)
-    vente_or_achat = models.CharField(
-        max_length=100, choices=CLIENT, default="CR")
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        unique_together = ['fname', 'lname', 'numero']
-
-    def new_passage(self):
-        self.passage += 1
-
-    def __str__(self):
-        return '{} {}'.format(self.fname, self.lname)
 
 
 class ProductModel(models.Model):
@@ -236,53 +186,6 @@ class ProductModel(models.Model):
             return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_dv)
         else:
             return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_ad)
-
-
-# Model --  Achat Direct
-class AchatDirectModel(models.Model):
-    """
-        This model talks about all the products that the shops has bought directly
-        from the owner (client).
-        It keeps their records from the day the product has arrived in 
-        the shop.
-        It holds:
-            - produit           : the product that has been sold
-            - created_date      : date and time of the sale
-            - price             : the price the product has been purchased
-    """
-
-    produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    price = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="Prix d'achat")
-    client = models.ForeignKey(
-        ClientModel, on_delete=models.SET_NULL, null=True, blank=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{}[{}]'.format(self.produit.seller, self.produit.name)
-
-
-# Depot Vente Model
-class DepotVenteModel(models.Model):
-    """
-        This model represents the model in which, clients depose their belongings
-        hoping that the company is going to sell it for them. And the company will 
-        take its part after selling it. It basically has everything that the depositModel has.
-        It holds:
-
-            - produit           : the product that has been sold
-            - created_date      : date and time of the purchase
-            - price             : price the product has been given to the shop
-
-        Notice that the diffrence is going to be in which page, the user went to fill the form
-    """
-    produit = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    price = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="Prix de vente minimum", blank=True, null=True)
-    created_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return '{}[{}]'.format(self.produit.name, self.produit.name)
 
 
 # Model -- Vente
