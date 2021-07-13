@@ -19,8 +19,8 @@ class UserProfile(models.Model):
     cin = models.CharField(max_length=200, blank=True, null=True)
     phone_number = models.CharField(
         max_length=100, blank=True, null=True, verbose_name="Numero de Telephone")
-    gender = models.IntegerField(
-        choices=GENDER, blank=True, null=True, default=1)
+    # gender = models.IntegerField(
+    #     choices=GENDER, blank=True, null=True, default=1)
     address = models.CharField(max_length=255, null=True, blank=True)
     number = models.CharField(max_length=32, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)

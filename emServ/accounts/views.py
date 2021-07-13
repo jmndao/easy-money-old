@@ -32,11 +32,12 @@ class UserCreationView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        print(form)
         messages.success(self.request, "Un agent existe avec ce nom d'utilisateur !")
         return super().form_invalid(form)
 
     def get_success_url(self):
-        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+        return reverse_lazy('accounts:profilePage')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -105,6 +106,7 @@ class UserProfileView(View, LoginRequiredMixin):
             messages.success(request, 'Profile enregistre avec succes !')
         else:
             messages.error(request, form_validation_error(form))
+
         return redirect(reverse('accounts:profilePage'))
 
 
@@ -122,7 +124,7 @@ class ShopCreationView(LoginRequiredMixin, CreateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('accounts:profileUpdatePage', args=(self.request.user.shop_user_related.pk,))
+        return reverse_lazy('accounts:profilePage')
 
 
 
@@ -193,7 +195,7 @@ def export_product_view(request):
     today_date = str(date.today())
     filename = "produit_" + today_date + ".xls"
     response['Content-Disposition'] = 'attachment; filename={}'.format(filename)
-    return 
+    return response
     
 def export_vente_view(request):
     vente_excel = VenteExcel()

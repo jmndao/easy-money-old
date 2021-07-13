@@ -40,10 +40,13 @@
     <!--- Form -->
     {% if user.is_superuser %}
     <div class="row">
-      <div class="input-field col m4 s6">
+      <div class="input-field col s12">
         {{ form.shop }}
         <label for="{{ form.shop.id_for_label }}">Boutiques</label>
       </div>
+    </div>
+    {% endif %}
+    <div class="row">
       <div class="input-field col m4 s6">
         {{ form.fname }}
         <label for="{{ form.fname.id_for_label }}">Prenom du Client</label>
@@ -52,7 +55,6 @@
         {{ form.lname }}
         <label for="{{ form.lname.id_for_label }}">Nom du Client</label>
       </div>
-      {% endif %}
       <div class="input-field col m4 s6">
         {{ form.vente_or_achat }}
         <label for="{{ form.vente_or_achat.id_for_label }}">Vendeur ou Acheteur</label>

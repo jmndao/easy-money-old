@@ -1,21 +1,13 @@
 {% extends 'dashboard/base.html' %} {% load static %} {% block stylesheets %}
-<link
-  type="text/css"
-  rel="stylesheet"
-  href="{% static 'dashboard/css/style.css' %}"
-/>
+<link type="text/css" rel="stylesheet" href="{% static 'dashboard/css/style.css' %}" />
 {% endblock stylesheets %} {% block body_content %}
 
 {% if user.is_superuser %}
 <div class="top-section">
-  <a
-    href="{% url 'accounts:userCreationPage' %}"
-    class="waves-effect waves-light btn black deep-orange-text accent-3">
+  <a href="{% url 'accounts:userCreationPage' %}" class="waves-effect waves-light btn black deep-orange-text accent-3">
     <i class="material-icons right">add</i> <b>Utilisateur</b>
   </a>
-  <a
-    href="{% url 'accounts:shopCreationPage' %}"
-    class="waves-effect waves-light btn black deep-orange-text accent-3">
+  <a href="{% url 'accounts:shopCreationPage' %}" class="waves-effect waves-light btn black deep-orange-text accent-3">
     <i class="material-icons right">add</i> <b>Boutique</b>
   </a>
 
@@ -33,24 +25,21 @@
       </a>
     </li>
     <li><a href="{% url 'accounts:exportClientView' %}">
-      <span class="material-icons right">
+        <span class="material-icons right">
           file_download
         </span>
-      Clients</a></li>
+        Clients</a></li>
     <li><a href="{% url 'accounts:exportVenteView' %}">
         <span class="material-icons right">
           file_download
         </span>
-      Ventes</a></li>
+        Ventes</a></li>
   </ul>
 </div>
 {% endif %}
 
 <div class="form-section">
-  <form
-    action="{% url 'accounts:profilePage' %}"
-    method="post"
-    enctype="multipart/form-data">
+  <form action="{% url 'accounts:profilePage' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row">
       <div class="col s12 m8">
@@ -62,63 +51,29 @@
               </div>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="first_name"
-                id="first_name"
-                value="{{ userprofile.user.first_name }}"
-              />
+              <input type="text" name="first_name" id="first_name" value="{{ userprofile.user.first_name }}" />
               <label for="first_name">Prenom</label>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="last_name"
-                id="last_name"
-                value="{{ userprofile.user.last_name }}"
-              />
+              <input type="text" name="last_name" id="last_name" value="{{ userprofile.user.last_name }}" />
               <label for="last_name">Nom</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
-              <input
-                type="text"
-                name="cin"
-                id="cin"
-                value="{{ userprofile.cin|default:'' }}"
-                placeholder="Numero Carte d'Identite"
-              />
+            <div class="input-field col s12">
+              <input type="text" name="cin" id="cin" value="{{ userprofile.cin|default:'' }}"
+                placeholder="Numero Carte d'Identite" />
               <label for="cin">CIN</label>
-            </div>
-            <div class="input-field col s6">
-              <select name="gender" id="gender">
-                <option value="" disabled selected>Votre Genre</option>
-                {% for key, value in userprofile.GENDER %}
-                  <option value="{{ key }}" {% if userprofile.gender == key %}selected{% endif %}>{{ value }}</option>
-                {% endfor %}
-              </select>
-              <label for="gender">Sexe</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value="{{ userprofile.user.email }}"
-              />
+              <input type="email" name="email" id="email" value="{{ userprofile.user.email }}" />
               <label for="email">Email</label>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="phone_number"
-                placeholder="+221 7X XXX XX XX"
-                id="phone_number"
-                value="{{ userprofile.phone_number|default:'' }}"
-              />
+              <input type="text" name="phone_number" placeholder="+221 7X XXX XX XX" id="phone_number"
+                value="{{ userprofile.phone_number|default:'' }}" />
               <label for="phone_number">Telephone</label>
             </div>
           </div>
@@ -129,55 +84,33 @@
               </div>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="address"
-                id="address"
-                value="{{ userprofile.address|default:'' }}"
-              />
+              <input type="text" name="address" id="address" value="{{ userprofile.address|default:'' }}" />
               <label for="address">Adresse</label>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                value="{{ userprofile.city|default:'' }}"
-              />
+              <input type="text" name="city" id="city" value="{{ userprofile.city|default:'' }}" />
               <label for="city">Ville</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="number"
-                id="number"
-                value="{{ userprofile.number|default:'' }}"
-              />
+              <input type="text" name="number" id="number" value="{{ userprofile.number|default:'' }}" />
               <label for="address">Numero Maison</label>
             </div>
             <div class="input-field col s6">
-              <input
-                type="text"
-                name="zip"
-                id="zip"
-                value="{{ userprofile.zip|default:'' }}"
-              />
+              <input type="text" name="zip" id="zip" value="{{ userprofile.zip|default:'' }}" />
               <label for="city">Code Postal</label>
             </div>
           </div>
           <div class="row">
             <div class="col s12">
-              <button
-                class="
+              <button class="
                   btn
                   waves-effect waves-light
                   deep-orange
                   accent-3
                   white-text
-                "
-                type="submit">
+                " type="submit">
                 <i class="material-icons right">edit</i>
                 Tout Enregistrer
               </button>
@@ -189,13 +122,7 @@
         <div class="card-panel">
           <div class="row center">
             <div class="col s12">
-              <img
-                src="{{ userprofile.avatar.url }}"
-                alt="User"
-                width="150px"
-                height="150px"
-                class="circle"
-              />
+              <img src="{{ userprofile.avatar.url }}" alt="User" width="150px" height="150px" class="circle" />
             </div>
             <div class="col s12">
               <p class="pt-1 big-text">
@@ -221,13 +148,13 @@
               </a>
             </div>
             {% if user.is_superuser %}
-              <div class="col s12">
-                <p class="pt-1 big-text">Super Utilisateur</p>
-              </div>
+            <div class="col s12">
+              <p class="pt-1 big-text">Super Utilisateur</p>
+            </div>
             {% else %}
-              <div class="col s12">
-                <p class="pt-1 big-text">Agent Utilisateur</p>
-              </div>
+            <div class="col s12">
+              <p class="pt-1 big-text">Agent Utilisateur</p>
+            </div>
             {% endif %}
           </div>
         </div>
@@ -238,12 +165,7 @@
           <div class="file-field input-field">
             <div class="btn">
               <span>Photo</span>
-              <input
-                type="file"
-                name="avatar"
-                id="avatar"
-                value="{{ userprofile.avatar.url }}"
-              />
+              <input type="file" name="avatar" id="avatar" value="{{ userprofile.avatar.url }}" />
             </div>
             <div class="file-path-wrapper">
               <input type="text" class="file-path" />
@@ -258,26 +180,29 @@
 {% if user.is_superuser %}
 
 <div class="card-panel grey lighten-4">
-  <h4 class="valign-wrapper"><i class="material-icons medium">groups</i> <span class="pl-2"><b>Agents Assignés</b></span> </h4>
+  <h4 class="valign-wrapper"><i class="material-icons medium">groups</i> <span class="pl-2"><b>Agents
+        Assignés</b></span> </h4>
   {% for shop in shops %}
-    <div class="row valign-wrapper">
-      <div class="col s2">
-        <img src="{{ shop.owner.avatar.url }}" alt="{{ shop.owner.user.username }}" class="rounded responsive-img" width="50px" height="50px"> <!-- notice the "circle" class -->
-      </div>
-      <div class="col s10">
-        <div class="black-text card-title">
-          <b>{{ shop.owner.user.username }}</b>
-            <a href="{% url 'accounts:userUpdatePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
-              <i class="material-icons">edit</i>
-            </a> 
-            <a href="{% url 'accounts:userDeletePage' shop.owner.user.pk %}" class="btn-flat red-text waves-effect">
-              <i class="material-icons">delete_forever</i>
-            </a>
-          <span class="grey-text darken-2 right">Boutique: {{ shop.name }}</span>
-        </div>
-        <div> {{ shop.owner.user.first_name }} {{ shop.owner.user.last_name }} <span class="grey-text darken-2 right">Date ajoutée: {{ shop.created_date }}</span></div>
-      </div>
+  <div class="row valign-wrapper">
+    <div class="col s2">
+      <img src="{{ shop.owner.avatar.url }}" alt="{{ shop.owner.user.username }}" class="rounded responsive-img"
+        width="50px" height="50px"> <!-- notice the "circle" class -->
     </div>
+    <div class="col s10">
+      <div class="black-text card-title">
+        <b>{{ shop.owner.user.username }}</b>
+        <a href="{% url 'accounts:userUpdatePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
+          <i class="material-icons">edit</i>
+        </a>
+        <a href="{% url 'accounts:userDeletePage' shop.owner.user.pk %}" class="btn-flat red-text waves-effect">
+          <i class="material-icons">delete_forever</i>
+        </a>
+        <span class="grey-text darken-2 right">Boutique: {{ shop.name }}</span>
+      </div>
+      <div> {{ shop.owner.user.first_name }} {{ shop.owner.user.last_name }} <span class="grey-text darken-2 right">Date
+          ajoutée: {{ shop.created_date }}</span></div>
+    </div>
+  </div>
   {% endfor %}
 </div>
 
