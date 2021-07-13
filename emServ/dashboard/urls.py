@@ -13,13 +13,8 @@ urlpatterns = [
     path('devis/supprimer/<int:pk>/', d_views.DevisDeleteView.as_view(), name = 'devisDeletePage'),
     path('devis/tirer/<int:pk>/', d_views.TirerDevis.as_view(), name = 'tirerDevisPage'),
     #Handling the estimation page
-    path('estimation/', d_views.EstimationPage.as_view(), name = 'estimationPage'),
-    path('estimation/resultat/<int:pk>/', d_views.EstimationResultPage.as_view(), name = 'estimationResultPage'),
-    path('estimation/supprimer/<int:pk>/', d_views.EstimationDeletePage.as_view(), name = 'estimationDeletePage'),
-    path('estimation/dernier/', d_views.LastEstimationPage.as_view(), name = 'lastEstimationPage'),
-    path('estimation/supprimer_plusieur/', d_views.multiple_delete_estimation, name='multipleDeleteEstimationPage'),
-    path('estimation/detail/<int:pk>/', d_views.EstimationDetail.as_view(), name='estimationDetailPage'),
-    path('estimation/modifier/<int:pk>/', d_views.EstimationEdit.as_view(), name='estimationEditPage'),
+    #Everything is now on the estimation app
+    
     
     #This is the home page
     path('', d_views.IndexView.as_view(), name="homePage"),
