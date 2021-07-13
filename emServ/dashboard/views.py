@@ -760,7 +760,7 @@ def multiple_delete_client(request):
 def multiple_delete_product(request):
     if request.method == 'POST':
         product_ids = request.POST.getlist('id[]')
-        for id in product_ids:
+        for id in product_ids: 
             product = ProductModel.objects.get(pk=id)
             product.delete()
     return redirect('dashboard:homePage')
@@ -769,7 +769,7 @@ def multiple_delete_product(request):
 def multiple_delete_vente(request): 
     if request.method == 'POST':
         vente_ids = request.POST.getlist('id[]')
-        for id in vente_ids:
+        for id in vente_ids: 
             vente = VenteModel.objects.get(pk=id)
             vente.delete()
     return redirect('dashboard:homePage')
