@@ -94,26 +94,27 @@ DB_PORT = config('DB_PORT', cast=int)
 DB_HOST = config('DB_HOST')
 DB_PWD = config('DB_PASSWORD')
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'easy_money',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost'
+#     }
+# } 
+
 DATABASES = {}
 
-if config('USE_POSTGRES', cast=bool):
-    # If using postgreSQL
-    if config('DEVELOPMENT_MODE', cast=bool):
-        # Deployment on Heroku with PostgreSQL
-        DATABASES['default'] = dj_database_url.config(
-            conn_max_age=600, ssl_require=True)
-    else:
-        # Local deployment with PostgreSQL
-        DATABASES['default'] = dj_database_url.config(
-            default=f'postgres://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+if config('DEVELOPMENT_MODE', cast=bool):
+    # Local deployment with PostgreSQL
+    DATABASES['default'] = dj_database_url.config(
+        default=f'postgres://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 else:
-    # if using a sqlite file locally
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+    # Deployment on Heroku with PostgreSQL
+    DATABASES['default'] = dj_database_url.config(
+        conn_max_age=600, ssl_require=True)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
