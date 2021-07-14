@@ -38,7 +38,7 @@ class ClientModel(models.Model):
                              null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    sexe = models.CharField(max_length=1, choices=SEXE)
+    sexe = models.CharField(max_length=1, choices=SEXE, default=1)
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     id_card = models.IntegerField(blank =True, null=True)
