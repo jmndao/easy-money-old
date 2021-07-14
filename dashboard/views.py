@@ -106,7 +106,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
             context["tendance_achat_direct"] = ProductModel.objects.filter(dv_or_ad='AD').values(
                 'name').annotate(freq=Count('name')).order_by("?")
             context['spent'] = sum(
-                [p.price_total for p in self.q if p.price_total != None])
+                [p.price_total_tt_produit for p in self.q if p.price_total_tt_produit != None])
             context["dataset_achat_direct"] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
         else:
@@ -173,14 +173,14 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
         uname = self.request.user.username
         if self.request.user.is_superuser:
             self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
-            context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV').values(
+            context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad='DV').values(
                 'name').annotate(freq=Count('name')).order_by("?")
             # Nombre de produit
             context['depot_ventes'] = self.q
             context['total_item'] = self.q.count()
             # Sum des produits de depots ventes
             context['spent_depot'] = sum(
-                [p.price_total for p in self.q if p.price_total != None])
+                [p.price_total_tt_produit for p in self.q if p.price_total_tt_produit != None])
             context['dataset_depot'] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
         else:

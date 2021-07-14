@@ -65,7 +65,7 @@
             <li class="collection-item avatar">
                 <i class="material-icons circle green accent-3 z-depth-2">trending_up</i>
                 <p class="deep-orange-text accent-3">{{ t_dpv.name }}
-                    <p> Frequence de Vente: {{ t_dpv.freq }}</p>
+                    <p> Frequence de Vente: {{ t_dpv.freq }} </p>
                 </p>
             </li>
 
@@ -85,7 +85,7 @@
             {% if t_dpv_d.freq < 2 %}
             <li class="collection-item avatar">
                 <i class="material-icons circle red accent-3 z-depth-2">trending_down</i>
-                <p class="deep-orange-text accent-3">{{ t_dpv_d.produit__name }}
+                <p class="deep-orange-text accent-3">{{ t_dpv_d.name }}
                     <p> Frequence de Vente: {{ t_dpv_d.freq }}</p>
                 </p>
             </li>

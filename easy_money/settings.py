@@ -151,3 +151,6 @@ MEDIA_URL = '/media/'
 # Redirect url
 REDIRECT_URL_LOGIN = 'dashboard:homePage'
 REDIRECT_URL = 'dashboard:homePage'
+
+
+#Messages 

@@ -8,6 +8,16 @@ class VenteForm(forms.ModelForm):
     class Meta:
         model = VenteModel
         fields = '__all__'
+    
+
+    # class Meta:
+    #     model = VenteModel
+    #     fields = ['price']
+    #     error_messages = {
+    #         'price': {
+    #             'required': "This is a custom error message from modelform meta",
+    #         },
+    #     }
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
