@@ -23,6 +23,7 @@ class GenerateDevis(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['title'] = "Devis"
         user = self.request.user
         if user.is_superuser:
             context['devis'] = self.a = DevisModel.objects.all()
@@ -37,6 +38,12 @@ class DevisDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
     template_name = 'devis/devisDelete.html'
     model = DevisModel
     context_object_name = 'devis'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Suppression - Devis"
+        return context
+    
 
 
 class TirerDevis(LoginRequiredMixin, CreateView):

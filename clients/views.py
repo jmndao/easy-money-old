@@ -56,7 +56,9 @@ class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
     model = ClientModel
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            form.instance.shop = shop_owner
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

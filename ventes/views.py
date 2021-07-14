@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.db.models import Count
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -66,6 +66,9 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             not_new_client.save()
         else:
             pass
+        if (form.instance.produit.price_vente_minimum_ad or form.instance.price_vente_minimum_dv) < form.instance.price:
+            messages.error(self.request, "Vous êtes entrain de vendre à un prix inférieur.")
+            
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -108,7 +111,9 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
     success_url = reverse_lazy('ventes:ventePage')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            form.instance.shop = shop_owner
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

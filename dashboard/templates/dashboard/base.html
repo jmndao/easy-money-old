@@ -7,6 +7,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'dashboard/images/logo.png' %}" />
     <!-- Chart JS -->
     <script type="text/javascript" src="{% static 'dashboard/js/chartjs.min.js' %}"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -60,7 +61,7 @@
 {% block javascripts %}
  
 {% endblock javascripts %}
-    <script>
+    {% comment %} <script>
         var products = JSON.parse('{% list_item %}');
         console.log(products)
         // Setting up the Autocomplete
@@ -69,6 +70,6 @@
         M.Autocomplete.init(elems, {
             data: products,
         });
-    </script>
+    </script> {% endcomment %}
 
 </html>

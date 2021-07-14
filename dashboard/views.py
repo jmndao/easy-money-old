@@ -87,6 +87,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
     template_name = 'dashboard/achat_direct/achat_direct.html'
     model = ProductModel
     fields = '__all__'
+    queryset = ProductModel.objects.filter(dv_or_ad='AD')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -128,6 +129,7 @@ class AchatDirectUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateV
     template_name = 'dashboard/achat_direct/achat_direct_edit.html'
     model = ProductModel
     fields = '__all__'
+    queryset = ProductModel.objects.filter(dv_or_ad='AD')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -139,6 +141,7 @@ class AchatDirectDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/achat_direct/achat_direct_detail.html'
     model = ProductModel
     context_object_name = 'achat_direct'
+    queryset = ProductModel.objects.filter(dv_or_ad='AD')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -151,6 +154,7 @@ class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteV
 
     template_name = 'dashboard/achat_direct/achat_direct_delete.html'
     model = ProductModel
+    queryset = ProductModel.objects.filter(dv_or_ad='AD')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -199,6 +203,8 @@ class DepotVenteDetailView(LoginRequiredMixin, DetailView):
     template_name = 'dashboard/depot_vente/depot_vente_detail.html'
     model = ProductModel
     context_object_name = 'd_vente'
+    queryset = ProductModel.objects.filter(dv_or_ad='DV')
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -212,6 +218,7 @@ class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView
     template_name = 'dashboard/depot_vente/depot_vente_edit.html'
     model = ProductModel
     fields = '__all__'
+    queryset = ProductModel.objects.filter(dv_or_ad='DV')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -228,6 +235,7 @@ class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteVi
     model = ProductModel
     template_name = 'dashboard/depot_vente/depot_vente_delete.html'
     context_object_name = 'dv_delete'
+    queryset = ProductModel.objects.filter(dv_or_ad='DV')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -273,7 +281,9 @@ class ProductUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView)
     fields = '__all__'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        user = self.request.user
+        if not user.is_superuser:
+            form.instance.shop = Shop.objects.get(ower__user__username=user.username)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -379,8 +389,22 @@ def multiple_delete_achatDirect(request):
     return redirect('dashboard:homePage')
 
 #Error handling
-def error_404(request, exception):
-    return render(request, 'dashboard/error/404.html', {})
+def custom_page_not_found_view(request, exception):
+    response = render(request, 'dashboard/error/404.html', {})
+    response.status_code = 404
+    return response
 
-def error_500(request, exception=None):
-    return render(request, 'dashboard/error/500.html' , {})
+def custom_error_view(request, exception=None):
+    response = render(request, 'dashboard/error/500.html' , {})
+    response.status_code = 500
+    return response
+
+def custom_permission_denied_view(request, exception=None):
+    response = render(request, 'dashboard/error/403.html', {})
+    response.status_code = 403
+    return response
+
+def custom_bad_request_view(request, exception=None):
+    response = render(request, 'dashboard/error/400.html', {})
+    response.status_code = 400
+    return response
