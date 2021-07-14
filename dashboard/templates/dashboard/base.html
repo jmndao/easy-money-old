@@ -61,7 +61,7 @@
 {% block javascripts %}
  
 {% endblock javascripts %}
-    <script>
+    {% comment %} <script>
         var products = JSON.parse('{% list_item %}');
         console.log(products)
         // Setting up the Autocomplete
@@ -70,6 +70,6 @@
         M.Autocomplete.init(elems, {
             data: products,
         });
-    </script>
+    </script> {% endcomment %}
 
 </html>
