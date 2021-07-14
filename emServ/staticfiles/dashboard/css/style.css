@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Vollkorn:ital@1&display=swap');
+.container {
+    padding-top: 100px;
+    margin: auto;
+}
+
+.row-a {
+    padding: 0 10px;
+}
+
+
+/* .row a {
+    width: 100%;
+} */
+
+#togglePassword {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+}
+
+.right a {
+    color: #ef6c00;
+}
+
+.chart_bar {
+    width: 100%;
+    height: 280px;
+}
+
+table.responsive-table tr {
+    border-bottom: none;
+    padding: 0 !important;
+}
+
+#depot-title {
+    font-family: 'Vollcon', 'serif';
+    font-size: 20px;
+}
+
+.number {
+    font-family: 'Vollcon', 'serif';
+    font-size: 26px;
+    text-align: center;
+}
+
+.depot-center {
+    text-align: center;
+}
+
+ul.deposit.collection.with-header {
+    max-height: 360px;
+    overflow-y: scroll;
+}
+
+.collection.with-header .collection-header {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+span.dummy_info {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+span.material-icons.dummy_icon {
+    font-size: 60px;
+}
+
+.card-title.center.dummy_info {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.select-dropdown {
+    width: 100% !important;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.top-section {
+    width: 90%;
+    margin: 1rem auto;
+}
+
+
+/* .collapsible-body {
+    height: 120px;
+} */
+
+.with-margin-y-30 {
+    margin: 30px 0;
+}
+
+.m-grid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+}
+
+.btn.way-bigger {
+    height: 80px!important;
+    width: 350px!important;
+    border-radius: 5px;
+    border: 4px solid #000;
+}
+
+.btn.way-bigger.black {
+    font-size: 22px;
+}
+
+.for-hover {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+.btn.way-bigger.deep-orange {
+    font-size: 19px;
+}
+
+@media only screen and (max-width: 880px) {
+    .for-hover {
+        display: block;
+    }
+    a .way-bigger {
+        position: absolute;
+        right: 50%;
+    }
+}

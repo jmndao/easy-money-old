@@ -1,0 +1,23 @@
+body{
+    width: 72%;
+    margin: auto;
+  }
+  .fd {
+      margin-left: 0!important;
+      margin-right: 0!important;
+  }
+  .inline{
+    display: inline-block;
+    width: 150px;
+    font-size: 22px;
+    font-weight: bolder;
+    height: 42px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
+    padding-left: 10px;
+    padding-top: 5px;
+  
+  }
+  .hide{
+    visibility: hidden;
+  }
