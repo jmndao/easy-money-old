@@ -281,7 +281,9 @@ class ProductUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView)
     fields = '__all__'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        user = self.request.user
+        if not user.is_superuser:
+            form.instance.shop = Shop.objects.get(ower__user__username=user.username)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

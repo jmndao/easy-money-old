@@ -136,7 +136,7 @@
 
 <div class="card-panel">
   <div class="card-content">
-    <form action="" method="post" name="v_form" onsubmit="return validationForm()">
+    <form action="" method="post">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.path }}">
       <!--- Form -->
@@ -285,7 +285,6 @@
 {% block javascripts %}
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
 </script>
-<script type="text/javascript" src="{% static 'dashboard/js/venteChecker.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 

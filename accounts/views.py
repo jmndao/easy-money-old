@@ -32,7 +32,6 @@ class UserCreationView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        print(form)
         messages.success(self.request, "Un agent existe avec ce nom d'utilisateur !")
         return super().form_invalid(form)
 
