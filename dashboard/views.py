@@ -252,7 +252,7 @@ class ProductView(LoginRequiredMixin, CreateView):
             shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
         messages.success(self.request, 'Produit a ete ajoute avec success')
-        return super().form_valid()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
