@@ -29,10 +29,10 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = config('DEBUG', cast=bool)
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 config('SERVER', default='127.0.0.1')]
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+#                  config('SERVER', default='127.0.0.1')]
 
-
+ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
@@ -49,11 +49,11 @@ INSTALLED_APPS = [
     'clients',
     'clientRequests',
     'ventes',
-    'estimation',
     'notifications',
+    'devis',
     'search',
     'import_export',
-    'devis',
+    'estimation',
 ]
 
 MIDDLEWARE = [
