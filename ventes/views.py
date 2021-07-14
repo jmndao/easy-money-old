@@ -12,6 +12,7 @@ from clients.models import ClientModel
 from ventes.models import VenteModel
 from ventes.forms import VenteForm
 
+from django.core.exceptions import ValidationError
 # Create your views here.
 
 
@@ -26,6 +27,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         kwargs.update({'user': self.request.user})
         return kwargs
 
+
     def form_valid(self, form):
         # check if we choose the right quantities or not?
         ################################################################
@@ -39,16 +41,20 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         form.instance.price_total = form.instance.price * form.instance.quantity
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
-        if remaining_qty < 0:
-            messages.error(self.request, "Il ne reste que {} object(s) de {}".format(
-                product.quantity, product.name))
-        # elif remaining_qty == 0:
-        #     ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
-        else:
+        if remaining_qty > 0:
             product.quantity = remaining_qty
             product.initial_quantity = product.quantity + vente_qty
+        
+        else:
+            # redirect('ventes:ventePage')
+            raise ValidationError("We don't have this amount that you are looking for.")
+            
+            # messages.error( "Il ne reste que {} object(s) de {}".format(
+            # product.quantity, product.name))
         product.save()
-        # Checking whether client has already passed or not
+        #Checking whether client has already passed or not
+        
+        
         client = form.instance.client
         try:
             not_new_client = ClientModel.objects.get(pk=client.pk)
@@ -91,7 +97,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             context['benefice'] = self.benefice_vente(
                 VenteModel, ProductModel, is_superuser=False, user=self.request.user)
 
-        return context
+        return context 
 
 
 class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
@@ -144,3 +150,4 @@ def multiple_delete_vente(request):
             vente = VenteModel.objects.get(pk=id)
             vente.delete()
     return redirect('clients:clientPage')
+

@@ -129,12 +129,23 @@
 
 <div class="card-panel deep-orange accent-3 white-text big-text">
   <b>Formulaire de Vente</b>
-  <!-- <a href="" class="btn-flat waves-effect right white-text tooltipped" data-position="bottom" data-tooltip="Devis">
+</div>
+
+{% if messages  %}
+<div class="card-panel deep-orange accent-3 black-text big-text"></div>
+{% for message in messages %}
+<b>{{message}}</b>
+{% endfor %}
+<!-- <a href="" class="btn-flat waves-effect right white-text tooltipped" data-position="bottom" data-tooltip="Devis">
     <i class="material-icons right">picture_as_pdf</i>
   </a> -->
 </div>
+{% endif %}
+
+
 
 <div class="card-panel">
+
   <div class="card-content">
     <form action="" method="post">
       {% csrf_token %}
@@ -156,8 +167,8 @@
           <label for="{{form.client.id_for_label}}">Client</label>
         </div>
         <div class="input-field col m1 s2">
-          <a href="{% url 'clients:clientPage' %}" name="clientID"
-            class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Vendeur">
+          <a href="{% url 'clients:clientPage' %}" name="clientID" class="btn-flat deep-orange-text accent-3 tooltipped"
+            data-position="bottom" data-tooltip="Nouveau Vendeur">
             <i class="material-icons right">person_add</i>
           </a>
         </div>

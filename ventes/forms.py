@@ -18,3 +18,5 @@ class VenteForm(forms.ModelForm):
         else:
             self.fields['produit'].queryset = ProductModel.objects.filter(
                 quantity__gt=0, shop__owner__user=self.user)
+
+   
