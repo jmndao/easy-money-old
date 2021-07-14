@@ -18,6 +18,16 @@
     <div class="row">
         <h6>
             <div class="col s6">
+                Numéro Article:
+            </div>
+            <div class="col s6">
+                <b>{% if product.id %}{{ product.id }}{% else %}Non spécifiée{% endif %}</b>
+            </div>
+        </h6>
+    </div>
+    <div class="row">
+        <h6>
+            <div class="col s6">
                 Vendeur:
             </div>
             <div class="col s6">
