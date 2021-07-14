@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
 from dashboard.models import ProductModel
-from clients.models import ClientModel
 
 # Create your models here.
 

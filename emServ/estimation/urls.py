@@ -1,9 +1,6 @@
 from django.urls import path
 import estimation.views as e_views
 
-from django.conf import settings
-from django.conf.urls.static import static
-
 app_name = 'estimation'
 
 urlpatterns = [
@@ -21,5 +18,4 @@ urlpatterns = [
          name='estimationDetailPage'),
     path('modifier/<int:pk>/', e_views.EstimationEdit.as_view(),
          name='estimationEditPage'),
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 

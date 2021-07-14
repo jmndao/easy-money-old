@@ -1,6 +1,5 @@
 from django.db import models
 from dashboard.models import Shop
-from clients.models import ClientModel
 
 # Create your models here.
 
@@ -68,7 +67,7 @@ class EstimationModel(models.Model):
     shop = models.ForeignKey(
         Shop, on_delete=models.CASCADE, blank=True, null=True)
     seller = models.ForeignKey(
-        ClientModel, null=True, on_delete=models.SET_NULL)
+        to='clients.ClientModel', null=True, on_delete=models.SET_NULL)
     product_name = models.CharField(max_length=100)
     new_price = models.IntegerField(
         blank=False, null=True, verbose_name="Prix neuf")

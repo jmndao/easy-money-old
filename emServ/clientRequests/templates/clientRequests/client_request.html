@@ -137,7 +137,7 @@
             } else {
                 console.log(id)
                 $.ajax({
-                    url: "{% url 'clients:multipleDeleteClientRequestPage' %}",
+                    url: "{% url 'clientRequests:multipleDeleteClientRequestPage' %}",
                     method: 'POST',
                     data: {
                         id,

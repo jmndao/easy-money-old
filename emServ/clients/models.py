@@ -26,7 +26,7 @@ class ClientModel(models.Model):
             - address_email     : his email address that will serve for newsletter
     """
     shop = models.ForeignKey(
-        Shop, on_delete=models.CASCADE, blank=True, null=True)
+        to='dashboard.Shop', on_delete=models.CASCADE, blank=True, null=True)
     fname = models.CharField(max_length=100, blank=True,
                              null=True, verbose_name="First Name")
     lname = models.CharField(max_length=100, blank=True,

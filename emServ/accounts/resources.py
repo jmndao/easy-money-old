@@ -1,5 +1,7 @@
 from import_export import resources
-from dashboard.models import ProductModel, VenteModel, ClientModel
+from dashboard.models import ProductModel
+from ventes.models import VenteModel
+from clients.models import ClientModel
 
 class ProductExcel(resources.ModelResource):
     class Meta:

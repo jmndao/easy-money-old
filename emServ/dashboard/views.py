@@ -14,7 +14,7 @@ from clients.models import ClientModel
 from ventes.models import VenteModel
 
 from dashboard.utils import Utils, RedirectToPreviousMixin
-from dashboard.forms import ProductModelForm, DevisModelForm
+from dashboard.forms import ProductModelForm
 
 
 # Create your views here.
@@ -43,9 +43,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["tendance_vente"] = VenteModel.objects.values(
                 'produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context["tendance_achat_direct"] = ProductModel.objects.filter(dv_or_ad='AD').values(
-                'produit__name').annotate(freq=Count('produit__name')).order_by("?")
+                'name').annotate(freq=Count('name')).order_by("?")
             context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad='DV').values(
-                'produit__name').annotate(freq=Count('produit__name')).order_by("?")
+                'name').annotate(freq=Count('name')).order_by("?")
             context["n_product"] = ProductModel.objects.all().count()
             context["n_client"] = ClientModel.objects.all().count()
             context['benefice_day'] = self.benefice_per_day(
@@ -60,15 +60,15 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["dataset_achat"] = self.chartObject(
                 ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context["achat_directs"] = ProductModel.objects.filter(
-                produit__shop__owner__user__username=user.username, dv_or_ad='AD').order_by('-created_date')
+                shop__owner__user__username=user.username, dv_or_ad='AD').order_by('-created_date')
             context["depot_ventes"] = ProductModel.objects.filter(
-                produit__shop__owner__user__username=user.username, dv_or_ad='DV').order_by('-created_date')
+                shop__owner__user__username=user.username, dv_or_ad='DV').order_by('-created_date')
             context["ventes"] = VenteModel.objects.filter(
                 produit__shop__owner__user__username=user.username).order_by('-created_date')
             context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=user.username).values(
                 'produit__name').annotate(freq=Count('produit__name')).order_by()
             context["tendance_achat_direct"] = ProductModel.objects.filter(
-                produit__shop__owner__user__username=user.username, dv_or_ad='AD').values('produit__name').annotate(freq=Count('produit__name')).order_by()
+                shop__owner__user__username=user.username, dv_or_ad='AD').values('name').annotate(freq=Count('name')).order_by()
             context["n_product"] = ProductModel.objects.filter(
                 shop__owner__user__username=user.username).count()
             context["n_client"] = ClientModel.objects.filter(

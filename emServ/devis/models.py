@@ -14,7 +14,7 @@ class DevisModel(models.Model):
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="prix proposed")
     client = models.ForeignKey(
-        to='clients.Model', on_delete=models.SET_NULL, null=True, blank=True)
+        to='clients.ClientModel', on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.db.models import Count
 from django.contrib import messages
@@ -17,7 +17,7 @@ from ventes.forms import VenteForm
 
 class VenteView(LoginRequiredMixin, CreateView, Utils):
 
-    template_name = 'vente/vente.html'
+    template_name = 'ventes/vente.html'
     form_class = VenteForm
     success_url = reverse_lazy('ventes:ventePage')
 
@@ -96,7 +96,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
 
 class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
-    template_name = 'vente/vente_edit.html'
+    template_name = 'ventes/vente_edit.html'
     model = VenteModel
     fields = '__all__'
     success_url = reverse_lazy('ventes:ventePage')
@@ -114,7 +114,7 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
 class VenteDetailView(LoginRequiredMixin, DetailView):
 
-    template_name = 'vente/vente_detail.html'
+    template_name = 'ventes/vente_detail.html'
     model = VenteModel
     context_object_name = 'sales'
 
@@ -127,7 +127,7 @@ class VenteDetailView(LoginRequiredMixin, DetailView):
 
 class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
-    template_name = 'vente/vente_delete.html'
+    template_name = 'ventes/vente_delete.html'
     model = VenteModel
     context_object_name = 'vente'
 

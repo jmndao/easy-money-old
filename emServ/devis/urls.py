@@ -1,6 +1,8 @@
 from django.urls import path
 import devis.views as d_views
 
+app_name = 'devis'
+
 urlpatterns = [
     #Handling the devis page
     path('', d_views.GenerateDevis.as_view(), name = 'devisPage'),
