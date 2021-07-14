@@ -97,6 +97,16 @@ DB_PORT = config('DB_PORT', cast=int)
 DB_HOST = config('DB_HOST')
 DB_PWD = config('DB_PASSWORD')
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'easy_money',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost'
+#     }
+# } 
+
 DATABASES = {}
 
 if config('DEVELOPMENT_MODE', cast=bool):
