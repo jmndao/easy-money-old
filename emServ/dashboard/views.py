@@ -382,5 +382,5 @@ def multiple_delete_achatDirect(request):
 def error_404(request, exception):
     return render(request, 'error/404.html', {})
 
-def error_500(request, exception):
+def error_500(request, exception = None):
     return render(request, 'error/500.html' , {})
