@@ -13,7 +13,7 @@ from clients.models import ClientModel
 
 class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
-    template_name = 'clients/client.html'
+    template_name = 'clients/clients.html'
     model = ClientModel
     fields = '__all__'
     success_url = reverse_lazy('clients:clientPage')
@@ -51,7 +51,7 @@ class ClientView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils)
 
 class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
-    template_name = 'clients/client_edit.html'
+    template_name = 'clients/clients_edit.html'
     fields = '__all__'
     model = ClientModel
 
@@ -68,7 +68,7 @@ class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
 class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
 
-    template_name = 'clients/client_delete.html'
+    template_name = 'clients/clients_delete.html'
     model = ClientModel
     context_object_name = 'client'
 
@@ -79,7 +79,7 @@ class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
     
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
-    template_name = 'clients/client_detail.html'
+    template_name = 'clients/clients_detail.html'
     model = ClientModel
     context_object_name = 'client'
 
