@@ -90,7 +90,9 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
     queryset = ProductModel.objects.filter(dv_or_ad='AD')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            form.instance.shop = shop_owner
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -132,7 +134,9 @@ class AchatDirectUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateV
     queryset = ProductModel.objects.filter(dv_or_ad='AD')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            form.instance.shop = shop_owner
         return super().form_valid(form)
 
 
@@ -221,7 +225,9 @@ class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView
     queryset = ProductModel.objects.filter(dv_or_ad='DV')
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            form.instance.shop = shop_owner
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -394,17 +400,17 @@ def custom_page_not_found_view(request, exception):
     response.status_code = 404
     return response
 
-def custom_error_view(request, exception=None):
-    response = render(request, 'dashboard/error/500.html' , {})
-    response.status_code = 500
-    return response
+# def custom_error_view(request, exception=None):
+#     response = render(request, 'error/500.html' , {})
+#     response.status_code = 500
+#     return response
 
-def custom_permission_denied_view(request, exception=None):
-    response = render(request, 'dashboard/error/403.html', {})
-    response.status_code = 403
-    return response
+# def custom_permission_denied_view(request, exception=None):
+#     response = render(request, 'error/403.html', {})
+#     response.status_code = 403
+#     return response
 
-def custom_bad_request_view(request, exception=None):
-    response = render(request, 'dashboard/error/400.html', {})
-    response.status_code = 400
-    return response
+# def custom_bad_request_view(request, exception=None):
+#     response = render(request, 'error/400.html', {})
+#     response.status_code = 400
+#     return response

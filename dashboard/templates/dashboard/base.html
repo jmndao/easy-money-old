@@ -33,21 +33,25 @@
 
         {% include 'includes/navbar.html' %}
 
-        {% if messages %}
-            <div class="row">
-            {% for message in messages %}
-                {% if message.tags == "success" %}
-                    <div class="card-panel green center-center-align col s11 accent-2">{{message}}</div>
-                {% elif message.tags == "error" %}
-                    <div class="card-panel red accent-2 center-align col s11">{{message}}</div>
-                {% endif %}
-            {% endfor %}
-            </div>
-        {% endif %}
-
         <div class="easy-body-wrapper">
 
+                {% if messages %}
+                    <div class="row">
+                    {% for message in messages %}
+                        {% if message.tags == "success" %}
+                            <div class="col s12">
+                                <div class="card-panel green center-center-align accent-2">{{message}}</div>
+                            </div>
+                        {% elif message.tags == "error" %}
+                            <div class="col s12">
+                                <div class="card-panel red accent-2 center-align">{{message}}</div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endif %}
             {% block body_content %}
+               
             <!----- Add your code here...  -->
             {% endblock body_content %}
 
