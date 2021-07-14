@@ -8,6 +8,11 @@ CLIENT = [
     ('CV', 'Vendeur')
 ]
 
+SEXE = [
+    (1, 'Homme'),
+    (2, 'Femme')
+]
+
 class ClientModel(models.Model):
     """
         This is a model that hold client data so that we can keep
@@ -33,7 +38,7 @@ class ClientModel(models.Model):
                              null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    # sexe = models.CharField(max_length=1, choices=SEXE)
+    sexe = models.CharField(max_length=1, choices=SEXE)
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     id_card = models.IntegerField(blank =True, null=True)
