@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import sys
 import dj_database_url
 from decouple import config
 from pathlib import Path
@@ -26,11 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = config('DEBUG', cast=bool)
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1',
-                 config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = config('SERVER', default='127.0.0.1').split(",")
 
 
 # Application definition
@@ -99,24 +98,21 @@ DB_PWD = config('DB_PASSWORD')
 
 DATABASES = {}
 
-if config('USE_POSTGRES', cast=bool):
-    # If using postgreSQL
-    if config('DEVELOPMENT_MODE', cast=bool):
-        # Deployment on Heroku with PostgreSQL
-        DATABASES['default'] = dj_database_url.config(
-            conn_max_age=600, ssl_require=True)
-    else:
-        # Local deployment with PostgreSQL
-        DATABASES['default'] = dj_database_url.config(
-            default=f'postgres://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
-else:
-    # if using a sqlite file locally
+if config('DEVELOPMENT_MODE', cast=bool):
+    # Using a sqlite file locally
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
+elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+    if config("DATABASE_URL", None) is None:
+        raise Exception('DATABASE_URL environment variable not defined')
+    DATABASES = {
+        "default": dj_database_url.parse(config('DATABASE_URL'))
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
