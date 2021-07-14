@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
-import sys
 import dj_database_url
 from decouple import config
 from pathlib import Path
@@ -31,9 +30,6 @@ DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('SERVER', default='127.0.0.1').split(",")
 
-
-ALLOWED_HOSTS = ['*']
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,24 +88,18 @@ WSGI_APPLICATION = 'easy_money.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# Setting up database
-DB_USER = config('DB_USER')
-DB_NAME = config('DB_NAME')
-DB_PORT = config('DB_PORT', cast=int)
-DB_HOST = config('DB_HOST')
-DB_PWD = config('DB_PASSWORD')
-
 
 DATABASES = {}
 
 if config('DEVELOPMENT_MODE', cast=bool):
-    # Local deployment with PostgreSQL
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
-else:
     DATABASES['default'] = {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
     }
+else:
+    # Local deployment with PostgreSQL
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    
 
 
 
