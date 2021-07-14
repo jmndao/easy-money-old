@@ -181,6 +181,6 @@ class ProductModel(models.Model):
 
     def __str__(self):
         if self.dv_or_ad == 'DV':
-            return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_dv)
+            return '{} /{} /{} / {} cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_dv)
         else:
-            return '{} /{} /{} / {}cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_ad)
+            return '{} /{} /{} / {} cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_ad)
