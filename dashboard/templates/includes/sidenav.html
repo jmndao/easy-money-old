@@ -61,7 +61,7 @@
                 </a>
             </li>
             <li>
-                <a {% if 'demande_cliant' in request.path  %} class="active" {% else %} class="" {% endif %}
+                <a {% if 'demandes' in request.path  %} class="active" {% else %} class="" {% endif %}
                     href="{% url 'clientRequests:clientRequestPage' %}">
                     <span class="material-icons"> history_edu </span>
                     <span>Demande Client</span>
