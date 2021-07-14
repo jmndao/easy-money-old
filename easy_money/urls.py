@@ -22,7 +22,7 @@ from django.conf.urls import handler404, handler500
 urlpatterns = [
     path('', include('dashboard.urls')),
     path('accounts/', include('accounts.urls')),
-    path('client_request/', include('clientRequests.urls')),
+    path('demandes/', include('clientRequests.urls')),
     path('clients/', include('clients.urls')),
     path('ventes/', include('ventes.urls')),
     path('estimation/', include('estimation.urls')),
