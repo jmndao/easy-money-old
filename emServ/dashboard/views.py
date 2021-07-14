@@ -380,10 +380,7 @@ def multiple_delete_achatDirect(request):
 
 #Error handling
 def error_404(request, exception):
-        data = {}
-        return render(request,'myerrors/404.html', data)
+    return render(request, 'error/404.html', {})
 
-def error_500(request):
-        data = {}
-        template_name = 'dashboard/myerrors/500.html'
-        return render(request,template_name, data)
+def error_500(request, exception):
+    return render(request, 'error/500.html' , {})

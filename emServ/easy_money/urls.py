@@ -36,9 +36,9 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'dashboard.views.error_404'
-handler404 = 'estimation.views.error_404'
+# handler404 = 'estimation.views.error_404'
 
 handler500 = 'dashboard.views.error_500'
-handler500 = 'estimation.views.error_500'
+# handler500 = 'estimation.views.error_500'
 
 
