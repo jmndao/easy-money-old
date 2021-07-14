@@ -29,11 +29,12 @@
                     <label for="{{ form.password2.id_for_label }}">Mot de Passe de Confirmation</label>
                     {{ form.password2 }}
                 </div>
-                <button type="submit" class="btn-flat deep-orange-text accent-3 waves-effect">
+                <button type="submit" class="btn-flat deep-orange-text accent-3 black waves-effect">
                     <i class="material-icons right">recommend</i>
                     Creer
                 </button>
-                <a href="{% url 'accounts:profilePage' %}" class="btn-flat deep-orange-text accent-3 waves-effect">
+                <a href="{% url 'accounts:profilePage' %}"
+                    class="btn-flat red accen-3 white-text accent-3 waves-effect">
                     <i class="material-icons right">keyboard_return</i>
                     Retour
                 </a>
@@ -42,6 +43,6 @@
     </div>
 
 </div>
-    
+
 
 {% endblock body_content %}

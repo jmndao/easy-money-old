@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block stylesheets %}
-    <link type="text/css" rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+<link type="text/css" rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -30,18 +30,19 @@
                         <label for="{{ form.emplacement.id_for_label }}">Adresse:</label>
                     </div>
 
-                    <button type="submit" class="deep-orange-text accent-3 btn-flat waves-effect right">
+                    <button type="submit" class="deep-orange-text accent-3 black btn-flat waves-effect right">
                         <i class="material-icons right">recommend</i>
                         Creer
                     </button>
-                    <a href="{% url 'accounts:profilePage' %}" class="btn-flat deep-orange-text accent-3 waves-effect left">
-                    <i class="material-icons right">keyboard_return</i>
-                    Retour
-                </a>
+                    <a href="{% url 'accounts:profilePage' %}"
+                        class="btn-flat red accent-3 white-text accent-3 waves-effect left">
+                        <i class="material-icons right">keyboard_return</i>
+                        Retour
+                    </a>
                 </div>
             </form>
         </div>
-        
+
     </div>
 
 </div>
