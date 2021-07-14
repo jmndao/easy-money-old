@@ -8,11 +8,6 @@ CLIENT = [
     ('CV', 'Vendeur')
 ]
 
-SEXE = [
-    (1, 'Homme'),
-    (2, 'Femme')
-]
-
 class ClientModel(models.Model):
     """
         This is a model that hold client data so that we can keep
@@ -26,7 +21,6 @@ class ClientModel(models.Model):
             - lname             : the last name of the client
             - nationality       : nationality of the client
             - address           : address of the client
-            - sexe              : the sexe of the client (Male or Female)
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
     """
@@ -38,7 +32,6 @@ class ClientModel(models.Model):
                              null=True, verbose_name="Last Name")
     nationality = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    sexe = models.CharField(max_length=1, choices=SEXE, default=1)
     age = models.IntegerField()
     numero = models.CharField(max_length=20, blank=True, null=True)
     id_card = models.IntegerField(blank =True, null=True)
