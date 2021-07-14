@@ -387,8 +387,22 @@ def multiple_delete_achatDirect(request):
     return redirect('dashboard:homePage')
 
 #Error handling
-def error_404(request, exception):
-    return render(request, 'dashboard/error/404.html', {})
+def custom_page_not_found_view(request, exception):
+    response = render(request, 'dashboard/error/404.html', {})
+    response.status_code = 404
+    return response
 
-def error_500(request, exception=None):
-    return render(request, 'dashboard/error/500.html' , {})
+def custom_error_view(request, exception=None):
+    response = render(request, 'dashboard/error/500.html' , {})
+    response.status_code = 500
+    return response
+
+def custom_permission_denied_view(request, exception=None):
+    response = render(request, 'dashboard/error/403.html', {})
+    response.status_code = 403
+    return response
+
+def custom_bad_request_view(request, exception=None):
+    response = render(request, 'dashboard/error/400.html', {})
+    response.status_code = 400
+    return response
