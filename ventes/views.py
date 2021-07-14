@@ -41,19 +41,16 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         form.instance.price_total = form.instance.price * form.instance.quantity
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
-        if remaining_qty > 0:
+        if remaining_qty < 0:
+            messages.error(self.request, "Il ne reste que {} object(s) de {}. Donc cette vente ne peut être effectuée".format(
+                product.quantity, product.name))
+            return redirect(reverse('ventes:ventePage'))
+        # elif remaining_qty == 0:
+        #     ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
+        else:
             product.quantity = remaining_qty
             product.initial_quantity = product.quantity + vente_qty
-        
-        else:
-            # redirect('ventes:ventePage')
-            raise ValidationError("We don't have this amount that you are looking for.")
-            
-            # messages.error( "Il ne reste que {} object(s) de {}".format(
-            # product.quantity, product.name))
         product.save()
-        #Checking whether client has already passed or not
-        
         
         client = form.instance.client
         try:
@@ -66,8 +63,12 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             not_new_client.save()
         else:
             pass
-        if (form.instance.produit.price_vente_minimum_ad or form.instance.price_vente_minimum_dv) < form.instance.price:
-            messages.error(self.request, "Vous êtes entrain de vendre à un prix inférieur.")
+        if form.instance.produit.dv_or_ad == 'AD':
+            if form.instance.produit.price_vente_minimum_ad < form.instance.price:
+                messages.warning(self.request, "Vous êtes entrain de vendre à un prix inférieur. Vous pouvez aller modifier la vente du produit {}".format(form.instance.produit.name))
+        elif form.instance.produit.dv_or_ad == 'DV':
+            if form.instance.produit.price_vente_minimum_dv < form.instance.price:
+                messages.warning(self.request, "Vous êtes entrain de vendre à un prix inférieur. Vous pouvez aller modifier la vente du produit {}".format(form.instance.produit.name))
             
         return super().form_valid(form)
 
