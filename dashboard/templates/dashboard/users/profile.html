@@ -51,11 +51,11 @@
               </div>
             </div>
             <div class="input-field col s6">
-              <input type="text" name="first_name" id="first_name" value="{{ userprofile.user.first_name }}" />
+              <input type="text" name="first_name" id="first_name" value="{{ userprofile.user.first_name }}" required />
               <label for="first_name">Prenom</label>
             </div>
             <div class="input-field col s6">
-              <input type="text" name="last_name" id="last_name" value="{{ userprofile.user.last_name }}" />
+              <input type="text" name="last_name" id="last_name" value="{{ userprofile.user.last_name }}" required/>
               <label for="last_name">Nom</label>
             </div>
           </div>
@@ -68,7 +68,7 @@
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <input type="email" name="email" id="email" value="{{ userprofile.user.email }}" />
+              <input type="email" name="email" id="email" value="{{ userprofile.user.email }}" required />
               <label for="email">Email</label>
             </div>
             <div class="input-field col s6">
