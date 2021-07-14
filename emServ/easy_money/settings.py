@@ -64,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Adding whitenoise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'easy_money.urls'
@@ -97,22 +99,18 @@ DB_PORT = config('DB_PORT', cast=int)
 DB_HOST = config('DB_HOST')
 DB_PWD = config('DB_PASSWORD')
 
+
 DATABASES = {}
 
 if config('DEVELOPMENT_MODE', cast=bool):
-    # Using a sqlite file locally
-    DATABASES = {
-        'default': {
+    # Local deployment with PostgreSQL
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+else:
+    DATABASES['default'] = {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
-        }
     }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if config("DATABASE_URL", None) is None:
-        raise Exception('DATABASE_URL environment variable not defined')
-    DATABASES = {
-        "default": dj_database_url.parse(config('DATABASE_URL'))
-    }
+
 
 
 # Password validation
