@@ -131,201 +131,198 @@
   <b>Formulaire de Vente</b>
 </div>
 
-  <div class="card-panel">
+<div class="card-panel">
 
-    <div class="card-content">
-      <form action="" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <!--- Form -->
-        <div class="row" id="venteID">
-          <div class="input-field col m5 s10">
-            {{ form.produit }}
-            <label for="{{form.produit.id_for_label}}">Produit</label>
-          </div>
-          <div class="input-field col m1 s2">
-            <a href="{% url 'dashboard:productPage' %}" name="clientID"
-              class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
-              data-tooltip="Nouveau Produit">
-              <i class="material-icons right">local_mall</i>
-            </a>
-          </div>
-          <div class="input-field col m5 s10">
-            {{ form.client }}
-            <label for="{{form.client.id_for_label}}">Client</label>
-          </div>
-          <div class="input-field col m1 s2">
-            <a href="{% url 'clients:clientPage' %}" name="clientID"
-              class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
-              data-tooltip="Nouveau client">
-              <i class="material-icons right">person_add</i>
-            </a>
-          </div>
-
+  <div class="card-content">
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <!--- Form -->
+      <div class="row" id="venteID">
+        <div class="input-field col m5 s10">
+          {{ form.produit }}
+          <label for="{{form.produit.id_for_label}}">Produit</label>
         </div>
-        <div class="row center-align">
-          <div class="input-field col m6 s12">
-            {{ form.price }}
-            <label for="{{ form.price.id_for_label }}">Prix de vente </label>
-          </div>
-
-          <div class="input-field col m6 s12">
-            {{ form.acompte }}
-            <label for="{{form.acompte.id_for_label}}">Acompte</label>
-          </div>
+        <div class="input-field col m1 s2">
+          <a href="{% url 'dashboard:productPage' %}" name="clientID"
+            class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Produit">
+            <i class="material-icons right">local_mall</i>
+          </a>
         </div>
-        <div class="row">
-          <div class="input-field col m6 s12">
-            {{ form.quantity }}
-            <label for="{{form.quantity.id_for_label}}">Quantité</label>
-          </div>
-          <div class="col m6 s12 ">
-            <ul class="collapsible">
-              <li>
-                <div class="collapsible-header deep-orange accent-3 white-text"><i
-                    class="material-icons">health_and_safety</i> Assurez-vous une garantie
-                  pour ce produit ?</div>
-                <div class="collapsible-body">
-                  <div class="row">
-                    <div class="input-field col m6 s12">
-                      <label for="{{ form.guarantee.id_for_label }}">
-                        {{ form.guarantee }}
-                        <span>Garantie</span>
-                      </label>
-                    </div>
-                    <div class="input-field col m6 s12">
-                      {{ form.guarantee_period }}
-                      <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
-                    </div>
+        <div class="input-field col m5 s10">
+          {{ form.client }}
+          <label for="{{form.client.id_for_label}}">Client</label>
+        </div>
+        <div class="input-field col m1 s2">
+          <a href="{% url 'clients:clientPage' %}" name="clientID" class="btn-flat deep-orange-text accent-3 tooltipped"
+            data-position="bottom" data-tooltip="Nouveau client">
+            <i class="material-icons right">person_add</i>
+          </a>
+        </div>
+
+      </div>
+      <div class="row center-align">
+        <div class="input-field col m6 s12">
+          {{ form.price }}
+          <label for="{{ form.price.id_for_label }}">Prix de vente </label>
+        </div>
+
+        <div class="input-field col m6 s12">
+          {{ form.acompte }}
+          <label for="{{form.acompte.id_for_label}}">Acompte</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col m6 s12">
+          {{ form.quantity }}
+          <label for="{{form.quantity.id_for_label}}">Quantité</label>
+        </div>
+        <div class="col m6 s12 ">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header deep-orange accent-3 white-text"><i
+                  class="material-icons">health_and_safety</i> Assurez-vous une garantie
+                pour ce produit ?</div>
+              <div class="collapsible-body">
+                <div class="row">
+                  <div class="input-field col m6 s12">
+                    <label for="{{ form.guarantee.id_for_label }}">
+                      {{ form.guarantee }}
+                      <span>Garantie</span>
+                    </label>
+                  </div>
+                  <div class="input-field col m6 s12">
+                    {{ form.guarantee_period }}
+                    <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
                   </div>
                 </div>
-              </li>
-            </ul>
-          </div>
+              </div>
+            </li>
+          </ul>
         </div>
+      </div>
 
-        <div class="col s12">
-          <button class="waves-effect waves-green btn-flat black" type="submit">
-            <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-            <b class="deep-orange-text accent-3">Enregistrer</b>
+      <div class="col s12">
+        <button class="waves-effect waves-green btn-flat black" type="submit">
+          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+          <b class="deep-orange-text accent-3">Enregistrer</b>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!------- Section R3002: - Deposit stock [] -->
+
+<div class="row card">
+  <div id="man" class="col s12">
+    <div class=" material-table">
+      <div class="table-header">
+        <span class="table-title">Liste des Ventes</span>
+        <div class="actions">
+          <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+        </div>
+        <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
+          <button id='delete' type='submit' class="red darken-1 btn white-text">
+            <i class="material-icons left"></i>Supprimer
           </button>
         </div>
-      </form>
-    </div>
-  </div>
-
-
-  <!------- Section R3002: - Deposit stock [] -->
-
-  <div class="row card">
-    <div id="man" class="col s12">
-      <div class=" material-table">
-        <div class="table-header">
-          <span class="table-title">Liste des Ventes</span>
-          <div class="actions">
-            <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
-                class="material-icons">search</i></a>
-          </div>
-          <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
-            <button id='delete' type='submit' class="red darken-1 btn white-text">
-              <i class="material-icons left"></i>Supprimer
-            </button>
-          </div>
-        </div>
-
-        <table id="datatable" class="responsive-table">
-          <thead>
-            <tr>
-
-              <th>Clients</th>
-              <th>Produit</th>
-              <th>Prix de <br> vente</th>
-              <th>Restant Du <br></th>
-              <th>date<br> vendue</th>
-              <th>Factures</th>
-              <th>Actions</th>
-              <th>Supprimer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for v in vente %}
-            <tr id="v.id" {% if v.restant_du != 0%} class="red" {% else %} class="" {% endif %}>
-              <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
-              <td class=''> {{ v.produit.name }} </td>
-              <td> {{ v.price_total|floatformat:0|intcomma }}</td>
-              <td class=''> {{ v.restant_du }} </td>
-              <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
-              <td class=''>
-                <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
-                  <span class="material-icons black">picture_as_pdf</span>
-                </a>
-              </td>
-              <td class="black-text center-align-element">
-                <a href="{% url 'ventes:venteDetailPage' v.pk %}"
-                  class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
-                  data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-                <a href="{% url 'ventes:venteEditPage' v.pk %}"
-                  class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                  data-tooltip="Modifier"><span class="material-icons">update</span></a>
-              <td>
-                <label class="">
-                  <input type="checkbox" name='vente_id[]' value='{{v.id}}' id='delete_vente' />
-                  <span></span>
-                </label>
-              </td>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
       </div>
+
+      <table id="datatable" class="responsive-table">
+        <thead>
+          <tr>
+
+            <th>Clients</th>
+            <th>Produit</th>
+            <th>Prix de <br> vente</th>
+            <th>Restant Du <br></th>
+            <th>date<br> vendue</th>
+            <th>Factures</th>
+            <th>Actions</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in vente %}
+          <tr id="v.id" {% if v.restant_du != 0%} class="red" {% else %} class="" {% endif %}>
+            <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
+            <td class=''> {{ v.produit.name }} </td>
+            <td> {{ v.price_total|floatformat:0|intcomma }}</td>
+            <td class=''> {{ v.restant_du }} </td>
+            <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
+            <td class=''>
+              <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
+                <span class="material-icons black">picture_as_pdf</span>
+              </a>
+            </td>
+            <td class="black-text center-align-element">
+              <a href="{% url 'ventes:venteDetailPage' v.pk %}"
+                class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
+              <a href="{% url 'ventes:venteEditPage' v.pk %}"
+                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Modifier"><span class="material-icons">update</span></a>
+            <td>
+              <label class="">
+                <input type="checkbox" name='vente_id[]' value='{{v.id}}' id='delete_vente' />
+                <span></span>
+              </label>
+            </td>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
 
-  {% endblock body_content %}
+{% endblock body_content %}
 
-  {% block javascripts %}
-  <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
-  </script>
-  <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
+</script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 
-  <script>
-    var dataset_vente = JSON.parse('{{dataset_vente}}');
-  </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    //var dataset_client = JSON.parse('{{dataset_client}}')
-    $(document).ready(function () {
-      $('#delete').click(function () {
-        if (confirm('Êtes vous sures de vouloir supprimer les éléments selectionnés?'))
-          var id = [];
-        $(':checkbox:checked').each(function (i) {
-          id[i] = $(this).val()
-          var csrf = $('input[name="csrfmiddlewaretoken"]').val();
-        })
-        if (id.length === 0) {
-          alert('Please Select the item')
-        } else {
-          console.log(id)
-          $.ajax({
-            url: "{% url 'ventes:multipleDeleteVentePage' %}",
-            method: 'POST',
-            data: {
-              id,
-              csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
-            },
-            success: function (response) {
-              console.log(response)
-              window.location.reload();
-            }
-          })
-        }
+<script>
+  var dataset_vente = JSON.parse('{{dataset_vente}}');
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  //var dataset_client = JSON.parse('{{dataset_client}}')
+  $(document).ready(function () {
+    $('#delete').click(function () {
+      if (confirm('Êtes vous sures de vouloir supprimer les éléments selectionnés?'))
+        var id = [];
+      $(':checkbox:checked').each(function (i) {
+        id[i] = $(this).val()
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val();
       })
+      if (id.length === 0) {
+        alert('Please Select the item')
+      } else {
+        console.log(id)
+        $.ajax({
+          url: "{% url 'ventes:multipleDeleteVentePage' %}",
+          method: 'POST',
+          data: {
+            id,
+            csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
+          },
+          success: function (response) {
+            console.log(response)
+            window.location.reload();
+          }
+        })
+      }
     })
-  </script>
-  <script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
-  <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+  })
+</script>
+<script type="text/javascript" src="{% static 'dashboard/js/chartVente.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 
-  {% endblock javascripts %}
+{% endblock javascripts %}
