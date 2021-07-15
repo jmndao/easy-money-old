@@ -191,13 +191,27 @@
       <img src="{{ shop.owner.avatar.url }}" alt="{{ shop.owner.user.username }}" class="rounded responsive-img"
         width="50px" height="50px"> <!-- notice the "circle" class -->
     </div>
+
+    <div class="col s10">
+      <div class="black-text card-title">
+        <b>{{ shop.owner.user.username}}</b>
+        <a href="{% url 'accounts:userUpdatePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
+          <i class="material-icons">edit</i>
+        </a>
+        <span class="grey-text darken-2 right">Boutique: {{ shop.name }}</span>
+      </div>
+      <div> {{ shop.owner.user.first_name }} {{ shop.owner.user.last_name }} <span class="grey-text darken-2 right">Date
+          ajoutée: {{ shop.created_date }}</span></div>
+    </div>
   </div>
   {% endfor %}
-  {% endif %}
+</div>
 
-  {% endblock body_content %} {% block javascripts %}
-  <script>
-    var datePicker = document.querySelectorAll(".datepicker");
-    M.Datepicker.init(datePicker, {});
-  </script>
-  {% endblock javascripts %}
+{% endif %}
+
+{% endblock body_content %} {% block javascripts %}
+<script>
+  var datePicker = document.querySelectorAll(".datepicker");
+  M.Datepicker.init(datePicker, {});
+</script>
+{% endblock javascripts %}
