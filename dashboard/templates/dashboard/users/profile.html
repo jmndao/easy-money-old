@@ -188,22 +188,35 @@
       <img src="{{ shop.owner.avatar.url }}" alt="{{ shop.owner.user.username }}" class="rounded responsive-img"
         width="50px" height="50px"> <!-- notice the "circle" class -->
     </div>
+    {% if shop.owner.user.is_superuser %}
     <div class="col s10">
       <div class="black-text card-title">
-        <b>{{ shop.owner.user.username }}</b>
+        <b>{{ shop.owner.user.username}}</b>
         <a href="{% url 'accounts:userUpdatePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
           <i class="material-icons">edit</i>
         </a>
-        {% if user.is_superuser %}
-        <a href="{% url 'accounts:userDeletePage' shop.owner.user.pk %}" class="btn-flat red-text waves-effect">
-          <i class="material-icons">delete_forever</i>
-        </a>
-        {% endif %}
         <span class="grey-text darken-2 right">Boutique: {{ shop.name }}</span>
       </div>
       <div> {{ shop.owner.user.first_name }} {{ shop.owner.user.last_name }} <span class="grey-text darken-2 right">Date
           ajoutée: {{ shop.created_date }}</span></div>
     </div>
+    {% else %}
+    <div class="col s10">
+      <div class="black-text card-title">
+        <b>{{ shop.owner.user.username}}</b>
+        <a href="{% url 'accounts:userUpdatePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
+          <i class="material-icons">edit</i>
+        </a>
+        <a href="{% url 'accounts:userDeletePage' shop.owner.user.pk %}" class="btn-flat red-text waves-effect">
+          <i class="material-icons">delete_forever</i>
+        </a>
+        <span class="grey-text darken-2 right">Boutique: {{ shop.name }}</span>
+
+      </div>
+      <div> {{ shop.owner.user.first_name }} {{ shop.owner.user.last_name }} <span class="grey-text darken-2 right">Date
+          ajoutée: {{ shop.created_date }}</span></div>
+    </div>
+    {% endif %}
   </div>
   {% endfor %}
 </div>
