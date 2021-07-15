@@ -80,7 +80,7 @@ class Shop(models.Model):
             - create_date.
     """
 
-    owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    owner = models.ForeignKey(UserProfile, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=100, null=True, blank=True)
     emplacement = models.CharField(max_length=100, blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)

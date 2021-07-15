@@ -14,7 +14,7 @@ GENDER = [
 class UserProfile(models.Model):
 
     user = models.OneToOneField(
-        User, on_delete=models.SET_NULL, null=True, related_name="shop_user_related")
+        User, on_delete=models.CASCADE, null=True, related_name="shop_user_related")
     avatar = models.ImageField(upload_to="profiles/", default='default.png')
     cin = models.CharField(max_length=200, blank=True, null=True)
     phone_number = models.CharField(
@@ -40,9 +40,3 @@ def create_default_userprofile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_default_userprofile(sender, instance, **kwargs):
     instance.shop_user_related.save()
-
-
-@receiver(post_delete, sender=User)
-def delete_shop(sender, instance, **kwargs):
-    userprofile_pk = instance.shop_user_related.pk
-    UserProfile.objects.get(pk=userprofile_pk).delete()
