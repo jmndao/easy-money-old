@@ -41,7 +41,7 @@
     </li>
   {% endif %}
 
-  {% for page in page_obj.paginator.num_pages %}
+  {% for page in page_obj.paginator.page_range %}
     <li class="{% if page == page_obj.number %}active {% else %} waves-effect {% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
   {% endfor %}
 
