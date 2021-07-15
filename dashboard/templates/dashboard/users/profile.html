@@ -55,7 +55,7 @@
               <label for="first_name">Prenom</label>
             </div>
             <div class="input-field col s6">
-              <input type="text" name="last_name" id="last_name" value="{{ userprofile.user.last_name }}" required/>
+              <input type="text" name="last_name" id="last_name" value="{{ userprofile.user.last_name }}" required />
               <label for="last_name">Nom</label>
             </div>
           </div>
@@ -194,9 +194,11 @@
         <a href="{% url 'accounts:userUpdatePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
           <i class="material-icons">edit</i>
         </a>
+        {% if user.is_superuser %}
         <a href="{% url 'accounts:userDeletePage' shop.owner.user.pk %}" class="btn-flat red-text waves-effect">
           <i class="material-icons">delete_forever</i>
         </a>
+        {% endif %}
         <span class="grey-text darken-2 right">Boutique: {{ shop.name }}</span>
       </div>
       <div> {{ shop.owner.user.first_name }} {{ shop.owner.user.last_name }} <span class="grey-text darken-2 right">Date
