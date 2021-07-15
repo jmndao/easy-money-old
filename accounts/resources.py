@@ -1,5 +1,5 @@
 from import_export import resources
-from import_export import Field
+from import_export.fields import Field
 from dashboard.models import ProductModel
 from ventes.models import VenteModel
 from clients.models import ClientModel
