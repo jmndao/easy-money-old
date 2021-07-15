@@ -155,3 +155,4 @@ def multiple_delete_vente(request):
             vente.delete()
     return redirect('clients:clientPage')
 
+#404 page not found

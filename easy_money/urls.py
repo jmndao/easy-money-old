@@ -35,10 +35,12 @@ urlpatterns = [
 
 # handler403 = 'dashboard.views.custom_permission_denied_view'
 # handler400 = 'dashboard.views.custom_bad_request_view'
-handler404 = 'dashboard.views.custom_page_not_found_view'
+# handler404 = 'dashboard.views.page_not_found_view'
 # handler500 = 'dashboard.views.custom_error_view'
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
+handler500 = "easy_money.views.server_error"
+handler404 = "easy_money.views.page_not_found_view"
