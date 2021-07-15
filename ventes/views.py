@@ -52,8 +52,8 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             product.initial_quantity = product.quantity + vente_qty
         # 
         price_vente_minimum = product.price_vente_minimum_ad or product.price_vente_minimum_dv
-        if price_vente_minimum < form.instance.price:
-                messages.warning(self.request, "Vous êtes entrain de vendre à un prix inférieur. Vous pouvez aller modifier la vente du produit {}".format(product.name))        
+        if form.instance.price < price_vente_minimum:
+            messages.warning(self.request, "Attention vous vendez au prix minimum conseillé. Vous pouvez modifier la vente du produit {}".format(product.name))        
         product.save()
         
         client = form.instance.client

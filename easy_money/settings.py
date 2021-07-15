@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'search',
     'import_export',
     'estimation',
+    # Django DropBox Storage App
+    'django_dropbox_storage_2'
 ]
 
 MIDDLEWARE = [
@@ -149,8 +151,15 @@ MEDIA_URL = '/media/'
 
 
 # Redirect url
-REDIRECT_URL_LOGIN = 'dashboard:homePage'
+REDIRECT_URL_LOGIN = 'accounts:loginPage'
 REDIRECT_URL = 'dashboard:homePage'
 
 
-#Messages 
+#DROPBOX
+# 
+DEFAULT_FILE_STORAGE = 'django_dropbox_storage_2.storage.DropboxStorage'
+
+DROPBOX_CONSUMER_KEY = config('DROBOX_CONSUMER_KEY')
+DROPBOX_CONSUMER_SECRET = config('DROPBOX_CONSUMER_SECRET') 
+DROPBOX_ACCESS_TOKEN = config('DROPBOX_ACCESS_TOKEN')
+DROPBOX_ROOT_PATH = config('DROPBOX_ROOT_PATH')

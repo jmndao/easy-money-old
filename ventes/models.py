@@ -34,7 +34,7 @@ class VenteModel(models.Model):
     quantity = models.IntegerField(null=True, blank=True, default=1)
 
     def save(self, *args, **kwargs):
-        # self.price_total = self.price * self.quantity
+        self.price_total = self.price * self.quantity
         if self.acompte != 0 or None: 
             self.restant_du = self.price_total -  self.acompte
         else: 
