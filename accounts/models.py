@@ -44,4 +44,5 @@ def save_default_userprofile(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=User)
 def delete_shop(sender, instance, **kwargs):
-    instance.shop_user_related.delete()
+    userprofile_pk = instance.shop_user_related.pk
+    UserProfile.objects.get(pk=userprofile_pk).delete()
