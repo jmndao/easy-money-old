@@ -30,7 +30,7 @@ urlpatterns = [
     path('devis/', include('devis.urls')),
     path('search/', include('search.urls')),
     path('notifications/', include('notifications.urls')),
-    path('admin/', admin.site.urls),
+    path('easymoney/admin/', admin.site.urls),
 ]
 
 # handler403 = 'dashboard.views.custom_permission_denied_view'
