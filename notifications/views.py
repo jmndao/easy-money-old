@@ -12,6 +12,7 @@ class NotificationView(ListView, Utils):
         self.label_notif_as_read(NotificationModel)
 
     template_name = 'notifications/notification.html'
+    model = NotificationModel
     context_object_name = 'notifications'
     paginate_by = 2
 

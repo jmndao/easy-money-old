@@ -31,9 +31,9 @@
 </ul>
 
 <ul class="pagination">
-  {% if notification.has_previous %}
+  {% if page_obj.has_previous %}
     <li class="waves-effect">
-      <a href="?page={{ notification.previous_page_number }}"><i class="material-icons">chevron_left</i></a>
+      <a href="?page={{ page_obj.previous_page_number }}"><i class="material-icons">chevron_left</i></a>
     </li>
   {% else %}
     <li class="disabled">
@@ -41,13 +41,13 @@
     </li>
   {% endif %}
 
-  {% for page in notification.paginator.num_pages %}
-    <li class="{% if page == notification.number %}active {% else %} waves-effect {% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
+  {% for page in page_obj.paginator.num_pages %}
+    <li class="{% if page == page_obj.number %}active {% else %} waves-effect {% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
   {% endfor %}
 
-  {% if notification.has_next %}
+  {% if page_obj.has_next %}
     <li class="waves-effect">
-      <a href="?page={{ notification.next_page_number }}"><i class="material-icons">chevron_right</i></a>
+      <a href="?page={{ page_obj.next_page_number }}"><i class="material-icons">chevron_right</i></a>
     </li>
   {% else %}
     <li class="disabled">
