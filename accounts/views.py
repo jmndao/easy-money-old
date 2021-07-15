@@ -67,7 +67,7 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
 
     model = User
     template_name = 'dashboard/users/user_delete.html'
-    success_url = reverse_lazy('accounts:userCreationPage')
+    success_url = reverse_lazy('accounts:profilePage')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
