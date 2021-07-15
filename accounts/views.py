@@ -73,6 +73,10 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Suppression-utilisateur"
         return context
+
+    def form_valid(self, form):
+        messages.success(self.request, "Utilisateur supprimé avec success.") 
+        return super().form_valid(form)
     
 
 
