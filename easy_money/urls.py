@@ -44,3 +44,4 @@ if settings.DEBUG:
 
 handler500 = "easy_money.views.server_error"
 handler404 = "easy_money.views.page_not_found_view"
+

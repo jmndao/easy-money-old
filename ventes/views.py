@@ -42,7 +42,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         vente_qty = form.instance.quantity
         remaining_qty = product.quantity - vente_qty
         if remaining_qty < 0:
-            messages.error(self.request, "Il ne reste que {} object(s) de {}. Donc cette vente ne peut être effectuée".format(
+            messages.error(self.request, "Il ne reste que {} {}. Donc cette vente ne peut être effectuée".format(
                 product.quantity, product.name))
             return redirect(reverse('ventes:ventePage'))
         # elif remaining_qty == 0:
