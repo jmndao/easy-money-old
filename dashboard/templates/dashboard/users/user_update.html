@@ -13,23 +13,19 @@
                 </div>
                 <form action="" method="post">
                     {% csrf_token %}
-                    user.username
-                    <div class="input-field col s12 m6">
-                        <label for="{{ form.username.id_for_label }}">Prenom</label>
-                        {{ form.username }}
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <label for="{{ form.first_name.id_for_label }}">Prenom</label>
-                        {{ form.first_name }}
-                    </div>
-                    <div class="input-field col s12 m6">
-                        <label for="{{ form.last_name.id_for_label }}">Nom</label>
-                        {{ form.last_name }}
-                    </div>
-
-                    <div class="input-field col s12">
-                        <label for="{{ form.email.id_for_label }}">Nouveau Email</label>
-                        {{ form.email }}
+                {{ user.username}}
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <label for="{{ form.username.id_for_label }}">Username</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="col s12">
+                            <span class="blue-text"><small>Changer le mot de passe utilisteur ici -> </small>
+                                <a href="{% url 'accounts:passwordChangePage' user.pk %}" class="btn-flat blue-grey-text waves-effect">
+                                    <i class="material-icons">password</i>
+                                </a>
+                            </span>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -38,9 +34,6 @@
                                 <i class="material-icons right">recommend</i>
                                 Enregistrer
                             </button>
-                            <a href="{% url 'accounts:passwordChangePage' user.pk %}" class="btn-flat blue-grey-text waves-effect">
-                                <i class="material-icons">password</i>
-                            </a>
                         </div>
                     </div>
                 </form>
