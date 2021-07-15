@@ -102,12 +102,11 @@
 
 
 <!------- Section R3002: - Deposts Ventes Stock [] -->
-
 <div class="row">
     <div id="man" class="col s12">
         <div class="card material-table">
             <div class="table-header">
-                <span class="table-title">Liste des Depots-Vente</span>
+                <span class="table-title">Liste Depots Vente Direct</span>
                 <div class="actions">
                     <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i
                             class="material-icons">search</i></a>
@@ -162,13 +161,9 @@
         </div>
     </div>
 </div>
-<!------- Section R3002: - Depots Ventes Stock [] -->
-
-
 {% endblock body_content %}
-
 {% block javascripts %}
-<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script> -->
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 
 <script>
@@ -205,8 +200,10 @@
         })
     })
 </script>
+</script>
 <script type="text/javascript" src="{% static 'dashboard/js/chart_depot.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 
 {% endblock javascripts %}
