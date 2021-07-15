@@ -28,7 +28,7 @@ class UserCreationView(LoginRequiredMixin, CreateView):
     template_name = 'dashboard/users/user_create.html'
 
     def form_valid(self, form):
-        messages.success(self.request, "Agent {} a ete ajoute avec succes !".format(form.instance.username))
+        messages.success(self.request, "Agent {} a été ajouté avec succes !".format(form.instance.username))
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -51,7 +51,7 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'dashboard/users/user_update.html'
 
     def form_valid(self, form):
-        messages.success(self.request, 'Vos modifications ont ete accepte !') 
+        messages.success(self.request, 'Vos modifications ont été acceptées !') 
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -102,7 +102,7 @@ class UserProfileView(View, LoginRequiredMixin):
             userprofile.user.email = form.cleaned_data.get('email')
             userprofile.user.save()
 
-            messages.success(request, 'Profile enregistre avec succes !')
+            messages.success(request, 'Profile enregistré avec succes !')
         else:
             messages.error(request, form_validation_error(form))
 
