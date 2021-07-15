@@ -13,6 +13,7 @@ class NotificationView(ListView, Utils):
 
     template_name = 'notifications/notification.html'
     context_object_name = 'notifications'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

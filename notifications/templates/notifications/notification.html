@@ -30,4 +30,30 @@
   {% endfor %}
 </ul>
 
+<ul class="pagination">
+  {% if notification.has_previous %}
+    <li class="waves-effect">
+      <a href="?page={{ notification.previous_page_number }}"><i class="material-icons">chevron_left</i></a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_left</i></a>
+    </li>
+  {% endif %}
+
+  {% for page in notification.num_pages %}
+    <li class="{% if page == notification.number %}active {% else %} waves-effect {% endif %}"><a href="?page={{ page }}">{{ page }}</a></li>
+  {% endfor %}
+
+  {% if notification.has_next %}
+    <li class="waves-effect">
+      <a href="?page={{ notification.next_page_number }}"><i class="material-icons">chevron_right</i></a>
+    </li>
+  {% else %}
+    <li class="disabled">
+      <a href="#!"><i class="material-icons">chevron_right</i></a>
+    </li>
+  {% endif %}
+</ul>
+
 {% endblock body_content %}

@@ -50,6 +50,10 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         else:
             product.quantity = remaining_qty
             product.initial_quantity = product.quantity + vente_qty
+        # 
+        price_vente_minimum = product.price_vente_minimum_ad or product.price_vente_minimum_dv
+        if price_vente_minimum < form.instance.price:
+                messages.warning(self.request, "Vous êtes entrain de vendre à un prix inférieur. Vous pouvez aller modifier la vente du produit {}".format(product.name))        
         product.save()
         
         client = form.instance.client
@@ -63,12 +67,6 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             not_new_client.save()
         else:
             pass
-        if form.instance.produit.dv_or_ad == 'AD':
-            if form.instance.produit.price_vente_minimum_ad < form.instance.price:
-                messages.warning(self.request, "Vous êtes entrain de vendre à un prix inférieur. Vous pouvez aller modifier la vente du produit {}".format(form.instance.produit.name))
-        elif form.instance.produit.dv_or_ad == 'DV':
-            if form.instance.produit.price_vente_minimum_dv < form.instance.price:
-                messages.warning(self.request, "Vous êtes entrain de vendre à un prix inférieur. Vous pouvez aller modifier la vente du produit {}".format(form.instance.produit.name))
             
         return super().form_valid(form)
 
