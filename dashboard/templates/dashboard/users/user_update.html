@@ -13,7 +13,7 @@
                 </div>
                 <form action="" method="post">
                     {% csrf_token %}
-                    
+                    user.username
                     <div class="input-field col s12 m6">
                         <label for="{{ form.username.id_for_label }}">Prenom</label>
                         {{ form.username }}
@@ -38,7 +38,7 @@
                                 <i class="material-icons right">recommend</i>
                                 Enregistrer
                             </button>
-                            <a href="{% url 'accounts:passwordChangePage' shop.owner.user.pk %}" class="btn-flat blue-grey-text waves-effect">
+                            <a href="{% url 'accounts:passwordChangePage' user.pk %}" class="btn-flat blue-grey-text waves-effect">
                                 <i class="material-icons">password</i>
                             </a>
                         </div>
