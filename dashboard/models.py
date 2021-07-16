@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 from accounts.models import UserProfile
 
 
@@ -183,3 +185,11 @@ class ProductModel(models.Model):
             return '{} /{} /{} / {} cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_dv)
         else:
             return '{} /{} /{} / {} cfa '.format(self.name, self.dv_or_ad, self.quantity, self.price_vente_minimum_ad)
+
+
+@receiver(pre_delete, sender=UserProfile)
+def set_admin_shop_owner(sender, instance, **kwargs):
+    admin = UserProfile.objects.get(user__is_superuser=True)
+    shop = Shop.objects.get(owner=instance)
+    shop  = admin
+    shop.save()

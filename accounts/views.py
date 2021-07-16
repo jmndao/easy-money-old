@@ -1,6 +1,7 @@
 from datetime import date
+from django.contrib.auth import authenticate, models
 from django.http import HttpResponse
-from accounts.forms import form_validation_error
+from accounts.forms import PasswordForm, form_validation_error
 from accounts.models import UserProfile
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -14,7 +15,7 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.views.generic.edit import DeleteView, FormView, UpdateView
-from django.contrib.auth import login
+from django.contrib.auth.views import PasswordChangeView
 
 from dashboard.models import Shop
 from accounts.forms import UserProfileForm
@@ -47,11 +48,12 @@ class UserCreationView(LoginRequiredMixin, CreateView):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = '__all__'
+    fields = ['username']
     template_name = 'dashboard/users/user_update.html'
 
     def form_valid(self, form):
-        messages.success(self.request, 'Vos modifications ont été acceptées !') 
+        u_user = User.objects.get(pk=self.kwargs["pk"])
+        messages.success(self.request, 'Modifications enregistré avec succès pour {}'.format(u_user)) 
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -59,7 +61,8 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Modification-Utilisateur"
+        u_user = User.objects.get(pk=self.kwargs["pk"])
+        context["title"] = "Modification-{}".format(u_user)
         return context
     
     
@@ -71,12 +74,39 @@ class UserDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Suppression-utilisateur"
+        u_user = User.objects.get(pk=self.kwargs["pk"])
+        context["title"] = "Suppression-{}".format(u_user)
         return context
 
     def form_valid(self, form):
-        messages.success(self.request, "Utilisateur supprimé avec success.") 
+        u_user = User.objects.get(pk=self.kwargs["pk"])
+        messages.success(self.request, "{} supprimé avec success.".format(u_user)) 
         return super().form_valid(form)
+    
+
+def change_password_view(request, pk):
+    u_user = User.objects.get(pk=pk)
+
+    if request.method == "POST":
+        form = PasswordForm(request.POST)
+        if form.is_valid():
+            old_password = form.cleaned_data.get('ancient_pwd')
+            if not u_user.check_password(old_password):
+                messages.error(request, "L'ancien mot de passe ne correspond pas")
+                return redirect(reverse('accounts:passwordChangePage', args=(pk,)))
+            if form.cleaned_data.get('new_password') != form.cleaned_data.get('new_confirmation_password'):
+                messages.error(request, "Vos mot de passe ne correspondent pas.")
+                return redirect(reverse('accounts:passwordChangePage', args=(pk,)))
+            u_user.set_password(form.cleaned_data.get('new_password'))
+            u_user.save()
+            messages.success(request, "Mot de Passe modifié avec succès pour {}.".format(u_user))
+            return redirect(reverse('accounts:profilePage'))
+    form = PasswordForm()
+    context = {
+        "form": form,
+        "title": "Mot de Passe-{}".format(u_user)
+    }
+    return render(request, 'dashboard/users/password_change.html', context)
     
 
 

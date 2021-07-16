@@ -40,3 +40,4 @@ def create_default_userprofile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_default_userprofile(sender, instance, **kwargs):
     instance.shop_user_related.save()
+

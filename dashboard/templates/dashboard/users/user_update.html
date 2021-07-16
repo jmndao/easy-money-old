@@ -11,9 +11,8 @@
                     <i class="material-icons right">edit</i>
                     Editer ... 
                 </div>
-                <form action="" method="post">
+                <form action="{% url 'accounts:userUpdatePage' user.pk %}" method="post">
                     {% csrf_token %}
-                {{ user.username}}
                     <div class="row">
                         <div class="input-field col s12">
                             <label for="{{ form.username.id_for_label }}">Username</label>

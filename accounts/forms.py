@@ -21,3 +21,10 @@ def form_validation_error(form):
         for error in field.errors:
             msg += "%s: %s \\n" % (field.label if hasattr(field, 'label') else 'Error', error)
     return msg
+
+
+class PasswordForm(forms.Form):
+
+    ancient_pwd = forms.CharField(widget=forms.PasswordInput())
+    new_password = forms.CharField(widget=forms.PasswordInput())
+    new_confirmation_password = forms.CharField(widget=forms.PasswordInput())

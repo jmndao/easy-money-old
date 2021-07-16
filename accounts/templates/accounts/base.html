@@ -15,6 +15,25 @@
 </head>
 <body class="grey lighten-2">
 
+    {% if messages %}
+        <div class="row">
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+                <div class="col s12">
+                    <div class="card-panel green accent-3"><b>{{message}}</b></div>
+                </div>
+            {% elif message.tags == "error" %}
+                <div class="col s12">
+                    <div class="card-panel red accent-4 white-text"><b>{{message}}</b></div>
+                </div>
+            {% elif message.tags == "warning" %}
+                <div class="col s12">
+                    <div class="card-panel yellow accent-2"><b>{{message}}</b></div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
     {% block body_content %}{% endblock body_content %}
    
 </body>
