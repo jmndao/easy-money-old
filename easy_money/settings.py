@@ -157,7 +157,7 @@ REDIRECT_URL = 'dashboard:homePage'
 
 #DROPBOX
 # 
-# DEFAULT_FILE_STORAGE = 'django_dropbox_storage_2.storage.DropboxStorage'
+DEFAULT_FILE_STORAGE = 'django_dropbox_storage_2.storage.DropboxStorage'
 
 DROPBOX_CONSUMER_KEY = config('DROPBOX_CONSUMER_KEY')
 DROPBOX_CONSUMER_SECRET = config('DROPBOX_CONSUMER_SECRET') 
