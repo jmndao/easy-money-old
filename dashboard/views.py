@@ -110,7 +110,7 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
             context['spent'] = sum(
                 [p.price_total_tt_produit for p in self.q if p.price_total_tt_produit != None])
             context["dataset_achat_direct"] = self.chartObject(
-                ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
+                ProductModel, key='price_total_tt_produit', dv_or_ad='AD', dt_col_name='created_date')
         else:
             context['achat_directs'] = self.q = ProductModel.objects.filter(dv_or_ad='AD', shop__owner__user__username=uname).order_by(
                 '-created_date')
@@ -186,7 +186,7 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
             context['spent_depot'] = sum(
                 [p.price_total_tt_produit for p in self.q if p.price_total_tt_produit != None])
             context['dataset_depot'] = self.chartObject(
-                ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
+                ProductModel, key='price_total_tt_produit', dv_or_ad='DV', dt_col_name='created_date')
         else:
             self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV', shop__owner__user__username=uname)
             context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV', shop__owner__user__username=uname).values(
