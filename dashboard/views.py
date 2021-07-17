@@ -33,9 +33,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date')
             context['dataset_depot'] = self.chartObject(
-                ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date')
+                ProductModel, key='price_total_tt_produit', dv_or_ad='DV', dt_col_name='created_date')
             context["dataset_achat"] = self.chartObject(
-                ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date')
+                ProductModel, key='price_total_tt_produit', dv_or_ad='AD', dt_col_name='created_date')
             context["achat_directs"] = ProductModel.objects.filter(dv_or_ad='AD').order_by(
                 '-created_date')
             context["depot_ventes"] = ProductModel.objects.filter(dv_or_ad='DV').order_by(
@@ -58,9 +58,9 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context['dataset_depot'] = self.chartObject(
-                ProductModel, key='price_total', dv_or_ad='DV', dt_col_name='created_date' , is_superuser=False, uname=user.username)
+                ProductModel, key='price_total_tt_produit', dv_or_ad='DV', dt_col_name='created_date' , is_superuser=False, uname=user.username)
             context["dataset_achat"] = self.chartObject(
-                ProductModel, key='price_total', dv_or_ad='AD', dt_col_name='created_date', is_superuser=False, uname=user.username)
+                ProductModel, key='price_total_tt_produit', dv_or_ad='AD', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context["achat_directs"] = ProductModel.objects.filter(
                 shop__owner__user__username=user.username, dv_or_ad='AD').order_by('-created_date')
             context["depot_ventes"] = ProductModel.objects.filter(
