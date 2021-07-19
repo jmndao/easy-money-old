@@ -13,9 +13,7 @@ class ProductModelForm(forms.ModelForm):
         self.user = kwargs.pop('user')
         super(ProductModelForm, self).__init__(*args, **kwargs)
         if self.user.is_superuser:
-            self.fields['seller'].queryset = ClientModel.objects.filter(
-                vente_or_achat='CV')
+            self.fields['seller'].queryset = ClientModel.objects.all()
         else:
-            self.fields['seller'].queryset = ClientModel.objects.filter(
-                vente_or_achat='CV', shop__owner__user=self.user)
+            self.fields['seller'].queryset = ClientModel.objects.filter(shop__owner__user=self.user)
 

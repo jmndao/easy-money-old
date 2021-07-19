@@ -183,7 +183,7 @@
           <tr id="product.id">
             <th class="black-text">{{ product.id }}</th>
             <th class="black-text">{{ product.created_date|date:"SHORT_DATE_FORMAT" }}</th>
-            <th class="black-text">{{ product.name }}</th>
+            <th class="black-text">{{ product.name|truncatechars:25 }}</th>
             <th class="black-text">{{ product.price|floatformat:0 }} fcfa</th>
             <th class="black-text">{{ product.quantity }} / {{product.initial_quantity}}</th>
             <th class="actions black-text">
