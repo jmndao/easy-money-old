@@ -23,7 +23,7 @@ CATEGORY = [
     ('AMMEUBLEMENT', 'Ammeublement'),
     ('LOISIRS', 'Loisirs'),
     ('IMAGES_ET_SONS', 'Images_et_sons'),
-    ('CONNECTIQUE', 'Connectique')
+    ('CONNECTIQUE', 'Connectique'),
     ('AUTRES', 'Autre'),
 ]
 
