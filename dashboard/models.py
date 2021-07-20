@@ -23,6 +23,7 @@ CATEGORY = [
     ('AMMEUBLEMENT', 'Ammeublement'),
     ('LOISIRS', 'Loisirs'),
     ('IMAGES_ET_SONS', 'Images_et_sons'),
+    ('CONNECTIQUE', 'Connectique')
     ('AUTRES', 'Autre'),
 ]
 
@@ -88,7 +89,7 @@ class Shop(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{} {}'.format(self.name, self.owner.user.username)
+        return '{}'.format(self.name)
 
 
 class ProductModel(models.Model):
