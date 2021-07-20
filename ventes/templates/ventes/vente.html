@@ -7,6 +7,9 @@
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/select2Select.css' %}">
+
 {% endblock stylesheets %}
 
 {% block body_content %}
@@ -141,7 +144,6 @@
       <div class="row" id="venteID">
         <div class="input-field col m5 s10">
           {{ form.produit }}
-          <label for="{{form.produit.id_for_label}}">Produit</label>
         </div>
         <div class="input-field col m1 s2">
           <a href="{% url 'dashboard:productPage' %}" name="clientID"
@@ -151,7 +153,6 @@
         </div>
         <div class="input-field col m5 s10">
           {{ form.client }}
-          <label for="{{form.client.id_for_label}}">Client</label>
         </div>
         <div class="input-field col m1 s2">
           <a href="{% url 'clients:clientPage' %}" name="clientID" class="btn-flat deep-orange-text accent-3 tooltipped"
@@ -303,7 +304,6 @@
       if (id.length === 0) {
         alert('Please Select the item')
       } else {
-        console.log(id)
         $.ajax({
           url: "{% url 'ventes:multipleDeleteVentePage' %}",
           method: 'POST',
@@ -312,7 +312,6 @@
             csrfmiddlewaretoken: $('[name="csrfmiddlewaretoken"]').val()
           },
           success: function (response) {
-            console.log(response)
             window.location.reload();
           }
         })
@@ -324,5 +323,7 @@
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/select2Select.js' %}"></script>
 
 {% endblock javascripts %}

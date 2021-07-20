@@ -12,6 +12,8 @@ class ProductModelForm(forms.ModelForm):
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user')
         super(ProductModelForm, self).__init__(*args, **kwargs)
+        self.fields['seller'].widget.attrs['class'] = 'select-with-search'
+        self.fields['seller'].empty_label = 'Clients'
         if self.user.is_superuser:
             self.fields['seller'].queryset = ClientModel.objects.all()
         else:

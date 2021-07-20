@@ -22,6 +22,10 @@ class VenteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
         super(VenteForm, self).__init__(*args, **kwargs)
+        self.fields['produit'].widget.attrs['class'] = 'select-with-search'
+        self.fields['client'].widget.attrs['class'] = 'select-with-search'
+        self.fields['produit'].empty_label = 'Produits'
+        self.fields['client'].empty_label = 'Clients'
         if self.user.is_superuser:
             self.fields['produit'].queryset = ProductModel.objects.filter(
                 quantity__gt=0)

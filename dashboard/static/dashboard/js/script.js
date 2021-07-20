@@ -2,10 +2,6 @@
 const modal = document.querySelector('.modal');
 M.Modal.init(modal, {});
 
-// Setting up the Select
-const select = document.querySelectorAll('select');
-M.FormSelect.init(select, {});
-
 // Setting up the Dropdown
 const dropdown = document.querySelectorAll('.dropdown-trigger');
 M.Dropdown.init(dropdown, {
