@@ -24,7 +24,7 @@ urlpatterns = [
     # Accounts Routers
     path('login/', a_views.AppLoginView.as_view(), name='loginPage'),
     path('register/', a_views.AppRegisterView.as_view(), name='registerPage'),
-    path('logout/', LogoutView.as_view(next_page='accounts:loginPage'), name='logoutPage'),
+    path('logout/', a_views.applogout, name='logoutPage'),
     # Password Routers
     path('mot_de_passe/modifier/<int:pk>/', a_views.change_password_view, name='passwordChangePage'),
     path('mot_de_passe/modifier_admin/<int:pk>/', PasswordChangeView.as_view(success_url=reverse_lazy('accounts:profilePage'), template_name='dashboard/users/password_admin_change.html'), name='passwordAdminChangePage'),

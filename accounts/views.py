@@ -1,12 +1,13 @@
 from datetime import date
-from django.contrib.auth import authenticate, models
+from django.conf import settings
+from django.contrib.auth import get_user, login, logout
 from django.http import HttpResponse
+from django.http.response import HttpResponseRedirect
 from accounts.forms import PasswordForm, form_validation_error
 from accounts.models import UserProfile
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from django.utils.decorators import method_decorator
 from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
@@ -15,13 +16,12 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.views.generic.edit import DeleteView, FormView, UpdateView
-from django.contrib.auth.views import PasswordChangeView
 
 from dashboard.models import Shop
 from accounts.forms import UserProfileForm
 from accounts.resources import ProductExcel, VenteExcel, ClientExcel
 
-
+history = {} 
 
 class UserCreationView(LoginRequiredMixin, CreateView):
 
@@ -120,6 +120,7 @@ class UserProfileView(View, LoginRequiredMixin):
     def get(self, request):
         shops = Shop.objects.all()
         context = {
+            'logged_in_users': history.get('logged_in_users', None) if history else [],
             'shops': shops,
             'userprofile': self.userprofile, 
             'segment': 'profile',
@@ -176,11 +177,10 @@ class ShopUpdateView(LoginRequiredMixin, UpdateView):
         context["title"] = "Modification-Boutique"
         return context
     
-        
-
 
 class AppLoginView(LoginView):
 
+    users = []
     template_name = 'accounts/login.html'
     fields = '__all__'
     redirect_authenticated_user = True
@@ -188,12 +188,34 @@ class AppLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('dashboard:homePage')
 
+    def form_valid(self, form):
+        self.users.append(form.cleaned_data.get('username'))
+        try:
+            history['logged_in_users'] = self.users
+        except Exception as e:
+            pass
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Se Connecter"
         return context
-    
 
+
+def applogout(request):
+    l_user = get_user(request).username
+    try:
+        list_users = history.get('logged_in_users', None)
+        list_users.remove(l_user)
+        if len(list_users) == 0:
+            del history['logged_in_users']
+        else:
+            history['logged_in_users'] = list_users
+    except Exception as e:
+        pass
+    logout(request)
+    return HttpResponseRedirect(settings.LOGIN_URL)
+    
 
 class AppRegisterView(FormView):
 
@@ -203,7 +225,6 @@ class AppRegisterView(FormView):
     success_url = reverse_lazy('accounts:loginPage')
 
     def form_valid(self, form):
-
         user = form.save()
         if user is not None:
             login(self.request, user)

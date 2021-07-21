@@ -175,6 +175,14 @@
         </div>
 
       </div>
+      <div class="col s12 m4">
+        <ul class="collection with-header">
+          <li class="collection-header deep-orange accent-3"><b>Les Utilisateurs connectés</b></li>
+          {% for l_user in logged_in_users %}
+            <li class="collection-item"><div>{{ l_user }}<span class="secondary-content"><i class="material-icons">online_prediction</i></span></div></li>
+          {% endfor %}
+        </ul>
+      </div>
 
     </div>
   </form>
