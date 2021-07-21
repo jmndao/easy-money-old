@@ -136,7 +136,6 @@ class UserProfileView(View, LoginRequiredMixin):
             userprofile.user.last_name = form.cleaned_data.get('last_name')
             userprofile.user.email = form.cleaned_data.get('email')
             userprofile.user.save()
-
             messages.success(request, 'Profile enregistré avec succes !')
         else:
             messages.error(request, form_validation_error(form))
