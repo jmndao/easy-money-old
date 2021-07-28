@@ -239,8 +239,10 @@
             <th>Restant Du <br></th>
             <th>date<br> vendue</th>
             <th>Factures</th>
+            {% if user.is_superuser %}
             <th>Actions</th>
             <th>Supprimer</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -251,6 +253,7 @@
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>
             <td class=''> {{ v.restant_du }} </td>
             <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
+            {% if user.is_superuser %}
             <td class=''>
               <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
                 <span class="material-icons black">picture_as_pdf</span>
@@ -270,6 +273,7 @@
               </label>
             </td>
             </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>
