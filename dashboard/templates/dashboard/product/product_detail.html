@@ -151,6 +151,26 @@
         <div class="row">
             <h6>
                 <div class="col s6">
+                    Matière:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.matière %}{{ product.matière }}{% else %}Non spécifiée{% endif %}</b>
+                </div>
+            </h6>
+        </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Garantie:
+                </div>
+                <div class="col s6">
+                    <b>{{ product.garantie|yesno:"OUI, NON" }}</b>
+                </div>
+            </h6>
+        </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
                     Dimension:
                 </div>
                 <div class="col s6">

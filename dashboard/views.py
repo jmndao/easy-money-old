@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
-
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count
@@ -58,7 +57,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context["dataset_vente"] = self.chart_vente(
                 VenteModel, key='price_total', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context['dataset_depot'] = self.chartObject(
-                ProductModel, key='price_total_tt_produit', dv_or_ad='DV', dt_col_name='created_date' , is_superuser=False, uname=user.username)
+                ProductModel, key='price_total_tt_produit', dv_or_ad='DV', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context["dataset_achat"] = self.chartObject(
                 ProductModel, key='price_total_tt_produit', dv_or_ad='AD', dt_col_name='created_date', is_superuser=False, uname=user.username)
             context["achat_directs"] = ProductModel.objects.filter(
@@ -80,7 +79,7 @@ class IndexView(LoginRequiredMixin, TemplateView, Utils):
             context['benefice_month'] = self.benefice_per_month(
                 VenteModel, ProductModel, is_superuser=False, user=user)
         return context
-    
+
 
 class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, Utils):
 
@@ -91,7 +90,8 @@ class AchatDirectView(LoginRequiredMixin, RedirectToPreviousMixin, CreateView, U
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
-            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            shop_owner = Shop.objects.get(
+                owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
         return super().form_valid(form)
 
@@ -135,7 +135,8 @@ class AchatDirectUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateV
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
-            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            shop_owner = Shop.objects.get(
+                owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
         return super().form_valid(form)
 
@@ -151,7 +152,6 @@ class AchatDirectDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Detail-Achat Direct"
         return context
-    
 
 
 class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
@@ -164,7 +164,6 @@ class AchatDirectDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteV
         context = super().get_context_data(**kwargs)
         context["title"] = "Suppression-Achat Direct"
         return context
-    
 
 
 # First, creating the DepotVenteView
@@ -176,7 +175,8 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
         context["title"] = "Depot Vente"
         uname = self.request.user.username
         if self.request.user.is_superuser:
-            self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV')
+            self.q = ProductModel.objects.order_by(
+                '-created_date').filter(dv_or_ad='DV')
             context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad='DV').values(
                 'name').annotate(freq=Count('name')).order_by("?")
             # Nombre de produit
@@ -188,8 +188,9 @@ class DepotVenteView(LoginRequiredMixin, RedirectToPreviousMixin, TemplateView, 
             context['dataset_depot'] = self.chartObject(
                 ProductModel, key='price_total_tt_produit', dv_or_ad='DV', dt_col_name='created_date')
         else:
-            self.q = ProductModel.objects.order_by('-created_date').filter(dv_or_ad = 'DV', shop__owner__user__username=uname)
-            context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad ='DV', shop__owner__user__username=uname).values(
+            self.q = ProductModel.objects.order_by(
+                '-created_date').filter(dv_or_ad='DV', shop__owner__user__username=uname)
+            context["tendance_depot_vente"] = ProductModel.objects.filter(dv_or_ad='DV', shop__owner__user__username=uname).values(
                 'name').annotate(freq=Count('name')).order_by("?")
             # Nombre de produit
             context['depot_ventes'] = self.q
@@ -209,12 +210,10 @@ class DepotVenteDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'd_vente'
     queryset = ProductModel.objects.filter(dv_or_ad='DV')
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Detail-Depot Vente"
         return context
-    
 
 
 # Third, create the depotVenteStockEditView
@@ -226,7 +225,8 @@ class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
-            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            shop_owner = Shop.objects.get(
+                owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
         return super().form_valid(form)
 
@@ -234,7 +234,6 @@ class DepotVenteEditView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView
         context = super().get_context_data(**kwargs)
         context["title"] = "Modification-Depot Vente"
         return context
-    
 
 
 class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
@@ -247,7 +246,6 @@ class DepotVenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteVi
         context = super().get_context_data(**kwargs)
         context["title"] = "Suppression-Depot Vente"
         return context
-    
 
 
 class ProductView(LoginRequiredMixin, CreateView):
@@ -263,9 +261,10 @@ class ProductView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
-            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            shop_owner = Shop.objects.get(
+                owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
-        messages.success(self.request, 'Produit a ete ajoute avec success')
+        messages.success(self.request, 'Produit a été ajouté avec success')
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -289,14 +288,14 @@ class ProductUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView)
     def form_valid(self, form):
         user = self.request.user
         if not user.is_superuser:
-            form.instance.shop = Shop.objects.get(ower__user__username=user.username)
+            form.instance.shop = Shop.objects.get(
+                ower__user__username=user.username)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Modification-Produit"
         return context
-    
 
 
 class ProductDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
@@ -310,7 +309,6 @@ class ProductDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView)
         context = super().get_context_data(**kwargs)
         context["title"] = "Suppression-Produit"
         return context
-    
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -331,7 +329,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Detail-Produit"
         return context
-    
+
 # Rendering the pdf class here:
 
 
@@ -366,16 +364,18 @@ Here Is where we are going to make our models to be able to delete multiple time
 """
 
 
-#Delete Multiple Product
+# Delete Multiple Product
 def multiple_delete_product(request):
     if request.method == 'POST':
         product_ids = request.POST.getlist('id[]')
-        for id in product_ids: 
+        for id in product_ids:
             product = ProductModel.objects.get(pk=id)
             product.delete()
     return redirect('dashboard:homePage')
 
 # Delete Multiple  DepotVente
+
+
 def multiple_delete_depotVente(request):
     if request.method == 'POST':
         depot_vente_ids = request.POST.getlist('id[]')
@@ -394,7 +394,9 @@ def multiple_delete_achatDirect(request):
             ad.delete()
     return redirect('dashboard:homePage')
 
-#Error handling
+# Error handling
+
+
 def custom_page_not_found_view(request, exception):
     response = render(request, 'dashboard/error/404.html', {})
     response.status_code = 404

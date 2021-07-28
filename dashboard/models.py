@@ -24,6 +24,11 @@ CATEGORY = [
     ('LOISIRS', 'Loisirs'),
     ('IMAGES_ET_SONS', 'Images_et_sons'),
     ('CONNECTIQUE', 'Connectique'),
+    ('LED', 'Led'),
+    ('BIJOUX', 'Bijoux'),
+    ('ENFANTS_ET_BÉBÉS', 'Enfants_et_bébés'),
+    ('MONTRE', 'Montre'),
+    ('ÉLECTROMÉNAGÉ', 'Électroménagé'),
     ('AUTRES', 'Autre'),
 ]
 
@@ -130,8 +135,9 @@ class ProductModel(models.Model):
         max_length=100, choices=CATEGORY, blank=True, null=True)
     dv_or_ad = models.CharField(
         max_length=100, choices=TYPE, blank=True, null=True)
-    quantity = models.IntegerField(blank=False, null=False,default = 1)
-    initial_quantity = models.IntegerField(blank=True, null=True,default = 1, editable=False)
+    quantity = models.IntegerField(blank=False, null=False, default=1)
+    initial_quantity = models.IntegerField(
+        blank=True, null=True, default=1, editable=False)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, blank=True, null=True, verbose_name="Prix d'Achat")
     price_total = models.DecimalField(
@@ -167,6 +173,8 @@ class ProductModel(models.Model):
     sold = models.BooleanField(default=False)
     color = models.CharField(max_length=100, blank=True, null=True)
     connectic = models.BooleanField(default=False)
+    matière = models.CharField(max_length=100, null=True, blank=True)
+    garantie = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
@@ -192,5 +200,5 @@ class ProductModel(models.Model):
 def set_admin_shop_owner(sender, instance, **kwargs):
     admin = UserProfile.objects.get(user__is_superuser=True)
     shop = Shop.objects.get(owner=instance)
-    shop  = admin
+    shop = admin
     shop.save()

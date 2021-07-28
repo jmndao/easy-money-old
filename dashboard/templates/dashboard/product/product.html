@@ -106,7 +106,16 @@
         {{ form.color }}
         <label for="{{form.color.id_for_label}}">Couleur</label>
       </div>
-
+      <div class="input-field col m3 s6">
+        {{ form.matière }}
+        <label for="{{form.matière.id_for_label}}">Matière</label>
+      </div>
+      <div class="input-field col m3 s6">
+        <label for="{{form.garantie.id_for_label}}">
+          {{ form.garantie }}
+          <span>Garantie</span>
+        </label>
+      </div>
       <div class="col s12">
         <label for="{{form.description.id_for_label}}">
           {{ form.description }}
@@ -169,23 +178,27 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-            <th>article</th>
+            <th>N<span>&#8470;</span></th>
             <th>date</th>
             <th>nom</th>
             <th>prix unitaire</th>
             <th>quantité</th>
             {% if user.is_superuser %}
             <th>actions</th>
-            {% endif %}
             <th style="text-align:center;">supprimer</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
           {% for product in products %}
           <tr id="product.id">
-            <th class="black-text">{{ product.id }}</th>
+            <th class="black-text">{{ forloop.counter }}</th>
             <th class="black-text">{{ product.created_date|date:"SHORT_DATE_FORMAT" }}</th>
-            <th class="black-text">{{ product.name|truncatechars:15 }}</th>
+            <th class="black-text">
+              <a class=" waves-effect btn-flat tooltipped" data-position="bottom" data-tooltip="{{ product.name }}">
+                {{ product.name|truncatechars:15 }}
+              </a>
+            </th>
             <th class="black-text">{{ product.price|floatformat:0 }} fcfa</th>
             <th class="black-text">{{ product.quantity }} / {{product.initial_quantity}}</th>
             {% if user.is_superuser %}
@@ -200,13 +213,14 @@
                 class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Supprimer"><span class="material-icons">delete</span></a> -->
             </th>
-            {% endif %}
+
             <th>
               <label class="">
                 <input type="checkbox" name='product_id[]' value='{{product.id}}' id='delete_product' />
                 <span></span>
               </label>
             </th>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>

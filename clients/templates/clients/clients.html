@@ -123,8 +123,10 @@
             <th>Numero</th>
             <th>Passage</th>
             <th>Date</th>
+            {% if user.is_superuser %}
             <th>Actions</th>
             <th class="">Supprimer</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -137,6 +139,7 @@
             <th class="black-text ">
               {{ client.created_date|date:"SHORT_DATE_FORMAT" }}
             </th>
+            {% if user.is_superuser %}
             <th class="center-align-element black-text ">
 
               <a href="{% url 'clients:clientDetailPage' client.pk %}"
@@ -158,6 +161,7 @@
                 <span></span>
               </label>
             </th>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>

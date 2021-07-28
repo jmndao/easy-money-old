@@ -108,7 +108,16 @@
                 {{ form.color }}
                 <label for="{{form.color.id_for_label}}">Couleur</label>
             </div>
-
+            <div class="input-field col m3 s6">
+                {{ form.matière }}
+                <label for="{{form.matière.id_for_label}}">Matière</label>
+            </div>
+            <div class="input-field col m3 s6">
+                <label for="{{form.garantie.id_for_label}}">
+                    {{ form.garantie }}
+                    <span>Garantie</span>
+                </label>
+            </div>
             <div class="col s12">
                 <label for="{{form.description.id_for_label}}">
                     {{ form.description }}
