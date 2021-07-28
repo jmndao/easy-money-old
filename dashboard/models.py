@@ -176,6 +176,7 @@ class ProductModel(models.Model):
     matière = models.CharField(
         max_length=100, null=True, blank=True, default=None)
     garantie = models.BooleanField(default=False)
+    delai_garantie = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
