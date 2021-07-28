@@ -174,7 +174,9 @@
             <th>nom</th>
             <th>prix unitaire</th>
             <th>quantité</th>
+            {% if user.is_superuser %}
             <th>actions</th>
+            {% endif %}
             <th style="text-align:center;">supprimer</th>
           </tr>
         </thead>
@@ -186,6 +188,7 @@
             <th class="black-text">{{ product.name|truncatechars:15 }}</th>
             <th class="black-text">{{ product.price|floatformat:0 }} fcfa</th>
             <th class="black-text">{{ product.quantity }} / {{product.initial_quantity}}</th>
+            {% if user.is_superuser %}
             <th class="actions black-text">
               <a href="{% url 'dashboard:productDetailPage' product.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
@@ -197,6 +200,7 @@
                 class="red-text accent-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Supprimer"><span class="material-icons">delete</span></a> -->
             </th>
+            {% endif %}
             <th>
               <label class="">
                 <input type="checkbox" name='product_id[]' value='{{product.id}}' id='delete_product' />
