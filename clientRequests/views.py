@@ -6,6 +6,7 @@ from django.views.generic.edit import DeleteView, UpdateView
 from dashboard.utils import RedirectToPreviousMixin
 from dashboard.models import Shop
 from clientRequests.models import ClientRequestModel
+from clientRequests.forms import ClientRequestForm
 
 # Create your views here.
 
@@ -13,9 +14,9 @@ from clientRequests.models import ClientRequestModel
 class ClientRequestView(LoginRequiredMixin, CreateView):
 
     template_name = 'clientRequests/client_request.html'
-    model = ClientRequestModel
-    fields = '__all__'
+    form_class = ClientRequestForm
     success_url = reverse_lazy('clientRequests:clientRequestPage')
+    
     def form_valid(self, form):
         if not self.request.user.is_superuser:
             form.instance.shop = Shop.objects.get(
