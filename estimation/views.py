@@ -38,6 +38,14 @@ class EstimationView(LoginRequiredMixin, CreateView, Utils):
         return context
 
 
+# I have to work on this
+def change_value(request):
+    template_name = 'estimation/estimation.html'
+    if request.method == 'POST':
+        print('request is post')
+    return render(request, template_name)
+
+
 class LastEstimationPage(LoginRequiredMixin, CreateView, Utils):
     template_name = 'estimation/lastEstimation.html'
     model = EstimationModel

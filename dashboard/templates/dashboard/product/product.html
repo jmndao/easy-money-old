@@ -70,6 +70,10 @@
         <label for="{{form.dimension.id_for_label}}">Dimension</label>
       </div>
       <div class="input-field col m3 s6">
+        {{ form.exact_dimension }}
+        <label for="{{form.exact_dimension.id_for_label}}">Dimension exacte</label>
+      </div>
+      <div class="input-field col m3 s6">
         {{ form.estate }}
         <label for="{{form.estate.id_for_label}}">Etat</label>
       </div>
@@ -116,7 +120,7 @@
           <span>Garantie</span>
         </label>
       </div>
-      <div class="col s12">
+      <div class="col m9 s12">
         <label for="{{form.description.id_for_label}}">
           {{ form.description }}
           <span>Description du produit</span>
