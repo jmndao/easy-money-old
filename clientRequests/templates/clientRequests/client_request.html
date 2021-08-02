@@ -38,24 +38,43 @@
                         <th>prix souhaité</th>
                         <th>numero</th>
                         <th>email</th>
-                        <th>supprimer</th>
-
+                        {% if user.is_superuser %}
+                        <th>Actions</th>
+                        <th class="">Supprimer</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for c_req in client_requests%}
                     <tr id="{{c_req.id}}">
                         <td>{{c_req.client.fname}} {{c_req.client.lname}}</td>
-                        <td> {{c_req.produit_demander}} </td>
+                        <td> <a class=" waves-effect btn-flat tooltipped" data-position="bottom"
+                                data-tooltip="{{ c_req.produit_demander }}">
+                                {{ c_req.produit_demander|truncatechars:15 }}
+                            </a>
+                        </td>
                         <td> {% if c_req.wished_price %} {{c_req.wished_price}} {%else%} Non Specifié {% endif %} </td>
                         <td>{{c_req.client.numero}}</td>
                         <td>{{c_req.client.email}}</td>
+
+                        {% if user.is_superuser %}
+                        <td class="center-align-element black-text ">
+                            <a href="{% url 'clientRequests:clientRequestDetailPage' c_req.pk %}"
+                                class="deep-orange-text accent-3  waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Voir"><span class="material-icons">visibility</span>
+                            </a>
+                            <a href="{% url 'clientRequests:clientRequestEditPage' c_req.pk %}"
+                                class="green-text darken-4   waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Modifier"><span class="material-icons">update</span>
+                            </a>
+                        </td>
                         <td>
                             <label class="">
                                 <input type="checkbox" name='c_req_id[]' value='{{c_req.id}}' id='delete_c_req' />
                                 <span></span>
                             </label>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -154,5 +173,6 @@
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/select2Select.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'dashboard/js/materializeSelect.js' %}"></script> -->
 
 {% endblock javascripts %}

@@ -57,7 +57,8 @@ class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
-            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            shop_owner = Shop.objects.get(
+                owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
         return super().form_valid(form)
 
@@ -65,20 +66,7 @@ class ClientUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Modification-Espace Client"
         return context
-    
 
-
-class ClientDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
-
-    template_name = 'clients/clients_delete.html'
-    model = ClientModel
-    context_object_name = 'client'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Suppression-Espace Client"
-        return context
-    
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
     template_name = 'clients/clients_detail.html'
@@ -99,7 +87,9 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
         context["title"] = "Detail-Espace Client"
         return context
 
-#Delete Multiple Client
+# Delete Multiple Client
+
+
 def multiple_delete_client(request):
     if request.method == 'POST':
         client_ids = request.POST.getlist('id[]')

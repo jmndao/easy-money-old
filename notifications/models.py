@@ -15,8 +15,10 @@ class NotificationModel(models.Model):
         (3, 'Ajout'),
     ]
 
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_sender')
-    to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notif_to')
+    sender = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='notif_sender')
+    to = models.ForeignKey(User, on_delete=models.CASCADE,
+                           related_name='notif_to')
     message = models.TextField()
     notification_type = models.IntegerField(choices=NOTIFICATION_TYPES)
     read = models.BooleanField(default=False)
@@ -28,19 +30,21 @@ class NotificationModel(models.Model):
             if not instance.shop.owner.user.is_superuser:
                 users = User.objects.filter(is_superuser=True)
                 for user in users:
-                    msg = "Produit {} vient d'être ajouté par {}".format(instance.name, instance.shop.owner.user)
+                    msg = "Produit {} vient d'être ajouté par {}".format(
+                        instance.name, instance.shop.owner.user)
                     NotificationModel.objects.create(
-                        sender = instance.shop.owner.user,
-                        to = user,
-                        message = msg,
-                        notification_type = 2).save()
+                        sender=instance.shop.owner.user,
+                        to=user,
+                        message=msg,
+                        notification_type=2).save()
 
     @receiver(post_delete, sender=ProductModel)
     def create_notif_product_delete(sender, instance, *args, **kwargs):
         if not instance.shop.owner.user.is_superuser:
             users = User.objects.filter(is_superuser=True)
             for user in users:
-                msg ="Produit {} vient d'être supprimé par {}".format(instance.name, instance.shop.owner.user)
+                msg = "Produit {} vient d'être supprimé par {}".format(
+                    instance.name, instance.shop.owner.user)
                 NotificationModel.objects.create(
                     sender=instance.shop.owner.user,
                     to=user,

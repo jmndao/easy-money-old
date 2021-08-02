@@ -189,7 +189,14 @@ class ProductModel(models.Model):
         if not self.price_total_tt_produit:
             self.price_total_tt_produit = self.price_total * self.quantity
         self.price_vente_minimum_ad = self.price_total * 2
-        self.price_vente_minimum_dv = float(self.price_total) * 1.3
+
+        if self.dimension == 'MOYEN':
+            self.price_vente_minimum_dv = float(self.price_total) * 1.35
+        elif self.dimension == 'GRAND':
+            self.price_vente_minimum_dv = float(self.price_total) * 1.38
+        else:
+            self.price_vente_minimum_dv = float(self.price_total) * 1.3
+
         return super(ProductModel, self).save(*args, **kwargs)
 
     def __str__(self):

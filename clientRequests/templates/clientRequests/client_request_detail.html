@@ -1,0 +1,48 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block body_content %}
+
+<div class="card-panel">
+
+    <div class="card-panel deep-orange accent-3 center-align darken-4">
+        <h4>
+            <b>{{ title }} <br><span class="white-text">{{ client_request.client }}</span> </b>
+        </h4>
+    </div>
+    <div class="col s12">
+        <h4>Client: {% if client_request.client %} {{ client_request.client }}{% else %}Non spécifié{% endif %}</h4>
+    </div>
+    <div class="col s12">
+        <h4>Produit demandé: {% if client_request.produit_demander %} {{ client_request.produit_demander }}{% else %}Non
+            spécifié{% endif %}</h4>
+    </div>
+    <div class="col s12">
+        <h4>Numéro du client: {% if client_request.client.numero %} {{ client_request.client.numero }}{% else %}Non
+            spécifié{% endif %}</h4>
+    </div>
+    <div class="col s12">
+        <h4>Addresse email du client: {% if client_request.client.email %}
+            {{ client_request.client.email }}{% else %}Non
+            spécifié{% endif %}</h4>
+    </div>
+    <div class="col s12">
+        <h4>Description du produit: {% if client_request.description %} {{ client_request.description }}{% else %}Non
+            spécifié{% endif %}</h4>
+    </div>
+    <div class="col s12">
+        <h4>Prix souhaité: {% if client_request.wished_price %} <span class="deep-orange accent-t white-text"
+                style="padding:10px; border-radius:5px">
+                {{ client_request.wished_price|intcomma:False }} fcfa </span>{% else %}Non
+            spécifié{% endif %}</h4>
+    </div>
+    <a href="{% url 'clients:clientPage' %}"
+        class="btn-flat btn-large waves-effect black deep-orange-text accent-3">Retourner
+        <i class="material-icons right">keyboard_return</i>
+    </a>
+</div>
+
+
+
+{% endblock body_content %}

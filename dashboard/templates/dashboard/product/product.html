@@ -114,45 +114,52 @@
         {{ form.material }}
         <label for="{{form.material.id_for_label}}">Matière</label>
       </div>
-      <div class="col m9 s12">
+      <div class="col m12 s12">
         <label for="{{form.description.id_for_label}}">
           {{ form.description }}
           <span>Description du produit</span>
         </label>
       </div>
+
       <br />
       <div class="row">
-        <div class="input-field col m3 s6">
+        <div class="input-field col m4 s6">
+          <label for="{{form.garantie.id_for_label}}">
+            {{ form.garantie }}
+            <span>Garantie</span>
+          </label>
+        </div>
+        <div class="input-field col m4 s6">
           <label for="{{form.charger.id_for_label}}">
             {{ form.charger }}
             <span>Chargeur</span>
           </label>
         </div>
-        <div class="input-field col m3 s6">
+        <div class="input-field col m4 s6">
           <label for="{{form.original_box.id_for_label}}">
             {{ form.original_box }}
             <span>Boite d'origine</span>
           </label>
         </div>
-        <div class="input-field col m3 s6">
-          <label for="{{form.sale_bill.id_for_label}}">
-            {{ form.sale_bill }}
-            <span>Facture d'Achat</span>
-          </label>
-        </div>
-        <div class="input-field col m3 s6">
-          <label for="{{form.connectic.id_for_label}}">
-            {{ form.connectic }}
-            <span>Connectiques</span>
-          </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col m3 s6">
-          <button class="waves-effect waves-green black btn-flat" type="submit">
-            <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-            <b class="deep-orange-text accent-3">Enregistrer</b>
-          </button>
+        <div class="row">
+          <div class="input-field col m4 s6">
+            <label for="{{form.sale_bill.id_for_label}}">
+              {{ form.sale_bill }}
+              <span>Facture d'Achat</span>
+            </label>
+          </div>
+          <div class="input-field col m4 s6">
+            <label for="{{form.connectic.id_for_label}}">
+              {{ form.connectic }}
+              <span>Connectiques</span>
+            </label>
+          </div>
+          <div class="input-field col m4 s6">
+            <button class="waves-effect waves-green black btn-flat" type="submit">
+              <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+              <b class="deep-orange-text accent-3">Enregistrer</b>
+            </button>
+          </div>
         </div>
       </div>
     </div>
