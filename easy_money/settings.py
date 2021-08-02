@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('SERVER', default='127.0.0.1').split(",")
 
@@ -157,7 +157,7 @@ REDIRECT_URL = 'dashboard:homePage'
 
 #DROPBOX
 # 
-# DEFAULT_FILE_STORAGE = 'django_dropbox_storage_2.storage.DropboxStorage'
+DEFAULT_FILE_STORAGE = 'django_dropbox_storage_2.storage.DropboxStorage'
 
 DROPBOX_CONSUMER_KEY = config('DROPBOX_CONSUMER_KEY')
 DROPBOX_CONSUMER_SECRET = config('DROPBOX_CONSUMER_SECRET') 

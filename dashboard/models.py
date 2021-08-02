@@ -174,9 +174,10 @@ class ProductModel(models.Model):
     sold = models.BooleanField(default=False)
     color = models.CharField(max_length=100, blank=True, null=True)
     connectic = models.BooleanField(default=False)
-    matière = models.CharField(
+    material = models.CharField(
         max_length=100, null=True, blank=True, default=None)
     garantie = models.BooleanField(default=False)
+    delai_garantie = models.IntegerField(null=True, blank=True, default=True)
 
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
