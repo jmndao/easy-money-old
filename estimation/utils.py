@@ -95,8 +95,9 @@ class Utils:
 
         i_price = i_price - i_price * diff_year * percentage_8
 
-        print(diff_year)
-        return int(i_price)
+        proposed_price = round(float(i_price) / 1000) * 1000
+
+        return int(proposed_price)
 
     def estimation_from_form(self, form):
 
@@ -187,4 +188,5 @@ class Utils:
         i_price = i_price - i_price * diff_year * percentage_8
 
         i_price = i_price - repair_amount
-        return int(i_price)
+        proposed_price = round(float(i_price) / 1000) * 1000
+        return int(proposed_price)

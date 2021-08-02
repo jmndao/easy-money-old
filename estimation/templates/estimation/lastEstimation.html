@@ -174,18 +174,6 @@
         <span class="count last">{{estimation_result}}</span>
     </div>
     <!-- This is what I have added inside the last estimation -->
-    <div class=container>
-        <span class="change-value">Changer la valeur </span>
-        <form action="{% url 'estimation:change_value' %}" class="input">
-            {% csrf_token %}
-            <span><input type=" number" name="estimation"></span>
-            <div class="button">
-                <button type='submit' class="">
-                    Changer Valeur
-                </button>
-            </div>
-        </form>
-    </div>
 
 
     <div class="button">
