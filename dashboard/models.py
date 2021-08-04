@@ -159,7 +159,7 @@ class ProductModel(models.Model):
     sale_bill = models.BooleanField(default=False)
     dimension = models.CharField(
         max_length=20, choices=DIMENSION, null=True, blank=True)
-    exact_dimension = models.IntegerField(null=True, blank=True)
+    exact_dimension = models.IntegerField(null=True, blank=True, default=0)
     edition = models.CharField(max_length=100, null=True, blank=True)
     annee = models.CharField(max_length=20, null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
