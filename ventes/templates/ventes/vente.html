@@ -247,7 +247,7 @@
         </thead>
         <tbody>
           {% for v in vente %}
-          <tr id="v.id" {% if v.restant_du != 0%} class="red" {% else %} class="" {% endif %}>
+          <tr id="v.id" {% if v.restant_du != 0%} class="red accent-3" {% else %} class="" {% endif %}>
             <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
             <td class=''> {{ v.produit.name }} </td>
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>

@@ -27,7 +27,6 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         kwargs.update({'user': self.request.user})
         return kwargs
 
-
     def form_valid(self, form):
         # check if we choose the right quantities or not?
         ################################################################
@@ -50,12 +49,12 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         else:
             product.quantity = remaining_qty
             product.initial_quantity = product.quantity + vente_qty
-        # 
+        #
         price_vente_minimum = product.price_vente_minimum_ad or product.price_vente_minimum_dv
         if form.instance.price < price_vente_minimum:
-            messages.warning(self.request, "Attention vous vendez au prix minimum conseillé. Vous pouvez modifier la vente du produit {}".format(product.name))        
+            messages.warning(
+                self.request, "Attention vous vendez au prix minimum conseillé. Vous pouvez modifier la vente du produit {}".format(product.name))
         product.save()
-        
         client = form.instance.client
         try:
             not_new_client = ClientModel.objects.get(pk=client.pk)
@@ -67,7 +66,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             not_new_client.save()
         else:
             pass
-            
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -76,7 +75,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         uname = self.request.user.username
         if self.request.user.is_superuser:
             context['vente'] = self.q = VenteModel.objects.order_by(
-            '-created_date')
+                '-created_date')
             context["tendance_vente"] = VenteModel.objects.values(
                 'produit__name').annotate(freq=Count('produit__name')).order_by("?")
             context['count_item'] = self.q.count()
@@ -99,7 +98,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             context['benefice'] = self.benefice_vente(
                 VenteModel, ProductModel, is_superuser=False, user=self.request.user)
 
-        return context 
+        return context
 
 
 class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
@@ -111,7 +110,8 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
-            shop_owner = Shop.objects.get(owner__user__username=self.request.user.username)
+            shop_owner = Shop.objects.get(
+                owner__user__username=self.request.user.username)
             form.instance.shop = shop_owner
         return super().form_valid(form)
 
@@ -119,7 +119,6 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Modification-Vente"
         return context
-    
 
 
 class VenteDetailView(LoginRequiredMixin, DetailView):
@@ -132,7 +131,6 @@ class VenteDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Detail-Vente"
         return context
-    
 
 
 class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
@@ -146,13 +144,15 @@ class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
         context["title"] = "Suppression-Vente"
         return context
 
-#Delete Multiple Vente
-def multiple_delete_vente(request): 
+# Delete Multiple Vente
+
+
+def multiple_delete_vente(request):
     if request.method == 'POST':
         vente_ids = request.POST.getlist('id[]')
-        for id in vente_ids: 
+        for id in vente_ids:
             vente = VenteModel.objects.get(pk=id)
             vente.delete()
     return redirect('clients:clientPage')
 
-#404 page not found
+# 404 page not found
