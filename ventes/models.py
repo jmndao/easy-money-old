@@ -17,7 +17,7 @@ class VenteModel(models.Model):
             - acompte           : the amount of money that the client has given at this moment
     """
 
-    produit = models.ForeignKey(to='dashboard.ProductModel', on_delete=models.CASCADE)
+    produit = models.ManyToManyField(to='dashboard.ProductModel', null=True, blank=True)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente", blank=True, null=True)
     price_total = models.DecimalField(
