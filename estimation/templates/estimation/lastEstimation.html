@@ -126,6 +126,10 @@
         color: #ff3d00;
     }
 
+    .change-value {
+        color: #f2f2f2;
+    }
+
     @media (max-width: 880px) {
         .info {
             font-size: 15px;
@@ -169,11 +173,15 @@
         <span class="count middle">{{reparation}}</span>
         <span class="count last">{{estimation_result}}</span>
     </div>
+    <!-- This is what I have added inside the last estimation -->
+
+
     <div class="button">
         <a href="{% url 'estimation:estimationPage' %}" class="">
             Retourner
         </a>
     </div>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>

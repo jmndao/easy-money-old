@@ -159,6 +159,7 @@ class ProductModel(models.Model):
     sale_bill = models.BooleanField(default=False)
     dimension = models.CharField(
         max_length=20, choices=DIMENSION, null=True, blank=True)
+    exact_dimension = models.IntegerField(null=True, blank=True, default=0)
     edition = models.CharField(max_length=100, null=True, blank=True)
     annee = models.CharField(max_length=20, null=True, blank=True)
     storage = models.IntegerField(null=True, blank=True)
@@ -188,7 +189,14 @@ class ProductModel(models.Model):
         if not self.price_total_tt_produit:
             self.price_total_tt_produit = self.price_total * self.quantity
         self.price_vente_minimum_ad = self.price_total * 2
-        self.price_vente_minimum_dv = float(self.price_total) * 1.3
+
+        if self.dimension == 'MOYEN':
+            self.price_vente_minimum_dv = float(self.price_total) * 1.35
+        elif self.dimension == 'GRAND':
+            self.price_vente_minimum_dv = float(self.price_total) * 1.38
+        else:
+            self.price_vente_minimum_dv = float(self.price_total) * 1.3
+
         return super(ProductModel, self).save(*args, **kwargs)
 
     def __str__(self):

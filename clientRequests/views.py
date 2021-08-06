@@ -55,7 +55,6 @@ class ClientRequestUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, Updat
         context = super().get_context_data(**kwargs)
         context["title"] = "Modification-Demande Utilisateur"
         return context
-    
 
 
 class ClientRequestDetailView(LoginRequiredMixin, DetailView):
@@ -63,18 +62,29 @@ class ClientRequestDetailView(LoginRequiredMixin, DetailView):
     template_name = 'clientRequests/client_request_detail.html'
     model = ClientRequestModel
 
+    # def get_queryset(self):
+    #     uname = self.request.user.username
+    #     self.client_request = get_object_or_404(ClientRequestModel,
+    #                                             pk=self.kwargs['pk'],
+    #                                             client__shop__owner__user__username=uname)
+    #     return self.client_request
+
     def get_queryset(self):
-        uname = self.request.user.username
-        self.client_request = get_object_or_404(ClientRequestModel,
-                                                pk=self.kwargs['pk'],
-                                                client__shop__owner__user__username=uname)
+        u_user = self.request.user
+        if not u_user.is_superuser:
+            self.client_request = ClientRequestModel.objects.filter(pk=self.kwargs["pk"],
+                                                                    shop__owner__user__username=u_user.username)
+        else:
+            self.client_request = ClientRequestModel.objects.filter(
+                pk=self.kwargs["pk"])
         return self.client_request
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Detail-Demande Utilisateur"
+        context["title"] = "Details de la demande du client"
+        context['client_request'] = get_object_or_404(
+            ClientRequestModel, pk=self.kwargs["pk"])
         return context
-    
 
 
 class ClientRequestDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):
@@ -88,7 +98,8 @@ class ClientRequestDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, Delet
         context["title"] = "Suppression-Demande Utilisateur"
         return context
 
-#Delete Multiple Delete ClientRequest
+
+# Delete Multiple Delete ClientRequest
 def multiple_delete_clientRequest(request):
     if request.method == 'POST':
         c_req_ids = request.POST.getlist('id[]')
