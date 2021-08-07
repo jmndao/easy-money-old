@@ -183,8 +183,7 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-            <th><span>&#8470;</span></th>
-            <th>référence<span></span></th>
+            <th><span>&#8470;</span>référence</th>
             <th>date</th>
             <th>nom</th>
             <th>prix unitaire</th>
@@ -198,7 +197,6 @@
         <tbody>
           {% for product in products %}
           <tr id="product.id" {% if product.quantity == 0 %} class="black-text red accent-3" {% endif %}>
-            <th class="black-text">{{ forloop.counter }}</th>
             <th class="black-text">{{ product.id }}</th>
             <th class="black-text">{{ product.created_date|date:"SHORT_DATE_FORMAT" }}</th>
             <th class="black-text">
