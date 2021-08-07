@@ -354,7 +354,7 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         context['quantity'] = sum([qty.quantity for qty in vente_of_that_date])
         context['c_fname'] = self.q.client.fname
         context['c_lname'] = self.q.client.lname
-        
+
         context['v_date'] = date = self.q.created_date
         date = date.strftime("%B-%d")
         context['v_date'] = date
