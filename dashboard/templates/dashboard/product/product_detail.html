@@ -11,8 +11,11 @@
                 class="material-icons right">visibility</i></h4>
     </div>
     <div class="row">
-        <div class="col s12">
-            <h4>Boutique: {{ product.shop }}</h4>
+        <div class="col s6">
+            <h4>Boutique: </h4>
+        </div>
+        <div class="cols 6">
+            <h4> {{ product.shop }}</h4>
         </div>
     </div>
     <div class="row">
@@ -48,6 +51,16 @@
     <div class="row">
         <div class="col s12">
             <h4>Produit: {{ product.name }}</h4>
+        </div>
+        <div class="row">
+            <h6>
+                <div class="col s6">
+                    Description:
+                </div>
+                <div class="col s6">
+                    <b>{% if product.description  %}{{ product.description }}{% else %}Pas de description{% endif %}</b>
+                </div>
+            </h6>
         </div>
         <div class="row">
             <h6>

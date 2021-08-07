@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 
 # Model -- Vente
+
+
 class VenteModel(models.Model):
     """
         The Sale Stock holds the information about the all transaction that the
@@ -17,14 +19,16 @@ class VenteModel(models.Model):
             - acompte           : the amount of money that the client has given at this moment
     """
 
-    produit = models.ForeignKey(to='dashboard.ProductModel', on_delete=models.CASCADE)
+    produit = models.ForeignKey(
+        to='dashboard.ProductModel', on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente", blank=True, null=True)
     price_total = models.DecimalField(
         max_digits=20, decimal_places=3, verbose_name="Prix De Vente Final", blank=True, null=True)
     acompte = models.DecimalField(
-        max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True, default = 0)
-    restant_du = models.DecimalField( decimal_places=3, verbose_name="Restant du Client", blank=True, null=True, max_digits=20, default = 0)
+        max_digits=20, decimal_places=3, verbose_name="L'avance du client", blank=True, null=True, default=0)
+    restant_du = models.DecimalField(
+        decimal_places=3, verbose_name="Restant du Client", blank=True, null=True, max_digits=20, default=0)
     guarantee = models.BooleanField(default=False)
     client = models.ForeignKey(
         to='clients.ClientModel', on_delete=models.SET_NULL, blank=True, null=True)
@@ -35,9 +39,9 @@ class VenteModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.price_total = self.price * self.quantity
-        if self.acompte != 0 or None: 
-            self.restant_du = self.price_total -  self.acompte
-        else: 
+        if self.acompte != 0 or None:
+            self.restant_du = self.price_total - self.acompte
+        else:
             self.restant_du = 0
         return super(VenteModel, self).save(*args, **kwargs)
 
