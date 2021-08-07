@@ -339,9 +339,6 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
     fields = '__all__'
 
     def get_context_data(self, **kwargs):
-        import datetime
-        today = datetime.date.today()
-
         context = super().get_context_data(**kwargs)
         context['v_shop'] = self.s = Shop.objects.all()
 
@@ -349,7 +346,7 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         context["f_number"] = self.kwargs["pk"]
 
         vente_of_that_date = VenteModel.objects.filter(
-            client=vente_pk.client, created_date__day=today.day)
+            client=vente_pk.client, created_date__day=vente_pk.created_date.day)
         context["ventes"] = vente_of_that_date
         context["total_price"] = sum(
             [v.produit.price_total for v in vente_of_that_date])
@@ -363,7 +360,6 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['c_address'] = self.q.client.address
         context['c_tel'] = self.q.client.numero
-        print(context)
         return context
 
 
