@@ -166,7 +166,7 @@
                 {% for vente in ventes %}
                 <tr>
                     <td> {{vente.produit.name}} </td>
-                    <td>{{vente.produit.quantity}}</td>
+                    <td>{{vente.quantity}}</td>
                     <td> {{vente.produit.price|floatformat:0}} fcfa </td>
                     <th>{{vente.produit.price_total|floatformat:0}} fcfa </th>
                 </tr>

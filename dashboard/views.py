@@ -339,7 +339,6 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
     fields = '__all__'
 
     def get_context_data(self, **kwargs):
-
         context = super().get_context_data(**kwargs)
         context['v_shop'] = self.s = Shop.objects.all()
 
@@ -361,7 +360,6 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['c_address'] = self.q.client.address
         context['c_tel'] = self.q.client.numero
-        print(context)
         return context
 
 
