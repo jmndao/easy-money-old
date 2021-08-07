@@ -235,8 +235,8 @@
 
             <th>Clients</th>
             <th>Produit</th>
+            <th>Référence<br></th>
             <th>Prix de <br> vente</th>
-            <th>Restant Du <br></th>
             <th>date<br> vendue</th>
             <th>Factures</th>
             {% if user.is_superuser %}
@@ -250,8 +250,8 @@
           <tr id="v.id" {% if v.restant_du != 0%} class="red accent-3" {% else %} class="" {% endif %}>
             <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
             <td class=''> {{ v.produit.name }} </td>
+            <td class=''> {{ v.produit.id }} </td>
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>
-            <td class=''> {{ v.restant_du }} </td>
             <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
             {% if user.is_superuser %}
             <td class=''>
