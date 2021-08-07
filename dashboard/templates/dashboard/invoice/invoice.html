@@ -164,12 +164,14 @@
                 </tr>
             </thead>
             <tbody>
+                {% for vente in ventes %}
                 <tr>
-                    <td> {{v_product}} </td>
-                    <td>{{quantity}}</td>
-                    <td> {{c_price|floatformat:0}} fcfa </td>
-                    <th>{{c_price_total|floatformat:0}} fcfa </th>
+                    <td> {{vente.produit.name}} </td>
+                    <td>{{vente.produit.quantity}}</td>
+                    <td> {{vente.produit.price|floatformat:0}} fcfa </td>
+                    <th>{{vente.produit.price_total|floatformat:0}} fcfa </th>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
         <br><br>
@@ -180,7 +182,7 @@
                 <tbody>
                     <tr>
                         <td> TOTAL &ensp; HT</td>
-                        <th>{{c_price_total|floatformat:0}} fcfa </th>
+                        <th>{{total_price|floatformat:0}} fcfa </th>
                     </tr>
                     <tr>
                         <td> TVA &ensp; 0%</td>
@@ -188,7 +190,7 @@
                     </tr>
                     <tr>
                         <td> TOTAL &ensp; TTC</td>
-                        <th>{{c_price_total|floatformat:0}} fcfa </th>
+                        <th>{{total_price|floatformat:0}} fcfa </th>
                     </tr>
                 </tbody>
             </table>
@@ -197,7 +199,7 @@
         <div class="row">
             <div class="col s7"></div>
             <div class="col s5 payer">
-                <p> Montant à payer :&ensp; <b>{{c_price_total|floatformat:0}} fcfa </b></p>
+                <p> Montant à payer :&ensp; <b>{{total_price|floatformat:0}} fcfa </b></p>
             </div>
         </div>
 

@@ -121,7 +121,7 @@
                                 <td>{{ achat.seller}}</td>
                                 <td>{{ achat.created_date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td lass="right-align">{{ achat.price_total|floatformat:0|intcomma }}</td>
-                                <td>{{ achat.quantity}} / {{achat.initial_quantity}}</td>
+                                <td>{{ achat.quantity }} / {{ achat.initial_quantity }}</td>
                             </tr>
                             {% endif %}
                             {% endfor %}
@@ -169,7 +169,7 @@
                                 <td>{{ depot_vente.created_date|date:"SHORT_DATE_FORMAT" }}</td>
                                 <td>{{ depot_vente.price_total|floatformat:0|intcomma }}
                                 </td>
-                                <td>{{ depot_vente.quantity}} / {{ depot_vente.initial_quantity}}</td>
+                                <td>{{ depot_vente.quantity}} / {{ depot_vente.initial_quantity s}}</td>
                             </tr>
                             {% endif %}
                             {% endfor %}
