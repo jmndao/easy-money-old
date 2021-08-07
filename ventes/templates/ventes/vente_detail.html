@@ -15,81 +15,93 @@
             <div class="col s12">
                 <h4>Produit vendu: {{ sales.produit.name }}</h4>
             </div>
-            <div class="col s6">
-                Quantité vendu:
-            </div>
-
-            <div class="col s6">
-                <b>{{ sales.quantity }}</b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                produit vendu à:
-            </div>
-            <div class="col s6">
-                <b>{{ sales.client.fname }} {{ sales.client.lname }}</b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                Date de la vente:
-            </div>
-            <div class="col s6">
-                <b>{{ sales.created_date }}</b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                Garantie:
-            </div>
-            <div class="col s6">
-                <b>{{ sales.garantie|yesno:"OUI, NON"}} {% if sales.garantie %} / Delai {{ sales.delai_garantie }}
-                    {% else %} -------- {% endif %}</b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                Prix de vente d'un {{ sales.produit.name }} :
-            </div>
-            <div class="col s6">
-                <b>{% if sales.price %}{{ sales.price|floatformat:0|intcomma }}fcfa {% else %} -------
-                    {% endif %} </b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                Prix de vente total :
-            </div>
-            <div class="col s6">
-                <b>{% if sales.price_total %}{{ sales.price_total|floatformat:0|intcomma }}fcfa {% else %} -------
-                    {% endif %} </b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                Montant d'accompte :
-            </div>
-            <div class="col s6">
-                <b>{% if sales.acompte %}{{ sales.acompte|floatformat:0|intcomma }} fcfa {% else %} 0 fcfa
-                    {% endif %} </b>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col s6">
-                Montant Restant :
-            </div>
-            <div class="col s6">
-                <b class="deep-orange accent-3 white-text"
-                    style="padding:10px; border-radius:5px">{% if sales.restant_du %}{{ sales.restant_du|floatformat:0|intcomma }}fcfa
-                    {% else %} 0 fcfa
-                    {% endif %} </b>
-            </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col s6">
+            produit vendu à:
+        </div>
+        <div class="col s6">
+            <b>{{ sales.client.fname }} {{ sales.client.lname }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Référence du produit :
+        </div>
 
-    <a href="{% url 'ventes:ventePage' %}" class="btn-flat black deep-orange-text accent-3 waves-effect">Retourner <i
-            class="material-icons right">keyboard_return</i></a>
+        <div class="col s6">
+            <b>{{ sales.produit.id }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Quantité vendu:
+        </div>
+
+        <div class="col s6">
+            <b>{{ sales.quantity }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Date de la vente:
+        </div>
+        <div class="col s6">
+            <b>{{ sales.created_date }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Garantie:
+        </div>
+        <div class="col s6">
+            <b>{{ sales.garantie|yesno:"OUI, NON"}} {% if sales.garantie %} / Delai {{ sales.delai_garantie }}
+                {% else %} -------- {% endif %}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Prix de vente d'un {{ sales.produit.name }} :
+        </div>
+        <div class="col s6">
+            <b>{% if sales.price %}{{ sales.price|floatformat:0|intcomma }}fcfa {% else %} -------
+                {% endif %} </b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Prix de vente total :
+        </div>
+        <div class="col s6">
+            <b>{% if sales.price_total %}{{ sales.price_total|floatformat:0|intcomma }}fcfa {% else %} -------
+                {% endif %} </b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Montant d'accompte :
+        </div>
+        <div class="col s6">
+            <b>{% if sales.acompte %}{{ sales.acompte|floatformat:0|intcomma }} fcfa {% else %} 0 fcfa
+                {% endif %} </b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            Montant Restant :
+        </div>
+        <div class="col s6">
+            <b class="deep-orange accent-3 white-text"
+                style="padding:10px; border-radius:5px">{% if sales.restant_du %}{{ sales.restant_du|floatformat:0|intcomma }}fcfa
+                {% else %} 0 fcfa
+                {% endif %} </b>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'ventes:ventePage' %}" class="btn-flat black deep-orange-text accent-3 waves-effect">Retourner <i
+        class="material-icons right">keyboard_return</i></a>
 
 </div>
 
