@@ -133,7 +133,11 @@
           {% for ad in achat_directs %}
           <tr id='ad.id'>
             <th class="black-text"> {{ ad.seller }} </th>
-            <th class="black-text"> {{ ad.name }}</th>
+            <th class="black-text">
+              <a class=" waves-effect btn-flat tooltipped" data-position="bottom" data-tooltip="{{ ad.name }}">
+                {{ ad.name|truncatechars:15 }}
+              </a>
+            </th>
             <th class="black-text"> {{ ad.quantity }} / {{ad.initial_quantity}}</th>
             <th class="black-text">{{ ad.price_total|floatformat:0|intcomma}}</th>
             <th class="black-text">{{ ad.created_date|date:"SHORT_DATE_FORMAT"}}</th>
