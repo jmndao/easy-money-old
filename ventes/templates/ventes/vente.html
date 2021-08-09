@@ -232,7 +232,7 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-
+            <th>Compteur</th>
             <th>Clients</th>
             <th>Produit</th>
             <th><span>&#8470;</span>article</th>
@@ -248,6 +248,7 @@
         <tbody>
           {% for v in vente %}
           <tr id="v.id" {% if v.restant_du != 0%} class="red accent-3" {% else %} class="" {% endif %}>
+            <td>{{forloop.counter}}</td>
             <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
             <td class=''> {{ v.produit.name }} </td>
             <td class=''> {{ v.produit.id }} </td>
