@@ -29,7 +29,8 @@ CATEGORY = [
     ('ENFANTS_ET_BÉBÉS', 'Enfants_et_bébés'),
     ('MONTRE', 'Montre'),
     ('ÉLECTROMÉNAGÉ', 'Électroménagé'),
-    ('AUTRES', 'Autre'),
+    ('ACCESSOIRE', 'Accessoire'),
+    ('AUTRES', 'Autre')
 ]
 
 ETAT = [
