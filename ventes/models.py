@@ -4,12 +4,6 @@ from django.db import models
 
 # Model -- Vente
 
-PAYMENTMODE = [
-    (1, 'Espèce'),
-    (2, 'Chèque'),
-    (3, 'Orange Money')
-]
-
 
 class VenteModel(models.Model):
     """
@@ -22,7 +16,6 @@ class VenteModel(models.Model):
             - price             : the final price the product has been sold
             - garantee          : the number of months the product is guaranteed to the client
             - guarantee_period  : the period in which the guarantee is valid in months
-            - payment_mode      : describe the way the customer has billed his items
             - acompte           : the amount of money that the client has given at this moment
     """
 
@@ -42,7 +35,6 @@ class VenteModel(models.Model):
     guarantee_period = models.IntegerField(
         blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     created_date = models.DateTimeField(auto_now_add=True)
-    payment_mode = models.CharField(max_length=100, choices=PAYMENTMODE, default=1)
     quantity = models.IntegerField(null=True, blank=True, default=1)
 
     def save(self, *args, **kwargs):

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'search',
     'import_export',
     'estimation',
+    'invoice',
     # Django DropBox Storage App
     'django_dropbox_storage_2'
 ]

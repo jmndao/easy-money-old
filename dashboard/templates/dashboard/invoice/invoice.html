@@ -97,6 +97,15 @@
         table td {
             border: 3px solid;
         }
+        .footer-class {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer-class div {
+            text-align: center;
+            line-height: 0.1;
+        }
     </style>
 </head>
 
@@ -203,16 +212,22 @@
         </div>
 
         <!-- Le Nom et la Signature -->
-        <footer>
+        <div class="row">
             <div class="row">
                 <br>
                 <div class="col s8">
                     <p>Merci pour la <b> Confiance </b></p>
-                    <p>Numero N.I.N.E.A <b> 008523533 </b></p>
                 </div>
                 <div class="col s4">
                     <u><b>Nom et Signature </b></u>
                 </div>
+            </div>
+        </div>
+
+        <footer class='footer-class'>
+            <div>
+                <p><small><b> EASY-MONEY SARL </b></small></p>
+                <p><small> Numero N.I.N.E.A: <b> 008523533 </b> </small> </p>
             </div>
         </footer>
     </div>

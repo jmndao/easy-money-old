@@ -174,11 +174,13 @@
         <div class="actions">
           <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
-        <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 2px;">
-          <button id='delete' type='submit' class="red darken-1 btn white-text">
-            <i class="material-icons left"></i>Supprimer
-          </button>
-        </div>
+        {% if user.is_superuser %}
+          <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 2px;">
+            <button id='delete' type='submit' class="red darken-1 btn white-text">
+              <i class="material-icons left"></i>Supprimer
+            </button>
+          </div>
+        {% endif %}
       </div>
       <table id="datatable" class="responsive-table">
         <thead>
@@ -209,7 +211,7 @@
             <th class="black-text">
               {{ product.quantity }} / {{product.initial_quantity}}
             </th>
-            <th class="actions black-text">
+            <th class="actions black-text center-align">
               <a href="{% url 'dashboard:productDetailPage' product.pk %}"
                 class="orange-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Voir"><span class="material-icons">visibility</span>

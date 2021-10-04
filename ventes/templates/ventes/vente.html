@@ -222,11 +222,13 @@
         <div class="actions">
           <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
-        <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
-          <button id='delete' type='submit' class="red darken-1 btn white-text">
-            <i class="material-icons left"></i>Supprimer
-          </button>
-        </div>
+        {% if user.is_superuser %}
+          <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
+            <button id='delete' type='submit' class="red darken-1 btn white-text">
+              <i class="material-icons left"></i>Supprimer
+            </button>
+          </div>
+        {% endif %}
       </div>
 
       <table id="datatable" class="responsive-table">
@@ -239,8 +241,8 @@
             <th>Prix de <br> vente</th>
             <th>date<br> vendue</th>
             <th>Factures</th>
-            {% if user.is_superuser %}
             <th>Actions</th>
+            {% if user.is_superuser %}
             <th>Supprimer</th>
             {% endif %}
           </tr>
@@ -254,19 +256,21 @@
             <td class=''> {{ v.produit.id }} </td>
             <td> {{ v.price_total|floatformat:0|intcomma }}</td>
             <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
-            {% if user.is_superuser %}
             <td class=''>
               <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
-                <span class="material-icons black">picture_as_pdf</span>
+                <span class="material-icons ">picture_as_pdf</span>
               </a>
             </td>
             <td class="black-text center-align-element">
               <a href="{% url 'ventes:venteDetailPage' v.pk %}"
                 class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-              <a href="{% url 'ventes:venteEditPage' v.pk %}"
-                class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier"><span class="material-icons">update</span></a>
+                data-tooltip="Voir"><span class="material-icons">visibility</span>
+              </a>
+              {% if user.is_superuser %}
+                <a href="{% url 'ventes:venteEditPage' v.pk %}"
+                  class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
+                  data-tooltip="Modifier"><span class="material-icons">update</span>
+                </a>            
             <td>
               <label class="">
                 <input type="checkbox" name='vente_id[]' value='{{v.id}}' id='delete_vente' />

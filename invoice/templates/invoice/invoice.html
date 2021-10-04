@@ -1,0 +1,23 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/datatables/datatables.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/addon_datatables.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/style.css' %}" />
+{% endblock stylesheets %} {% block title %} {{ title }} {% endblock title %}
+
+{%block body_content %}
+
+
+
+{% endblock body_content %}
+
+{% block javascripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'dashboard/js/main.js' %}">
+</script>
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
+</script>
+<script type="text/javascript" src="{% static 'dashboard/js/materializeSelect.js' %}"></script>
+{% endblock javascripts %}

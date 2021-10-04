@@ -1,5 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
 from django.db.models import Count

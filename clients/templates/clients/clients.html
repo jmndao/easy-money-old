@@ -109,11 +109,13 @@
           <!-- Here is where we should make the linking-->
           <a href="#man" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
         </div>
-        <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
-          <button id='delete' type='submit' class="red darken-1 btn white-text">
-            <i class="material-icons left"></i>Supprimer
-          </button>
-        </div>
+        {% if user.is_superuser %}
+          <div class="row center-align with-pd" style="margin-left: 10px; margin-right: 10px;">
+            <button id='delete' type='submit' class="red darken-1 btn white-text">
+              <i class="material-icons left"></i>Supprimer
+            </button>
+          </div>
+        {% endif %}
       </div>
       <table id="datatable" class="responsive-table">
         <thead>
@@ -123,8 +125,8 @@
             <th>Numero</th>
             <th>Passage</th>
             <th>Date</th>
-            {% if user.is_superuser %}
             <th>Actions</th>
+            {% if user.is_superuser %}
             <th class="">Supprimer</th>
             {% endif %}
           </tr>
@@ -139,7 +141,6 @@
             <th class="black-text ">
               {{ client.created_date|date:"SHORT_DATE_FORMAT" }}
             </th>
-            {% if user.is_superuser %}
             <th class="center-align-element black-text ">
 
               <a href="{% url 'clients:clientDetailPage' client.pk %}"
@@ -147,12 +148,14 @@
                 data-tooltip="Voir"><span class="material-icons">visibility</span></a>
 
 
+            {% if user.is_superuser %}
               <a href="{% url 'clients:clientEditPage' client.pk %}"
                 class="green-text darken-4   waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier"><span class="material-icons">update</span></a>
-
-
+                data-tooltip="Modifier"><span class="material-icons">update</span>
+              </a>
+            {% endif %}
             </th>
+            {% if user.is_superuser %}
             <th>
               <label class="">
                 <input type="checkbox" name='client_id[]' value='{{client.id}}' id='delete_client' />

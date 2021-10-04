@@ -29,6 +29,7 @@ urlpatterns = [
     path('estimation/', include('estimation.urls')),
     path('devis/', include('devis.urls')),
     path('search/', include('search.urls')),
+    path('invoice/', include('invoice.urls')),
     path('notifications/', include('notifications.urls')),
     path('easymoney/admin/', admin.site.urls),
 ]
