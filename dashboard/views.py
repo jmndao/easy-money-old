@@ -349,7 +349,7 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
             client=vente_pk.client, created_date__day=vente_pk.created_date.day)
         context["ventes"] = vente_of_that_date
         context["total_price"] = sum(
-            [v.produit.price_total for v in vente_of_that_date])
+            [v.price_total for v in vente_of_that_date])
 
         context['quantity'] = sum([qty.quantity for qty in vente_of_that_date])
         context['c_fname'] = self.q.client.fname
