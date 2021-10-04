@@ -180,17 +180,17 @@
             <table>
                 <tbody>
                     <tr>
-                        <td> TOTAL &ensp; HT</td>
-                        <th>{{total_price|floatformat:0}} fcfa </th>
-                    </tr>
-                    <tr>
                         <td> TVA &ensp; 0%</td>
                         <th> 0fcfa </th>
                     </tr>
                     <tr>
-                        <td> TOTAL &ensp; TTC</td>
+                        <td> TOTAL &ensp; HT</td>
                         <th>{{total_price|floatformat:0}} fcfa </th>
                     </tr>
+                    {% comment %} <tr>
+                        <td> TOTAL &ensp; TTC</td>
+                        <th>{{total_price|floatformat:0}} fcfa </th>
+                    </tr> {% endcomment %}
                 </tbody>
             </table>
         </div>
