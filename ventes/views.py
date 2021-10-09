@@ -70,8 +70,7 @@ def vente_creation_view(request, pk):
     VenteFormSet = inlineformset_factory(ClientModel,
                                          VenteModel,
                                          form=VenteForm,
-                                         extra=5,
-                                         max_num=10,
+                                         extra=10,
                                          fields=(
                                             'produit', 
                                             'price', 
