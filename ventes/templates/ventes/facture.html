@@ -1,0 +1,140 @@
+{% extends 'dashboard/base.html' %} 
+{% load static %} 
+{% load humanize %} 
+{%load product_tags %} 
+{% block stylesheets %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'dashboard/datatables/datatables.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'dashboard/css/addon_datatables.css' %}"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'dashboard/css/style.css' %}"
+/>
+
+{% endblock stylesheets %} 
+
+{% block body_content %}
+
+<div class="card-panel deep-orange accent-3 white-text big-text">
+  <b>Creation de facture pour</b>
+  {{ client.fname }} {{ client.lname }}
+</div>
+
+<div class="card-panel">
+
+    <a href="{% url 'clients:clientPage' %}" name="clientID"
+        class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+        data-tooltip="Nouveau client">
+        <i class="material-icons right">person_add</i>
+        <b>Creér un nouveau client</b>
+    </a>
+  <div class="card-content">
+    <form method="POST">
+    {% csrf_token %}
+      {{ formset.management_form }}
+    {% for form in formset %}
+      <li>
+        <div class="input-field col m5 s10">{{ form.produit }}</div>
+        <div class="row center-align">
+          <div class="input-field col m6 s12">
+            {{ form.price }}
+            <label for="{{ form.price.id_for_label }}">Prix de vente </label>
+          </div>
+
+          <div class="input-field col m6 s12">
+            {{ form.acompte }}
+            <label for="{{form.acompte.id_for_label}}">Acompte</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col m6 s12">
+            {{ form.quantity }}
+            <label for="{{form.quantity.id_for_label}}">Quantité</label>
+          </div>
+          <div class="col m6 s12">
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header deep-orange accent-3 white-text">
+                  <i class="material-icons">health_and_safety</i> Assurez-vous
+                  une garantie pour ce produit ?
+                </div>
+                <div class="collapsible-body">
+                  <div class="row">
+                    <div class="input-field col m6 s12">
+                      <label for="{{ form.guarantee.id_for_label }}">
+                        {{ form.guarantee }}
+                        <span>Garantie</span>
+                      </label>
+                    </div>
+                    <div class="input-field col m6 s12">
+                      {{ form.guarantee_period }}
+                      <label for="{{ form.guarantee_period.id_for_label }}">
+                        Delai garantie
+                      </label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            {% if formset.can_delete %}
+                <div class="input-field col m6 s12">
+                    <label for="{{ form.DELETE.id_for_label }}">
+                        {{ form.DELETE }}
+                        <span>Supprimer</span>
+                    </label>
+                </div>
+            {% endif %}
+          </div>
+        </div>
+        
+      </li>
+      <br />
+      {% endfor %}
+      <div class="col s12">
+        <button class="waves-effect waves-green btn-flat black" type="submit">
+          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+          <b class="deep-orange-text accent-3">Enregistrer</b>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock body_content %} 
+{% block javascripts %}
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/materialize_setup.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/main.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/chartVente.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/datatables/datatables.js' %}"
+></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/main.js' %}"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script
+  type="text/javascript"
+  src="{% static 'dashboard/js/select2Select.js' %}"
+></script>
+
+{% endblock javascripts %}

@@ -129,85 +129,30 @@
 </div>
 
 <div class="card-panel deep-orange accent-3 white-text big-text">
-  <b>Formulaire de Vente</b>
+  <b>Effectuer une facture de vente</b>
 </div>
 
 <div class="card-panel">
 
   <div class="card-content">
-    <form action="" method="post">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ request.path }}">
-      <!--- Form -->
-      <div class="row" id="venteID">
-        <div class="input-field col m5 s10">
-          {{ form.produit }}
-        </div>
-        <div class="input-field col m1 s2">
-          <a href="{% url 'dashboard:productPage' %}" name="clientID"
-            class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom" data-tooltip="Nouveau Produit">
-            <i class="material-icons right">local_mall</i>
-          </a>
-        </div>
-        <div class="input-field col m5 s10">
-          {{ form.client }}
-        </div>
-        <div class="input-field col m1 s2">
-          <a href="{% url 'clients:clientPage' %}" name="clientID" class="btn-flat deep-orange-text accent-3 tooltipped"
-            data-position="bottom" data-tooltip="Nouveau client">
-            <i class="material-icons right">person_add</i>
-          </a>
-        </div>
-
+    <a href="{% url 'clients:clientPage' %}" name="clientID"
+        class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+        data-tooltip="Nouveau client">
+        <i class="material-icons right">person_add</i>
+        <b>Creér un nouveau client</b>
+    </a>
+    <div class="collection">
+      {% for client in clients %}
+        <li class="collection-item">
+          <div>
+            {{ client.fname }} {{ client.lname }}
+            <a href="{% url 'ventes:venteCreationPage' client.pk %}" class="secondary-content">
+             <i class="material-icons">receipt_long</i>
+            </a>
+          </div>
+        </li>
+      {% endfor %}
       </div>
-      <div class="row center-align">
-        <div class="input-field col m6 s12">
-          {{ form.price }}
-          <label for="{{ form.price.id_for_label }}">Prix de vente </label>
-        </div>
-
-        <div class="input-field col m6 s12">
-          {{ form.acompte }}
-          <label for="{{form.acompte.id_for_label}}">Acompte</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col m6 s12">
-          {{ form.quantity }}
-          <label for="{{form.quantity.id_for_label}}">Quantité</label>
-        </div>
-        <div class="col m6 s12 ">
-          <ul class="collapsible">
-            <li>
-              <div class="collapsible-header deep-orange accent-3 white-text"><i
-                  class="material-icons">health_and_safety</i> Assurez-vous une garantie
-                pour ce produit ?</div>
-              <div class="collapsible-body">
-                <div class="row">
-                  <div class="input-field col m6 s12">
-                    <label for="{{ form.guarantee.id_for_label }}">
-                      {{ form.guarantee }}
-                      <span>Garantie</span>
-                    </label>
-                  </div>
-                  <div class="input-field col m6 s12">
-                    {{ form.guarantee_period }}
-                    <label for="{{ form.guarantee_period.id_for_label }}">Delai garantie</label>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col s12">
-        <button class="waves-effect waves-green btn-flat black" type="submit">
-          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-          <b class="deep-orange-text accent-3">Enregistrer</b>
-        </button>
-      </div>
-    </form>
   </div>
 </div>
 
