@@ -28,7 +28,7 @@ def vente_list_view(request):
     context = {}
 
     # Render the list of all client in context and pks
-    context['clients'] = ClientModel.objects.all().order_by('-created_date')[5]
+    context['clients'] = ClientModel.objects.all().order_by('-created_date')[:10]
 
     # What superuser and simple_user sees are at some 
     # point different that's why their context rendering
