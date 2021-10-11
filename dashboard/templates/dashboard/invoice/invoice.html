@@ -184,7 +184,13 @@
         <div class='row jc'>
             <div class='col s6 lh jc2'>
                 <p><b>Informations additionnelles</b></p>
-                <p>Service après vente - Livraison à domicile</p>
+                {% if v.type_de_service == 0 %}
+                    <p>Non spécifié</p>
+                {% elif v.type_de_service == 1 %}
+                    <p>Service après vente</p>
+                {% elif v.type_de_service == 2 %}
+                    <p>Livraison à domicile</p>
+                {% endif %}
             </div>
         </div>
         <br>
@@ -239,19 +245,16 @@
             </div>
         </div>
         <div class="row ">
-            <div class="col s4 lh">
+            <div class="col s6 lh">
                 <p><b>Siège social</b></p>
                 <p>Centre Commercial saly Center</p>
                 <p>Saly Portudal</p>
+                <p><b>N.I.N.E.A </b></p>
             </div>
-            <div class="col s4 lh">
-                <p><b>Coordonnées</b></p>
-                <p> Damian Claro</p>
-                <p>tel: 772842358</p>
-            </div>
-            <div class="col s4 lh">
+            
+            <div class="col s6 lh">
                 <p><b>Détails Règlement</b></p>
-                <p>50% acompte à la commande, le solde à la livraison</p>
+                <p>{{ v.type_de_reglement }}</p>
                 <p>Règlement espèces ou chèques</p>
             </div>
         </div>

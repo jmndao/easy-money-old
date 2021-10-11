@@ -42,8 +42,8 @@ class VenteModel(models.Model):
         blank=True, null=True, verbose_name="Periode de garantie [en mois]")
     
     # Newly added fields
-    type_de_service = models.IntegerField(choices=TYPE_OF_SERVICE, default=0)
-    type_de_reglement = models.TextField()
+    type_de_service = models.IntegerField(choices=TYPE_OF_SERVICE, null=True, blank=True, default=0)
+    type_de_reglement = models.TextField(null=True, blank=True, default="")
 
     created_date = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=True, blank=True, default=1)
