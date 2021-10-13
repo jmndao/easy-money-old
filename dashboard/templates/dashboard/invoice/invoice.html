@@ -136,7 +136,7 @@
         <div class="card-content col s12 line-height ">
             <div class='row jc'>
                 <div class='col s8 hb'>
-                    <h2 class='hb'>DEVIS n&deg; {{f_number}} </h2>
+                    <h2 class='hb'>Facture - n&deg; {{f_number}} </h2>
                 </div>
                 <div class="image col s4 right hb">
                     <img src="{% static 'dashboard/images/logo.png' %}" alt="Easy Money Logo" width="100" height="100">
@@ -202,7 +202,7 @@
                     <th>Description </th>
                     <th>Quantité</th>
                     <th>Prix Unitaire</th>
-                    <th>Total TTC</th>
+                    <th>Total HT</th>
                 </tr>
             </thead>
             <tbody>
@@ -249,13 +249,13 @@
                 <p><b>Siège social</b></p>
                 <p>Centre Commercial saly Center</p>
                 <p>Saly Portudal</p>
-                <p><b>N.I.N.E.A </b></p>
+                <p><b>N.I.N.E.A: 008523533 </b></p>
+                <p><b>RCS SNMBR2021B848 </b></p>
             </div>
             
             <div class="col s6 lh">
                 <p><b>Détails Règlement</b></p>
                 <p>{{ v.type_de_reglement }}</p>
-                <p>Règlement espèces ou chèques</p>
             </div>
         </div>
     </div>
