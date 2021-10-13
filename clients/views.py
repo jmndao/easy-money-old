@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from dashboard.utils import RedirectToPreviousMixin, Utils
 from dashboard.models import Shop
 from clients.models import ClientModel
+from ventes.models import VenteModel
 
 # Create your views here.
 
@@ -85,6 +86,8 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Detail-Espace Client"
+        context["ventes_client"] = vs = VenteModel.objects.filter(client=self.client[0])
+        context["sum_ventes"] = sum([v.price_total for v in vs])
         return context
 
 # Delete Multiple Client
