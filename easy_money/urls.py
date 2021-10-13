@@ -30,6 +30,7 @@ urlpatterns = [
     path('devis/', include('devis.urls')),
     path('search/', include('search.urls')),
     path('notifications/', include('notifications.urls')),
+    path('templated_email/', include('templated_email.urls', namespace='templated_email')),
     path('easymoney/admin/', admin.site.urls),
 ]
 

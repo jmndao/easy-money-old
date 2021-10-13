@@ -26,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+# DEBUG = config('DEBUG', cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = config('SERVER', default='127.0.0.1').split(",")
 
@@ -51,7 +52,9 @@ INSTALLED_APPS = [
     'import_export',
     'estimation',
     # Django DropBox Storage App
-    'django_dropbox_storage_2'
+    'django_dropbox_storage_2',
+    # Django templated_email
+    'templated_email'
 ]
 
 MIDDLEWARE = [
@@ -163,3 +166,14 @@ DROPBOX_CONSUMER_KEY = config('DROPBOX_CONSUMER_KEY')
 DROPBOX_CONSUMER_SECRET = config('DROPBOX_CONSUMER_SECRET') 
 DROPBOX_ACCESS_TOKEN = config('DROPBOX_ACCESS_TOKEN')
 DROPBOX_ROOT_PATH = config('DROPBOX_ROOT_PATH')
+
+##########################
+## Django-email Backend ##
+##########################
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'abu.ibrahimxxx68@gmail.com'
+EMAIL_HOST_PASSWORD = 'Yirime18'
