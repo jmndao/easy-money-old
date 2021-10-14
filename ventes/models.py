@@ -23,6 +23,8 @@ class VenteModel(models.Model):
             - garantee          : the number of months the product is guaranteed to the client
             - guarantee_period  : the period in which the guarantee is valid in months
             - acompte           : the amount of money that the client has given at this moment
+            - type_de_service   : desc the type of service delivered
+            - type_de_reglement : the way the customer/client has resolved the payment
     """
 
     produit = models.ForeignKey(

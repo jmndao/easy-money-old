@@ -1,3 +1,4 @@
+import datetime
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
@@ -30,9 +31,14 @@ def vente_list_view(request):
     # context to render
     context = {}
 
-    # Render the list of all client in context and pks
-    context['clients'] = ClientModel.objects.all().order_by(
-        '-created_date')[:10]
+    # Render the list of all not yet invoiced in the day
+    # Get all client of today and those with invoiced = false
+    
+    client_of_today = ClientModel.objects.filter(
+                            created_date__day=datetime.date.today().day,
+                            invoiced=False
+                        )
+    context['clients'] = client_of_today
 
     # What superuser and simple_user sees are at some
     # point different that's why their context rendering
@@ -88,7 +94,7 @@ def vente_creation_view(request, pk):
                                              'type_de_reglement',
 
                                          )
-                                         )
+                                        )
     # Pick the selected client
     client = ClientModel.objects.get(pk=pk)
 
@@ -165,6 +171,9 @@ def vente_creation_view(request, pk):
                     },
                     create_link=True
                 )
+            # This client has been invoiced for today
+            client.invoiced = True
+            client.save()
 
             return redirect(reverse('dashboard:invoice', args=(last_vente.pk,)))
 
