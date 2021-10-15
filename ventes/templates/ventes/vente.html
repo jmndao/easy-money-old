@@ -143,7 +143,7 @@
     </a>
 
     <div class="card-panel deep-orange accent-3 white-text">
-      <b> Liste des client non-facturés: </b>
+      <b> Liste des nouveaux clients non-facturés: </b>
     </div>
 
     <div class="collection">
@@ -155,6 +155,10 @@
              <i class="material-icons">receipt_long</i>
             </a>
           </div>
+        </li>
+      {% empty %}
+        <li class="collection">
+          Personne en attente...
         </li>
       {% endfor %}
       </div>
