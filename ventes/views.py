@@ -82,7 +82,7 @@ def vente_creation_view(request, pk):
                                          VenteModel,
                                          form=VenteForm,
                                          extra=10,
-                                         can_delete=True,
+                                         can_delete=False,
                                          fields=(
                                              'produit',
                                              'price',
