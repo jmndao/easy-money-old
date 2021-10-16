@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'estimation',
     # Django DropBox Storage App
     'django_dropbox_storage_2',
-    # Django templated_email
     'templated_email'
 ]
 
