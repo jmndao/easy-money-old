@@ -21,7 +21,7 @@
                     <p class=""> prix du produit: {{ product.price |floatformat:"-3" }} XOF</p>
                     {% if product.dv_or_ad == 'DV'%}
                     <p>prix de vente minimum {{ product.price_vente_minimum_dv |floatformat:"-3" }} XOF</p>
-                    {% else %}
+                    {% elif product.dv_or_ad == 'AD' %}
                     <p>prix de vente minimum {{ product.price_vente_minimum_av |floatformat:"-3" }} XOF</p>
                     {%endif %}
                 </div>
