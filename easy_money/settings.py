@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'import_export',
     'estimation',
     # Django DropBox Storage App
-    'django_dropbox_storage_2'
+    'django_dropbox_storage_2',
+     'livereload'
 ]
 
 MIDDLEWARE = [
@@ -64,7 +65,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Adding whitenoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'livereload.middleware.LiveReloadScript',
 ]
+
 
 ROOT_URLCONF = 'easy_money.urls'
 

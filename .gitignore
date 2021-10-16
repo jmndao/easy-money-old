@@ -88,6 +88,7 @@ venv/
 ENV/ 
 env.bak/ 
 venv.bak/ 
+runserver.sh
 
 # mkdocs documentation 
 /site 

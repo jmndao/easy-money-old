@@ -359,6 +359,8 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         context['v_date'] = date
         context['c_address'] = self.q.client.address
         context['c_tel'] = self.q.client.numero
+        # context ['rule'] = self.q.type_de_reglement
+        # context['service'] = self.q.type_of_service
         return context
 
 
@@ -405,17 +407,3 @@ def custom_page_not_found_view(request, exception):
     response.status_code = 404
     return response
 
-# def custom_error_view(request, exception=None):
-#     response = render(request, 'error/500.html' , {})
-#     response.status_code = 500
-#     return response
-
-# def custom_permission_denied_view(request, exception=None):
-#     response = render(request, 'error/403.html', {})
-#     response.status_code = 403
-#     return response
-
-# def custom_bad_request_view(request, exception=None):
-#     response = render(request, 'error/400.html', {})
-#     response.status_code = 400
-#     return response

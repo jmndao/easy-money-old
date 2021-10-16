@@ -13,8 +13,8 @@ from xhtml2pdf import pisa
 from collections import OrderedDict
 
 import datetime
-
-
+from collections import OrderedDict
+months = ['January','February','March','April','May','June','July','August','September','October','November','December',]
 class Utils:
 
     '''
@@ -84,6 +84,7 @@ class Utils:
 
     def chartObject(self, db, key=None, dv_or_ad=None, dt_col_name=None, uname=None, is_superuser=True):
         # Let's check is user is superuser or not
+       
         if is_superuser:
             if dv_or_ad:
                 df = pd.DataFrame(db.objects.filter(
@@ -105,8 +106,13 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
+            msp= OrderedDict(sorted(msp.items(),key =lambda x:months.index(x[0])))
+            # print(msp)
+
             dataset = { 'months': [m for m in msp.keys()], 
                         'data': [d for d in msp.values()]}
+            # print(type(dataset))
+            # print((dataset))
 
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
@@ -135,7 +141,7 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
-            msp
+            msp= OrderedDict(sorted(msp.items(),key =lambda x:months.index(x[0])))
             dataset = { 'months': [m for m in msp.keys()], 
                         'data': [d for d in msp.values()]}
 
@@ -159,9 +165,10 @@ class Utils:
             monthtly_data = json.loads(un_x.to_json())
             # the monthly key
             msp = monthtly_data[key]
+            msp= OrderedDict(sorted(msp.items(),key =lambda x:months.index(x[0])))
             dataset = {'months': [m for m in msp.keys()], 'data': [
                 d for d in msp.values()]}
-
+            
         else:
             dataset = {'months': ['Jan', 'Fev', 'Avr'],
                        'data': [0, 0, 0]}

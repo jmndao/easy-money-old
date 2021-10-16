@@ -34,7 +34,8 @@ CATEGORY = [
     ('FRIPERIE', 'Friperie'),
     ('JEUXVIDEO', 'Jeux Video'),
     ('LUXE', 'Luxe'),
-    ('AUTRES', 'Autre')
+    ('CUISINE', 'Cuisine'),
+    ('AUTRES', 'Autre')     
 ]
 
 ETAT = [

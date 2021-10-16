@@ -304,11 +304,23 @@
             </h6>
         </div>
     </div>
+    <div class="row">
+        <div class="col s6">
+            <a href="{% url 'dashboard:productEditPage' product.pk %}"
+                class=" btn-flat btn black green-text darken-4 waves-effect">Modifier<i
+                    class="material-icons right">update</i>
+            </a>
+        </div>
+        <div class="col s6">
+            <a href="{% url 'dashboard:productPage' %}"
+                class="btn-flat btn black deep-orange-text accent-3 waves-effect">Retourner
+                <i class="material-icons right">keyboard_return</i>
+            </a>
 
-    <a href="{% url 'dashboard:productPage' %}"
-        class="btn-flat btn-large black deep-orange-text accent-3 waves-effect">Retourner
-        <i class="material-icons right">keyboard_return</i></a>
+        </div>
 
+    </div>
 </div>
+
 
 {% endblock body_content %}
