@@ -3,10 +3,9 @@ from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.db.models import Count
-from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, DetailView
+from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from dashboard.utils import Utils, RedirectToPreviousMixin
 
@@ -168,8 +167,7 @@ def vente_creation_view(request, pk):
                             client=client, 
                             created_date__day=last_vente.created_date.day
                         ),
-                    },
-                    create_link=True
+                    }
                 )
             # This client has been invoiced for today
             client.invoiced = True

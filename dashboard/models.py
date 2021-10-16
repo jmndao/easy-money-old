@@ -217,3 +217,7 @@ def set_admin_shop_owner(sender, instance, **kwargs):
     shop = Shop.objects.get(owner=instance)
     shop = admin
     shop.save()
+
+
+class CompanyLogo(models.Model):
+   logo = models.ImageField(upload_to="profiles/", default='default.png')
