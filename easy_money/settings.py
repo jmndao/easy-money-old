@@ -65,7 +65,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Adding whitenoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'livereload.middleware.LiveReloadScript',
 ]
 
 
