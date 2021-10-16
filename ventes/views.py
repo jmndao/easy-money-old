@@ -156,6 +156,12 @@ def vente_creation_view(request, pk):
 
             last_vente = VenteModel.objects.all().order_by('-created_date')[0]
 
+            ventes =  VenteModel.objects.filter(client=client, 
+                            created_date__day=last_vente.created_date.day
+                    )
+
+            total_price = sum([v.price_total for v in ventes if v.price_total])
+
             # Send Invoice to client by email
             if client.email:
                 send_templated_mail(
@@ -163,10 +169,8 @@ def vente_creation_view(request, pk):
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=[client.email],
                     context={
-                        'ventes': VenteModel.objects.filter(
-                            client=client, 
-                            created_date__day=last_vente.created_date.day
-                        ),
+                        'ventes': ventes,
+                        'total_price': total_price
                     }
                 )
             # This client has been invoiced for today

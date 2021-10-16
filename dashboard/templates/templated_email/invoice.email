@@ -213,23 +213,26 @@
                         </td>
                         <td>
                             <table class="invoice-client-table-2">
+                            {% with ventes|first as first_v %}
                                 <tbody>
                                     <tr>
                                         <td><b>Destinataire</b></td>
                                     </tr>
                                     <tr>
-                                        <td>Tapha Sy</td>
+                                        <td>{{ first_v.client.fname }} {{ first_v.client.lname }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Cayor</td>
+                                        <td>{{ first_v.client.address }} </td>
                                     </tr>
                                     <tr>
-                                        <td>None</td>
+                                        <td>{{ first_v.client.email }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Sénégal</td>
+                                        <td>{{ first_v.client.nationality }}</td>
                                     </tr>
                                 </tbody>
+                                {% endwith %}
+
                             </table>
                         </td>
                     </tr>
@@ -296,11 +299,6 @@
                 </td>
             </tr>
         </table>
-
-        <!-- Client Signature -->
-        <div class="client-signature">
-            <p><b>Signature du client ("precede de la mention bon pour accord")</b></p>
-        </div>
 
         <!-- invoice-footer -->
         <table class="invoice-footer">
