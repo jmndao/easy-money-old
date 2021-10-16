@@ -3,7 +3,6 @@ from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 from accounts.models import UserProfile
 
-
 # Create your models here.
 
 SEXE = [
@@ -186,7 +185,9 @@ class ProductModel(models.Model):
     delai_garantie = models.IntegerField(null=True, blank=True, default=True)
 
     def save(self, *args, **kwargs):
+        import unidecode
         self.name = self.name.lower()
+        self.name = unidecode.unidecode(self.name)
         if self.quantity == 1 or self.quantity == None:
             self.quantity = 1
         if self.initial_quantity == 1 or self.initial_quantity == None:

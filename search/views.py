@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from dashboard.models import ProductModel
 from dashboard.utils import Utils
+from django.utils.encoding import iri_to_uri
+
 
 # Create your views here.
 
@@ -22,4 +24,4 @@ def search_product_view(request):
         'ncount': len(products),
         'title': "Recherche"
     }
-    return render(request, 'search/results.html', context)
+    return render(request, iri_to_uri('search/results.html'), context)
