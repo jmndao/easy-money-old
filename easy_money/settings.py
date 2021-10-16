@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'estimation',
     # Django DropBox Storage App
     'django_dropbox_storage_2',
-     'livereload'
+    # Django templated_email
+    'templated_email'
 ]
 
 MIDDLEWARE = [
@@ -166,3 +167,14 @@ DROPBOX_CONSUMER_KEY = config('DROPBOX_CONSUMER_KEY')
 DROPBOX_CONSUMER_SECRET = config('DROPBOX_CONSUMER_SECRET') 
 DROPBOX_ACCESS_TOKEN = config('DROPBOX_ACCESS_TOKEN')
 DROPBOX_ROOT_PATH = config('DROPBOX_ROOT_PATH')
+
+##########################
+## Django-email Backend ##
+##########################
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')

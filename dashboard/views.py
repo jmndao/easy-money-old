@@ -347,8 +347,9 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         vente_of_that_date = VenteModel.objects.filter(
             client=vente_pk.client, created_date__day=vente_pk.created_date.day)
         context["ventes"] = vente_of_that_date
+        context["v"] = vente_of_that_date[0] 
         context["total_price"] = sum(
-            [v.price_total for v in vente_of_that_date])
+            [v.price_total for v in vente_of_that_date if v.price_total])
 
         context['quantity'] = sum([qty.quantity for qty in vente_of_that_date])
         context['c_fname'] = self.q.client.fname

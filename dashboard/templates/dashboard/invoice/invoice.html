@@ -136,7 +136,7 @@
         <div class="card-content col s12 line-height ">
             <div class='row jc'>
                 <div class='col s8 hb'>
-                    <h2 class='hb'>DEVIS n&deg; {{f_number}} </h2>
+                    <h2 class='hb'>Facture - n&deg; {{f_number}} </h2>
                 </div>
                 <div class="image col s4 right hb">
                     <img src="{% static 'dashboard/images/logo.png' %}" alt="Easy Money Logo" width="100" height="100">
@@ -184,7 +184,13 @@
         <div class='row jc'>
             <div class='col s6 lh jc2'>
                 <p><b>Informations additionnelles</b></p>
-                <p>Service après vente - Livraison à domicile</p>
+                {% if v.type_de_service == 0 %}
+                <p>Non spécifié</p>
+                {% elif v.type_de_service == 1 %}
+                <p>Service après vente</p>
+                {% elif v.type_de_service == 2 %}
+                <p>Livraison à domicile</p>
+                {% endif %}
             </div>
         </div>
         <br>
@@ -196,7 +202,7 @@
                     <th>Description </th>
                     <th>Quantité</th>
                     <th>Prix Unitaire</th>
-                    <th>Total TTC</th>
+                    <th>Total HT</th>
                 </tr>
             </thead>
             <tbody>
@@ -225,7 +231,7 @@
                         <th>{{total_price|floatformat:0}} XOF </th>
                     </tr>
                     <tr class='blue-text text-blue'>
-                        <th> TOTAL &ensp; TTC</th>
+                        <th> TOTAL &ensp; HT</th>
                         <th>{{total_price|floatformat:0}} XOF </th>
                     </tr>
                 </tbody>
@@ -239,19 +245,17 @@
             </div>
         </div>
         <div class="row ">
-            <div class="col s4 lh">
+            <div class="col s6 lh">
                 <p><b>Siège social</b></p>
                 <p>Centre Commercial saly Center</p>
                 <p>Saly Portudal</p>
+                <p><b>N.I.N.E.A: 008523533 </b></p>
+                <p><b>RCS SNMBR2021B848 </b></p>
             </div>
-            <div class="col s4 lh">
-                <p><b>Coordonnées</b></p>
-                <p> Damian Claro</p>
-                <p>tel: 772842358</p>
-            </div>
-            <div class="col s4 lh">
+
+            <div class="col s6 lh">
                 <p><b>Détails Règlement</b></p>
-                <p>Règlement espèces ou chèques</p>
+                <p>{{ v.type_de_reglement }}</p>
             </div>
         </div>
     </div>

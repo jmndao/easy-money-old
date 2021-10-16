@@ -17,4 +17,3 @@ class ProductModelForm(forms.ModelForm):
             self.fields['seller'].queryset = ClientModel.objects.all()
         else:
             self.fields['seller'].queryset = ClientModel.objects.filter(shop__owner__user=self.user)
-

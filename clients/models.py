@@ -23,6 +23,7 @@ class ClientModel(models.Model):
             - address           : address of the client
             - numero            : his phone numer if he wills to.
             - address_email     : his email address that will serve for newsletter
+            - invoiced          : tell if the client has got an invoice or not, in the day.
     """
     shop = models.ForeignKey(
         to='dashboard.Shop', on_delete=models.CASCADE, blank=True, null=True)
@@ -41,6 +42,7 @@ class ClientModel(models.Model):
     vente_or_achat = models.CharField(
         max_length=100, choices=CLIENT, default="CR")
     created_date = models.DateTimeField(auto_now_add=True)
+    invoiced = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ['fname', 'lname', 'numero']

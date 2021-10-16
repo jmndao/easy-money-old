@@ -1,0 +1,348 @@
+<!-- Static assets -->
+{% load static %}
+{% block html %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Invoice</title>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" charset="utf-8"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js" charset="utf-8"></script>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+
+
+    <style>
+    .body-wrapper {
+        min-width: 600px;
+        background-color: white;
+        padding: 20px;
+        overflow: hidden;
+        font-size: 14px;
+    }
+    
+    .invoice-header {
+        width: 100%;
+        border-bottom: 4px solid #2196f3;
+    }
+    
+    .row-header td {
+        padding: 10px;
+    }
+    
+    .row-header td:first-child {
+        font-size: 28px;
+        font-weight: 600;
+    }
+    
+    .header-logo {
+        text-align: right;
+    }
+    
+    .invoice-comp-info,
+    .service-info {
+        margin-top: 5px;
+        padding: 5px;
+        width: 100%;
+        height: auto;
+    }
+    
+    .service-info {
+        border-bottom: 4px solid #2196f3;
+    }
+    
+    .invoice-comp-info p {
+        line-height: 8px;
+        font-style: italic;
+    }
+    
+    .service-info p {
+        line-height: 8px;
+    }
+    
+    .invoice-comp-info p:first-child {
+        font-weight: 800;
+        letter-spacing: 2px;
+    }
+    
+    .invoice-client-info {
+        padding: 20px;
+    }
+    
+    .invoice-client-table-wrapper {
+        width: 80%;
+    }
+    
+    .invoice-client-table-wrapper table {
+        margin: 5px;
+    }
+    
+    .invoice-client-table-1 tr td {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    
+    .invoice-client-table-1 tr td:first-child {
+        text-align: right;
+    }
+    
+    .invoice-client-table-2 tr:first-child td {
+        font-weight: 800;
+    }
+    
+    .item-table-list {
+        width: 100%;
+        margin: 10px 0;
+        border-collapse: collapse;
+    }
+    
+    .item-table-list tr td {
+        padding: 10px;
+    }
+    
+    .item-table-list tr td {
+        border-bottom: 1px solid #eee;
+    }
+    
+    .sum-table-wrapper {
+        width: 100%;
+        background-color: red;
+    }
+    
+    .summation-table {
+        width: 100%;
+    }
+    
+    .summation-table tr td:first-child {
+        width: 50%;
+    }
+    
+    .total-sum {
+        color: #2196f3;
+    }
+    
+    .client-signature {
+        padding: 10px;
+        background-color: #eee;
+        margin: 10px;
+    }
+    
+    .invoice-footer {
+        width: 90%;
+        margin-top: 20px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+</style>
+
+<body>
+    {% block subject %} Facture - Easy Money{% endblock %}
+
+    <div class="body-wrapper">
+
+        <!-- Company Header -->
+        <table class="invoice-header">
+            <tr class="row-header">
+                {% with ventes|first as first_v %}
+                    <td>Facture {{ first_v.client.pk }} </td>
+                {% endwith %}
+                <td class="header-logo">
+                    <img src="https://content.dropboxapi.com/apitl/1/A6RxQKSfx_0GcFlgqAFf639j_a_KAq9tc-jZTGryQuO9dInbEL5zxHioTUzgvk85xFzoOrvXLkstBsdLGk1MuMiSnNXLQWoGwPwNrd5jCHarqRlsoOw2ZfKQ8Mv1h_ipBlxAnHBQtvALP7buPhR7bnOlYhsAdHwf64rhqfiWcfiNozh-lX-H8TUiI6DKszCNPtjRByVM2iIFLkdMlpW6FTCdYcOw8AYBUA-yYx5C4-q8DJYFX2ReWE_uJR5yvYnJI8KucGzxe8hBfA43Np7HM8J60QxfWR2QynwnJ2EfQDqlSJuO8NCQLS9mND4dWvurPQ-3mAsYjq4VYGI7pS7BUVn6"
+                        alt="Easy Money Logo"
+                        height="60px"
+                        width="60px"
+                    />
+                </td>
+            </tr>
+        </table>
+
+        <!-- Company Info -->
+        <div class="invoice-comp-info">
+            <p><b><em>EASY-MONEY SARL</em></b></p>
+            <p>Centre Commercial Saly Center</p>
+            <p>Saly Portudal</p>
+            <p>Senegal</p>
+            <p><a href="mailto:serviceclient@easymoney.sn">serviceclient@easymoney.sn</a></p>
+        </div>
+
+
+        <!-- Client Info -->
+
+        <div class="invoice-client-info">
+            <center>
+                <table class="invoice-client-table-wrapper">
+                    <tr>
+                        <td>
+                            <table class="invoice-client-table-1">
+                            {% with ventes|first as first_v %}
+                                <tbody>
+                                    <tr>
+                                        <td>Date du Devis</td>
+                                        <td>{{first_v.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Référence du Devis</td>
+                                        <td>{{ first_v.client.pk }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Date de validité du Devis</td>
+                                        <td>{{first_v.created_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Emis par Devis</td>
+                                        <td>Easy Money SARL</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client</td>
+                                        <td>{{ first_v.client.fname }} {{ first_v.client.lname }}</td>
+                                    </tr>
+                                </tbody>
+                            {% endwith %}
+                            </table>
+                        </td>
+                        <td>
+                            <table class="invoice-client-table-2">
+                                <tbody>
+                                    <tr>
+                                        <td><b>Destinataire</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tapha Sy</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cayor</td>
+                                    </tr>
+                                    <tr>
+                                        <td>None</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sénégal</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+
+        <!-- Service Info -->
+        <div class="service-info">
+            <p><b>Informations Additionelles</b></p>
+            {% with ventes|first as first_v %}
+                {% if first_v.type_de_service == 0 %}
+                    <p>Non spécifié</p>
+                {% elif first_v.type_de_service == 1 %}
+                    <p>Service après vente</p>
+                {% elif first_v.type_de_service == 2 %}
+                    <p>Livraison à domicile</p>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Client Items List -->
+        <table class="item-table-list">
+            <thead>
+                <tr>
+                    <td><b>Description</b></td>
+                    <td><b>Quantité</b></td>
+                    <td><b>Prix Unitaire</b></td>
+                    <td><b>Total HT</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vente in ventes %}
+                    <tr>
+                        <td><b> {{vente.produit.name}} </b> </td>
+                        <td>{{vente.quantity}}</td>
+                        <td> {{vente.price|floatformat:0}} f.cfa </td>
+                        <td>{{vente.price_total|floatformat:0}} f.cfa </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Table summation -->
+        <table class="summation-table">
+            <tr>
+                <td style="width:50%"></td>
+                <td>
+                    <table class="item-table-list sum-table">
+                        <tr>
+                            <td><b>TVA 0%</b></td>
+                            <td>0 F.CFA</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total HT</b></td>
+                            <td>{{total_price|floatformat:0}} XOF</td>
+                        </tr>
+                        <tr class="total-sum" style="font-size: 18px;font-weight: bold;">
+                            <td><b>Total HT</b></td>
+                            <td>{{total_price|floatformat:0}} XOF</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Client Signature -->
+        <div class="client-signature">
+            <p><b>Signature du client ("precede de la mention bon pour accord")</b></p>
+        </div>
+
+        <!-- invoice-footer -->
+        <table class="invoice-footer">
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td><b>Siège social</b></td>
+                        </tr>
+                        <tr>
+                            <td>Centre Commercial Saly Center</td>
+                        </tr>
+                        <tr>
+                            <td>Saly Portudal</td>
+                        </tr>
+                        <tr>
+                            <td><b>N.I.N.E.A: 008523533</b></td>
+                        </tr>
+                        <tr>
+                            <td><b>RCS SNMBR2021B848</b></td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td><b>Détail Règlement</b></td>
+                            </tr>
+                            <tr>
+                                {% with ventes|first as first_v %}
+                                    <td>{{ first_v.type_de_reglement }}</td>
+                                {% endwith %}
+                            </tr>
+                        </table>
+                    </td>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
+{% endblock %}

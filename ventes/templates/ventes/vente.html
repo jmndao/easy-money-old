@@ -141,6 +141,11 @@
         <i class="material-icons right">person_add</i>
         <b>Creér un nouveau client</b>
     </a>
+
+    <div class="card-panel deep-orange accent-3 white-text">
+      <b> Liste des nouveaux clients non-facturés: </b>
+    </div>
+
     <div class="collection">
       {% for client in clients %}
         <li class="collection-item">
@@ -151,6 +156,10 @@
             </a>
           </div>
         </li>
+      {% empty %}
+        <h6>
+          Personne en attente...
+        </h6>
       {% endfor %}
       </div>
   </div>
@@ -276,5 +285,6 @@
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/select2Select.js' %}"></script>
-
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
+</script>
 {% endblock javascripts %}

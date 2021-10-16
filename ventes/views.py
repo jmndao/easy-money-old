@@ -1,11 +1,11 @@
+import datetime
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
 from django.db.models import Count
-from django.db import transaction
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import CreateView, DetailView
+from django.views.generic import DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from dashboard.utils import Utils, RedirectToPreviousMixin
 
@@ -13,6 +13,9 @@ from dashboard.models import ProductModel, Shop
 from clients.models import ClientModel
 from ventes.forms import VenteForm
 from ventes.models import VenteModel
+
+from templated_email import send_templated_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -27,10 +30,16 @@ def vente_list_view(request):
     # context to render
     context = {}
 
-    # Render the list of all client in context and pks
-    context['clients'] = ClientModel.objects.all().order_by('-created_date')[:10]
+    # Render the list of all not yet invoiced in the day
+    # Get all client of today and those with invoiced = false
+    
+    client_of_today = ClientModel.objects.filter(
+                            created_date__day=datetime.date.today().day,
+                            invoiced=False
+                        )
+    context['clients'] = client_of_today
 
-    # What superuser and simple_user sees are at some 
+    # What superuser and simple_user sees are at some
     # point different that's why their context rendering
     # is also different
     if conn_user.is_superuser:
@@ -63,6 +72,7 @@ def vente_list_view(request):
 
 def vente_creation_view(request, pk):
 
+    type_de_service, type_de_reglement = 0, ''
     # Get the connected user
     conn_user = request.user
 
@@ -71,63 +81,98 @@ def vente_creation_view(request, pk):
                                          VenteModel,
                                          form=VenteForm,
                                          extra=10,
+                                         can_delete=False,
                                          fields=(
-                                            'produit', 
-                                            'price', 
-                                            'acompte', 
-                                            'quantity', 
-                                            'guarantee', 
-                                            'guarantee_period'
+                                             'produit',
+                                             'price',
+                                             'acompte',
+                                             'quantity',
+                                             'guarantee',
+                                             'guarantee_period',
+                                             'type_de_service',
+                                             'type_de_reglement',
+
+                                         )
                                         )
-    )
     # Pick the selected client
     client = ClientModel.objects.get(pk=pk)
 
     formset = VenteFormSet(
         queryset=VenteModel.objects.none(),
         instance=client)
+
     if request.method == 'POST':
         formset = VenteFormSet(request.POST, instance=client)
         if formset.is_valid():
             for form in formset:
-                if not conn_user.is_superuser:
-                    form.instance.shop = Shop.objects.get(
-                        owner__user__username=conn_user.username)
-                    if form.instance.produit.pk:
-                        product = ProductModel.objects.get(pk=form.instance.produit.pk)
+                if form.is_valid():
+                    if not conn_user.is_superuser:
+                        form.instance.shop = Shop.objects.get(
+                            owner__user__username=conn_user.username)
+                    if form.instance.produit:
+                        product = ProductModel.objects.get(
+                            pk=form.instance.produit.pk)
                         product.sold = True
-
+                        # Calculating the total price here (Tt = price * Qty)
                         form.instance.price_total = form.instance.price * form.instance.quantity
-                        vente_qty = form.instance.quantity
-                        remaining_qty = product.quantity - vente_qty
+                        # Calculate the remaining quantity
+                        remaining_qty = product.quantity - form.instance.quantity
+
                         if remaining_qty < 0:
                             messages.error(request, "Il ne reste que {} {}. Donc cette vente ne peut être effectuée".format(
                                 product.quantity, product.name))
                             return redirect(reverse('ventes:ventePage'))
                         # elif remaining_qty == 0:
                         #     ProductModel.objects.filter(pk=form.instance.produit.pk).delete()
+                        # Update the remaining quantity here
                         else:
                             product.quantity = remaining_qty
-                            product.initial_quantity = product.quantity + vente_qty
+                            product.initial_quantity = product.quantity + form.instance.quantity
                         #
                         price_vente_minimum = product.price_vente_minimum_ad or product.price_vente_minimum_dv
+
                         if form.instance.price < price_vente_minimum:
                             messages.warning(
                                 request, "Attention vous vendez au prix minimum conseillé. Vous pouvez modifier la vente du produit {}".format(product.name))
                         product.save()
-                        client = form.instance.client
+
                         try:
-                            not_new_client = ClientModel.objects.get(pk=client.pk)
+                            client.passage += 1
+                            client.save()
                         except Exception as e:
-                            not_new_client = None
-                        if not_new_client:
-                            # the client is not new.
-                            not_new_client.passage += 1
-                            not_new_client.save()
-                        else:
                             pass
-            formset.save()
+
+                        if form.instance.type_de_service:
+                            type_de_service = int(
+                                form.instance.type_de_service)
+                        if form.instance.type_de_reglement:
+                            type_de_reglement = form.instance.type_de_reglement
+
+                        if type_de_service or type_de_reglement:
+                            form.instance.type_de_service = type_de_service
+                            form.instance.type_de_reglement = type_de_reglement
+
+                        form.save()
+
             last_vente = VenteModel.objects.all().order_by('-created_date')[0]
+
+            # Send Invoice to client by email
+            if client.email:
+                send_templated_mail(
+                    template_name='invoice',
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[client.email],
+                    context={
+                        'ventes': VenteModel.objects.filter(
+                            client=client, 
+                            created_date__day=last_vente.created_date.day
+                        ),
+                    }
+                )
+            # This client has been invoiced for today
+            client.invoiced = True
+            client.save()
+
             return redirect(reverse('dashboard:invoice', args=(last_vente.pk,)))
 
     context = {

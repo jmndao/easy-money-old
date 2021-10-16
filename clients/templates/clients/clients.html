@@ -120,6 +120,7 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
+            <th>Facturer</th>
             <th>Prenom</th>
             <th>Nom</th>
             <th>Numero</th>
@@ -127,13 +128,18 @@
             <th>Date</th>
             <th>Actions</th>
             {% if user.is_superuser %}
-            <th class="">Supprimer</th>
+              <th class="">Supprimer</th>
             {% endif %}
           </tr>
         </thead>
         <tbody>
           {% for client in clients %}
           <tr id="client.id">
+            <th class="valign-wrapper center-align black-text ">
+              <a href="{% url 'ventes:venteCreationPage' client.pk %}"
+                class="deep-orange-text accent-3  waves-effect btn-flat tooltipped" data-position="left"
+                data-tooltip="Faire une facture"><span class="material-icons">receipt_long</span></a>
+            </th>
             <th class="black-text">{{ client.fname }}</th>
             <th class="black-text">{{ client.lname }}</th>
             <th class="black-text">{{ client.numero }}</th>
@@ -141,20 +147,22 @@
             <th class="black-text ">
               {{ client.created_date|date:"SHORT_DATE_FORMAT" }}
             </th>
+            
             <th class="center-align-element black-text ">
 
               <a href="{% url 'clients:clientDetailPage' client.pk %}"
                 class="deep-orange-text accent-3  waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Voir"><span class="material-icons">visibility</span></a>
-
-
-            {% if user.is_superuser %}
-              <a href="{% url 'clients:clientEditPage' client.pk %}"
-                class="green-text darken-4   waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier"><span class="material-icons">update</span>
+                data-tooltip="Voir"><span class="material-icons">visibility</span>
               </a>
-            {% endif %}
+
+              {% if user.is_superuser %}
+                <a href="{% url 'clients:clientEditPage' client.pk %}"
+                  class="green-text darken-4   waves-effect btn-flat tooltipped" data-position="left"
+                  data-tooltip="Modifier"><span class="material-icons">update</span>
+                </a>
+              {% endif %}
             </th>
+            
             {% if user.is_superuser %}
             <th>
               <label class="">

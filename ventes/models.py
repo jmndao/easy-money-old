@@ -4,6 +4,12 @@ from django.db import models
 
 # Model -- Vente
 
+TYPE_OF_SERVICE = [
+    (0, 'Non défini'),
+    (1, 'Service après vente'),
+    (2, 'Livraison à domicile'),
+]
+
 
 class VenteModel(models.Model):
     """
@@ -17,6 +23,8 @@ class VenteModel(models.Model):
             - garantee          : the number of months the product is guaranteed to the client
             - guarantee_period  : the period in which the guarantee is valid in months
             - acompte           : the amount of money that the client has given at this moment
+            - type_de_service   : desc the type of service delivered
+            - type_de_reglement : the way the customer/client has resolved the payment
     """
 
     produit = models.ForeignKey(
@@ -34,6 +42,11 @@ class VenteModel(models.Model):
         to='clients.ClientModel', on_delete=models.SET_NULL, blank=True, null=True)
     guarantee_period = models.IntegerField(
         blank=True, null=True, verbose_name="Periode de garantie [en mois]")
+    
+    # Newly added fields
+    type_de_service = models.IntegerField(choices=TYPE_OF_SERVICE, null=True, blank=True, default=0)
+    type_de_reglement = models.TextField(null=True, blank=True, default="")
+
     created_date = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=True, blank=True, default=1)
 
