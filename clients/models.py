@@ -42,6 +42,7 @@ class ClientModel(models.Model):
     vente_or_achat = models.CharField(
         max_length=100, choices=CLIENT, default="CR")
     created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True) # Update each time the client pass
     invoiced = models.BooleanField(default=False)
 
     class Meta:

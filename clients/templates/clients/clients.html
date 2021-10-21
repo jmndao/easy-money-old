@@ -138,7 +138,14 @@
             <th class="valign-wrapper center-align black-text ">
               <a href="{% url 'ventes:venteCreationPage' client.pk %}"
                 class="deep-orange-text accent-3  waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Faire une facture"><span class="material-icons">receipt_long</span></a>
+                data-tooltip="Faire une facture"><span class="material-icons">receipt_long</span>
+              </a>
+              {% if client.email %}
+                <a href="{% url 'clients:sendInvoice' client.pk %}"
+                  class="deep-orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                  data-tooltip="Envoyer Facture"><span class="material-icons">email</span>
+                </a>
+              {% endif %}
             </th>
             <th class="black-text">{{ client.fname }}</th>
             <th class="black-text">{{ client.lname }}</th>
@@ -157,10 +164,11 @@
 
               {% if user.is_superuser %}
                 <a href="{% url 'clients:clientEditPage' client.pk %}"
-                  class="green-text darken-4   waves-effect btn-flat tooltipped" data-position="left"
+                  class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                   data-tooltip="Modifier"><span class="material-icons">update</span>
                 </a>
               {% endif %}
+              
             </th>
             
             {% if user.is_superuser %}

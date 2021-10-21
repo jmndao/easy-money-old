@@ -3,7 +3,7 @@
     background-color: #424242;
 }
 
-input:not([type]):focus:not([readonly]),
+i input:not([type]):focus:not([readonly]),
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=password]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),

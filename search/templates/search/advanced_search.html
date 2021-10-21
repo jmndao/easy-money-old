@@ -1,0 +1,210 @@
+{% extends 'dashboard/base.html' %}
+{% load humanize %}
+{% load static %}
+{% block body_content %}
+
+<div class="">
+    
+    {% comment %} Upper Section: Form {% endcomment %}
+
+    <div class="container_wrapper">
+    
+        <div class="card-panel">
+            <i class="material-icons secondary-content right">filter_alt</i>
+            Effectuer une recherche avancée
+        </div>
+
+        {% comment %} Form {% endcomment %}
+
+            <form action="" method="get">
+                {% csrf_token %}
+
+                <ul class="collapsible">
+                    <li class="active">
+                        <div class="collapsible-header">
+                            <i class="material-icons">filter_drama</i> Generique 
+                        </div>
+                        <div class="collapsible-body">
+                            
+                            {% comment %} Generic form {% endcomment %}
+                            <div class="row">
+                                <div class="input-field col s4">
+                                    <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                                    <label for="first_name">First Name</label>
+                                </div>
+                                <div class="input-field col s4">
+                                    <input id="last_name" type="text" class="validate">
+                                    <label for="last_name">Last Name</label>
+                                </div>
+                                <div class="input-field col s4">
+                                    <input id="last_name" type="text" class="validate">
+                                    <label for="last_name">Last Name</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">place</i> Electroniques
+                        </div>
+                        <div class="collapsible-body">
+                            <span>Lorem ipsum dolor sit amet.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons">whatshot</i>Téléphones
+                        </div>
+                        <div class="collapsible-body">
+                            <span>Lorem ipsum dolor sit amet.</span>
+                        </div>
+                    </li>
+                </ul>
+                {% comment %} <div class="row">
+                    <div class="input-field col m5 s12">
+                        {{ form.seller }}
+                        <label for="{{form.seller.id_for_label}}">Client</label>
+                    </div>
+
+                    <div class="input-field col m3 s6">
+                        {{ form.category }}
+                        <label for="{{form.category.id_for_label}}">Catégory</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.name }}
+                        <label for="{{form.name.id_for_label}}">Nom Produit</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.quantity }}
+                        <label for="{{form.quantity.id_for_label}}">Quantité</label>
+                    </div>
+
+                    <div class="input-field col m3 s6">
+                        {{ form.dv_or_ad }}
+                        <label for="{{form.dv_or_ad.id_for_label}}">Depot Vente ou Achat</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.price }}
+                        <label for="{{form.price.id_for_label}}">Prix Unitaire</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.montant_restauration }}
+                        <label for="{{form.montant_restauration.id_for_label}}">Montant Restauration
+                        </label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.dimension }}
+                        <label for="{{form.dimension.id_for_label}}">Dimension</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.exact_dimension }}
+                        <label for="{{form.exact_dimension.id_for_label}}">Dimension exacte</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.estate }}
+                        <label for="{{form.estate.id_for_label}}">Etat</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.obsolescence }}
+                        <label for="{{form.obsolescence.id_for_label}}">Obsolescence</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.rarety }}
+                        <label for="{{form.rarety.id_for_label}}">Rarete</label>
+                    </div>
+
+                    <div class="input-field col m3 s6">
+                        {{ form.storage }}
+                        <label for="{{form.storage.id_for_label}}">Memoire de Stockage</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.ram }}
+                        <label for="{{form.ram.id_for_label}}">Memoire RAM</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.model }}
+                        <label for="{{form.model.id_for_label}}">Model du produit</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{form.edition}}
+                        <label for="{{form.edition.id_for_label}}">Edition</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.annee }}
+                        <label for="{{form.annee.id_for_label}}">Annee </label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.color }}
+                        <label for="{{form.color.id_for_label}}">Couleur</label>
+                    </div>
+                    <div class="input-field col m3 s6">
+                        {{ form.material }}
+                        <label for="{{form.material.id_for_label}}">Matière</label>
+                    </div>
+                    <div class="col m12 s12">
+                        <label for="{{form.description.id_for_label}}">
+                        {{ form.description }}
+                        <span>Description du produit</span>
+                        </label>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="input-field col m4 s6">
+                        <label for="{{form.garantie.id_for_label}}">
+                            {{ form.garantie }}
+                            <span>Garantie</span>
+                        </label>
+                        </div>
+                        <div class="input-field col m4 s6">
+                        <label for="{{form.charger.id_for_label}}">
+                            {{ form.charger }}
+                            <span>Chargeur</span>
+                        </label>
+                        </div>
+                        <div class="input-field col m4 s6">
+                        <label for="{{form.original_box.id_for_label}}">
+                            {{ form.original_box }}
+                            <span>Boite d'origine</span>
+                        </label>
+                        </div>
+                        <div class="row">
+                        <div class="input-field col m4 s6">
+                            <label for="{{form.sale_bill.id_for_label}}">
+                            {{ form.sale_bill }}
+                            <span>Facture d'Achat</span>
+                            </label>
+                        </div>
+                        <div class="input-field col m4 s6">
+                            <label for="{{form.connectic.id_for_label}}">
+                            {{ form.connectic }}
+                            <span>Connectiques</span>
+                            </label>
+                        </div>
+                        <div class="input-field col m4 s6">
+                            <button class="waves-effect waves-green black btn-flat" type="submit">
+                            <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+                            <b class="deep-orange-text accent-3">Enregistrer</b>
+                            </button>
+                        </div>
+                        </div>
+                    </div> {% endcomment %}
+                </div>
+            </form>
+
+    </div>
+
+
+
+    {% comment %} Lower Section: Results {% endcomment %}
+</div>
+
+{% endblock body_content %}
+
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/select2Select.js' %}"></script>
+    <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
+{% endblock javascripts %}

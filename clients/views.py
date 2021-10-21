@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib import messages
+from django.urls.base import reverse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +10,8 @@ from dashboard.models import Shop
 from clients.models import ClientModel
 from ventes.models import VenteModel
 
+from templated_email import send_templated_mail
+from django.conf import settings
 # Create your views here.
 
 
@@ -89,6 +92,34 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
         context["ventes_client"] = vs = VenteModel.objects.filter(client=self.client[0])
         context["sum_ventes"] = sum([v.price_total for v in vs])
         return context
+
+def send_invoice(request, pk):
+
+    client = ClientModel.objects.get(pk=pk)
+    
+    if client.email:
+        # Pick the latest sales made by the client
+        lastest_passage = VenteModel.objects.filter(client=client).order_by('-created_date')[0].created_date.day
+        ventes = VenteModel.objects.filter(client=client, created_date__day=lastest_passage)
+        # Calculate the total sum
+        total_price = sum([v.price_total for v in ventes if v.price_total])
+        
+        send_templated_mail(
+                    template_name='invoice',
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[client.email],
+                    context={
+                        'ventes': ventes,
+                        'total_price': total_price
+                    }
+                )
+        messages.success(request, "La facture a été envoyé avec success à l'adresse {}".format(client.email))
+        
+        return redirect(reverse('clients:clientPage'))
+
+
+    return render(request, 'clients/clients.html', context=None)
+
 
 # Delete Multiple Client
 

@@ -28,17 +28,23 @@
             </a>
             <ul id='dropdown_notif' class=' collection dropdown-content'>
                 <li class="collection-item">
+                    <a href="{% url 'search:advancedSearchPage' %}" class="orange-text darken-4">
+                        Recherche avancée
+                        <i class="material-icons secondary-content right">filter_alt</i>
+                    </a>
+                </li>
+                <li class="collection-item">
                     <a href="{% url 'accounts:profilePage' %}" class="orange-text darken-4">
                         Mon Profile
                         <i class="material-icons secondary-content right">settings</i>
                     </a>
                 </li>
+                
                 <li class="collection-item">
-                        <a href="{% url 'accounts:logoutPage' %}" class="orange-text darken-4">
-                            Se Deconnecter
-                            <i class="material-icons secondary-content right">logout</i>
-                        </a>
-                    </div>
+                    <a href="{% url 'accounts:logoutPage' %}" class="orange-text darken-4">
+                        Se Deconnecter
+                        <i class="material-icons secondary-content right">logout</i>
+                    </a>
                 </li>
             </ul>
         </div>
