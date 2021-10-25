@@ -163,20 +163,20 @@
                     <p></p>
                 </div>
                 <div class='col s6 left-align'>
-                    <p> {{v_date }}</p>
+                    <p> {{v.created_date|date:"SHORT_DATE_FORMAT" }}</p>
                     <p> {{f_number}}</p>
-                    <p> {{v_date }}</p>
+                    <p> {{v.created_date|date:"SHORT_DATE_FORMAT" }}</p>
                     <p> Damien Claro</p>
-                    <p> {{c_fname}} {{c_lname}}</p>
+                    <p> {{v.client.fname}} {{v.client.lname}}</p>
                 </div>
 
             </div>
             <div class='row col s6 left-align '>
                 <div class='px'>
                     <p><b> Destinataire </b></p>
-                    <p>{{c_fname}} {{c_lname}} </p>
-                    <p>{{c_address}} </p>
-                    <p>{{c_tel}} </p>
+                    <p>{{v.client.fname}} {{v.client.lname}} </p>
+                    <p>{{v.client.address}} </p>
+                    <p>{{v.client.number}} </p>
                     <p>Sénégal</p>
                 </div>
             </div>

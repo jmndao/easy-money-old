@@ -176,17 +176,37 @@
         </div>
 
         <div class="input-field col m6 s12">
+          {{ form.quantity }}
+          <label for="{{form.quantity.id_for_label}}">Quantité</label>
+        </div>
+      </div>
+
+      <div class="row center-align">
+        <div class="input-field col m6 s12">
+          {{ form.price_remise }}
+          <label for="{{form.price_remise.id_for_label}}">Remise</label>
+        </div>
+
+        <div class="input-field col m6 s12">
           {{ form.acompte }}
           <label for="{{form.acompte.id_for_label}}">Acompte</label>
         </div>
       </div>
 
       <div class="row">
-        <div class="input-field col m6 s12">
-          {{ form.quantity }}
-          <label for="{{form.quantity.id_for_label}}">Quantité</label>
+          <div class="input-field col m6 s12">
+            {{ form.type_de_service }}
+          </div>
+          <div class="col m6 s12">
+            <label for="{{form.type_de_reglement.id_for_label}}">
+              {{ form.type_de_reglement }}
+              <span>Type de règlement</span>
+            </label>
         </div>
-        <div class="col m6 s12 ">
+      </div>
+
+      <div class="row">
+        <div class="col m12 ">
           <ul class="collapsible">
             <li>
               <div class="collapsible-header deep-orange accent-3 white-text"><i
@@ -208,18 +228,6 @@
               </div>
             </li>
           </ul>
-        </div>
-      </div>
-
-      <div class="row">
-          <div class="input-field col m6 s12">
-            {{ form.type_de_service }}
-          </div>
-          <div class="col m6 s12">
-            <label for="{{form.type_de_reglement.id_for_label}}">
-              {{ form.type_de_reglement }}
-              <span>Type de règlement</span>
-            </label>
         </div>
       </div>
 
@@ -256,12 +264,11 @@
       <table id="datatable" class="responsive-table">
         <thead>
           <tr>
-            <th>Compteur</th>
-            <th>Clients</th>
-            <th>Produit</th>
-            <th><span>&#8470;</span>article</th>
-            <th>Prix de <br> vente</th>
-            <th>date<br> vendue</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            {% comment %} <th><span>&#8470;</span>Article</th> {% endcomment %}
+            <th>Achat Total</th>
+            <th>Date de vente</th>
             <th>Factures</th>
             <th>Actions</th>
             {% if user.is_superuser %}
@@ -270,32 +277,31 @@
           </tr>
         </thead>
         <tbody>
-          {% for v in vente %}
-          <tr id="v.id" {% if v.restant_du != 0%} class="red accent-3" {% else %} class="" {% endif %}>
-            <td>{{forloop.counter}}</td>
-            <td class=''> {{ v.client.fname }} {{ v.client.lname }}</td>
-            <td class=''> {{ v.produit.name }} </td>
-            <td class=''> {{ v.produit.id }} </td>
-            <td> {{ v.price_total|floatformat:0|intcomma }}</td>
-            <td class=''> {{ v.created_date|date:"SHORT_DATE_FORMAT"}} </td>
+          {% for v in vs %}
+          {% comment %} <tr id="v.id" {% if v.restant_du != 0%} class="red accent-3" {% else %} class="" {% endif %}> {% endcomment %}
+            <td class=''> {{ v.client__fname }} </td>
+            <td class=''> {{ v.client__lname }}</td>
+            <td class=''> {{ v.total }} </td>
+            {% comment %} <td> {{ v.price_total|floatformat:0|intcomma }}</td> {% endcomment %}
+            <td class=''> {{ v.c_date|date:"SHORT_DATE_FORMAT"}} </td>
             <td class=''>
-              <a href="{% url 'dashboard:invoice' v.pk %}" class="deep-orange-text accent-3 waves-effect btn-flat">
+              <a href="{% url 'dashboard:invoice' v.client__pk v.c_date.day v.c_date.month v.c_date.year %}" class="deep-orange-text accent-3 waves-effect btn-flat">
                 <span class="material-icons ">picture_as_pdf</span>
               </a>
             </td>
             <td class="black-text center-align-element">
-              <a href="{% url 'ventes:venteDetailPage' v.pk %}"
+              <a href="{% url 'ventes:venteDetailPage' v.client__pk v.c_date.day %}"
                 class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
                 data-tooltip="Voir"><span class="material-icons">visibility</span>
               </a>
               {% if user.is_superuser %}
-                <a href="{% url 'ventes:venteEditPage' v.pk %}"
+                <a href="{% url 'ventes:venteEditPage' v.client__pk %}"
                   class="green-text darken-4 waves-effect btn-flat tooltipped" data-position="left"
                   data-tooltip="Modifier"><span class="material-icons">update</span>
                 </a>            
             <td>
               <label class="">
-                <input type="checkbox" name='vente_id[]' value='{{v.id}}' id='delete_vente' />
+                <input type="checkbox" name='vente_id[]' value='{{v.client__pk}}' id='delete_vente' />
                 <span></span>
               </label>
             </td>
@@ -353,6 +359,5 @@
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/select2Select.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
 </script>
 {% endblock javascripts %}

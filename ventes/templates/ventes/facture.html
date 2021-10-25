@@ -45,20 +45,26 @@
     <li>
         <div class="input-field col m5 s10">{{ form.produit }}</div>
         <div class="row center-align">
-          <div class="input-field col m6 s12">
+          <div class="input-field col m4 s6">
             {{ form.price }}
             <label for="{{ form.price.id_for_label }}">Prix de vente </label>
           </div>
 
-          <div class="input-field col m6 s12">
-            {{ form.acompte }}
-            <label for="{{form.acompte.id_for_label}}">Acompte</label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col m6 s12">
+          <div class="input-field col m4 s6">
             {{ form.quantity }}
             <label for="{{form.quantity.id_for_label}}">Quantité</label>
+          </div>
+
+          <div class="input-field col m4 s6">
+            {{ form.price_remise }}
+            <label for="{{form.price_remise.id_for_label}}">Remise</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col m6 s12">
+            {{ form.acompte }}
+            <label for="{{form.acompte.id_for_label}}">Accompte</label>
           </div>
           <div class="col m6 s12">
             <ul class="collapsible">

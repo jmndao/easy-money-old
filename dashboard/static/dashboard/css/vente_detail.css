@@ -1,0 +1,30 @@
+.client-actions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.action {
+    display: block;
+    margin: 4px 10px;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.action span {
+    margin: 0 5px;
+}
+
+.action-title {
+    font-weight: 800;
+}
+
+.send-invoice {
+    border-right: 1px solid rgb(80, 78, 78);
+    padding-right: 10px;
+}

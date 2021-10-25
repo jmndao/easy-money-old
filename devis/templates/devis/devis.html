@@ -29,52 +29,68 @@
     </div>
 </div>
 
-<div class="card-panel ">
-    <form action="#" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <!--- Form -->
-        {% if user.is_superuser %}
+<div class="card-panel">
+
+  <div class="card-content">
+    <div class="row">
+      <div class="col s6">
+          <a href="{% url 'clients:clientPage' %}" name="clientID"
+              class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+              data-tooltip="Nouveau client">
+              <i class="material-icons right">person_add</i>
+              <b>Nouveau client</b>
+          </a>
+      </div>
+      <div class="col s6">
+        <a href="{% url 'dashboard:productPage' %}" name="productID"
+            class="btn-flat deep-orange-text accent-3 tooltipped" data-position="bottom"
+            data-tooltip="Nouveau produit">
+            <i class="material-icons right">local_mall</i>
+            <b>Nouveau Produit</b>
+        </a>
+      </div>
+    </div>
+
+    <form action="" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <!--- Form -->
+        
         <div class="row">
-            <div class="input-field col s6">
-                {{ form.shop }}
-                <label for="{{ form.shop.id_for_label }}">Boutique</label>
-            </div>
+          <div class="input-field col m5 mr-8 s10">
+            {{ form.produit }}
+          </div>
+
+          <div class="input-field col m5 mr-8 s10">
+            {{ form.client }}
+          </div>
         </div>
-        {% endif %}
-        <div class="row">
-            <div class="input-field col m4 s12">
-                {{ form.produit }}
-                <label for="{{ form.produit.id_for_label }}">Produit</label>
-            </div>
-            <div class="input-field col m4 s12">
-                {{ form.price }}
-                <label for="{{ form.price.id_for_label }}">Prix Unitaire</label>
-            </div>
-            <div class="input-field col m4 s12">
-                {{ form.quantity }}
-                <label for="{{ form.quantity.id_for_label }}">Quantité</label>
-            </div>
-            <div class="input-field col s6">
-                {{ form.client }}
-                <label for="{{ form.client.id_for_label }}">Client</label>
-            </div>
+
+      <div class="row center-align">
+        <div class="input-field col m4 s12">
+          {{ form.price }}
+          <label for="{{ form.price.id_for_label }}">Prix de vente </label>
         </div>
-        <div class="row">
-            <div class="input-field col s12">
-                {{ form.description }}
-                <label for="{{ form.description.id_for_label }}">Description</label>
-            </div>
+
+        <div class="input-field col m4 s12">
+          {{ form.quantity }}
+          <label for="{{form.quantity.id_for_label}}">Quantité</label>
         </div>
-        <div class="row">
-            <div class="col m3 s6 right">
-                <button class="waves-effect waves-green black btn-flat" type="submit">
-                    <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
-                    <b class="deep-orange-text accent-3">Enregistrer</b>
-                </button>
-            </div>
+
+        <div class="input-field col m4 s12">
+          {{ form.price_remise }}
+          <label for="{{form.price_remise.id_for_label}}">Remise</label>
         </div>
+      </div>
+
+      <div class="col s12">
+        <button class="waves-effect waves-green btn-flat black" type="submit">
+          <i class="material-icons right deep-orange-text accent-3 right">thumb_up_alt</i>
+          <b class="deep-orange-text accent-3">Enregistrer</b>
+        </button>
+      </div>
     </form>
+  </div>
 </div>
 
 <div class="row">
@@ -91,37 +107,50 @@
             <table id="datatable" class="responsive-table">
                 <thead>
                     <tr>
+                        <th>Prénom</th>
                         <th>Nom</th>
-                        <th>Produit</th>
-                        <th>quantity</th>
-                        <th>prix unitaire</th>
-                        <th>prix total</th>
-                        <th>Date</th>
-                        <th>devis</th>
-                        <th>delete</th>
+                        <th>Achat Total</th>
+                        <th>Date de vente</th>
+                        <th>Devis</th>
+                        <th>Actions</th>
+                        {% if user.is_superuser %}
+                        <th>Supprimer</th>
+                        {% endif %}
+                        <th>Transfert <br /> en Facture</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for d in devis %}
+                {% for d in devis %}
                     <tr>
-                        <th class="black-text"> {{ d.client.fname }} {{ d.client.lname }}</th>
-                        <th class="black-text">{{ d.produit.name }}</th>
-                        <th class="black-text">{{ d.quantity }}</th>
-                        <th class="black-text">{{ d.price|floatformat:0 }}fcfa</th>
-                        <th class="black-text">{{ d.price_total|floatformat:0 }}fcfa</th>
-                        <th class="black-text">{{ d.created_date|date:"SHORT_DATE_FORMAT" }}</th>
-                        <th>
-                            <a href="{% url 'devis:tirerDevisPage' d.pk %}"
-                                class="deep-orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="tirer"><span class="material-icons">receipt</span></a>
-                        </th>
-                        <th>
-                            <a href="{% url 'devis:devisDeletePage' d.pk %}"
-                                class=" waves-effect btn-flat tooltipped" data-position="left"
-                                data-tooltip="Supprimer"><span class="material-icons grblackey-text">delete</span></a>
-                        </th>
+                        <td class=''> {{ d.client__fname }} </td>
+                        <td class=''> {{ d.client__lname }}</td>
+                        <td class=''> {{ d.total }} </td>
+                        <td class=''> {{ d.c_date|date:"SHORT_DATE_FORMAT"}} </td>
+                        <td class=''>
+                            <a href="{% url 'devis:tirerDevisPage' d.client__pk d.c_date.day d.c_date.month d.c_date.year %}" class="deep-orange-text accent-3 waves-effect btn-flat tooltipped"
+                                data-position="left" data-tooltip="Faire un devis">
+                                <span class="material-icons ">receipt</span>
+                            </a>
+                        </td>
+                        <td class="black-text">
+                            <a href="#!"
+                                class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Voir"><span class="material-icons">visibility</span>
+                            </a>       
+                        <td>
+                            <label class="">
+                                <input type="checkbox" name='vente_id[]' value='{{v.client__pk}}' id='delete_vente' />
+                                <span></span>
+                            </label>
+                        </td>
+                        <td class=''>
+                            <a href="" class="deep-orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Transfert en tant que facture">
+                                <span class="material-icons ">multiple_stop</span>
+                            </a>
+                        </td>
                     </tr>
-                    {% endfor %}
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -139,6 +168,6 @@
 <script type="text/javascript" src="{% static 'dashboard/datatables/datatables.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}"></script>
-<script type="text/javascript" src="{% static 'dashboard/js/materializeSelect.js' %}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="{% static 'dashboard/js/select2Select.js' %}"></script>
 {% endblock javascripts %}

@@ -13,5 +13,5 @@ urlpatterns = [
          name='multipleDeleteClientPage'),
     path('detail/<int:pk>/', c_views.ClientDetailView.as_view(),
          name='clientDetailPage'),
-     path('envoie_facture/<int:pk>/', c_views.send_invoice, name="sendInvoice")
+     path('envoie_facture/<int:pk>/<int:day>/<int:month>/<int:year>/', c_views.send_invoice, name="sendInvoice")
 ]

@@ -7,7 +7,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     # For handling bills
-    path('invoice/<int:pk>/', d_views.GeneratePDF.as_view(), name = 'invoice'),
+    path('invoice/<int:pk>/<int:day>/<int:month>/<int:year>', d_views.GeneratePDF.as_view(), name = 'invoice'),
     #This is the home page
     path('', d_views.IndexView.as_view(), name="homePage"),
     # Achat Direct Routers

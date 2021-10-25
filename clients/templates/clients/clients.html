@@ -141,7 +141,7 @@
                 data-tooltip="Faire une facture"><span class="material-icons">receipt_long</span>
               </a>
               {% if client.email %}
-                <a href="{% url 'clients:sendInvoice' client.pk %}"
+                <a href="{% url 'clients:sendInvoice' client.pk client.created_date.day client.created_date.month client.created_date.year %}"
                   class="deep-orange-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
                   data-tooltip="Envoyer Facture"><span class="material-icons">email</span>
                 </a>

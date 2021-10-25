@@ -2,118 +2,100 @@
 {% load static %}
 {% load humanize %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/vente_detail.css' %}" />
+{% endblock stylesheets %}
+
 {% block body_content %}
 
 <div class="card-panel">
 
     <div class="card-panel deep-orange accent-3 center-align darken-4">
-        <h3> <b>Details de la Vente </b><i class="material-icons right">visibility</i></h3>
+        <h4> <b>Details de vente  </b></h4>
+        <h5>
+            Client: {{ client.fname }} {{ client.lname }}
+        </h5>
+        <h5>
+            Le 
+            {% with ventes|first as vente %}
+                {{ vente.created_date|date:"SHORT_DATE_FORMAT"}}
+            {% endwith %}
+        </h5> 
     </div>
 
-    <div class="row">
-        <div class="row">
-            <div class="col s12">
-                <h4>Produit vendu: {{ sales.produit.name }}</h4>
-            </div>
+    <div class="client-actions mx-8 right-align">
+        <div class="">
+            {% with ventes|first as vente %}
+                <a href="{% url 'clients:sendInvoice' client.pk vente.created_date.day vente.created_date.month vente.created_date.year %}" class="action send-invoice deep-orange-text accent-3 waves-effect btn-flat" >
+                    <span class="action-title">Envoyer Facture </span>
+                    <span class="material-icons">email</span>
+                </a>
+            {% endwith %}
         </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            produit vendu à:
-        </div>
-        <div class="col s6">
-            <b>{{ sales.client.fname }} {{ sales.client.lname }}</b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Référence du produit :
-        </div>
-
-        <div class="col s6">
-            <b>{{ sales.produit.id }}</b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Quantité vendu:
-        </div>
-
-        <div class="col s6">
-            <b>{{ sales.quantity }}</b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Date de la vente:
-        </div>
-        <div class="col s6">
-            <b>{{ sales.created_date }}</b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Garantie:
-        </div>
-        <div class="col s6">
-            <b>{{ sales.garantie|yesno:"OUI, NON"}} {% if sales.garantie %} / Delai {{ sales.delai_garantie }}
-                {% else %} -------- {% endif %}</b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Prix de vente d'un {{ sales.produit.name }} :
-        </div>
-        <div class="col s6">
-            <b>{% if sales.price %}{{ sales.price|floatformat:0|intcomma }}fcfa {% else %} -------
-                {% endif %} </b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Prix de vente total :
-        </div>
-        <div class="col s6">
-            <b>{% if sales.price_total %}{{ sales.price_total|floatformat:0|intcomma }}fcfa {% else %} -------
-                {% endif %} </b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Montant d'accompte :
-        </div>
-        <div class="col s6">
-            <b>{% if sales.acompte %}{{ sales.acompte|floatformat:0|intcomma }} fcfa {% else %} 0 fcfa
-                {% endif %} </b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6">
-            Montant Restant :
-        </div>
-        <div class="col s6">
-            <b class="deep-orange accent-3 white-text"
-                style="padding:10px; border-radius:5px">{% if sales.restant_du %}{{ sales.restant_du|floatformat:0|intcomma }}fcfa
-                {% else %} 0 fcfa
-                {% endif %} </b>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6 valign-wrappe">
-            <a href="{% url 'ventes:ventePage' %}"
-                class="btn-flat black deep-orange-text accent-3 waves-effect">Retourner
-                <i class="material-icons right mt-4">keyboard_return</i>
+        <div class="">
+            <a href="{% url 'ventes:venteCreationPage' client.pk %}" class="action new-sale deep-orange-text accent-3 waves-effect btn-flat" >
+                <span class="action-title">Nouvelle vente</span>
+                <span class="material-icons">price_check</span>
             </a>
         </div>
-        <div class="col s6">
-            <a href="{% url 'ventes:venteEditPage' sales.pk %}"
-                class="green-text darken-4 black waves-effect btn-flat tooltipped" data-position="left"
-                data-tooltip="Modifier">Modifier<i class="material-icons right mt-4">update</i>
-            </a>
-        </div>
+    
     </div>
-</div>
 
+    {% comment %} Table {% endcomment %}
+    <div class="section-vente-detail">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Réf</th>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Remise</th>
+                    <th>Accompte</th>
+                    <th>Guarantie</th>
+                    <th>Restant</th>
+                    <th>Total</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for vente in ventes %}
+                <tr>
+                        <td>{{ vente.pk }}</td>
+                        <td>{{ vente.produit.name }}</td>
+                        <td>{{ vente.quantity }}</td>
+                        <td>{{ vente.price_remise }}</td>
+                        <td>{{ vente.acompte }}</td>
+                        <td>
+                            {% if vente.guarantee is True %}
+                                Oui ({{ vente.guarantee_period}})
+                            {% else %}
+                                Non
+                            {% endif %}
+                        </td>
+                        {% if vente.restant_du > 0 %}
+                            <td class="red accent-3">{{ vente.restant_du }}</td>  
+                        {% else %}
+                            <td class="green accent-3">{{ vente.restant_du }}</td>    
+                        {% endif %}
+                        <td>{{ vente.price_total }}</td>
+                        <td>
+                            <a href="{% url 'ventes:venteEditPage' vente.pk %}"
+                                class="green-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Modifier"><i class="material-icons right mt-4">update</i>
+                            </a>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    
 </div>
 
 {% endblock body_content %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
+{% endblock javascripts %}

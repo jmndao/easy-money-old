@@ -25,6 +25,7 @@ class VenteForm(forms.ModelForm):
         super(VenteForm, self).__init__(*args, **kwargs)
         self.fields['produit'].widget.attrs['class'] = 'select-with-search'
         self.fields['type_de_service'].widget.attrs['class'] = 'select-with-search'
+        self.fields['type_de_reglement'].widget.attrs['class'] = 'textarea_cls'
         self.fields['produit'].empty_label = 'Produits'
         self.fields['produit'].queryset = ProductModel.objects.filter(
             quantity__gt=0)

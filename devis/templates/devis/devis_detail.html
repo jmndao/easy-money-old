@@ -1,0 +1,85 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dashboard/css/vente_detail.css' %}" />
+{% endblock stylesheets %}
+
+{% block body_content %}
+
+<div class="card-panel">
+
+    <div class="card-panel deep-orange accent-3 center-align darken-4">
+        <h4> <b>Details devis  </b></h4>
+        <h5>
+            Client: {{ client.fname }} {{ client.lname }}
+        </h5>
+        <h5>
+            Le 
+            {% with all_devis|first as devis %}
+                {{ devis.created_date|date:"SHORT_DATE_FORMAT"}}
+            {% endwith %}
+        </h5> 
+    </div>
+
+    <div class="client-actions mx-8 right-align">
+        <div class="">
+            {% with all_devis|first as devis %}
+                <a href="#!" class="action send-invoice deep-orange-text accent-3 waves-effect btn-flat" >
+                    <span class="action-title">Envoyer Facture </span>
+                    <span class="material-icons">email</span>
+                </a>
+            {% endwith %}
+        </div>
+        <div class="">
+            <a href="{% url 'devis:devisPage' %}" class="action new-sale deep-orange-text accent-3 waves-effect btn-flat" >
+                <span class="action-title">Nouvelle vente</span>
+                <span class="material-icons">price_check</span>
+            </a>
+        </div>
+    
+    </div>
+
+    {% comment %} Table {% endcomment %}
+    <div class="section-vente-detail">
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Réf</th>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Remise</th>
+                    <th>Total</th>
+                    <th>Modifier</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for devis in all_devis %}
+                <tr>
+                        <td>{{ devis.pk }}</td>
+                        <td>{{ devis.produit.name }}</td>
+                        <td>{{ devis.quantity }}</td>
+                        <td>{{ devis.price_remise }}</td>
+                        <td>{{ devis.price_total }}</td>
+                        <td>
+                            <a href="{% url 'devis:devisEditPage' devis.pk %}"
+                                class="green-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
+                                data-tooltip="Modifier"><i class="material-icons right mt-4">update</i>
+                            </a>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    
+</div>
+
+{% endblock body_content %}
+
+{% block javascripts %}
+<script type="text/javascript" src="{% static 'dashboard/js/materialize_setup.js' %}">
+{% endblock javascripts %}

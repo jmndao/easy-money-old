@@ -2,7 +2,8 @@ import datetime
 from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy, reverse
-from django.db.models import Count
+from django.db.models import Count, Sum
+from django.db.models.functions import TruncDay
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
@@ -94,6 +95,8 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         context["title"] = "Vente"
         uname = self.request.user.username
         if self.request.user.is_superuser:
+            context['vs'] = VenteModel.objects.annotate(c_date=TruncDay('created_date')).values(
+                'c_date', 'client__fname', 'client__lname', 'client__pk').annotate(c=Count('id'), total=Sum('price_total')).order_by()
             context['vente'] = self.q = VenteModel.objects.order_by(
                 '-created_date')
             context["tendance_vente"] = VenteModel.objects.values(
@@ -106,6 +109,12 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
             context['benefice'] = self.benefice_vente(
                 VenteModel, ProductModel)
         else:
+            context['vs'] = VenteModel.objects.filter(
+                produit__shop__owner__user__username=uname).annotate(
+                    c_date=TruncDay('created_date')).values(
+                'c_date', 'client__fname', 'client__lname', 'client__pk').annotate(
+                    c=Count('id'), total=Sum('price_total')).order_by()
+                    
             context['vente'] = self.q = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by(
                 '-created_date')
             context["tendance_vente"] = VenteModel.objects.filter(produit__shop__owner__user__username=uname).values(
@@ -129,21 +138,21 @@ def multiple_vente_creation_view(request, pk):
 
     # Create inline formset for multiple vente
     VenteFormSet = inlineformset_factory(ClientModel,
-                                         VenteModel,
-                                         form=VenteForm,
-                                         extra=10,
-                                         can_delete=False,
-                                         fields=(
-                                             'produit',
-                                             'price',
-                                             'acompte',
-                                             'quantity',
-                                             'guarantee',
-                                             'guarantee_period',
-                                             'type_de_service',
-                                             'type_de_reglement',
-
-                                         )
+                                            VenteModel,
+                                            form=VenteForm,
+                                            extra=10,
+                                            can_delete=False,
+                                            fields=(
+                                                'produit',
+                                                'price',
+                                                'acompte',
+                                                'quantity',
+                                                'guarantee',
+                                                'guarantee_period',
+                                                'type_de_service',
+                                                'type_de_reglement',
+                                                'price_remise'
+                                            )
                                          )
     # Pick the selected client
     client = ClientModel.objects.get(pk=pk)
@@ -165,7 +174,7 @@ def multiple_vente_creation_view(request, pk):
                             pk=form.instance.produit.pk)
                         product.sold = True
                         # Calculating the total price here (Tt = price * Qty)
-                        form.instance.price_total = form.instance.price * form.instance.quantity
+                        form.instance.price_total = (form.instance.price * form.instance.quantity) - form.instance.price_remise
                         # Calculate the remaining quantity
                         remaining_qty = product.quantity - form.instance.quantity
 
@@ -206,6 +215,7 @@ def multiple_vente_creation_view(request, pk):
                         form.save()
 
             last_vente = VenteModel.objects.all().order_by('-created_date')[0]
+            # today = datetime.date.today()
 
             ventes = VenteModel.objects.filter(client=client,
                                                created_date__day=last_vente.created_date.day
@@ -228,7 +238,8 @@ def multiple_vente_creation_view(request, pk):
             client.invoiced = True
             client.save()
 
-            return redirect(reverse('dashboard:invoice', args=(last_vente.pk,)))
+            return redirect(reverse('dashboard:invoice', args=(client.pk, 
+                last_vente.created_date.day, last_vente.created_date.month, last_vente.created_date.year)))
 
     context = {
         'formset': formset,
@@ -267,6 +278,10 @@ class VenteDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Detail-Vente"
+        context["ventes"] = VenteModel.objects.filter(
+            client__pk=self.kwargs["pk"], created_date__day=self.kwargs["day"]
+        )
+        context["client"] = ClientModel.objects.get(pk=self.kwargs["pk"])
         return context
 
 

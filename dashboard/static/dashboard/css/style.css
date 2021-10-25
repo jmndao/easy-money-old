@@ -136,6 +136,94 @@ span.material-icons.dummy_icon {
 
 /* Margins */
 
+.m-2 {
+    margin: 2px;
+}
+
+.m-4 {
+    margin: 4px;
+}
+
+.m-8 {
+    margin: 8px;
+}
+
+.m-10 {
+    margin: 10px;
+}
+
+.m-12 {
+    margin: 12px;
+}
+
+.m-14 {
+    margin: 14px;
+}
+
+.m-16 {
+    margin: 16px;
+}
+
+.m-18 {
+    margin: 18px;
+}
+
+.m-20 {
+    margin: 20px;
+}
+
+.my-2 {
+    margin: 2px 0;
+}
+
+.my-4 {
+    margin: 4px 0;
+}
+
+.my-6 {
+    margin: 6px 0;
+}
+
+.my-8 {
+    margin: 8px 0;
+}
+
+.my-10 {
+    margin: 10px 0;
+}
+
+.my-12 {
+    margin: 12px 0;
+}
+
+.my-14 {
+    margin: 14px 0;
+}
+
+.my-16 {
+    margin: 16px 0;
+}
+
+.my-18 {
+    margin: 18px 0;
+}
+
+.mx-2 {
+    margin: 0 2px;
+}
+
+.mx-4 {
+    margin: 0 4px;
+}
+
+.mx-6 {
+    margin: 0 6px;
+}
+
+.mx-8 {
+    margin: 0 8px;
+}
+
 .mr-6 {
     margin-right: 6px;
 }

@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Devis</title>
+    <title>Invoice</title>
 
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" charset="utf-8"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.js" charset="utf-8"></script>
@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="invoice.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
@@ -26,16 +25,23 @@
     <style>
         .fd {
             margin-left: 0 !important;
-            margin-right: 0 !important;
             padding-left: 10px !important;
+            margin-right: 0 !important;
+        }
+
+        .lh {
+            line-height: 0.8;
+            font-size: 14px;
         }
 
         .row_pd {
-            padding: 20px 130px 50px;
+            padding: 20px 200px 50px;
         }
 
         .row {
             border: none;
+            justify-content: center;
+            align-items: center;
         }
 
         .inline {
@@ -51,15 +57,38 @@
 
         }
 
+        .jc {
+            border-bottom: 5px solid #2196f3;
+            padding-bottom: 10px;
+        }
+
+        .jc2 {
+            line-height: 0.5;
+            margin-bottom: 30px;
+        }
 
         .image img {
-            margin-left: 50px;
+            margin-left: 60%;
+            margin-top: 20px;
+        }
+
+        .px {
+            margin-left: 100px;
+            margin-bottom: 60px;
         }
 
         body {
             font-size: 22px;
-            height: 100%;
+            padding-top: 10px;
 
+        }
+
+        .hide {
+            visibility: hidden;
+        }
+
+        .line-height {
+            line-height: .8;
         }
 
         .row .col {
@@ -77,30 +106,26 @@
         }
 
         table {
-            border: 3px solid;
-        }
-
-        table th,
-        table td {
-            border: 3px solid;
+            border: none;
         }
 
         .payer {
-            margin-top: 20px;
-            border: 3px solid #ff3d00;
+            padding-top: 0px;
+            height: 8rem;
 
         }
 
-        .hide {
-            visibility: hidden;
+
+
+        .footer-class {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .line-height {
-            line-height: .8;
-        }
-
-        .pd {
-            padding: 10px;
+        .footer-class div {
+            text-align: center;
+            line-height: 0.1;
         }
     </style>
 </head>
@@ -108,147 +133,156 @@
 <body id="capture">
     <div class="row card-panel row_pd ttl" title="Faites un click pour télécharger la facture sous format bdf">
         <!-- This is the start of the first row -->
-        <div class="row html_to_pdf">
-            <div class="card-content col s7 line-height">
-                <div class="image">
-                    <img src="{% static 'dashboard/images/logo.png' %}" alt="Easy Money Logo" width="80" height="80">
-                </div>
-                <p> <b> Easy Money Sarl {{client}}</b></p>
-                <p><b> Centre Commercial Saly Center</b></p>
-                <p><b>+221 77 457 49 25</b></p>
-                <p><b> easymoneysaly@gmail.com</b></p>
-            </div>
-            <div class="col s5">
-                <div class="card">
-                    <div class=" card-content card-t deep-orange accent-3 ">
-                        <span class="card-title white-text center-align">
-                            <h4>Devis</h4>
-                    </div>
-                    <div class="divider"></div>
-                    <div class=" row white black-text fd">
-                        <p class="row col s6 pd ">
-                            <span class="">
-                                <span>&#8470; </span>devis</span><br><br>
-                            <span class="f_number"> {{f_number}}</span>
-                        </p>
-                        <p class="col s6 pd">
-                            <span class=""> Date devis</span><br><br>
-                            <span class=""> {{v_date}}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- This is the start of the second row -->
-        <div class="row">
-            <div class="card-content col s8 l">
-
-                <p class="white black-text inline">devis à: </p>
-                <div class="line-height">
-                    <br>
-                    <p> <b> {%if c_fname %}{{c_fname}} {% else %} {% endif %} {%if c_lname %}{{c_lname}} {% else %}
-                            {% endif %}</b></p>
-                    <p> <b>{{c_address}}</b></p>
-                    <p> <b>{{c_tel}}</b> </span>
+        <div class="card-content col s12 line-height ">
+            <div class='row jc'>
+                <div class='col s8 hb'>
+                    <h2 class='hb'>Devis - n&deg; {{f_number}} </h2>
+                </div> 
+                <div class="image col s4 right hb">
+                    <img src="{% static 'dashboard/images/logo.png' %}" alt="Easy Money Logo" width="100" height="100">
                 </div>
             </div>
         </div>
+        <div class='row'>
+            <div class='col s6 lh'>
+                <p><b> EASYMONEY SARL </b></p>
+                <p><i> Centre Commercial Saly Center</i></p>
+                <p><i> Saly Portudal</i></p>
+                <p><i>Senegal</i></p>
+                <p class='blue-text text-blue'><u> easymoneysaly@gmail.com</u></p>
+            </div>
+        </div>
+        <div class='row valign-wrapper lh'>
+            <div class='col s6 row center-align'>
+                <div class='col s6 right-align'>
+                    <p>Date du devis &ensp;</p>
+                    <p>Référence du devis &ensp;</p>
+                    <p>Date de validité du devis &ensp;</p>
+                    <p>Emis par &ensp;</p>
+                    <p>Contact client &ensp;</p>
+                    <p></p>
+                </div>
+                <div class='col s6 left-align'>
+                    <p> {{d.created_date|date:"SHORT_DATE_FORMAT" }}</p>
+                    <p> {{f_number}}</p>
+                    <p> {{d.created_date|date:"SHORT_DATE_FORMAT" }}</p>
+                    <p> Damien Claro</p>
+                    <p> {{d.client.fname}} {{d.client.lname}}</p>
+                </div>
 
-
+            </div>
+            <div class='row col s6 left-align '>
+                <div class='px'>
+                    <p><b> Destinataire </b></p>
+                    <p>{{d.client.fname}} {{d.client.lname}} </p>
+                    <p>{{d.client.address}} </p>
+                    <p>{{d.client.number}} </p>
+                    <p>Sénégal</p>
+                </div>
+            </div>
+        </div>
+        {% comment %} <div class='row jc'>
+            <div class='col s6 lh jc2'>
+                <p><b>Informations additionnelles</b></p>
+                {% if v.type_de_service == 0 %}
+                <p>Non spécifié</p>
+                {% elif v.type_de_service == 1 %}
+                <p>Service après vente</p>
+                {% elif v.type_de_service == 2 %}
+                <p>Livraison à domicile</p>
+                {% endif %}
+            </div>
+        </div> {% endcomment %}
+        <br />
+        <br />
 
         <!-- This is where a small table starts -->
-        <table>
+        <table cellspacing="0" cellpadding="0">
             <thead>
                 <tr>
-                    <th>Description Produit</th>
+                    <th>Nom </th>
                     <th>Quantité</th>
-                    <th>Prix</th>
-                    <th>Total</th>
+                    <th>Prix Unitaire</th>
+                    <th>Total HT</th>
                 </tr>
             </thead>
             <tbody>
+                {% for devis in all_devis %}
                 <tr>
-                    <td> {{v_product}} </td>
-                    <td>{{quantity}}</td>
-                    <td> {{c_price|floatformat:0}} fcfa </td>
-                    <th>{{c_price_total|floatformat:0}} fcfa </th>
+                    <td> {{devis.produit.name}} </td>
+                    <td>{{devis.quantity}}</td>
+                    <td> {{devis.price|floatformat:0}} XOF </td>
+                    <td>{{devis.price_total|floatformat:0}} fcfa </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
-        <br>
-        <div class="row">
-            <div class="row">
-                <div class="col s6 m0"></div>
-                <div class="col s6 m0">
-                    <table>
-                        <tbody>
-                            <tr>
+        <br><br>
+        <div class="col s6"></div>
 
-                                <td> TOTAL &ensp; HT</td>
-                                <th>{{c_price_total|floatformat:0}} fcfa </th>
-                            </tr>
-                            <tr>
-
-                                <td> TVA &ensp;0%</td>
-                                <th> 0 fcfa </th>
-                            </tr>
-
-                            <tr>
-
-                                <td> TOTAL &ensp; TTC</td>
-                                <th>{{c_price_total|floatformat:0}} fcfa </th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col s7"></div>
-                <div class="col s5 payer">
-                    <p> Montant à payer :&ensp; <b>{{c_price_total|floatformat:0}} fcfa</b></p>
-                </div>
-            </div>
-
-            <!-- Le Nom et la Signature -->
-            <footer>
-                <div class="row">
-                    <div class="col 12">
-                        <p class="">Merci pour la <b> Confiance </b></p>
-                    </div>
-
-                </div>
-            </footer>
+        <div class="col s6">
+            <table>
+                <tbody>
+                    <tr>
+                        <th> TVA &ensp; 0%</th>
+                        <th> 0XOF </th>
+                    </tr>
+                    <tr>
+                        <th> TOTAL &ensp; HT</th>
+                        <th>{{total_price|floatformat:0}} XOF </th>
+                    </tr>
+                    <tr class='blue-text text-blue'>
+                        <th> TOTAL &ensp; HT</th>
+                        <th>{{total_price|floatformat:0}} XOF </th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <br />
+        <br />
+        <br />
+        
+        <div class="row ">
+            <div class="col s6 lh">
+                <p><b>Siège social</b></p>
+                <p>Centre Commercial saly Center</p>
+                <p>Saly Portudal</p>
+                <p><b>N.I.N.E.A: 008523533 </b></p>
+                <p><b>RCS SNMBR2021B848 </b></p>
+            </div>
 
-        <!-- <button onclick="window.print()" id="doc" type="button" name="button">
+            <div class="col s6 lh">
+                <p><b>Détails Règlement</b></p>
+                <p>{{ v.type_de_reglement }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- <button onclick="window.print()" id="doc" type="button" name="button">
       click me
     </button>
   -->
-        <script src="jspdf.js"></script>
-        <script>
-            var f_number = document.getElementsByClassName('f_number');
-            f_number = f_number.innerHTML + '.pdf';
+    <script src="jspdf.js"></script>
+    <script>
+        var f_number = document.getElementsByClassName('f_number');
+        f_number = f_number.innerHTML + '.pdf';
 
-            function to_pdf() {
-                var data = document.getElementById('capture');
-                html2canvas(data).then(canvas => {
-                    var imgWidth = 208;
-                    var imgHeight = canvas.height * imgWidth / canvas.width;
-                    const contentDataURL = canvas.toDataURL('image/png')
-                    let pdf = new jspdf('p', 'mm', 'a4');
-                    var position = 0;
-                    pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-                    pdf.save('devis.pdf');
+        function to_pdf() {
+            var data = document.getElementById('capture');
+            html2canvas(data).then(canvas => {
+                var imgWidth = 208;
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+                const contentDataURL = canvas.toDataURL('image/png')
+                let pdf = new jspdf('p', 'mm', 'a4');
+                var position = 0;
+                pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+                pdf.save('devis.pdf');
 
-                });
-            }
-            const body = document.body;
-            body.onclick = to_pdf();
-        </script>
+            });
+        }
+        const body = document.body;
+        body.onclick = to_pdf();
+    </script>
 
 </body>
 

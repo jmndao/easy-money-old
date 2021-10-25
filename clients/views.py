@@ -93,14 +93,18 @@ class ClientDetailView(LoginRequiredMixin, DetailView):
         context["sum_ventes"] = sum([v.price_total for v in vs])
         return context
 
-def send_invoice(request, pk):
-
+def send_invoice(request, pk, day, month, year):
+    """
+        This view is receiving the client pk and the day, month and year he bought
+        products as integers
+    """
     client = ClientModel.objects.get(pk=pk)
     
     if client.email:
         # Pick the latest sales made by the client
-        lastest_passage = VenteModel.objects.filter(client=client).order_by('-created_date')[0].created_date.day
-        ventes = VenteModel.objects.filter(client=client, created_date__day=lastest_passage)
+        ventes = VenteModel.objects.filter(
+            client=client, created_date__day=day, created_date__month=month, created_date__year=year)
+        
         # Calculate the total sum
         total_price = sum([v.price_total for v in ventes if v.price_total])
         

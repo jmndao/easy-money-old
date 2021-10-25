@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'estimation',
     # Django DropBox Storage App
     'django_dropbox_storage_2',
-    'templated_email'
+    'templated_email',
+    'django_htmx'
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # Adding whitenoise
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django_htmx.middleware.HtmxMiddleware'
 ]
 
 

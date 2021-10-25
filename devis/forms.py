@@ -13,6 +13,10 @@ class DevisModelForm(forms.ModelForm):
     def __init__(self,*args, **kwargs):
         self.user = kwargs.pop('user')
         super(DevisModelForm, self).__init__(*args, **kwargs)
+        self.fields['produit'].widget.attrs['class'] = 'select-with-search'
+        self.fields['client'].widget.attrs['class'] = 'select-with-search'
+        self.fields['produit'].empty_label = 'Produits'
+        self.fields['client'].empty_label = 'Clients'
         if self.user.is_superuser:
             self.fields['client'].queryset = ClientModel.objects.filter(
                 vente_or_achat='CR')
