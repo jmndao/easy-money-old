@@ -63,4 +63,4 @@ class VenteModel(models.Model):
         return super(VenteModel, self).save(*args, **kwargs)
 
     def __str__(self):
-        return '{} {}'.format(self.produit.name, self.price)
+        return '{} {}'.format(self.produit, self.price)
