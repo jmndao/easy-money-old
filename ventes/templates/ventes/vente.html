@@ -284,11 +284,15 @@
             <td class=''> {{ v.total }} </td>
             {% comment %} <td> {{ v.price_total|floatformat:0|intcomma }}</td> {% endcomment %}
             <td class=''> {{ v.c_date|date:"SHORT_DATE_FORMAT"}} </td>
-            <td class=''>
-              <a href="{% url 'dashboard:invoice' v.client__pk v.c_date.day v.c_date.month v.c_date.year %}" class="deep-orange-text accent-3 waves-effect btn-flat">
-                <span class="material-icons ">picture_as_pdf</span>
-              </a>
-            </td>
+            {% if v.client__pk %}
+              <td class=''>
+                <a href="{% url 'dashboard:invoice' v.client__pk v.c_date.day v.c_date.month v.c_date.year %}" class="deep-orange-text accent-3 waves-effect btn-flat">
+                  <span class="material-icons ">picture_as_pdf</span>
+                </a>
+              </td>
+            {% elif %}
+              <p>-----</p>
+            {% endif %}
             <td class="black-text center-align-element">
               <a href="{% url 'ventes:venteDetailPage' v.client__pk v.c_date.day %}"
                 class="black-text accent-3 waves-effect btn-flat tooltipped" data-position="left"
