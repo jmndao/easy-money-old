@@ -283,6 +283,11 @@ class ProductUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView)
     model = ProductModel
     template_name = 'dashboard/product/product_edit.html'
     fields = '__all__'
+    
+    def get_success_url(self):
+        product = ProductModel.objects.get(pk=self.kwargs["pk"])
+        messages.success(self.request, "Produit {} a été modifié avec success.".format(product.name))
+        return reverse('dashboard:productDetailPage', args=(self.kwargs["pk"],))
 
     def form_valid(self, form):
         user = self.request.user
@@ -353,8 +358,13 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
 
         context["ventes"] = vente_of_that_date
         context["v"] = vente_of_that_date[0] 
+        acompte = any([True for v in vente_of_that_date if v.acompte > 0])
+        c = 0
+        if acompte:
+            context["acompte"] = acompte
+            context["total_acompte"] = c = sum([v.acompte for v in vente_of_that_date])
         context["total_price"] = sum(
-            [v.price_total for v in vente_of_that_date if v.price_total])
+            [v.price_total for v in vente_of_that_date if v.price_total]) - c
 
         context['quantity'] = sum([qty.quantity for qty in vente_of_that_date])
         return context

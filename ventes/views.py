@@ -269,20 +269,18 @@ class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
         return context
 
 
-class VenteDetailView(LoginRequiredMixin, DetailView):
+def vente_detail(request, pk, day):
 
-    template_name = 'ventes/vente_detail.html'
-    model = VenteModel
-    context_object_name = 'sales'
+    ventes = VenteModel.objects.filter(
+        client__pk=pk, created_date__day=day)
+    client = ClientModel.objects.get(pk=pk)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Detail-Vente"
-        context["ventes"] = VenteModel.objects.filter(
-            client__pk=self.kwargs["pk"], created_date__day=self.kwargs["day"]
-        )
-        context["client"] = ClientModel.objects.get(pk=self.kwargs["pk"])
-        return context
+    context = {
+        "title": "Detail-Vente",
+        "ventes": ventes,
+        "client": client,
+    }
+    return render(request, "ventes/vente_detail.html", context)
 
 
 class VenteDeleteView(LoginRequiredMixin, RedirectToPreviousMixin, DeleteView):

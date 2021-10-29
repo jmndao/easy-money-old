@@ -286,6 +286,12 @@
                             <td><b>TVA 0%</b></td>
                             <td>0 F.CFA</td>
                         </tr>
+                        {% if acompte %}
+                            <tr style="color: #6699cc">
+                                <td><b>Total Acompte</b></td>
+                                <td>{{total_acompte|floatformat:0}} XOF</td>
+                            </tr>
+                        {% endif %}
                         <tr>
                             <td><b>Total HT</b></td>
                             <td>{{total_price|floatformat:0}} XOF</td>

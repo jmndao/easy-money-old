@@ -105,14 +105,20 @@ def send_invoice(request, pk, day, month, year):
         ventes = VenteModel.objects.filter(
             client=client, created_date__day=day, created_date__month=month, created_date__year=year)
         
+        acompte = any([True for v in ventes if v.acompte > 0])
+        c = 0
+        if acompte:
+            total_acompte = c = sum([v.acompte for v in ventes])
+        
         # Calculate the total sum
-        total_price = sum([v.price_total for v in ventes if v.price_total])
+        total_price = sum([v.price_total for v in ventes if v.price_total]) - c
         
         send_templated_mail(
                     template_name='invoice',
                     from_email=settings.EMAIL_HOST_USER,
                     recipient_list=[client.email],
                     context={
+                        'acompte': acompte,
                         'ventes': ventes,
                         'total_price': total_price
                     }
