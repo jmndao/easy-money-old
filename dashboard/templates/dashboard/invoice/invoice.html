@@ -155,9 +155,9 @@
         <div class='row valign-wrapper lh'>
             <div class='col s6 row center-align'>
                 <div class='col s6 right-align'>
-                    <p>Date du devis &ensp;</p>
-                    <p>Référence du devis &ensp;</p>
-                    <p>Date de validité du devis &ensp;</p>
+                    <p>Date de la facture &ensp;</p>
+                    <p>Référence de la facture &ensp;</p>
+                    <p>Date de validité de la facture &ensp;</p>
                     <p>Emis par &ensp;</p>
                     <p>Contact client &ensp;</p>
                     <p></p>
@@ -211,7 +211,7 @@
                     <td> {{vente.produit.name}} </td>
                     <td>{{vente.quantity}}</td>
                     <td> {{vente.price|floatformat:0}} XOF </td>
-                    <td>{{vente.price_total|floatformat:0}} fcfa </td>
+                    <td>{{vente.price_total|floatformat:0}} XOF </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -222,10 +222,6 @@
         <div class="col s6">
             <table>
                 <tbody>
-                    <tr>
-                        <th> TVA &ensp; 0%</th>
-                        <th> 0XOF </th>
-                    </tr>
                     {% if acompte %}
                         <tr class='blue-grey-text'>
                             <th> TOTAL &ensp; Acompte</th>
@@ -236,8 +232,12 @@
                         <th> TOTAL &ensp; HT</th>
                         <th>{{total_price|floatformat:0}} XOF </th>
                     </tr>
+                    <tr>
+                        <th> TVA &ensp; 0%</th>
+                        <th> 0 XOF </th>
+                    </tr>
                     <tr class='blue-text text-blue'>
-                        <th> TOTAL &ensp; HT</th>
+                        <th> TOTAL &ensp; TTC</th>
                         <th>{{total_price|floatformat:0}} XOF </th>
                     </tr>
                 </tbody>

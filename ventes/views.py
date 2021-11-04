@@ -96,7 +96,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
         uname = self.request.user.username
         if self.request.user.is_superuser:
             context['vs'] = VenteModel.objects.annotate(c_date=TruncDay('created_date')).values(
-                'c_date', 'client__fname', 'client__lname', 'client__pk').annotate(c=Count('id'), total=Sum('price_total')).order_by()
+                'c_date', 'client__fname', 'client__lname', 'client__pk').annotate(c=Count('id'), total=Sum('price_total')).order_by("-created_date")
             context['vente'] = self.q = VenteModel.objects.order_by(
                 '-created_date')
             context["tendance_vente"] = VenteModel.objects.values(
@@ -113,7 +113,7 @@ class VenteView(LoginRequiredMixin, CreateView, Utils):
                 produit__shop__owner__user__username=uname).annotate(
                     c_date=TruncDay('created_date')).values(
                 'c_date', 'client__fname', 'client__lname', 'client__pk').annotate(
-                    c=Count('id'), total=Sum('price_total')).order_by()
+                    c=Count('id'), total=Sum('price_total')).order_by('-created_date')
                     
             context['vente'] = self.q = VenteModel.objects.filter(produit__shop__owner__user__username=uname).order_by(
                 '-created_date')
@@ -252,9 +252,15 @@ def multiple_vente_creation_view(request, pk):
 class VenteUpdateView(LoginRequiredMixin, RedirectToPreviousMixin, UpdateView):
 
     template_name = 'ventes/vente_edit.html'
-    model = VenteModel
-    fields = '__all__'
+    # model = VenteModel
+    # fields = '__all__'
+    context_object_name = 'vente_aggs'
     success_url = reverse_lazy('ventes:ventePage')
+
+    def get_queryset(self):
+        return VenteModel.objects.filter(
+            client__pk=self.kwargs['pk'], created_date__day=self.kwargs['day']
+        )
 
     def form_valid(self, form):
         if not self.request.user.is_superuser:
