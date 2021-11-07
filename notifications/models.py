@@ -38,18 +38,18 @@ class NotificationModel(models.Model):
                         message=msg,
                         notification_type=2).save()
 
-    @receiver(post_delete, sender=ProductModel)
-    def create_notif_product_delete(sender, instance, *args, **kwargs):
-        if not instance.shop.owner.user.is_superuser:
-            users = User.objects.filter(is_superuser=True)
-            for user in users:
-                msg = "Produit {} vient d'être supprimé par {}".format(
-                    instance.name, instance.shop.owner.user)
-                NotificationModel.objects.create(
-                    sender=instance.shop.owner.user,
-                    to=user,
-                    message=msg,
-                    notification_type=1).save()
+    # @receiver(post_delete, sender=ProductModel)
+    # def create_notif_product_delete(sender, instance, *args, **kwargs):
+    #     if not instance.shop.owner.user.is_superuser:
+    #         users = User.objects.filter(is_superuser=True)
+    #         for user in users:
+    #             msg = "Produit {} vient d'être supprimé par {}".format(
+    #                 instance.name, instance.shop.owner.user)
+    #             NotificationModel.objects.create(
+    #                 sender=instance.shop.owner.user,
+    #                 to=user,
+    #                 message=msg,
+    #                 notification_type=1).save()
 
     def __str__(self):
         return '{} {}'.format(self.notification_type, self.sender)

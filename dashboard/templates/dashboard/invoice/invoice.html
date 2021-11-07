@@ -223,18 +223,22 @@
             <table>
                 <tbody>
                     {% if acompte %}
-                        <tr class='blue-grey-text'>
-                            <th> TOTAL &ensp; Acompte</th>
-                            <th>{{total_acompte|floatformat:0}} XOF </th>
-                        </tr>
+                    <tr class='blue-grey-text'>
+                        <th> TOTAL &ensp; Acompte</th>
+                        <th>{{total_acompte|floatformat:0}} XOF </th>
+                    </tr>
                     {% endif %}
                     <tr>
                         <th> TOTAL &ensp; HT</th>
-                        <th>{{total_price|floatformat:0}} XOF </th>
+                        <th>{{total|floatformat:0}} XOF </th>
                     </tr>
                     <tr>
+                        {% if v.produit.estate == 'NEUF'%}
                         <th> TVA &ensp; 0%</th>
-                        <th> 0 XOF </th>
+                        {% else %}
+                        <th> TVA &ensp; 18%</th>
+                        {% endif %}
+                        <th> {{tva | floatformat }} XOF </th>
                     </tr>
                     <tr class='blue-text text-blue'>
                         <th> TOTAL &ensp; TTC</th>
@@ -246,7 +250,7 @@
         <br />
         <br />
         <br />
-        
+
         <div class="row ">
             <div class="col s6 lh">
                 <p><b>Siège social</b></p>

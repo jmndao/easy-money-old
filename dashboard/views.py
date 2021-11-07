@@ -357,14 +357,30 @@ class GeneratePDF(LoginRequiredMixin, CreateView):
         )
 
         context["ventes"] = vente_of_that_date
-        context["v"] = vente_of_that_date[0] 
+        context["v"] = v = vente_of_that_date[0] 
         acompte = any([True for v in vente_of_that_date if v.acompte > 0])
         c = 0
+        
+
         if acompte:
             context["acompte"] = acompte
             context["total_acompte"] = c = sum([v.acompte for v in vente_of_that_date])
-        context["total_price"] = sum(
+
+       
+        total = sum(
             [v.price_total for v in vente_of_that_date if v.price_total]) - c
+
+        if v.produit.estate == 'NEUF':
+            tva = 0
+        else :
+            tva = total * 18 / 100
+        
+
+        context["total_price"] = sum(
+            [v.price_total for v in vente_of_that_date if v.price_total]) - c + tva
+
+        context ['tva'] = tva
+        context ['total'] = total
 
         context['quantity'] = sum([qty.quantity for qty in vente_of_that_date])
         return context
