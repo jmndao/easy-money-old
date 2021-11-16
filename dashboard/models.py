@@ -28,7 +28,6 @@ CATEGORY = [
     ('ENFANTS_ET_BÉBÉS', 'Enfants_et_bébés'),
     ('MONTRE', 'Montre'),
     ('ÉLECTROMÉNAGÉ', 'Électroménagé'),
-    ('MONTRE', 'Montre'),
     ('LIVRE', 'Livre'),
     ('FRIPERIE', 'Friperie'),
     ('JEUXVIDEO', 'Jeux Video'),
